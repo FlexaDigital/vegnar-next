@@ -141,7 +141,7 @@ export default function Home() {
        <section className="bg-[#F6F6F6] py-16 px-4 sm:px-6 lg:px-20">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-12">
         <Image
-  src="/assets/img/waste-to-worth.jfif"
+  src="/assets/img/waste-to-worth.jpg"
   alt="About us | Vagnar Green"
   width={500}
   height={300}

@@ -16,14 +16,14 @@ const productCategories = [
     link: '/products/sugarcane-bagasse',
   },
   {
-    image: '/assets/img/ricehusk.jfif',
+    image: '/assets/img/areca-plate.jpg',
     alt: 'Areca Palm Leaf Tableware',
     title: 'Areca Palm Leaf Tableware',
     applications: ['Outdoor events', 'Eco-friendly dining', 'BBQs and picnics'],
     link: null,
   },
   {
-    image: '/assets/img/3.jfif',
+    image: '/assets/img/3.jpg',
     alt: 'Compostable Cutlery',
     title: 'Compostable Cutlery',
     applications: [
@@ -34,7 +34,7 @@ const productCategories = [
     link: null,
   },
   {
-    image: '/assets/img/bio-bags.jfif',
+    image: '/assets/img/bio-bags.png',
     alt: 'Bio Carry Bags',
     title: 'Bio Carry Bags',
     applications: [
