@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Vegnar Green | Biodegradable Tableware & Eco-Friendly Bags",
     description:
-      "Explore eco-conscious alternatives with Vegnar Green's biodegradable tableware and bags made from agricultural waste like sugarcane bagasse and areca leaf. Ideal for sustainable packaging.",
+      "Premium biodegradable tableware and eco-friendly bags made from sugarcane bagasse and areca palm leaves. 100% compostable packaging solutions for a sustainable future.",
     url: "https://www.vegnar.com/",
     type: "website",
     images: [
