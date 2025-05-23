@@ -30,53 +30,6 @@ const ProductHero: React.FC<ProductHeroProps> = ({
             {title}
           </h1>
           <p className="text-[#0B4F3F] text-lg mb-8 max-w-md">{description}</p>
-          <div className="flex flex-wrap gap-4">
-            <a href={catalogUrl} target="_blank" rel="noopener noreferrer">
-              <button
-                className="flex items-center gap-2 bg-[#0B4F3F] text-white font-semibold rounded-md px-6 py-3 hover:bg-[#0a4334] transition"
-                type="button"
-              >
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
-                </svg>
-                {catalogButtonText}
-              </button>
-            </a>
-
-            <Link href="/contact">
-              <button
-                className="flex items-center gap-2 border border-[#0B4F3F] text-[#0B4F3F] font-semibold rounded-md px-6 py-3 hover:bg-[#def3e7] transition"
-                type="button"
-              >
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2h-6l-4 4v-4H7a2 2 0 01-2-2v-2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
-                </svg>
-                {quoteButtonText}
-              </button>
-            </Link>
-          </div>
         </div>
 
         {/* Right Section: Image */}

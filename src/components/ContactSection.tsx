@@ -88,7 +88,7 @@ const ContactSection: React.FC = () => {
     {
       icon: faPhoneAlt,
       title: "Call Us",
-      detail: "+91 99980 40473",
+      detail: "+91 99980 40373",
     },
   ];
 
@@ -189,8 +189,7 @@ const ContactSection: React.FC = () => {
                 </option>
                 <option>SUGARCANE BAGASSE PRODUCTS</option>
                 <option>BIO BAGS</option>
-                <option>RICE-HUSK</option>
-                <option>WHEAT BRAN PRODUCTS</option>
+                <option>ARECA PALM LEAF TABLEWARE</option>
               </select>
             </div>
 

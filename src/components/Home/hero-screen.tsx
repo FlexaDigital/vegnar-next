@@ -87,7 +87,7 @@ const HeroSection = () => {
               {slide.description}
             </p>
             <div className="mt-6 flex flex-wrap gap-4">
-              <a href="#ProductCatagories">
+              <a href="/products">
                 <button className="bg-vegnar-green hover:bg-green-800 transition text-white font-semibold rounded-full px-6 py-3 text-sm sm:text-base flex items-center">
                   Explore Products
                   <svg

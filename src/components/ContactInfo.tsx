@@ -83,19 +83,22 @@ const ContactInfo: React.FC = () => {
           </address>
         </div>
 
-        {/* Hours */}
         <div className="bg-white rounded-lg p-6 shadow-sm w-full">
           <div className="flex items-center mb-2">
             <div className="bg-[#d9f5e8] text-[#0f4d3a] rounded-full p-3 mr-3">
-              <FontAwesomeIcon icon={faClock} className="w-5 h-5" />
+              <FontAwesomeIcon icon={faMapMarkerAlt} className="w-5 h-5" />
             </div>
-            <h4 className="font-semibold text-sm">Business Hours</h4>
+            <h4 className="font-semibold text-sm">Visit Us</h4>
           </div>
-          <p className="text-sm text-[#4a4a4a] mb-1">Monday - Friday:</p>
-          <p className="text-sm text-[#4a4a4a] mb-2">9:00 AM - 6:00 PM IST</p>
-          <p className="text-sm text-[#4a4a4a] mb-1">Saturday:</p>
-          <p className="text-sm text-[#4a4a4a]">10:00 AM - 2:00 PM IST</p>
+          <address className="not-italic text-sm text-[#4a4a4a] leading-relaxed">
+            USA Office<br />
+            16848 W. Lake Houston Parkway, <br />
+            Humble, TX 77346.<br />
+            usa@vegnar.com
+          </address>
         </div>
+        {/* Hours */}
+        
       </div>
 
       {/* Social Links */}

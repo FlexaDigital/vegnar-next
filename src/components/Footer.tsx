@@ -3,16 +3,20 @@ import React, { useState } from "react";
 import type { FormEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState<string>("");
-  const [status, setStatus] = useState<string>(""); 
+  const [status, setStatus] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const formData = new FormData();
-    formData.append("your-email", email); 
+    formData.append("your-email", email);
 
     try {
       const response = await fetch(
@@ -35,11 +39,13 @@ const Footer: React.FC = () => {
     } catch (error) {
       console.error("Error during form submission:", error);
       setStatus("An error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const quickLinks = [
-    { to: "/product", label: "Products" },
+    { to: "/products  ", label: "Products" },
     { to: "/about-us", label: "About Us" },
     { to: "/blog", label: "Blog" },
     { to: "/contact", label: "Contact" },
@@ -127,10 +133,11 @@ const Footer: React.FC = () => {
             />
             <button
               type="submit"
-              className="bg-[#0D7B52] rounded-r-md px-4 py-2 flex items-center justify-center hover:bg-[#0a5a3a]"
+              disabled={isSubmitting}
+              className="bg-[#0D7B52] rounded-r-md px-4 py-2 flex items-center justify-center hover:bg-[#0a5a3a] disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Subscribe"
             >
-              <i className="fas fa-paper-plane text-white"></i>
+              <FontAwesomeIcon icon={faPaperPlane} className="text-white w-4 h-4" />
             </button>
           </form>
           {status && (

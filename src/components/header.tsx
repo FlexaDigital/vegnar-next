@@ -199,12 +199,7 @@ const Header = ({ categories }: HeaderProps) => {
               Become a Partner
             </Link>
 
-            <Link
-              href="/quote"
-              className="px-4 py-2 bg-vegnar-green rounded-full text-white text-sm font-medium hover:bg-vegnar-green/90"
-            >
-              Get a Quote
-            </Link>
+            
           </div>
 
           {/* Mobile Menu Button */}

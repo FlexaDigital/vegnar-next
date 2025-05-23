@@ -126,6 +126,7 @@ export default async function RootLayout({
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+        <meta name="google-site-verification" content="RVHX2AHo39dHrvLKRZbcn2aQh8_UX8wasOwCrKR5SMM" />
       </head>
       <body className="min-h-screen flex flex-col antialiased overflow-x-hidden">
         <LoadingProvider>

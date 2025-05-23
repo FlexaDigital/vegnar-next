@@ -5,6 +5,7 @@ import Image from "next/image"; // Import Image component for optimized images
 import Link from "next/link";
 import CertificationsSection from "@/components/CertificationsSection";
 import ContactSection from "@/components/ContactSection";
+import CustomizationSection from "@/components/CustomizationSection";
 import { FaCheckCircle } from "react-icons/fa";
 import {
   GiSprout,
@@ -15,6 +16,7 @@ import {
 import { IconType } from "react-icons";
 import ProductCategories from "@/components/ProductCategories";
 import BrochureSection from "@/components/BrochureSection";
+import ProductSection from "@/components/ProductSection";
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -185,123 +187,12 @@ export default function Home() {
         <ProductCategories />
       </section>
 
-       <section>
-      
-      <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center md:items-start gap-12">
-        <div className="flex-1 max-w-md md:max-w-none">
-          <div className="w-full h-[500px] relative">
-            <Image
-              alt="Stacked wooden tableware bowls and plates on marble surface"
-              className="rounded-lg object-cover"
-              src="/assets/img/bagasse.webp"
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority
-            />
-          </div>
-        </div>
+      <ProductSection />
 
-        <div className="flex-1 max-w-md">
-        
-          <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
-            FEATURED
-          </span>
-          <h2 className="text-2xl font-bold text-green-900 mb-4">Bagasse Tableware</h2>
-          <p className="text-gray-700 mb-6">
-            Our signature line of tableware made from sugarcane waste. Strong,
-            stylish, and completely compostable after use.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 mb-8">
-            {[
-              { title: 'Microwave Safe', desc: 'Heat resistant up to 220°F (105°C)' },
-              { title: 'Leak Proof', desc: 'Suitable for hot, cold, and oily foods, Upto (90 mins)' },
-              { title: 'Freezer Safe', desc: 'Store leftovers with confidence down to -4°F (-20°C)' },
-              { title: 'Compostable', desc: 'Breaks down naturally in 90 days' },
-              { title: 'PFAS Free', desc: 'Made without harmful forever chemicals for a safer product and planet.' },
-              { title: 'Lightweight', desc: 'Easy to handle and transport' },
-              { title: 'Durable', desc: 'Strong and resistant to breaking or bending' },
-              { title: 'Natural Feel', desc: 'Offers a unique and pleasant tactile experience' },
-            ].map((item, index) => (
-              <div key={index} className="flex flex-col gap-1">
-                <div className="flex items-center gap-2 text-green-700 font-semibold">
-                  
-<FaCheckCircle className="text-green-700" />
-                  <span>{item.title}</span>
-                </div>
-                <p className="text-gray-500 text-sm">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <Link href="/products/bagasse-products">
-            <button className="bg-green-700 text-white px-6 py-3 rounded-full font-medium hover:bg-green-800 transition">
-              Explore Range
-            </button>
-          </Link>
-        </div>
-      </div>
-
-      {/* Bio Bags */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          <div className="lg:w-1/2">
-             <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
-            FEATURED
-          </span>
-            <h2 className="text-3xl font-bold text-green-900 mb-4">Bio Bags</h2>
-            <p className="text-gray-700 mb-8 max-w-md">
-              Plant-based alternatives to plastic bags that decompose
-              naturally without leaving microplastics behind.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-12 max-w-md mb-10">
-              {[
-                { title: 'Multiple Sizes', desc: 'From small produce to large garbage' },
-                { title: 'Tear Resistant', desc: 'Strong enough for everyday use' },
-                { title: 'Home Compostable', desc: 'Breaks down in home compost bins' },
-                { title: 'Plant-Based', desc: 'Made from renewable resources' },
-                { title: 'Non-Toxic', desc: 'Safe for handling various items' },
-                { title: 'Breathable', desc: 'Helps keep produce fresher for longer' },
-                { title: 'Odor Control', desc: 'Helps to contain unpleasant smells' },
-                { title: 'Sustainable Choice', desc: 'Reduces reliance on fossil fuels' },
-              ].map((item, index) => (
-                <div key={index}>
-                  <p className="flex items-center font-semibold text-green-900 mb-1">
-                   
-                    <FaCheckCircle className="text-green-700 mr-2" />
-                    {item.title}
-                  </p>
-                  <p className="text-gray-600 text-sm">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-
-            <Link href="/products/bio-bags">
-              <button className="bg-green-800 text-white rounded-full px-6 py-3 font-medium hover:bg-green-900 transition">
-                Explore Range
-              </button>
-            </Link>
-          </div>
-
-          <div className="lg:w-1/2 w-full">
-            <Image
-              alt="Hand holding yellow bio bag in soil with green plants around"
-              className="rounded-lg w-full object-cover"
-              src="https://storage.googleapis.com/a1aa/image/da09a7ff-7b63-4262-1026-b048f781309f.jpg"
-              width={600}
-              height={400}
-              priority={false}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Add more sections below like Rice Husk, Wheat Bran, etc. */}
-    </section>
-
+   
     <CertificationsSection/>
     <BrochureSection />
+    <CustomizationSection />
     <ContactSection />
 
    

@@ -7,7 +7,7 @@ import {
   Megaphone,
   Users,
   Recycle,
-  Verified, // Changed from Certificate to Verified
+  Verified, 
   Tag,
   Truck,
 } from 'lucide-react';
@@ -162,9 +162,9 @@ export default function PartnerPage() {
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className="bg-green-50 rounded-xl p-8 flex flex-col items-center text-center"
+                className="bg-green-50 rounded-xl p-8 flex flex-col items-center text-center transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl hover:rotate-1"
               >
-                <div className="bg-green-100 text-green-800 rounded-full p-4 mb-4 flex items-center justify-center">
+                <div className="bg-green-100 text-green-800 rounded-full p-4 mb-4 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
                   <benefit.icon className="w-6 h-6" />
                 </div>
                 <h3 className="font-bold text-green-800 text-lg leading-snug mb-2">
@@ -187,8 +187,11 @@ export default function PartnerPage() {
         </p>
         <div className="flex flex-wrap justify-center gap-x-24 gap-y-12">
           {steps.map((step) => (
-            <div key={step.number} className="max-w-[180px]">
-              <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-[#d0f3e0] flex items-center justify-center">
+            <div 
+              key={step.number} 
+              className="max-w-[180px] transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-lg hover:rotate-1 p-6 rounded-xl bg-white"
+            >
+              <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-[#d0f3e0] flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
                 <span className="text-[#005943] font-semibold text-lg">
                   {step.number}
                 </span>

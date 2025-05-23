@@ -287,7 +287,7 @@ export default function PartnerForm() {
             <p className="font-bold">Have questions?</p>
             <p className="flex items-center space-x-2">
               <FaEnvelope />
-              <span>vegnargreens@gmail.com</span>
+              <span>partner@vegnar.com</span>
             </p>
             <p className="flex items-center space-x-2">
               <FaPhone />
@@ -363,10 +363,10 @@ export default function PartnerForm() {
             </legend>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-[#1a254f]">
               {[
-                { value: 'bagasse', label: 'Bagasse Tableware' },
-                { value: 'bio-carry-bags', label: 'Bio Carry Bags' },
+                { value: 'bagasse tableware', label: 'Bagasse Tableware' },
+                { value: 'bio-bags', label: 'Bio  Bags' },
                 { value: 'compostable-cutlery', label: 'Compostable Cutlery' },
-                { value: 'custom-solutions', label: 'Custom Solutions' }
+                { value: 'areca palm leaf tableware', label: 'arecapalm leaf tableware' }
               ].map((item) => (
                 <label key={item.value} className="inline-flex items-center space-x-2">
                   <input

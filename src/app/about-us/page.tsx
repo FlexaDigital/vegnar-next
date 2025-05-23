@@ -295,7 +295,7 @@ export default function OurStory() {
         </article>
         <figure className="lg:w-1/2 max-w-md w-full rounded-md overflow-hidden shadow-lg mx-auto">
           <Image
-            src="/assets/img/about-us-hero.jfif"
+            src="/assets/img/about-us-hero.jpg"
             alt="Sustainable packaging products"
             width={600}
             height={400}
