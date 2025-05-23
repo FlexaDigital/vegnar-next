@@ -2,10 +2,18 @@
 
 User-agent: *
 Allow: /
-
-Sitemap: https://www.vegnar.com/sitemap.xml
-
 Disallow: /admin/
 Disallow: /private/
 Disallow: /api/
 Disallow: /_next/
+Disallow: /404
+Disallow: /500
+
+# Allow search engines to crawl JavaScript and CSS files
+Allow: /*.js$
+Allow: /*.css$
+
+# Crawl-delay: 10
+
+# Sitemaps
+Sitemap: https://www.vegnar.com/sitemap.xml

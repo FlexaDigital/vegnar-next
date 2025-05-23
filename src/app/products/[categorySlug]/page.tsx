@@ -169,9 +169,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (categorySlug === 'bagasse-products') {
     return {
-      title: 'Sugarcane Bagasse Tableware | Vegnar Greens',
+      title: 'Sugarcane Bagasse Tableware | Vegnar Green',
       description:
-        "Explore Vegnar's range of premium sugarcane bagasse products – biodegradable plates, bowls, trays, lids, and eco-friendly cutlery. Compostable, durable, and sustainable solutions for modern food service.",
+        "Premium biodegradable tableware made from sugarcane bagasse. Explore our eco-friendly plates, bowls, trays, and containers - perfect for restaurants and sustainable packaging needs.",
       keywords:
         'sugarcane bagasse products, bagasse tableware, biodegradable plates, compostable bowls, eco-friendly cutlery, bagasse compartment plates, round bagasse plates, bagasse trays, sugarcane fiber lids, disposable eco tableware, sustainable packaging, bagasse clamshells, bagasse lunch trays, bagasse soup bowls, biodegradable food containers, round eco plates, square bagasse plates, eco lids for containers, sugarcane takeout boxes, disposable party plates, natural fiber cutlery, plant-based tableware, compostable lunch boxes, bagasse food trays, molded fiber tableware, bagasse dinnerware, eco plates and bowls, biodegradable tableware manufacturer, eco-friendly food packaging, bagasse cups and lids, 3 compartment bagasse plates, 5 compartment biodegradable tray, sustainable restaurant supplies, bulk eco plates and bowls, export quality bagasse plates, bagasse tableware exporter, FSC certified tableware, disposable eco lids, microwave safe bagasse products, plastic-free food packaging',
       openGraph: {
@@ -190,9 +190,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   } else if (categorySlug === 'bio-bags') {
     return {
-      title: 'Biodegradable Bags | Vegnar Greens',
+      title: 'Eco-Friendly Bio Bags | Vegnar Green',
       description:
-        'Shop Vegnar Greens for eco-friendly, biodegradable bags. Our compostable bags are perfect for reducing plastic waste. Find various sizes of sustainable bags.',
+        'Discover our innovative biodegradable bags made from plant-based materials. Available in various sizes for retail, courier, and waste management applications.',
       keywords:
         'biodegradable bags, compostable bags, eco-friendly bags, plastic-free bags, sustainable bags, compostable shopping bags, biodegradable plastic bags',
       openGraph: {

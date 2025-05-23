@@ -66,7 +66,7 @@ export const viewport: Viewport = {
 
 export const metadata = {
   title:
-    "Vegnar Greens | Leading Manufacturer of Sugarcane Bagasse Tableware & Areca Palm Leaf",
+    "Vegnar Green | Sustainable Biodegradable Products Manufacturer",
   description: "Discover Vegnar Greens, India's premier manufacturer of sustainable tableware and eco-friendly packaging solutions. We specialize in biodegradable products made from sugarcane bagasse, areca palm leaf, and other natural materials.",
   icons: {
     icon: [
