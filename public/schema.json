@@ -1,0 +1,50 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Vegnar Green",
+  "url": "https://www.vegnar.com",
+  "logo": "https://www.vegnar.com/images/logo.png",
+  "description": "Leading manufacturer of biodegradable tableware and eco-friendly packaging solutions made from natural materials.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Office No,506 Riverawave, Near Mc Donald's, Kalawad Road",
+    "addressLocality": "Rajkot",
+    "addressRegion": "Gujarat",
+    "postalCode": "360005",
+    "addressCountry": "IN"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+91-9998040373",
+    "contactType": "sales",
+    "email": "vegnarglobal@gmail.com",
+    "availableLanguage": ["English", "Hindi", "Gujarati"]
+  },
+  "sameAs": [
+    "https://www.facebook.com/vegnargreen",
+    "https://www.instagram.com/vegnargreen",
+    "https://www.linkedin.com/company/vegnar-green",
+    "https://twitter.com/vegnargreen"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Eco-Friendly Products",
+    "itemListElement": [
+      {
+        "@type": "OfferCatalog",
+        "name": "Bagasse Products",
+        "description": "Biodegradable tableware made from sugarcane bagasse"
+      },
+      {
+        "@type": "OfferCatalog",
+        "name": "Bio Bags",
+        "description": "Compostable and biodegradable bags for various uses"
+      },
+      {
+        "@type": "OfferCatalog",
+        "name": "Rice Husk Products",
+        "description": "Sustainable products made from rice husk"
+      }
+    ]
+  }
+} 

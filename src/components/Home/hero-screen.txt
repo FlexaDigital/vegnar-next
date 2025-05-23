@@ -1,0 +1,185 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import HeroImage1 from "../../../public/assets/img/Hero-screen.jpg";
+import HeroImage2 from "../../../public/assets/img/hero-2.jpg"; // Add your second image here
+import HeroImage3 from "../../../public/assets/img/hero-3.jpg"; // Add your third image here
+import { FaLeaf, FaCheckCircle } from "react-icons/fa";
+import Link from "next/link";
+
+const slides = [
+  {
+    id: 1,
+    image: HeroImage1,
+    alt: "Blurred image of nature-friendly tableware including cups, bowls, and plates on a wooden table with green plants in the background",
+    title: (
+      <>
+        Nature-Friendly
+        <br />
+        Tableware for a <span className="font-bold">Better</span>
+        <br />
+        Tomorrow
+      </>
+    ),
+    description:
+      "100% Biodegradable. Made from Sugarcane Waste. Compostable. Stylish.",
+  },
+  {
+    id: 2,
+    image: HeroImage2,
+    alt: "Second slide alt text",
+    title: (
+      <>
+        Sustainable
+        <br />
+        Packaging for a <span className="font-bold">Greener</span>
+        <br />
+        Future
+      </>
+    ),
+    description:
+      "Eco-friendly materials. Durable and compostable. Designed for sustainability.",
+  },
+  {
+    id: 3,
+    image: HeroImage3,
+    alt: "Third slide alt text",
+    title: (
+      <>
+        Innovative
+        <br />
+        Designs for a <span className="font-bold">Cleaner</span>
+        <br />
+        Planet
+      </>
+    ),
+    description:
+      "Stylish, biodegradable tableware. Made with care for nature’s future.",
+  },
+];
+
+const HeroSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Change slide every 7 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="h-screen relative pt-20 overflow-hidden">
+      {slides.map((slide, index) => (
+        <div
+          key={slide.id}
+          className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+            index === currentIndex ? "opacity-100 z-20" : "opacity-0 -z-10"
+          }`}
+        >
+          <div className="absolute inset-0 bg-black opacity-60"></div>
+          <Image
+            src={slide.image}
+            alt={slide.alt}
+            fill
+            style={{ objectFit: "cover" }}
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
+          <div className="relative z-30 max-w-7xl px-6 py-10 sm:py-14 md:py-16 lg:py-18 xl:py-20 mx-auto text-white">
+            <h1 className="font-extrabold text-4xl sm:text-5xl md:text-6xl leading-tight max-w-3xl tracking-tight">
+              {slide.title}
+            </h1>
+            <p className="mt-2 max-w-xl text-base sm:text-lg font-normal">
+              {slide.description}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-4">
+              <a href="#ProductCatagories">
+                <button
+                  type="button"
+                  className="inline-flex items-center bg-green-700 hover:bg-green-800 transition-colors text-white font-semibold text-sm sm:text-base rounded-full px-5 py-2.5"
+                >
+                  Explore Products
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M5 12h14M13 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </a>
+              <Link href="/contact">
+                <button
+                  type="button"
+                  className="inline-flex items-center border border-white border-opacity-50 hover:border-opacity-100 transition-colors text-white font-semibold text-sm sm:text-base rounded-full px-5 py-2.5"
+                >
+                  Get a Sample
+                </button>
+              </Link>
+            </div>
+
+            {/* Stats & certifications only on first slide */}
+            {index === 0 && (
+              <>
+                <div className="mt-6 flex flex-wrap items-center gap-6 max-w-4xl">
+                  <div className="flex items-center bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-5 py-3 max-w-xs">
+                    <FaLeaf className="text-green-400 text-lg mr-3" />
+                    <div>
+                      <p className="font-bold text-white text-lg leading-none">
+                        2450+ tons
+                      </p>
+                      <p className="text-white text-xs font-semibold -mt-1">
+                        of plastic replaced
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 text-white text-sm font-normal">
+                    <span>Certified by:</span>
+                    <button className="bg-white text-gray-900 font-semibold text-xs rounded-md px-3 py-1">
+                      OKComposite
+                    </button>
+                    <button className="bg-white text-gray-900 font-semibold text-xs rounded-md px-3 py-1">
+                      US FDA
+                    </button>
+                    <button className="bg-white text-gray-900 font-semibold text-xs rounded-md px-3 py-1">
+                      SGS Tested
+                    </button>
+                    <button className="bg-white text-gray-900 font-semibold text-xs rounded-md px-3 py-1">
+                      CE
+                    </button>
+                  </div>
+                </div>
+                <div className="mt-4 inline-flex items-center bg-white bg-opacity-20 backdrop-blur-sm rounded-full px-5 py-2 max-w-max text-white text-sm font-semibold">
+                  <FaCheckCircle className="text-green-400 mr-2" />
+                  Trusted by eco-conscious businesses worldwide
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      ))}
+
+      {/* Optional: Dots navigation */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 z-30">
+        {slides.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentIndex(idx)}
+            className={`w-3 h-3 rounded-full transition-colors ${
+              currentIndex === idx ? "bg-green-700" : "bg-white bg-opacity-50"
+            }`}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default HeroSection;

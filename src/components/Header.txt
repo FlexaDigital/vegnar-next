@@ -1,0 +1,260 @@
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { FaBars, FaChevronDown, FaTimes } from "react-icons/fa";
+import Image from "next/image";
+import logo from "../../public/assets/img/vegnar-green.png";
+
+const Header = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const { asPath } = router;
+
+  const menuItems = [
+    {
+      name: "Products",
+      link: "/products",
+      submenu: [
+        {
+          name: "Sugarcane Bagasse Tableware",
+          link: "/products/sugarcane-bagasse",
+        },
+        { name: "Bio Carry Bags", link: "/products/bio-bags" },
+      ],
+    },
+    { name: "About Us", link: "/about-us" },
+    {
+      name: "Sustainability",
+      submenu: [
+        { name: "Eco Initiatives", link: "/sustainability/eco-initiatives" },
+      ],
+    },
+    { name: "Eco-Talks", link: "/blog" },
+    { name: "Contact", link: "/contact" },
+  ];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Close dropdowns and mobile menu on route change
+  useEffect(() => {
+    setActiveDropdown(null);
+    setIsMobileMenuOpen(false);
+  }, [asPath]); // <-- Dependency array is correctly placed here
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
+  }, [isMobileMenuOpen]);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+    setActiveDropdown(null);
+  };
+
+  const handleMouseEnter = (index: number) => {
+    setActiveDropdown(index);
+  };
+
+  const handleMouseLeave = () => {
+    setActiveDropdown(null);
+  };
+
+  const toggleDropdown = (index: number) => {
+    setActiveDropdown((prev) => (prev === index ? null : index));
+  };
+
+  return (
+    <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex-shrink-0">
+            <Link href="/" className="block">
+              <Image
+                src={logo}
+                alt="Vegnar Greens Logo"
+                height={40}
+                width={120}
+              />
+            </Link>
+          </div>
+
+          {/* Desktop Menu */}
+          <nav className="hidden md:flex items-center space-x-6">
+            {menuItems.map((item, index) =>
+              item.submenu ? (
+                <div
+                  key={index}
+                  className="relative group"
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <button
+                    aria-haspopup="true"
+                    aria-expanded={activeDropdown === index}
+                    onClick={() => toggleDropdown(index)}
+                    className="cursor-pointer flex items-center space-x-1 text-sm font-medium text-gray-700 hover:text-vegnar-green px-3 py-2 rounded-md focus:outline-none"
+                  >
+                    <span>{item.name}</span>
+                    <FaChevronDown
+                      className={`text-xs transition-transform ${
+                        activeDropdown === index ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    className={`absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 transition-opacity duration-200 ${
+                      activeDropdown === index
+                        ? "opacity-100 visible"
+                        : "opacity-0 invisible"
+                    }`}
+                  >
+                    {item.submenu.map((subItem, subIndex) => (
+                      <Link
+                        href={subItem.link}
+                        key={subIndex}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-vegnar-light hover:text-vegnar-green"
+                      >
+                        {subItem.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  href={item.link}
+                  key={index}
+                  className="text-sm font-medium text-gray-700 hover:text-vegnar-green px-3 py-2 rounded-md"
+                >
+                  {item.name}
+                </Link>
+              )
+            )}
+          </nav>
+
+          {/* Desktop Buttons */}
+          <div className="hidden md:flex items-center space-x-3">
+            <Link
+              href="/partner"
+              className="px-4 py-2 border border-vegnar-green rounded-full text-vegnar-green text-sm font-medium hover:bg-vegnar-light"
+            >
+              Become a Partner
+            </Link>
+
+            <Link
+              href="/quote"
+              className="px-4 py-2 bg-vegnar-green rounded-full text-white text-sm font-medium hover:bg-vegnar-green/90"
+            >
+              Get a Quote
+            </Link>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-green-900 hover:text-vegnar-green p-2 rounded-md"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+          >
+            {isMobileMenuOpen ? (
+              <FaTimes className="text-lg" />
+            ) : (
+              <FaBars className="text-lg" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <nav
+          ref={mobileMenuRef}
+          className="md:hidden bg-white border-t border-gray-200 shadow-md"
+        >
+          <ul className="flex flex-col px-4 py-4 space-y-1">
+            {menuItems.map((item, index) =>
+              item.submenu ? (
+                <li key={index}>
+                  <button
+                    onClick={() => toggleDropdown(index)}
+                    aria-haspopup="true"
+                    aria-expanded={activeDropdown === index}
+                    className="w-full flex justify-between items-center px-3 py-2 text-gray-700 hover:text-vegnar-green hover:bg-vegnar-light rounded-md font-medium"
+                  >
+                    <span>{item.name}</span>
+                    <FaChevronDown
+                      className={`text-xs transition-transform ${
+                        activeDropdown === index ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  {activeDropdown === index && (
+                    <ul className="pl-5 mt-1 space-y-1">
+                      {item.submenu.map((subItem, subIndex) => (
+                        <li key={subIndex}>
+                          <Link
+                            href={subItem.link}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block px-3 py-2 text-gray-700 hover:text-vegnar-green hover:bg-vegnar-light rounded-md"
+                          >
+                            {subItem.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ) : (
+                <li key={index}>
+                  <Link
+                    href={item.link}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-3 py-2 text-gray-700 hover:text-vegnar-green hover:bg-vegnar-light rounded-md font-medium"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              )
+            )}
+
+            {/* Mobile buttons */}
+            <li>
+              <Link
+                href="/partner"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block mt-4 px-4 py-2 border border-vegnar-green rounded-full text-center text-vegnar-green font-medium hover:bg-vegnar-light"
+              >
+                Become a Partner
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/quote"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block mt-2 px-4 py-2 bg-vegnar-green rounded-full text-center text-white font-medium hover:bg-vegnar-green/90"
+              >
+                Get a Quote
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      )}
+    </header>
+  );
+};
+
+export default Header;

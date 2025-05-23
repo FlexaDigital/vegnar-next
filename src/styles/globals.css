@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --header-height: 4rem;
+  }
+  
+  html,
+  body {
+    @apply h-full;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-white text-gray-900;
+    position: relative;
+    min-height: 100vh;
+    /* Prevent pull-to-refresh on mobile */
+    overscroll-behavior-y: none;
+    /* Prevent bounce effect on iOS */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #__next {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition-colors;
+  }
+  .btn-outline {
+    @apply px-4 py-2 border border-primary-500 text-primary-500 rounded-full hover:bg-primary-50 transition-colors;
+  }
+}
+

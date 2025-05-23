@@ -1,0 +1,385 @@
+// app/products/[categorySlug]/page.tsx
+import ProductCard from '@/components/ProductCard';
+import { notFound } from 'next/navigation';
+
+type Category = {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  parent: number;
+};
+
+type Product = {
+  id: number;
+  slug: string;
+  title: { rendered: string };
+  content: { rendered: string };
+  product_category: number[];
+  acf?: { product_size?: string };
+  _embedded?: {
+    'wp:featuredmedia'?: { source_url?: string }[];
+  };
+};
+
+type Props = {
+  params: { categorySlug: string };
+};
+
+async function fetchCategoryBySlug(slug: string): Promise<Category | null> {
+  const res = await fetch(
+    `https://cms.vegnar.com/wp-json/wp/v2/product_category?slug=${slug}`,
+    { cache: 'no-store' }
+  );
+  const data = await res.json();
+  return data[0] || null;
+}
+
+async function fetchProductsByCategoryId(categoryId: number): Promise<Product[]> {
+  const res = await fetch(
+    `https://cms.vegnar.com/wp-json/wp/v2/products?product_category=${categoryId}&_embed`,
+    { cache: 'no-store' }
+  );
+  return await res.json();
+}
+
+async function fetchAllCategories(): Promise<Category[]> {
+  const res = await fetch(
+    `https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100`,
+    { cache: 'no-store' }
+  );
+  return await res.json();
+}
+
+// Correctly export generateMetadata outside the component function
+export async function generateMetadata({ params }: Props) {
+  const category = await fetchCategoryBySlug(params.categorySlug);
+
+  if (!category) {
+    return {
+      title: 'Category Not Found - Vegnar Greens',
+      description: 'Category does not exist.',
+    };
+  }
+
+  const products = await fetchProductsByCategoryId(category.id);
+  const keywords = products.map((p) => p.title.rendered).join(', ');
+
+  return {
+    title: `Vegnar Greens | ${category.name}`,
+    description:
+      category.description ||
+      `Explore our collection of ${category.name} products at Vegnar Greens.`,
+    keywords:
+      keywords ||
+      'Sugarcane Bagasse Tableware, Areca Palm Leaf, Biodegradable Products',
+    canonical: `https://vegnar.com/products/${category.slug}`,
+    robots: 'index, follow',
+    authors: [{ name: 'Vegnar Greens', url: 'https://vegnar.com' }],
+    publisher: 'Vegnar Greens',
+    openGraph: {
+      title: `Vegnar Greens | ${category.name}`,
+      description: category.description || '',
+      url: `https://vegnar.com/products/${category.slug}`,
+      siteName: 'Vegnar Greens',
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Vegnar Greens | ${category.name}`,
+      description: category.description || '',
+      creator: '@VegnarGreens', // replace with your Twitter handle
+    },
+  };
+}
+
+export default async function ProductCategoryPage({ params }: Props) {
+  const category = await fetchCategoryBySlug(params.categorySlug);
+
+  if (!category) {
+    notFound();
+  }
+
+  const products = await fetchProductsByCategoryId(category.id);
+  const allCategories = await fetchAllCategories();
+
+  return (
+    <main className="p-8">
+      <section className="mb-10">
+        <h1 className="text-3xl font-bold text-green-900">{category.name}</h1>
+        <p className="text-gray-600 mt-2">
+          {category.description || 'No description available.'}
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-4 text-green-800">Products</h2>
+
+        {products.length === 0 ? (
+          <p>No products found in this category.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                allCategories={allCategories}
+                disableViewProduct={false}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+    </main>
+  );
+}
+
+
+
+updated final
+
+
+
+"use client"; // Make this a client component to handle filtering state
+
+import ProductCard from '@/components/ProductCard';
+import { notFound, useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect, useCallback } from 'react';
+
+// ... (Type definitions for Category and Product remain the same)
+
+type Props = {
+  params: { categorySlug: string };
+};
+
+const PRODUCTS_PER_PAGE = 6;
+
+async function fetchCategoryBySlug(slug: string): Promise<Category | null> {
+  const res = await fetch(
+    `https://cms.vegnar.com/wp-json/wp/v2/product_category?slug=${slug}`,
+    { cache: 'no-store' }
+  );
+  const data = await res.json();
+  return data[0] || null;
+}
+
+async function fetchProductsByCategoryId(categoryId: number): Promise<Product[]> {
+  const res = await fetch(
+    `https://cms.vegnar.com/wp-json/wp/v2/products?product_category=${categoryId}&per_page=100&_embed`,
+    { cache: 'no-store' }
+  );
+  return await res.json();
+}
+
+async function fetchSubCategories(parentId: number): Promise<Category[]> {
+  const res = await fetch(
+    `https://cms.vegnar.com/wp-json/wp/v2/product_category?parent=${parentId}&per_page=100`,
+    { cache: 'no-store' }
+  );
+  return await res.json();
+}
+
+async function fetchAllCategories(): Promise<Category[]> {
+  const res = await fetch(
+    `https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100`,
+    { cache: 'no-store' }
+  );
+  return await res.json();
+}
+
+function getSubCategoryIdsFromQuery(searchParams: URLSearchParams): number[] {
+  const subCategoryParam = searchParams.get('sub_category');
+  if (subCategoryParam) {
+    return subCategoryParam.split(',').map(Number).filter(Boolean);
+  }
+  return [];
+}
+
+export default function ProductCategoryPage({ params }: Props) {
+  const [category, setCategory] = useState<Category | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [subCategories, setSubCategories] = useState<Category[]>([]);
+  const [selectedSubCategories, setSelectedSubCategories] = useState<number[]>([]);
+  const [allCategories, setAllCategories] = useState<Category[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const fetchedCategory = await fetchCategoryBySlug(params.categorySlug);
+        if (!fetchedCategory) {
+          notFound();
+          return;
+        }
+        setCategory(fetchedCategory);
+
+        const fetchedProducts = await fetchProductsByCategoryId(fetchedCategory.id);
+        setProducts(fetchedProducts);
+
+        const fetchedSubCategories = await fetchSubCategories(fetchedCategory.id);
+        setSubCategories(fetchedSubCategories);
+
+        const fetchedAllCategories = await fetchAllCategories();
+        setAllCategories(fetchedAllCategories);
+
+        // Initialize selected sub-categories from the URL query
+        const initialSelected = getSubCategoryIdsFromQuery(searchParams);
+        setSelectedSubCategories(initialSelected);
+
+        setLoading(false);
+      } catch (err: any) {
+        setError('Failed to load data.');
+        setLoading(false);
+        console.error('Error loading category page data:', err);
+      }
+    }
+
+    loadData();
+  }, [params.categorySlug, searchParams]);
+
+  const handleSubCategoryChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const subCategoryId = parseInt(event.target.value);
+      const newSelectedSubCategories = event.target.checked
+        ? [...selectedSubCategories, subCategoryId]
+        : selectedSubCategories.filter((id) => id !== subCategoryId);
+
+      setSelectedSubCategories(newSelectedSubCategories);
+
+      // Update URL with selected sub-categories
+      const newSearchParams = new URLSearchParams(searchParams);
+      if (newSelectedSubCategories.length > 0) {
+        newSearchParams.set('sub_category', newSelectedSubCategories.join(','));
+      } else {
+        newSearchParams.delete('sub_category');
+      }
+      router.push(`?${newSearchParams.toString()}`);
+      setCurrentPage(1); // Reset to the first page after filtering
+    },
+    [router, searchParams, selectedSubCategories]
+  );
+
+  const handleClearFilters = useCallback(() => {
+    setSelectedSubCategories([]);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.delete('sub_category');
+    router.push(`?${newSearchParams.toString()}`);
+    setCurrentPage(1); // Reset to the first page after clearing filters
+  }, [router, searchParams]);
+
+  const filteredProducts = products.filter((product) => {
+    if (selectedSubCategories.length === 0) {
+      return true; // Show all products if no sub-categories are selected
+    }
+    return product.product_category.some((catId) =>
+      selectedSubCategories.includes(catId)
+    );
+  });
+
+  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+  const endIndex = startIndex + PRODUCTS_PER_PAGE;
+  const displayedProducts = filteredProducts.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  if (loading) {
+    return <div className="p-8">Loading products...</div>;
+  }
+
+  if (error) {
+    return <div className="p-8 text-red-500">{error}</div>;
+  }
+
+  if (!category) {
+    return null; // Should not happen due to notFound() in useEffect
+  }
+
+  return (
+    <main className="p-8">
+      <section className="mb-10">
+        <h1 className="text-3xl font-bold text-green-900">{category.name}</h1>
+        <p className="text-gray-600 mt-2">
+          {category.description || 'No description available.'}
+        </p>
+      </section>
+
+      {subCategories.length > 0 && (
+        <section className="mb-8">
+          <h3 className="text-lg font-semibold text-green-800 mb-2">
+            Filter by Sub-Category
+          </h3>
+          <div className="flex flex-wrap gap-4">
+            {subCategories.map((subCat) => (
+              <div key={subCat.id} className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={`sub-category-${subCat.id}`}
+                  value={subCat.id}
+                  checked={selectedSubCategories.includes(subCat.id)}
+                  onChange={handleSubCategoryChange}
+                  className="mr-2"
+                />
+                <label htmlFor={`sub-category-${subCat.id}`}>
+                  {subCat.name}
+                </label>
+              </div>
+            ))}
+          </div>
+          {selectedSubCategories.length > 0 && (
+            <button
+              onClick={handleClearFilters}
+              className="mt-4 text-sm text-blue-500 hover:underline"
+            >
+              Clear Filters
+            </button>
+          )}
+        </section>
+      )}
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-4 text-green-800">Products</h2>
+        {displayedProducts.length === 0 ? (
+          <p>No products found {selectedSubCategories.length > 0 ? 'matching these filters' : 'in this category'}.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-2 gap-6"> {/* Adjusted grid for 6 items */}
+            {displayedProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                allCategories={allCategories}
+                disableViewProduct={false}
+              />
+            ))}
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-8">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`mx-1 px-3 py-1 rounded-md ${
+                  currentPage === page
+                    ? 'bg-green-500 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+        )}
+      </section>
+    </main>
+  );
+}
