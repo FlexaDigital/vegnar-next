@@ -22,7 +22,7 @@ const brochures: Brochure[] = [
     icon: <FaFilePdf className="text-lg text-[#2B7A5B]" />,
     title: "Areca Palm Tableware",
     description: "Discover our areca palm tableware options.",
-    downloadLink: "/assets/downloads/Vegnar-Bio-Bags-Export.pdf",
+    downloadLink: "/assets/downloads/Vegnar-Areca-Tableware.pdf",
   },
   {
     icon: <FaFilePdf className="text-lg text-[#2B7A5B]" />,

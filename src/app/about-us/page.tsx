@@ -116,14 +116,14 @@ const coreValues = [
 
 const goals = [
   {
-    number: '50M+',
+    number: '12M+',
     title: 'Plastic Items Eliminated',
-    description: 'Replace 50 million single-use plastic items by 2030.',
+    description: 'Replace 12 million single-use plastic items by 2030.',
   },
   {
-    number: '100+',
+    number: '7+',
     title: 'Global Partners',
-    description: 'Partner with over 100 eco-conscious businesses worldwide.',
+    description: 'Partner with over 7 eco-conscious businesses worldwide.',
   },
   {
     number: '100%',

@@ -13,14 +13,14 @@ const productCategories = [
       'Catering events',
       'Parties and gatherings',
     ],
-    link: '/products/sugarcane-bagasse',
+    link: '/products/bagasse-products',
   },
   {
     image: '/assets/img/areca-plate.jpg',
     alt: 'Areca Palm Leaf Tableware',
     title: 'Areca Palm Leaf Tableware',
     applications: ['Outdoor events', 'Eco-friendly dining', 'BBQs and picnics'],
-    link: null,
+    link: '/products/areca-palm-tableware',
   },
   {
     image: '/assets/img/3.jpg',
@@ -42,7 +42,7 @@ const productCategories = [
       'Carrying dry goods',
       'Retail packaging (non-food)',
     ],
-    link: '/products/bio-carry-bags',
+    link: '/products/bio-bags',
   },
 ];
 
@@ -90,7 +90,7 @@ const ProductCategories = () => {
                 View Products
                 <i className="fas fa-arrow-right ml-1"></i>
               </Link>
-            )}
+            )} 
           </article>
         ))}
       </div>

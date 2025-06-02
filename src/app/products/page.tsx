@@ -91,13 +91,6 @@ export default function ProductPage() {
           <p className="text-white/90 text-sm sm:text-base mt-2 max-w-md">
             Fresh, compostable choices for responsible living — made from nature, for nature.
           </p>
-          <Link
-            href="/quote"
-            className="mt-6 bg-[#1a7a2b] hover:bg-[#166622] text-white font-semibold rounded-full px-6 py-3 flex items-center gap-2 transition-colors"
-          >
-            Get a Free Quote
-            <FontAwesomeIcon icon={faArrowRight} />
-          </Link>
         </div>
       </div>
 

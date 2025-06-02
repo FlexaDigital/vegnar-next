@@ -330,37 +330,42 @@ export default async function ProductCategoryPage({ params }: Props) {
             __html: JSON.stringify(generateSchemaOrgData(category, products)),
           }}
         />
-        <main className="p-8 pt-[80px]">
-          <section className="relative h-[400px] bg-green-100 flex flex-col justify-center items-start px-8 md:px-16 mb-10 rounded-2xl shadow-md overflow-hidden">
-            <div className="z-10">
-              <h1 className="text-4xl md:text-5xl font-extrabold text-green-900">{category.name}</h1>
-              <p className="text-gray-700 mt-4 max-w-2xl text-lg">{category.description || 'No description available.'}</p>
-              <a
-                href="/catalog.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block mt-6 bg-green-700 text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-green-800 transition duration-300"
-              >
-                Download Catalog
-              </a>
+        <main className="p-4 sm:p-6 md:p-8 pt-[80px]">
+          <section className="relative min-h-[250px] sm:min-h-[300px] md:h-[400px] bg-green-100 flex flex-col justify-center items-start px-4 sm:px-8 md:px-16 mb-6 sm:mb-8 md:mb-10 rounded-xl sm:rounded-2xl shadow-md overflow-hidden">
+            <div className="z-10 w-full md:max-w-3xl">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-green-900 mb-2 sm:mb-3">{category.name}</h1>
+              <p className="text-gray-700 mt-2 sm:mt-3 md:mt-4 max-w-2xl text-sm sm:text-base md:text-lg">{category.description || 'No description available.'}</p>
+              <div className="flex flex-wrap gap-3 mt-4 sm:mt-5 md:mt-6">
+                <a
+                  href="/catalog.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center bg-green-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-sm font-semibold hover:bg-green-800 transition duration-300"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  Download Catalog
+                </a>
+              </div>
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-green-200 to-white opacity-60 z-0"></div>
           </section>
 
-          <nav className="mb-8">
-            <ol className="list-reset flex items-center space-x-2">
+          <nav className="mb-6 sm:mb-8 overflow-x-auto whitespace-nowrap px-1">
+            <ol className="list-reset flex items-center space-x-2 text-sm sm:text-base">
               <li>
                 <Link href="/" className="hover:underline text-green-800 font-medium">
                   Home
                 </Link>
               </li>
-              <li>{'>'}</li>
+              <li className="text-gray-500">/</li>
               <li>
                 <Link href="/products" className="hover:underline text-green-800 font-medium">
                   Products
                 </Link>
               </li>
-              <li>{'>'}</li>
+              <li className="text-gray-500">/</li>
               <li>
                 <Link href={`/products/${category.slug}`} className="hover:underline text-green-800 font-medium">
                   {category.name}
