@@ -1,20 +1,21 @@
 import React from 'react';
+import { Metadata } from 'next';
+import { fetchAllProductCategories, ProductCategory } from '@/lib/api';
 import { notFound } from 'next/navigation';
-import Link from 'next/link'; 
-
-import ProductCard from '@/components/ProductCard';
-
-import { decodeAndStripHtml, decodeHtmlEntities } from './utils';
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from 'next/link';
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTemperatureHigh,
-  faTint,
+  faWater,
   faSnowflake,
   faCheckCircle,
   faEnvelope,
+  faArrowRight,
   faLeaf,
 } from "@fortawesome/free-solid-svg-icons";
+import ProductCard from '@/components/ProductCard';
+import { decodeAndStripHtml, decodeHtmlEntities } from './utils';
 
 // --- TypeScript Interfaces ---
 interface Product {
@@ -77,28 +78,6 @@ async function getProduct(slug: string): Promise<Product | null> {
 }
 
 /**
- * Fetches all product categories.
- * @returns An array of category data.
- */
-async function getAllCategories(): Promise<Category[]> {
-  try {
-    const res = await fetch(
-      "https://cms.vegnar.com/wp-json/wp/v2/product_category",
-      { next: { revalidate: 3600 } } // Revalidate data every hour
-    );
-    if (!res.ok) {
-      console.error("Failed to fetch categories. Status:", res.status);
-      return [];
-    }
-    const data: Category[] = await res.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching all categories:", error);
-    return [];
-  }
-}
-
-/**
  * Fetches related products based on a category ID, excluding a specific product.
  * @param categoryId The ID of the category to fetch related products from.
  * @param excludeProductId The ID of the product to exclude from the results.
@@ -125,13 +104,31 @@ async function getRelatedProducts(
   }
 }
 
+async function getProductBySlug(slug: string) {
+  try {
+    const res = await fetch(`https://cms.vegnar.com/wp-json/wp/v2/product?slug=${slug}&_embed`, {
+      next: { revalidate: 60 },
+    });
+    
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    const products = await res.json();
+    return products[0] || null;
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    return null;
+  }
+}
+
 // --- Main Server Component ---
 const SingleProductPage = async ({ params }: PageProps) => {
   const { productSlug, categorySlug } = params; // categorySlug from URL
 
   // Fetch all data concurrently on the server
   const productPromise = getProduct(productSlug);
-  const categoriesPromise = getAllCategories();
+  const categoriesPromise = fetchAllProductCategories();
 
   const [product, allCategories] = await Promise.all([
     productPromise,
@@ -263,7 +260,7 @@ const SingleProductPage = async ({ params }: PageProps) => {
                     </span>
                   </div>
                   <div className="flex flex-col items-center bg-green-50 border border-green-200 rounded-md p-3 text-center text-green-800 text-xs">
-                    <FontAwesomeIcon icon={faTint} className="text-base mb-1" />
+                    <FontAwesomeIcon icon={faWater} className="text-base mb-1" />
                     <span className="font-semibold">
                       Water &amp; Oil Resistant
                     </span>
@@ -403,3 +400,81 @@ const SingleProductPage = async ({ params }: PageProps) => {
 };
 
 export default SingleProductPage;
+
+export async function generateMetadata({ params }: { params: { categorySlug: string; productSlug: string } }): Promise<Metadata> {
+  const product = await getProduct(params.productSlug);
+  const allCategories = await fetchAllProductCategories();
+  
+  // Get the current category
+  const currentCategory = product?.product_category && Array.isArray(product.product_category) && product.product_category.length > 0
+    ? allCategories.find(cat => product.product_category!.includes(cat.id))
+    : null;
+
+  // Get the parent category if it exists
+  const parentCategory = currentCategory?.parent
+    ? allCategories.find(cat => cat.id === currentCategory.parent)
+    : null;
+
+  // Build keywords array
+  const keywords = [
+    'Vegnar Greens',
+    'Vegnar',
+    currentCategory?.name || '',
+    parentCategory?.name || '',
+    decodeHtmlEntities(decodeAndStripHtml(product?.title?.rendered || '')),
+    'eco-friendly',
+    'biodegradable',
+    'sustainable',
+    'compostable',
+    ...(currentCategory?.name?.toLowerCase().includes('bagasse') 
+      ? ['bagasse tableware', 'sugarcane tableware', 'biodegradable plates', 'eco-friendly bowls']
+      : currentCategory?.name?.toLowerCase().includes('areca') 
+      ? ['areca palm plates', 'palm leaf tableware', 'natural plates', 'eco-friendly dinnerware']
+      : currentCategory?.name?.toLowerCase().includes('bio-bags')
+      ? ['biodegradable bags', 'compostable bags', 'eco-friendly bags', 'green packaging']
+      : [])
+  ].filter(Boolean);
+
+  const featuredImageUrl = product?._embedded?.["wp:featuredmedia"]?.[0]?.source_url || 'https://www.vegnar.com/images/default-product.jpg';
+  const productTitle = decodeHtmlEntities(decodeAndStripHtml(product?.title?.rendered || 'Product'));
+  const productDescription = decodeAndStripHtml(product?.content?.rendered || '');
+
+  return {
+    title: `${productTitle} | ${currentCategory?.name || 'Products'} - Vegnar Green`,
+    description: productDescription || 'Discover our eco-friendly and sustainable products at Vegnar Green.',
+    keywords: keywords,
+    openGraph: {
+      title: `${productTitle} - Vegnar Green`,
+      description: productDescription || 'Sustainable and eco-friendly products by Vegnar Green.',
+      url: `https://www.vegnar.com/products/${params.categorySlug}/${params.productSlug}`,
+      type: 'article',
+      siteName: 'Vegnar Green',
+      images: [
+        {
+          url: featuredImageUrl,
+          width: 1200,
+          height: 630,
+          alt: productTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@VegnarGreens',
+      creator: '@VegnarGreens',
+      title: `${productTitle} - Vegnar Green`,
+      description: productDescription || 'Sustainable and eco-friendly products by Vegnar Green.',
+      images: [featuredImageUrl],
+    },
+    alternates: {
+      canonical: `https://www.vegnar.com/products/${params.categorySlug}/${params.productSlug}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+      'max-snippet': -1,
+    },
+  };
+}

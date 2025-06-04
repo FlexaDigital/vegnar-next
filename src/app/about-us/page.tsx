@@ -24,7 +24,7 @@ library.add(
 
 export const metadata: Metadata = {
   title: 'About Vegnar Green | Leading Biodegradable Products Manufacturer',
-  description: 'Discover Vegnar Green - India\'s premier manufacturer of biodegradable tableware and eco-friendly packaging. Specializing in sugarcane bagasse products, areca palm leaf tableware, and compostable bio bags.',
+  description: 'Discover Vegnar, India\’s trusted manufacturer of biodegradable tableware, eco-friendly bags, and compostable packaging made from sugarcane bagasse & areca.',
   keywords: [
     // Primary Keywords
     'biodegradable tableware manufacturer',
