@@ -335,19 +335,6 @@ export default async function ProductCategoryPage({ params }: Props) {
             <div className="z-10 w-full md:max-w-3xl">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-green-900 mb-2 sm:mb-3">{category.name}</h1>
               <p className="text-gray-700 mt-2 sm:mt-3 md:mt-4 max-w-2xl text-sm sm:text-base md:text-lg">{category.description || 'No description available.'}</p>
-              <div className="flex flex-wrap gap-3 mt-4 sm:mt-5 md:mt-6">
-                <a
-                  href="/catalog.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center bg-green-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-sm font-semibold hover:bg-green-800 transition duration-300"
-                >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  Download Catalog
-                </a>
-              </div>
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-green-200 to-white opacity-60 z-0"></div>
           </section>

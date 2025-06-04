@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 // Metadata for the EcoMovement section
 export const metadata: Metadata = {
@@ -41,18 +42,20 @@ const EcoMovement = () => {
                         a difference for our planet.
                     </p>
                     <div className="flex space-x-4">
-                        <button
-                            className="bg-white text-[#058a5e] font-semibold rounded-full px-6 py-3 hover:bg-white/90 transition font-sans"
-                            type="button"
-                        >
-                            Become a Partner
-                        </button>
-                        <button
+                        <Link href="/partner">
+                            <button
+                                className="bg-white text-[#058a5e] font-semibold rounded-full px-6 py-3 hover:bg-white/90 transition font-sans"
+                                type="button"
+                            >
+                                Become a Partner
+                            </button>
+                        </Link>
+                        {/* <button
                             className="border border-white text-white font-semibold rounded-full px-6 py-3 hover:bg-white/10 transition font-sans"
                             type="button"
                         >
                             Subscribe to Updates
-                        </button>
+                        </button> */}
                     </div>
                 </div>
 
@@ -61,7 +64,7 @@ const EcoMovement = () => {
                     
                     <h3 className="font-bold text-lg mb-2 font-sans">Our 2025 Pledge</h3>
                     <p className="mb-6 font-sans text-base leading-relaxed">
-                        We're committed to preventing 20 million plastic items from entering
+                        We're committed to preventing 30 million plastic items from entering
                         the environment by 2025.
                     </p>
                     <div className="w-full max-w-xs mx-auto mb-3 bg-[#01492f] rounded-full h-5 overflow-hidden">
@@ -71,7 +74,7 @@ const EcoMovement = () => {
                         >
                         </div>
                     </div>
-                    <p className="text-sm font-sans">5.2M of 20M goal reached</p>
+                    <p className="text-sm font-sans">12M of 30M goal reached</p>
                 </div>
             </div>
         </div>

@@ -116,7 +116,7 @@ const HeroSection = () => {
                   <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-5 py-3 max-w-xs">
                     <FaLeaf className="text-green-400 text-lg mr-3" />
                     <div>
-                      <p className="font-bold text-white text-lg">2450+ tons</p>
+                      <p className="font-bold text-white text-lg">630+ tons</p>
                       <p className="text-white text-xs font-semibold -mt-1">
                         of plastic replaced
                       </p>

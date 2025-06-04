@@ -34,9 +34,10 @@ interface ProductListProps {
         allCategories: Category[];
         disableViewProduct: boolean;
     }>;
+    categorySlug: string;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, allCategories, subCategories, ProductCard }) => {
+const ProductList: React.FC<ProductListProps> = ({ products, allCategories, subCategories, ProductCard, categorySlug }) => {
     const [selectedSubCategories, setSelectedSubCategories] = useState<number[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -163,7 +164,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, allCategories, subC
                                         key={product.id}
                                         product={product}
                                         allCategories={allCategories}
-                                        disableViewProduct={false}
+                                        disableViewProduct={categorySlug === 'paper-cups' || categorySlug === 'bio-bags'}
                                     />
                                 ))}
                             </div>

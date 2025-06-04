@@ -4,10 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaCheckCircle } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
 
 const products = [
   {
@@ -48,11 +48,15 @@ const ProductSlider = () => {
   return (
     <section className="py-8 md:py-16 bg-white">
       <Swiper
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Autoplay]}
         spaceBetween={30}
         slidesPerView={1}
         navigation
-        pagination={{ clickable: true }}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true
+        }}
         className="product-slider"
       >
         {products.map((product, index) => (
@@ -84,11 +88,11 @@ const ProductSlider = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
                     {product.features.map((feature, idx) => (
                       <div key={idx} className="flex flex-col gap-1">
-                        <div className="flex items-center gap-2 text-green-700 font-semibold">
+                        <div className="flex items-center justify-center gap-2 text-green-700 font-semibold">
                           <FaCheckCircle className="text-green-700 flex-shrink-0" />
                           <span>{feature.title}</span>
                         </div>
-                        <p className="text-gray-500 text-sm">{feature.desc}</p>
+                        <p className="text-gray-500 text-sm text-center">{feature.desc}</p>
                       </div>
                     ))}
                   </div>

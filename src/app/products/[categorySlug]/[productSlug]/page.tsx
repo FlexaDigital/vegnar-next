@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link'; 
@@ -372,15 +371,23 @@ const SingleProductPage = async ({ params }: PageProps) => {
                   Similar Products
                 </h2>
                 <div className="flex overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
-                  {relatedProducts.map((relatedProduct) => (
-                    <div key={relatedProduct.id} className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 snap-start">
-                      {/* Client Component */}
-                      <ProductCard
-                        product={relatedProduct}
-                        allCategories={allCategories}
-                      />
-                    </div>
-                  ))}
+                  {relatedProducts.map((relatedProduct) => {
+                    // Check if we're on paper-cups or bio-bags page
+                    const shouldDisableViewProduct = params.categorySlug === 'paper-cups' || params.categorySlug === 'bio-bags';
+
+                    return (
+                      <div key={relatedProduct.id} className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 snap-start">
+                        <ProductCard
+                          product={{
+                            ...relatedProduct,
+                            product_category: relatedProduct.product_category || []
+                          }}
+                          allCategories={allCategories}
+                          disableViewProduct={shouldDisableViewProduct}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}

@@ -16,6 +16,7 @@ import {
   faGlobeAmericas, // Added for consistency
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
 
 // Define Button component (remains the same)
 const Button = ({
@@ -166,12 +167,14 @@ const EcoInitiativesPage = () => {
             impact through innovative, eco-conscious tableware solutions.
           </p>
           <div className="mt-8 flex justify-center gap-6 flex-wrap">
-            <Button className="bg-[#0D8B5F] text-white rounded-full px-6 py-3 hover:bg-[#0b6f4a]">
-              Explore Our Products
-            </Button>
-            <Button className="border border-[#0D8B5F] text-[#0D8B5F] rounded-full px-6 py-3 hover:bg-[#0D8B5F] hover:text-white">
+            <Link href="/products">
+              <Button className="bg-[#0D8B5F] text-white rounded-full px-6 py-3 hover:bg-[#0b6f4a]">
+                Explore Our Products
+              </Button>
+            </Link>
+            {/* <Button className="border border-[#0D8B5F] text-[#0D8B5F] rounded-full px-6 py-3 hover:bg-[#0D8B5F] hover:text-white">
               Our Sustainability Report
-            </Button>
+            </Button> */}
           </div>
         </div>
         {/* Decorative skewed div */}

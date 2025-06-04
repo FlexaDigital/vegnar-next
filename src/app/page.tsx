@@ -168,11 +168,11 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap gap-12 max-w-2xl">
               <div>
-                <p className="font-extrabold text-2xl text-[#007A3E]">5M+</p>
+                <p className="font-extrabold text-2xl text-[#007A3E]">12M+</p>
                 <p className="text-base text-[#004D40]">Products Sold</p>
               </div>
               <div>
-                <p className="font-extrabold text-2xl text-[#007A3E]">15+</p>
+                <p className="font-extrabold text-2xl text-[#007A3E]">7+</p>
                 <p className="text-base text-[#004D40]">Countries Served</p>
               </div>
               <div>

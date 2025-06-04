@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRulerCombined } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import he from 'he';
+import PlaceholderImage from './PlaceholderImage';
 
 interface Category {
   id: number;
@@ -50,11 +51,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
     ? decodedDescription.substring(0, 100) + "..."
     : decodedDescription;
   const size = product.acf?.product_size || 'Size not specified';
-  const image = product._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.jpg';
+  const image = product._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/images/placeholder-product.jpg';
 
-  const isBioBagsCategory = product.product_category.some((catId) => {
+  // Check if product belongs to paper-cups or bio-bags category
+  const isRestrictedCategory = product.product_category.some((catId) => {
     const cat = allCategories.find((c) => c.id === catId);
-    return cat?.slug === 'bio-bags';
+    const parentCat = cat?.parent ? allCategories.find((c) => c.id === cat.parent) : null;
+    return (
+      cat?.slug === 'paper-cups' || 
+      cat?.slug === 'bio-bags' ||
+      parentCat?.slug === 'paper-cups' ||
+      parentCat?.slug === 'bio-bags'
+    );
   });
 
   const generateProductUrl = (product: Product): string => {
@@ -110,16 +118,24 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <div className="w-8 h-8 border-2 border-green-600 border-t-transparent rounded-full animate-spin"></div>
           </div>
         )}
-        <img
-          src={image}
-          alt={decodedTitle}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
-          onError={(e) => {
-            e.currentTarget.src = '/placeholder.jpg';
-            setImageLoading(false);
-          }}
-          onLoad={() => setImageLoading(false)}
-        />
+        {!product._embedded?.['wp:featuredmedia']?.[0]?.source_url ? (
+          <PlaceholderImage />
+        ) : (
+          <img
+            src={image}
+            alt={decodedTitle}
+            className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
+            onError={(e) => {
+              setImageLoading(false);
+              e.currentTarget.style.display = 'none';
+              const placeholder = document.createElement('div');
+              placeholder.className = 'w-full h-full';
+              placeholder.innerHTML = '<div class="w-full h-full bg-gray-100 flex items-center justify-center"><div class="text-center p-4"><svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg><p class="text-gray-500 text-sm">No Image Available</p></div></div>';
+              e.currentTarget.parentElement?.appendChild(placeholder);
+            }}
+            onLoad={() => setImageLoading(false)}
+          />
+        )}
       </div>
 
       {/* Title - Always Visible */}
@@ -137,7 +153,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           )}
           <p className="text-sm mb-4 line-clamp-3">{shortDescription}</p>
-          {!disableViewProduct && (
+          {!isRestrictedCategory && !disableViewProduct && (
             <Link
               href={generateProductUrl(product)}
               className="inline-block w-full bg-green-600 text-white text-center px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition-colors duration-200"
