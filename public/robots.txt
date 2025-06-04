@@ -1,19 +1,8 @@
 # robots.txt for https://www.vegnar.com
 
+# Allow all web crawlers
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /private/
-Disallow: /api/
-Disallow: /_next/
-Disallow: /404
-Disallow: /500
 
-# Allow search engines to crawl JavaScript and CSS files
-Allow: /*.js$
-Allow: /*.css$
-
-# Crawl-delay: 10
-
-# Sitemaps
+# Sitemap location
 Sitemap: https://www.vegnar.com/sitemap.xml
