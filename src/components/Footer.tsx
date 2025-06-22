@@ -55,6 +55,8 @@ const Footer: React.FC = () => {
   const productLinks = [
     { to: "/products/sugarcane-bagasse", label: "Bagasse Tableware" },
     { to: "/products/bio-bags", label: "Bio Bags" },
+    { to: "/products/areca-palm-tableware", label: "Areca Palm Leaf Tableware" },
+    { to: "/products/paper-cups", label: "Paper Cups" },
   ];
 
   return (
