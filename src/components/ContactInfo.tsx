@@ -77,26 +77,13 @@ const ContactInfo: React.FC = () => {
           </div>
           <address className="not-italic text-sm text-[#4a4a4a] leading-relaxed">
             Vegnar Green Headquarters<br />
-            506, Riverawave, Near Mc Donalds<br />
-            Kalawad Road, Rajkot<br />
-            Gujarat, 360005, India
+             256,Jasal Complex Nanavati Chowk,<br />
+            150 Feet Ring Rd<br />
+            Rajkot, Gujarat 360007
           </address>
         </div>
 
-        <div className="bg-white rounded-lg p-6 shadow-sm w-full">
-          <div className="flex items-center mb-2">
-            <div className="bg-[#d9f5e8] text-[#0f4d3a] rounded-full p-3 mr-3">
-              <FontAwesomeIcon icon={faMapMarkerAlt} className="w-5 h-5" />
-            </div>
-            <h4 className="font-semibold text-sm">Visit Us</h4>
-          </div>
-          <address className="not-italic text-sm text-[#4a4a4a] leading-relaxed">
-            USA Office<br />
-            16848 W. Lake Houston Parkway, <br />
-            Humble, TX 77346.<br />
-            usa@vegnar.com
-          </address>
-        </div>
+       
         {/* Hours */}
         
       </div>

@@ -78,7 +78,7 @@ const ContactSection: React.FC = () => {
       icon: faMapMarkerAlt,
       title: "Visit Us",
       detail:
-        "Office No,506 Riverawave, Near Mc Donald's, Kalawad Road, Rajkot, Gujarat (India) - 360005",
+        "256, Jasal Complex Nanavati Chowk, 150 Feet Ring Rd, Rajkot, Gujarat 360007",
     },
     {
       icon: faEnvelope,
