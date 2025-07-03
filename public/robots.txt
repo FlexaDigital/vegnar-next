@@ -4,5 +4,19 @@
 User-agent: *
 Allow: /
 
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+
+# Allow important pages
+Allow: /products/
+Allow: /blog/
+Allow: /about-us
+Allow: /contact
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
 # Sitemap location
 Sitemap: https://www.vegnar.com/sitemap.xml

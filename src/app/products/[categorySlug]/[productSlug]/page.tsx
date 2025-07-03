@@ -1,17 +1,14 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { fetchAllProductCategories, ProductCategory } from '@/lib/api';
+import { fetchAllProductCategories } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTemperatureHigh,
   faWater,
   faSnowflake,
   faCheckCircle,
-  faEnvelope,
-  faArrowRight,
   faLeaf,
 } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from '@/components/ProductCard';
@@ -104,27 +101,11 @@ async function getRelatedProducts(
   }
 }
 
-async function getProductBySlug(slug: string) {
-  try {
-    const res = await fetch(`https://cms.vegnar.com/wp-json/wp/v2/product?slug=${slug}&_embed`, {
-      next: { revalidate: 60 },
-    });
-    
-    if (!res.ok) {
-      throw new Error(`HTTP error! Status: ${res.status}`);
-    }
 
-    const products = await res.json();
-    return products[0] || null;
-  } catch (error) {
-    console.error('Error fetching product:', error);
-    return null;
-  }
-}
 
 // --- Main Server Component ---
 const SingleProductPage = async ({ params }: PageProps) => {
-  const { productSlug, categorySlug } = params; // categorySlug from URL
+  const { productSlug } = params;
 
   // Fetch all data concurrently on the server
   const productPromise = getProduct(productSlug);
@@ -369,7 +350,6 @@ const SingleProductPage = async ({ params }: PageProps) => {
                 </h2>
                 <div className="flex overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
                   {relatedProducts.map((relatedProduct) => {
-                    // Check if we're on paper-cups or bio-bags page
                     const shouldDisableViewProduct = params.categorySlug === 'paper-cups' || params.categorySlug === 'bio-bags';
 
                     return (
@@ -403,50 +383,46 @@ export default SingleProductPage;
 
 export async function generateMetadata({ params }: { params: { categorySlug: string; productSlug: string } }): Promise<Metadata> {
   const product = await getProduct(params.productSlug);
-  const allCategories = await fetchAllProductCategories();
-  
-  // Get the current category
-  const currentCategory = product?.product_category && Array.isArray(product.product_category) && product.product_category.length > 0
-    ? allCategories.find(cat => product.product_category!.includes(cat.id))
-    : null;
+  if (!product) {
+    return {
+      title: 'Product Not Found | Vegnar Green',
+      description: 'The requested product could not be found.',
+    };
+  }
 
-  // Get the parent category if it exists
-  const parentCategory = currentCategory?.parent
-    ? allCategories.find(cat => cat.id === currentCategory.parent)
-    : null;
+  // Fetch SEO data from custom endpoint
+  let seoData = null;
+  try {
+    const seoRes = await fetch(`https://cms.vegnar.com/wp-json/custom/v1/seo/${product.id}`, {
+      next: { revalidate: 60 }
+    });
+    if (seoRes.ok) {
+      seoData = await seoRes.json();
+    }
+  } catch (err) {
+    console.error('Error fetching product SEO data:', err);
+  }
 
-  // Build keywords array
-  const keywords = [
-    'Vegnar Greens',
-    'Vegnar',
-    currentCategory?.name || '',
-    parentCategory?.name || '',
-    decodeHtmlEntities(decodeAndStripHtml(product?.title?.rendered || '')),
-    'eco-friendly',
-    'biodegradable',
-    'sustainable',
-    'compostable',
-    ...(currentCategory?.name?.toLowerCase().includes('bagasse') 
-      ? ['bagasse tableware', 'sugarcane tableware', 'biodegradable plates', 'eco-friendly bowls']
-      : currentCategory?.name?.toLowerCase().includes('areca') 
-      ? ['areca palm plates', 'palm leaf tableware', 'natural plates', 'eco-friendly dinnerware']
-      : currentCategory?.name?.toLowerCase().includes('bio-bags')
-      ? ['biodegradable bags', 'compostable bags', 'eco-friendly bags', 'green packaging']
-      : [])
-  ].filter(Boolean);
+  const titleTemplate = seoData?.seo_title || "%title% | Vegnar Green";
+  const title = titleTemplate
+    .replace("%title%", product.title.rendered)
+    .replace("%sep%", "|");
 
+  const description = seoData?.seo_description || decodeAndStripHtml(product?.content?.rendered || '').slice(0, 160);
+  const keywords = seoData?.seo_keywords?.split(",") || [];
   const featuredImageUrl = product?._embedded?.["wp:featuredmedia"]?.[0]?.source_url || 'https://www.vegnar.com/images/default-product.jpg';
-  const productTitle = decodeHtmlEntities(decodeAndStripHtml(product?.title?.rendered || 'Product'));
-  const productDescription = decodeAndStripHtml(product?.content?.rendered || '');
 
   return {
-    title: `${productTitle} | ${currentCategory?.name || 'Products'} - Vegnar Green`,
-    description: productDescription || 'Discover our eco-friendly and sustainable products at Vegnar Green.',
-    keywords: keywords,
+    title,
+    description,
+    keywords,
+    alternates: {
+      canonical: seoData?.link || `https://www.vegnar.com/products/${params.categorySlug}/${params.productSlug}`,
+    },
     openGraph: {
-      title: `${productTitle} - Vegnar Green`,
-      description: productDescription || 'Sustainable and eco-friendly products by Vegnar Green.',
-      url: `https://www.vegnar.com/products/${params.categorySlug}/${params.productSlug}`,
+      title,
+      description,
+      url: seoData?.link || `https://www.vegnar.com/products/${params.categorySlug}/${params.productSlug}`,
       type: 'article',
       siteName: 'Vegnar Green',
       images: [
@@ -454,27 +430,18 @@ export async function generateMetadata({ params }: { params: { categorySlug: str
           url: featuredImageUrl,
           width: 1200,
           height: 630,
-          alt: productTitle,
+          alt: title,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      site: '@VegnarGreens',
-      creator: '@VegnarGreens',
-      title: `${productTitle} - Vegnar Green`,
-      description: productDescription || 'Sustainable and eco-friendly products by Vegnar Green.',
+      title,
+      description,
       images: [featuredImageUrl],
+      creator: '@VegnarGreens',
+      site: '@VegnarGreens'
     },
-    alternates: {
-      canonical: `https://www.vegnar.com/products/${params.categorySlug}/${params.productSlug}`,
-    },
-    robots: {
-      index: true,
-      follow: true,
-      'max-image-preview': 'large',
-      'max-video-preview': -1,
-      'max-snippet': -1,
-    },
+    robots: { index: true, follow: true }
   };
 }

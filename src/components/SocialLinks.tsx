@@ -33,7 +33,7 @@ const socialLinks: SocialLink[] = [
   {
     icon: faPinterest,
     label: "Pinterest",
-    link: "https://in.pinterest.com/vegnarg/",
+    link: "https://in.pinterest.com/vegnargreens/",
   },
 ];
 

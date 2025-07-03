@@ -55,125 +55,59 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const slug = post.slug;
-  const canonicalUrl = `${PUBLIC_SITE_URL}/blog/${slug}`;
-
-  // Fetch Rank Math metadata
-  let rankMathData: any = null;
+  // Fetch SEO data from custom endpoint
+  let seoData = null;
   try {
-    const rmRes = await fetch(
-      `https://cms.vegnar.com/wp-json/rankmath/v1/getHead?url=${encodeURIComponent(canonicalUrl)}`,
-      { next: { revalidate: 60 } }
-    );
-    if (rmRes.ok) {
-      rankMathData = await rmRes.json();
+    const seoRes = await fetch(`https://cms.vegnar.com/wp-json/custom/v1/seo/${post.id}`, {
+      next: { revalidate: 60 }
+    });
+    if (seoRes.ok) {
+      seoData = await seoRes.json();
     }
   } catch (err) {
-    console.error('Error fetching Rank Math metadata:', err);
+    console.error('Error fetching SEO data:', err);
   }
 
-  // Parse Rank Math data if available
-  let title = post.title?.rendered?.replace(/(<([^>]+)>)/gi, '');
-  let description = post.content?.rendered?.replace(/(<([^>]+)>)/gi, '').slice(0, 160);
-  let featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '';
-  let keywords = Array.isArray(post.tags) ? post.tags.map((tag: any) => tag.name).join(', ') : '';
+  const titleTemplate = seoData?.seo_title || "%title% | Vegnar Green";
+  const title = titleTemplate
+    .replace("%title%", post.title.rendered)
+    .replace("%sep%", "|");
 
-  if (rankMathData && rankMathData.head) {
-    // Try to extract from Rank Math head string
-    const head = rankMathData.head;
-    // Helper function to extract meta tag content
-    function extractMeta(nameOrProp, value) {
-      const metaRegex = new RegExp(`<meta (?:name|property)=["']${nameOrProp}["'] content=["']([^"']*)["']`, 'i');
-      const match = head.match(metaRegex);
-      return match ? match[1] : undefined;
-    }
-    // Helper function to extract link rel canonical
-    function extractCanonical() {
-      const canonicalRegex = /<link rel=["']canonical["'] href=["']([^"']*)["']/i;
-      const match = head.match(canonicalRegex);
-      return match ? match[1] : undefined;
-    }
-    // Helper function to extract title
-    function extractTitle() {
-      const ogTitle = extractMeta('og:title');
-      if (ogTitle) return ogTitle;
-      const twitterTitle = extractMeta('twitter:title');
-      if (twitterTitle) return twitterTitle;
-      const titleTag = head.match(/<title>(.*?)<\/title>/i);
-      if (titleTag) return titleTag[1];
-      return undefined;
-    }
-    // Helper function to extract author
-    function extractAuthor() {
-      const twitterAuthor = extractMeta('twitter:data1');
-      if (twitterAuthor) return twitterAuthor;
-      const authorMeta = extractMeta('author');
-      if (authorMeta) return authorMeta;
-      return post._embedded?.author?.[0]?.name || 'Vegnar Green';
-    }
-    // Extract all fields
-    title = extractTitle() || title;
-    description = extractMeta('description') || description;
-    featuredImage = extractMeta('og:image') || extractMeta('twitter:image') || featuredImage;
-    // Extract keywords from <meta name="keywords"> and all <meta property="article:tag"> tags
-    let keywordList = [];
-    const keywordsMeta = extractMeta('keywords');
-    if (keywordsMeta) keywordList = keywordsMeta.split(',').map(k => k.trim()).filter(Boolean);
-    // Extract all article:tag meta tags
-    const articleTagRegex = /<meta property=["']article:tag["'] content=["']([^"']*)["']/gi;
-    let tagMatch;
-    while ((tagMatch = articleTagRegex.exec(head)) !== null) {
-      if (tagMatch[1]) keywordList.push(tagMatch[1].trim());
-    }
-    // Remove duplicates and join
-    keywords = Array.from(new Set(keywordList)).join(', ');
-    const robots = extractMeta('robots');
-    const canonical = extractCanonical();
-    const ogUrl = extractMeta('og:url');
-    const author = extractAuthor();
+  const description = seoData?.seo_description || post?.excerpt?.rendered?.replace(/<[^>]*>?/gm, "").slice(0, 160);
+  const keywords = seoData?.seo_keywords?.split(",") || [];
 
-    // Overwrite metadata fields if available
-    metadata.title = title || undefined;
-    metadata.description = description || undefined;
-    metadata.alternates = { canonical: canonical || ogUrl || canonicalUrl };
-    metadata.openGraph = {
-      ...metadata.openGraph,
-      title: title || undefined,
-      description: description || undefined,
-      url: ogUrl || canonicalUrl,
-      images: featuredImage ? [
+  return {
+    title,
+    description,
+    keywords,
+    alternates: {
+      canonical: seoData?.link || `${PUBLIC_SITE_URL}/blog/${params.slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: seoData?.link || `${PUBLIC_SITE_URL}/blog/${params.slug}`,
+      type: 'article',
+      siteName: 'Vegnar Green',
+      images: [
         {
-          url: featuredImage,
+          url: post?._embedded?.['wp:featuredmedia']?.[0]?.source_url || "/default-og.jpg",
           width: 1200,
           height: 630,
-          alt: title || '',
+          alt: post?.title?.rendered,
         },
-      ] : undefined,
-    };
-    metadata.twitter = {
-      ...metadata.twitter,
-      title: title || undefined,
-      description: description || undefined,
-      images: featuredImage ? [featuredImage] : undefined,
-    };
-    metadata.robots = robots
-      ? robots.split(',').reduce((acc, v) => {
-          const [key, val] = v.trim().split(':');
-          if (val) acc[key.toLowerCase()] = val;
-          else acc[v.trim().toLowerCase()] = true;
-          return acc;
-        }, {})
-      : metadata.robots;
-    metadata.authors = [{ name: author }];
-    metadata.keywords = keywords || undefined;
-  }
-
-  // Only return title, description, and keywords
-  // Explicitly override all metadata fields to prevent layout defaults
-  return {
-    title: '',
-    description: '',
-    keywords: '',
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [post?._embedded?.['wp:featuredmedia']?.[0]?.source_url || "/default-og.jpg"],
+      creator: '@VegnarGreens',
+      site: '@VegnarGreens'
+    },
+    authors: [{ name: post?._embedded?.author?.[0]?.name || 'Vegnar Green' }],
+    robots: { index: true, follow: true }
   };
 }
 
