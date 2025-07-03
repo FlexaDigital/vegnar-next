@@ -186,7 +186,7 @@ const BlogPage: React.FC = () => {
               } text-xs rounded-full px-3 py-1 font-semibold hover:bg-[#c0e8d0] transition`}
               onClick={() => handleTagClick(category.name)}
             >
-              {category.name} ({category.count})
+              {category.name.replace(/&amp;/g, '&')} ({category.count})
             </a>
           ))}
           <a
@@ -248,7 +248,7 @@ const BlogPage: React.FC = () => {
                     }}
                   />
                   <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded mb-2 w-max">
-                    {article.tag}
+                    {article.tag.replace(/&amp;/g, '&')}
                   </span>
                   <h3 className="text-base font-semibold mb-1">{article.title}</h3>
                   <p className="text-sm text-gray-600 flex-grow">{article.summary}</p>
@@ -308,6 +308,68 @@ const BlogPage: React.FC = () => {
         {/* Optional sidebar or CTA section */}
         <aside className="hidden lg:block">
           <div className="sticky top-20 space-y-6">
+             <div className="bg-white rounded-lg shadow-lg p-6">
+              <div className="flex flex-col items-center text-center">
+                <img 
+                  alt="Tushar Hirani professional headshot" 
+                  className="w-20 h-20 rounded-full object-cover mb-4 bg-gray-200" 
+                  src="https://media.licdn.com/dms/image/v2/D4D03AQHEGLx61pmo6w/profile-displayphoto-shrink_800_800/B4DZZNMw.yHAAc-/0/1745051915695?e=1756944000&v=beta&t=4yFYIeAHdH4eeyGl2to5O7jpGJqzMT0VbBVfICbQYxY" 
+                  onError={(e) => {
+                    e.currentTarget.src = "https://media.licdn.com/dms/image/v2/D4D03AQHEGLx61pmo6w/profile-displayphoto-shrink_800_800/B4DZZNMw.yHAAc-/0/1745051915695?e=1756944000&v=beta&t=4yFYIeAHdH4eeyGl2to5O7jpGJqzMT0VbBVfICbQYxY";
+                  }}
+                />
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Tushar Hirani
+                </h3>
+                <p className="text-[#0f4d3f] font-medium text-sm mt-1">
+                 Co - Founder & Sales Director at Vegnar Greens | Eco Entrepreneur 
+                </p>
+                <p className="mt-2 text-gray-700 text-xs leading-relaxed">
+                  As Sales Director at Vegnar Greens, I lead our global sales and export strategies connecting Indian eco-friendly innovations with international buyers.
+                </p>
+                <a 
+                  className="inline-flex items-center mt-3 text-blue-700 hover:text-blue-900 font-semibold text-sm" 
+                  href="https://www.linkedin.com/in/hiranitushar/" 
+                  rel="noopener noreferrer" 
+                  target="_blank"
+                >
+                  <i className="fab fa-linkedin mr-2"></i>
+                  View Profile
+                </a>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <div className="flex flex-col items-center text-center">
+                <img 
+                  alt="Ashiish Chauhan professional headshot" 
+                  className="w-20 h-20 rounded-full object-cover mb-4 bg-gray-200" 
+                  src="https://media.licdn.com/dms/image/v2/D4D03AQEOnUNfZ-T83Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1720693421303?e=1756944000&v=beta&t=pxc0HAv33IyX7TfDMUpCv2Pa9BohEe5OtL46yzeczZE" 
+                  onError={(e) => {
+                    e.currentTarget.src = "https://media.licdn.com/dms/image/v2/D4D03AQEOnUNfZ-T83Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1720693421303?e=1756944000&v=beta&t=pxc0HAv33IyX7TfDMUpCv2Pa9BohEe5OtL46yzeczZE";
+                  }}
+                />
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Ashish Chauhan
+                </h3>
+                <p className="text-[#0f4d3f] font-medium text-sm mt-1">
+                  Co - Founder & COO at Vegnar Greens | Eco Entrepreneur 
+                </p>
+                <p className="mt-2 text-gray-700 text-xs leading-relaxed">
+                  As Co-Founder & COO of Vegnar, I lead operations and global strategy for our biodegradable product exports, driving B2B growth and contributing to India's international trade ecosystem.
+                </p>
+                <a 
+                  className="inline-flex items-center mt-3 text-blue-700 hover:text-blue-900 font-semibold text-sm" 
+                  href="https://www.linkedin.com/in/ashiishchauhan/" 
+                  rel="noopener noreferrer" 
+                  target="_blank"
+                >
+                  <i className="fab fa-linkedin mr-2"></i>
+                  View Profile
+                </a>
+              </div>
+            </div>
+            
+          
             <div className="bg-[#eafaf1] p-4 rounded-lg shadow">
               <h3 className="font-semibold mb-2 text-[#0f4d3f]">Stay Connected</h3>
               <p className="text-sm text-[#2f2f2f]">

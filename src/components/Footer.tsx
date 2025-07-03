@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faFacebookF, faInstagram, faLinkedinIn, faPinterestP } from "@fortawesome/free-brands-svg-icons";
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -53,10 +54,14 @@ const Footer: React.FC = () => {
   ];
 
   const productLinks = [
-    { to: "/products/sugarcane-bagasse", label: "Bagasse Tableware" },
-    { to: "/products/bio-bags", label: "Bio Bags" },
-    { to: "/products/areca-palm-tableware", label: "Areca Palm Leaf Tableware" },
-    { to: "/products/paper-cups", label: "Paper Cups" },
+    { to: "/products/round-plates", label: "Round Plates" },
+    { to: "/products/bowls", label: "Bowls" },
+    { to: "/products/clasmshells", label: "Clamshells" },
+    { to: "/products/meal-trays", label: "Meal Trays" },
+    { to: "/products/sipper-lid", label: "Sipper Lids" },
+    { to: "/products/takeaway-container", label: "Takeaway Container" },
+    { to: "/products/bagasse-tray", label: "Tray" },
+
   ];
 
   return (
@@ -75,18 +80,18 @@ const Footer: React.FC = () => {
             Turning agricultural waste into sustainable tableware and packaging
             solutions. Join us in creating a plastic-free future.
           </p>
-          <div className="flex space-x-4 text-white text-sm">
-            <a href="#" aria-label="Facebook" className="hover:text-[#7ED6A3]">
-              <i className="fab fa-facebook-f"></i>
+          <div className="flex space-x-4">
+            <a href="https://www.facebook.com/vegnargreens" aria-label="Facebook" className="text-white hover:text-[#7ED6A3] transition-colors">
+              <FontAwesomeIcon icon={faFacebookF} className="text-xl" />
             </a>
-            <a href="#" aria-label="Twitter" className="hover:text-[#7ED6A3]">
-              <i className="fab fa-twitter"></i>
+            <a href="https://www.instagram.com/vegnargreens/" aria-label="Instagram" className="text-white hover:text-[#7ED6A3] transition-colors">
+              <FontAwesomeIcon icon={faInstagram} className="text-xl" />
             </a>
-            <a href="#" aria-label="Instagram" className="hover:text-[#7ED6A3]">
-              <i className="fab fa-instagram"></i>
+            <a href="https://www.linkedin.com/company/vegnargreens/" aria-label="LinkedIn" className="text-white hover:text-[#7ED6A3] transition-colors">
+              <FontAwesomeIcon icon={faLinkedinIn} className="text-xl" />
             </a>
-            <a href="#" aria-label="LinkedIn" className="hover:text-[#7ED6A3]">
-              <i className="fab fa-linkedin-in"></i>
+            <a href="https://in.pinterest.com/vegnargreens/" aria-label="Pinterest" className="text-white hover:text-[#7ED6A3] transition-colors">
+              <FontAwesomeIcon icon={faPinterestP} className="text-xl" />
             </a>
           </div>
         </div>

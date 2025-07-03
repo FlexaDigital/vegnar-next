@@ -156,62 +156,54 @@ const initiatives: InitiativeData[] = [
 const EcoInitiativesPage = () => {
   return (
     <>
-      <section className="bg-[#E9F9F1] pt-20 pb-28 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-4xl font-extrabold text-[#1B2733] leading-tight">
+      <section className="bg-gradient-to-br from-green-50 to-green-100 pt-24 pb-32 relative overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <div className="inline-block bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            🌱 SUSTAINABILITY
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
             Our Eco-Initiatives
           </h1>
-          <p className="mt-4 text-lg text-[#3B4A57] max-w-3xl mx-auto leading-relaxed">
-            At Vegnar Greens, sustainability isn't just a buzzword—it's our
-            core mission. We're committed to creating a positive environmental
-            impact through innovative, eco-conscious tableware solutions.
+          <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-10">
+            At Vegnar Greens, sustainability isn't just a buzzword—it's our core mission. 
+            We're committed to creating a positive environmental impact through innovative, 
+            eco-conscious tableware solutions that protect our planet for future generations.
           </p>
-          <div className="mt-8 flex justify-center gap-6 flex-wrap">
+          <div className="flex justify-center gap-4 flex-wrap">
             <Link href="/products">
-              <Button className="bg-[#0D8B5F] text-white rounded-full px-6 py-3 hover:bg-[#0b6f4a]">
+              <Button className="bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 shadow-lg transform hover:scale-105 transition-all">
                 Explore Our Products
               </Button>
             </Link>
-            {/* <Button className="border border-[#0D8B5F] text-[#0D8B5F] rounded-full px-6 py-3 hover:bg-[#0D8B5F] hover:text-white">
-              Our Sustainability Report
-            </Button> */}
           </div>
         </div>
-        {/* Decorative skewed div */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-[#E9F9F1] transform -skew-y-2"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-white transform -skew-y-1"></div>
       </section>
 
-      <section>
-        <div className="max-w-7xl mx-auto px-6 py-12 relative">
-          {/* Main content card for this section */}
-          <div className="bg-white rounded-xl shadow-lg p-10 max-w-5xl mx-auto relative -mt-24"> {/* Added -mt-24 to pull it up over the skew */}
-            <div className="absolute -top-6 right-10 bg-green-100 rounded-full w-14 h-14 flex items-center justify-center shadow-md">
-              {/* Using FontAwesomeIcon for consistency */}
-              <FontAwesomeIcon icon={faGlobeAmericas} className="text-green-600 text-2xl" />
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="bg-white rounded-2xl shadow-xl p-12 relative -mt-16">
+            <div className="absolute -top-8 right-12 bg-green-600 rounded-full w-16 h-16 flex items-center justify-center shadow-lg">
+              <FontAwesomeIcon icon={faGlobeAmericas} className="text-white text-2xl" />
             </div>
-            <h2 className="text-2xl font-extrabold text-slate-900 mb-4">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">
               Our Commitment to Environmental Responsibility
             </h2>
-            <p className="text-slate-700 mb-10 leading-relaxed">
-              Our approach to sustainability spans sourcing, manufacturing,
-              packaging, and logistics. We continually refine processes to
-              minimize impact while delivering planet-friendly solutions.
+            <p className="text-gray-700 text-lg mb-12 leading-relaxed">
+              Our approach to sustainability spans sourcing, manufacturing, packaging, and logistics. 
+              We continually refine processes to minimize impact while delivering planet-friendly solutions.
             </p>
 
-            {/* --- Refactored Three Commitment Cards --- */}
-            <div className="flex flex-col sm:flex-row gap-6">
+            <div className="grid md:grid-cols-3 gap-8">
               {commitmentCardItems.map((card) => (
-                <div key={card.id} className="bg-green-50 rounded-lg p-6 text-center flex-1">
-                  <div className="flex justify-center">
-                    <FontAwesomeIcon
-                      icon={card.icon}
-                      className="text-green-700 w-7 h-7 mb-1.5" // Adjusted margin
-                    />
+                <div key={card.id} className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
+                  <div className="bg-green-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                    <FontAwesomeIcon icon={card.icon} className="text-white text-2xl" />
                   </div>
-                  <h3 className="font-semibold text-slate-900 mb-0.5"> {/* Adjusted margin */}
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
                     {card.title}
                   </h3>
-                  <p className="text-slate-600 text-sm mt-0"> {/* Ensured no top margin */}
+                  <p className="text-gray-600">
                     {card.description}
                   </p>
                 </div>
@@ -221,36 +213,40 @@ const EcoInitiativesPage = () => {
         </div>
       </section>
 
-      <section className="bg-gray-50 py-12"> {/* Added py-12 for consistency */}
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-center text-2xl font-extrabold text-slate-900 mb-10"> {/* Changed color for better contrast on light bg */}
-            Key Eco-Initiatives
-          </h2>
-          <div className="space-y-10">
-            {initiatives.map((initiative) => (
+      <section className="bg-gray-50 py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Key Eco-Initiatives
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Discover how we're making a difference through concrete actions and measurable impact
+            </p>
+          </div>
+          <div className="grid gap-8">
+            {initiatives.map((initiative, index) => (
               <div
                 key={initiative.id}
-                className="bg-white rounded-lg p-8 flex flex-col sm:flex-row items-center sm:items-start gap-8 shadow-md"
+                className={`bg-white rounded-2xl p-10 flex flex-col lg:flex-row items-center gap-10 shadow-lg hover:shadow-xl transition-shadow ${
+                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                }`}
               >
-                <div className="flex-shrink-0 bg-green-100 rounded-full w-20 h-20 flex items-center justify-center">
-                  {/* --- Using FontAwesomeIcon for initiative icons --- */}
+                <div className="flex-shrink-0 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl w-24 h-24 flex items-center justify-center shadow-lg">
                   <FontAwesomeIcon
                     icon={initiative.icon}
-                    className="text-green-600 text-3xl"
-                    width="25"
-                    height= "25" // text-3xl should work; adjust if too small/large
-                                                        // or use size prop e.g. size="2x"
-                                                        // or fixed width/height e.g. w-10 h-10
+                    className="text-white text-3xl"
                   />
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                <div className="flex-1 text-center lg:text-left">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
                     {initiative.title}
                   </h3>
-                  <p className="text-slate-700 mb-2 leading-relaxed">{initiative.description}</p> {/* Added leading-relaxed */}
+                  <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                    {initiative.description}
+                  </p>
                   <a
-                    href={initiative.linkUrl || '#'} // Use linkUrl, fallback to '#'
-                    className="text-green-700 hover:underline font-medium text-sm"
+                    href={initiative.linkUrl || '#'}
+                    className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold text-lg hover:underline transition-colors"
                   >
                     {initiative.linkText}
                   </a>

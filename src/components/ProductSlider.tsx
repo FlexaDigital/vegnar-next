@@ -26,22 +26,6 @@ const products = [
       { title: 'Natural Feel', desc: 'Offers a unique and pleasant tactile experience' },
     ],
   },
-  {
-    title: 'Bio Bags',
-    description: 'Plant-based alternatives to plastic bags that decompose naturally without leaving microplastics behind.',
-    image: 'https://storage.googleapis.com/a1aa/image/da09a7ff-7b63-4262-1026-b048f781309f.jpg',
-    link: '/products/bio-bags',
-    features: [
-      { title: 'Multiple Sizes', desc: 'From small produce to large garbage' },
-      { title: 'Tear Resistant', desc: 'Strong enough for everyday use' },
-      { title: 'Home Compostable', desc: 'Breaks down in home compost bins' },
-      { title: 'Plant-Based', desc: 'Made from renewable resources' },
-      { title: 'Non-Toxic', desc: 'Safe for handling various items' },
-      { title: 'Breathable', desc: 'Helps keep produce fresher for longer' },
-      { title: 'Odor Control', desc: 'Helps to contain unpleasant smells' },
-      { title: 'Sustainable Choice', desc: 'Reduces reliance on fossil fuels' },
-    ],
-  },
 ];
 
 const ProductSlider = () => {
@@ -88,11 +72,11 @@ const ProductSlider = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
                     {product.features.map((feature, idx) => (
                       <div key={idx} className="flex flex-col gap-1">
-                        <div className="flex items-center justify-center gap-2 text-green-700 font-semibold">
+                        <div className="flex items-center justify-start gap-2 text-green-700 font-semibold">
                           <FaCheckCircle className="text-green-700 flex-shrink-0" />
                           <span>{feature.title}</span>
                         </div>
-                        <p className="text-gray-500 text-sm text-center">{feature.desc}</p>
+                        <p className="text-gray-500 text-sm text-left">{feature.desc}</p>
                       </div>
                     ))}
                   </div>

@@ -8,33 +8,33 @@ import BecomePartnerSection from '@/components/BecomePartnerSection';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Eco-Friendly Products | Biodegradable Tableware & Bio Bags - Vegnar Green",
-  description: "Discover our complete range of sustainable products including sugarcane bagasse tableware, areca palm leaf plates, bio bags, and compostable packaging solutions. All products are 100% biodegradable and food-safe certified.",
+  title: "Sugarcane Bagasse Tableware | Biodegradable Plates, Bowls & Containers - Vegnar Green",
+  description: "Premium sugarcane bagasse tableware including eco-friendly plates, bowls, meal trays, and takeaway containers. 100% compostable, microwave-safe, and FDA approved biodegradable products made from agricultural waste.",
   keywords: [
-    "biodegradable tableware",
-    "eco-friendly products",
-    "sugarcane bagasse plates",
+    "sugarcane bagasse tableware",
+    "bagasse plates",
     "bagasse bowls",
-    "areca palm leaf plates",
-    "compostable packaging",
-    "bio bags",
-    "sustainable food containers",
-    "green packaging solutions",
-    "biodegradable food packaging",
-    "eco-friendly disposables",
+    "bagasse meal trays",
+    "bagasse containers",
+    "biodegradable plates",
     "compostable tableware",
+    "eco-friendly disposables",
+    "microwave safe plates",
+    "FDA approved tableware",
+    "sustainable food packaging",
+    "agricultural waste products",
+    "plastic-free tableware",
+    "restaurant supplies",
+    "takeaway containers",
+    "food service packaging",
+    "green packaging solutions",
     "zero waste products",
-    "plastic-free packaging",
-    "sustainable food service items",
-    "vegnar green products",
-    "environmentally friendly packaging",
-    "green restaurant supplies",
-    "biodegradable takeout containers",
-    "eco-conscious business supplies"
+    "vegnar bagasse products",
+    "biodegradable food containers"
   ],
   openGraph: {
-    title: "Eco-Friendly Products | Biodegradable Tableware & Bio Bags",
-    description: "Explore our complete range of sustainable products. From sugarcane bagasse tableware to bio bags - all 100% biodegradable and food-safe certified.",
+    title: "Sugarcane Bagasse Tableware | Premium Biodegradable Products",
+    description: "Discover our premium sugarcane bagasse tableware collection. Microwave-safe, compostable plates, bowls, and containers made from agricultural waste.",
     url: "https://www.vegnar.com/products",
     type: "website",
     siteName: "Vegnar Green",
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@VegnarGreens",
     creator: "@VegnarGreens",
-    title: "Sustainable Products by Vegnar Green",
-    description: "Browse our collection of eco-friendly tableware and packaging solutions. 100% biodegradable, food-safe, and planet-friendly.",
+    title: "Sugarcane Bagasse Tableware by Vegnar Green",
+    description: "Premium bagasse plates, bowls, and containers. Microwave-safe, compostable, and made from renewable sugarcane waste.",
     images: ["https://www.vegnar.com/images/products-banner.jpg"],
   },
   alternates: {
@@ -82,14 +82,14 @@ export default function ProductsPage() {
           />
         </div>
         <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center px-4 text-center">
-          <h1 className="font-extrabold text-white text-3xl sm:text-4xl md:text-5xl leading-tight max-w-3xl mb-4">
-            Biodegradable Tableware &amp; Bio Bags
-            <span className="block mt-2 text-[#9ee8b1]">
-              Sustainable Living Starts Here
+          <h1 className="font-extrabold text-white text-3xl sm:text-4xl md:text-5xl leading-tight max-w-4xl mb-4">
+            Premium Sugarcane Bagasse Tableware
+            <span className="block mt-2 text-[#9ee8b1] text-2xl sm:text-3xl">
+              Microwave-Safe • Compostable • FDA Approved
             </span>
           </h1>
-          <p className="text-white/90 text-sm sm:text-base mt-2 max-w-md">
-            Fresh, compostable choices for responsible living — made from nature, for nature.
+          <p className="text-white/90 text-base sm:text-lg mt-4 max-w-2xl">
+            Transform agricultural waste into premium tableware. Our bagasse products are stronger than paper, safer than plastic, and kinder to the planet.
           </p>
         </div>
       </div>
@@ -101,92 +101,90 @@ export default function ProductsPage() {
               OUR PRODUCTS
             </span>
             <h2 className="text-[#0b3d13] font-bold text-2xl sm:text-3xl mb-3">
-              Explore Our Product Range
+              Sugarcane Bagasse Product Categories
             </h2>
-            <p className="text-[#0b3d13]/80 text-sm sm:text-base">
-              Eco-friendly essentials for a better tomorrow.
+            <p className="text-[#0b3d13]/80 text-base sm:text-lg">
+              From plates to containers - discover our complete range of bagasse tableware made from renewable sugarcane fiber.
             </p>
           </section>
 
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <article className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow flex flex-col items-center text-center">
-              <div className="relative w-32 h-32 mb-6">
-                <Image
-                  alt="Sugarcane bagasse tableware set with bowls and plates on a peach background"
-                  className="rounded-lg object-cover"
-                  src="/assets/img/vegnar-sugarcane-bagasse.jpg"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
-              <h3 className="font-semibold text-[#0b3d13] mb-2 text-lg">
-                Sugarcane Bagasse Tableware
-              </h3>
-              <p className="text-[#0b3d13]/70 text-sm mb-6 max-w-xs">
-                Compostable plates, bowls, and boxes crafted from renewable sugarcane fiber. Perfect for any occasion, guilt-free and sturdy.
-              </p>
-              <Link
-                href="/products/bagasse-products"
-                className="mt-auto bg-[#d9f0de] text-[#1a7a2b] font-semibold rounded-full px-5 py-2 flex items-center gap-2 text-sm hover:bg-[#c0e6c6] transition-colors"
-              >
-                View Products
-                <FontAwesomeIcon icon={faArrowRight} />
-              </Link>
-            </article>
-
-            <article className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow flex flex-col items-center text-center">
-              <div className="relative w-32 h-32 mb-6">
-                <Image
-                  alt="Areca palm leaf tableware with green plates and bowls on a light wood background"
-                  className="rounded-lg object-cover"
-                  src="/assets/img/vegnar-areca-palm-tableware.jpg"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
-              <h3 className="font-semibold text-[#0b3d13] mb-2 text-lg">
-                Areca Palm Leaf Tableware
-              </h3>
-              <p className="text-[#0b3d13]/70 text-sm mb-6 max-w-xs">
-                Natural palm leaf plates and trays — durable, compostable, and elegantly designed from fallen palm leaves, no chemicals added.
-              </p>
-              <Link
-                href="/products/areca-palm-tableware"
-                className="mt-auto bg-[#d9f0de] text-[#1a7a2b] font-semibold rounded-full px-5 py-2 flex items-center gap-2 text-sm hover:bg-[#c0e6c6] transition-colors"
-              >
-                View Products
-                <FontAwesomeIcon icon={faArrowRight} />
-              </Link>
-            </article>
-
-            <article className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow flex flex-col items-center text-center">
-              <div className="relative w-32 h-32 mb-6">
-                <Image
-                  alt="Bio bags with white and green biodegradable bags on a light green background"
-                  className="rounded-lg object-cover"
-                  src="https://storage.googleapis.com/a1aa/image/da09a7ff-7b63-4262-1026-b048f781309f.jpg"
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
-              <h3 className="font-semibold text-[#0b3d13] mb-2 text-lg">
-                Bio Bags
-              </h3>
-              <p className="text-[#0b3d13]/70 text-sm mb-6 max-w-xs">
-                Strong, earth-friendly bags for shopping and disposal. 100% biodegradable, convenient, and safe for the planet.
-              </p>
-              <Link
-                href="/products/bio-bags"
-                className="mt-auto bg-[#d9f0de] text-[#1a7a2b] font-semibold rounded-full px-5 py-2 flex items-center gap-2 text-sm hover:bg-[#c0e6c6] transition-colors"
-              >
-                View Products
-                <FontAwesomeIcon icon={faArrowRight} />
-              </Link>
-            </article>
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto mb-16">
+            {[
+              { name: 'Bagasse Plates', slug: 'round-plates', desc: 'Durable round plates in multiple sizes', icon: '🍽️' },
+              { name: 'Bagasse Bowls', slug: 'bowls', desc: 'Deep bowls perfect for soups and salads', icon: '🥣' },
+              { name: 'Meal Trays', slug: 'meal-trays', desc: 'Compartment trays for complete meals', icon: '🍱' },
+              { name: 'Takeaway Containers', slug: 'takeaway-container', desc: 'Secure containers for food delivery', icon: '📦' },
+              { name: 'Clamshells', slug: 'clamshells', desc: 'Hinged containers for burgers and sandwiches', icon: '🥪' },
+              { name: 'Food Trays', slug: 'tray', desc: 'Flat trays for serving and presentation', icon: '🍴' },
+              { name: 'Sipper Lids', slug: 'sipper-lid', desc: 'Leak-proof lids for hot and cold beverages', icon: '☕' }
+            ].map((product) => (
+              <article key={product.slug} className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
+                <div className="text-4xl mb-4 text-center">{product.icon}</div>
+                <h3 className="font-bold text-[#0b3d13] mb-3 text-lg text-center">
+                  {product.name}
+                </h3>
+                <p className="text-[#0b3d13]/70 text-sm mb-6 text-center flex-grow">
+                  {product.desc}
+                </p>
+                <div className="space-y-2 mb-6 text-xs text-[#0b3d13]/60">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    Microwave Safe (220°F)
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    Compostable in 90 days
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    FDA Approved
+                  </div>
+                </div>
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="mt-auto bg-gradient-to-r from-[#1a7a2b] to-[#2d8f3f] text-white font-semibold rounded-lg px-4 py-3 flex items-center justify-center gap-2 text-sm hover:from-[#0f5a1f] hover:to-[#1a7a2b] transition-all duration-300 shadow-md hover:shadow-lg"
+                >
+                  View {product.name}
+                  <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
+                </Link>
+              </article>
+            ))}
           </section>
 
-          <CustomizationSection />
-          <BecomePartnerSection />
+          <section className="bg-white rounded-2xl p-8 mb-16 shadow-lg">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-[#0b3d13] mb-4">Why Choose Sugarcane Bagasse?</h2>
+              <p className="text-[#0b3d13]/70 max-w-3xl mx-auto">Bagasse is the fibrous residue left after extracting juice from sugarcane. Instead of burning this waste, we transform it into premium tableware.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🌱</span>
+                </div>
+                <h3 className="font-semibold text-[#0b3d13] mb-2">100% Natural</h3>
+                <p className="text-sm text-[#0b3d13]/70">Made from agricultural waste with no harmful chemicals or plastic coatings</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">💪</span>
+                </div>
+                <h3 className="font-semibold text-[#0b3d13] mb-2">Superior Strength</h3>
+                <p className="text-sm text-[#0b3d13]/70">Stronger than paper plates, handles hot and cold foods without breaking</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">♻️</span>
+                </div>
+                <h3 className="font-semibold text-[#0b3d13] mb-2">Fully Compostable</h3>
+                <p className="text-sm text-[#0b3d13]/70">Breaks down completely in 90 days, enriching soil instead of polluting it</p>
+              </div>
+            </div>
+          </section>
+
+          <div className="space-y-16">
+            <CustomizationSection />
+            <BecomePartnerSection />
+          </div>
         </div>
       </div>
     </div>
