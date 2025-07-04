@@ -155,124 +155,63 @@ const Button = ({
 
 export default function OurStory() {
   return (
-    <main className="w-full bg-[#E6F9F1] text-[#004D40] font-sans text-base leading-relaxed">
-      {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center bg-[#004D40]">
-        <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/assets/img/about-us-hero.jfif"
-            alt="Vegnar Green sustainable manufacturing facility"
-            fill
-            className="object-cover opacity-20"
-          />
-        </div>
-        <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-4xl sm:text-5xl font-semibold mb-6">
-            About Vegnar Green
-          </h1>
-          <p className="text-lg sm:text-xl max-w-3xl mx-auto">
-            Leading manufacturer of biodegradable tableware and eco-friendly packaging solutions
-          </p>
-        </div>
-      </section>
+    <main className="w-full bg-gray-50 text-gray-900 font-sans text-base leading-relaxed">
 
-      {/* Featured Products Section */}
-      <section className="bg-white py-16 px-4 -mt-16 relative z-10">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h1 className="text-2xl sm:text-3xl font-medium text-gray-900 mb-4">
-              India's Leading Manufacturer of Biodegradable Products
-            </h1>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Pioneering sustainable alternatives with our premium range of biodegradable tableware and compostable bio bags
-            </p>
+      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 overflow-hidden">
+        <div className="absolute inset-0">
+         
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30"></div>
+        </div>
+        
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-green-400/20 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-32 right-16 w-32 h-32 bg-emerald-400/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
+        
+        <div className="relative z-10 text-center text-white px-6 max-w-6xl mx-auto">
+          <div className="mb-8">
+            <span className="inline-block bg-green-500/20 backdrop-blur-sm text-green-200 text-sm font-semibold rounded-full px-6 py-2 mb-6 border border-green-400/30">
+              🌱 Transforming Tomorrow, Today
+            </span>
           </div>
+          
+          <h1 className="text-5xl sm:text-7xl font-bold mb-8 leading-tight">
+            Pioneering
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300">
+              Sustainable Future
+            </span>
+          </h1>
+          
+          <p className="text-xl sm:text-2xl max-w-4xl mx-auto mb-12 text-gray-200 leading-relaxed">
+            From agricultural waste to premium biodegradable products — we're revolutionizing how the world thinks about packaging
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <button className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl">
+              Our Story
+            </button>
+            <button className="border-2 border-white/30 backdrop-blur-sm text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300">
+              View Products
+            </button>
+          </div>
+          
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Biodegradable Tableware Card */}
-            <div className="bg-[#F0F9F4] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <div className="relative h-64">
-                <Image
-                  src="/assets/img/bagasse.webp"
-                  alt="Biodegradable tableware collection"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-bold mb-1">Biodegradable Tableware</h3>
-                  <p className="text-sm">Made from Sugarcane Bagasse</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center text-gray-700">
-                    <FontAwesomeIcon icon={faLeaf} className="w-4 h-4 text-[#007A3E] mr-2" />
-                    <span>100% Natural & Biodegradable</span>
-                  </li>
-                  <li className="flex items-center text-gray-700">
-                    <FontAwesomeIcon icon={faLeaf} className="w-4 h-4 text-[#007A3E] mr-2" />
-                    <span>Microwave & Freezer Safe</span>
-                  </li>
-                  <li className="flex items-center text-gray-700">
-                    <FontAwesomeIcon icon={faLeaf} className="w-4 h-4 text-[#007A3E] mr-2" />
-                    <span>Oil & Leak Resistant</span>
-                  </li>
-                  <li className="flex items-center text-gray-700">
-                    <FontAwesomeIcon icon={faLeaf} className="w-4 h-4 text-[#007A3E] mr-2" />
-                    <span>Sturdy & Elegant Design</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Bio Bags Card */}
-            <div className="bg-[#F0F9F4] rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <div className="relative h-64">
-                <Image
-                  src="/assets/img/bio-bags.png"
-                  alt="Compostable bio bags collection"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-bold mb-1">Compostable Bio Bags</h3>
-                  <p className="text-sm">Plant-Based Alternative to Plastic</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <ul className="space-y-2 mb-6">
-                  <li className="flex items-center text-gray-700">
-                    <FontAwesomeIcon icon={faLeaf} className="w-4 h-4 text-[#007A3E] mr-2" />
-                    <span>100% Compostable Material</span>
-                  </li>
-                  <li className="flex items-center text-gray-700">
-                    <FontAwesomeIcon icon={faLeaf} className="w-4 h-4 text-[#007A3E] mr-2" />
-                    <span>High Tensile Strength</span>
-                  </li>
-                  <li className="flex items-center text-gray-700">
-                    <FontAwesomeIcon icon={faLeaf} className="w-4 h-4 text-[#007A3E] mr-2" />
-                    <span>Multiple Sizes Available</span>
-                  </li>
-                  <li className="flex items-center text-gray-700">
-                    <FontAwesomeIcon icon={faLeaf} className="w-4 h-4 text-[#007A3E] mr-2" />
-                    <span>Customizable Solutions</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+        </div>
+        
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
 
       {/* Our Story Section */}
-      <section className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 py-24 bg-white rounded-md shadow-md px-6 mx-4 -mt-16 relative z-10">
+      <section className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 py-24 bg-white rounded-md shadow-md px-6 mx-4 -mt-32 relative z-10">
         <article className="lg:w-1/2">
           <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
             OUR STORY
           </span>
-          <h2 className="text-3xl font-semibold mb-6">Our Roots</h2>
+          <h2 className="text-3xl font-semibold mb-6">About Vegnar Green</h2>
           <p className="mb-6 text-justify">
             Vegnar Greens began with a simple but powerful observation — the
             devastating impact of plastic waste on nature. Motivated by the need
@@ -304,6 +243,133 @@ export default function OurStory() {
           />
         </figure>
       </section>
+
+      {/* Company Overview */}
+      <section className="bg-white py-24 px-4 relative z-10">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-16">
+            <span className="inline-block bg-green-100 text-green-800 text-sm font-semibold rounded-full px-6 py-2 mb-6">
+              🌍 Leading the Green Revolution
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+              Transforming Agricultural Waste
+              <span className="block text-green-600">Into Premium Products</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              We're not just manufacturing products — we're crafting a sustainable future where every meal served contributes to healing our planet
+            </p>
+          </div>
+          
+          {/* Timeline */}
+          <div className="mb-20">
+            <div className="flex flex-col md:flex-row items-center justify-between max-w-4xl mx-auto">
+              <div className="flex flex-col items-center text-center mb-8 md:mb-0">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                  <span className="text-white font-bold text-lg">1</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Vision Born</h3>
+                <p className="text-gray-600 text-sm max-w-xs">Recognized the urgent need for plastic alternatives</p>
+              </div>
+              
+              <div className="hidden md:block flex-1 h-0.5 bg-gradient-to-r from-green-500 to-emerald-600 mx-4"></div>
+              
+              <div className="flex flex-col items-center text-center mb-8 md:mb-0">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                  <span className="text-white font-bold text-lg">2</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Innovation</h3>
+                <p className="text-gray-600 text-sm max-w-xs">Developed breakthrough bagasse processing technology</p>
+              </div>
+              
+              <div className="hidden md:block flex-1 h-0.5 bg-gradient-to-r from-green-500 to-emerald-600 mx-4"></div>
+              
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                  <span className="text-white font-bold text-lg">3</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Global Impact</h3>
+                <p className="text-gray-600 text-sm max-w-xs">Expanding worldwide to eliminate plastic waste</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Product Showcase */}
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-3xl overflow-hidden shadow-2xl">
+            <div className="grid lg:grid-cols-2 gap-0">
+              <div className="relative h-96 lg:h-auto overflow-hidden">
+                <Image
+                  src="/assets/img/bagasse.webp"
+                  alt="Biodegradable tableware collection"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
+                <div className="absolute top-6 left-6">
+                  <span className="bg-green-600 text-white text-sm font-bold px-4 py-2 rounded-full">
+                    ECO-FRIENDLY
+                  </span>
+                </div>
+              </div>
+              
+              <div className="p-12 flex flex-col justify-center">
+                <h3 className="text-4xl font-bold text-gray-900 mb-4">Sugarcane Bagasse Tableware</h3>
+                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                  Our flagship product line transforms agricultural waste into premium biodegradable tableware. Made from sugarcane bagasse - the fibrous residue left after juice extraction - our products offer the perfect blend of sustainability and functionality.
+                </p>
+                
+                <div className="grid grid-cols-2 gap-6 mb-8">
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-3">Performance Features</h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-center text-gray-700">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        <span className="text-sm">Microwave Safe (220°F)</span>
+                      </li>
+                      <li className="flex items-center text-gray-700">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        <span className="text-sm">Oil & Water Resistant</span>
+                      </li>
+                      <li className="flex items-center text-gray-700">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        <span className="text-sm">Freezer Safe</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-3">Certifications</h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-center text-gray-700">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        <span className="text-sm">FDA Approved</span>
+                      </li>
+                      <li className="flex items-center text-gray-700">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        <span className="text-sm">SGS Tested</span>
+                      </li>
+                      <li className="flex items-center text-gray-700">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        <span className="text-sm">Compostable in 90 days</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <button className="bg-gradient-to-r from-green-600 to-emerald-700 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-800 transition-all duration-300">
+                    View Products
+                  </button>
+                  <button className="border-2 border-green-600 text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition-all duration-300">
+                    Download Catalog
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
 
       {/* Mission Section */}
       <section className="bg-[#008060] text-white py-16 px-8 sm:px-16 rounded-md my-24 text-center max-w-4xl mx-auto">

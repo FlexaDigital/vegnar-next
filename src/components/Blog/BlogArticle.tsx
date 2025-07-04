@@ -17,6 +17,7 @@ interface Heading {
   level: number;
   id: string;
   text: string;
+  children?: Heading[];
 }
 
 interface BlogArticleProps {
@@ -28,6 +29,8 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
   const [tableOfContents, setTableOfContents] = useState<Heading[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [activeId, setActiveId] = useState<string>('');
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  const [isTocOpen, setIsTocOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -39,7 +42,7 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
       tempDiv.innerHTML = content;
 
       const headings = tempDiv.querySelectorAll('h2, h3, h4, h5, h6');
-      const toc: Heading[] = [];
+      const flatToc: Heading[] = [];
 
       headings.forEach((heading) => {
         const level = parseInt(heading.tagName[1]);
@@ -49,7 +52,30 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
         // Add ID to the heading in the content
         heading.id = id;
         
-        toc.push({ level, id, text });
+        flatToc.push({ level, id, text });
+      });
+
+      // Build nested structure
+      const toc: Heading[] = [];
+      const stack: Heading[] = [];
+
+      flatToc.forEach((heading) => {
+        const newHeading = { ...heading, children: [] };
+        
+        // Find the correct parent
+        while (stack.length > 0 && stack[stack.length - 1].level >= heading.level) {
+          stack.pop();
+        }
+        
+        if (stack.length === 0) {
+          toc.push(newHeading);
+        } else {
+          const parent = stack[stack.length - 1];
+          if (!parent.children) parent.children = [];
+          parent.children.push(newHeading);
+        }
+        
+        stack.push(newHeading);
       });
 
       // Update the content with IDs
@@ -87,7 +113,7 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
     if (element) {
       const header = document.querySelector('header');
       const headerHeight = header ? header.offsetHeight : 80;
-      const yOffset = -(headerHeight + 20); // Add some extra padding
+      const yOffset = -(headerHeight + 20);
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       
       window.scrollTo({
@@ -95,9 +121,57 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
         behavior: 'smooth'
       });
       
-      // Update active ID
       setActiveId(id);
+      setIsTocOpen(false); // Close mobile TOC after clicking
     }
+  };
+
+  const toggleExpanded = (id: string) => {
+    setExpandedItems(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
+  const renderTocItems = (items: Heading[], depth = 0) => {
+    return items.map((heading) => {
+      const hasChildren = heading.children && heading.children.length > 0;
+      const isExpanded = expandedItems.has(heading.id);
+      const isActive = activeId === heading.id;
+      
+      return (
+        <li key={heading.id} className={`${styles.tocListItem} ${depth > 0 ? styles[`ml${depth * 2}`] : ''} ${isActive ? styles.active : ''}`}>
+          <div className={styles.tocItemWrapper}>
+            <a
+              href={`#${heading.id}`}
+              className={styles.tocLink}
+              onClick={(e) => handleTocClick(e, heading.id)}
+            >
+              {heading.text}
+            </a>
+            {hasChildren && (
+              <button
+                className={styles.tocToggle}
+                onClick={() => toggleExpanded(heading.id)}
+                aria-label={isExpanded ? 'Collapse' : 'Expand'}
+              >
+                {isExpanded ? '−' : '+'}
+              </button>
+            )}
+          </div>
+          {hasChildren && isExpanded && (
+            <ul className={styles.tocSubList}>
+              {renderTocItems(heading.children!, depth + 1)}
+            </ul>
+          )}
+        </li>
+      );
+    });
   };
 
   const image = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/img/default-blog.jpg';
@@ -185,32 +259,47 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
 
       {/* Main Content Area */}
       <main className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:flex-row lg:space-x-10 ${styles.mainContainer}`}>
+        {/* Mobile TOC Toggle Button */}
+        {tableOfContents.length > 0 && (
+          <button
+            className={styles.tocMobileToggle}
+            onClick={() => setIsTocOpen(true)}
+            aria-label="Open table of contents"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            Contents
+          </button>
+        )}
+
         {/* Table of Contents */}
         {tableOfContents.length > 0 && (
-          <nav
-            aria-label="Table of contents"
-            className={styles.tocNav}
-          >
-            <h2 className={styles.tocTitle}>Table of Contents</h2>
-            <ul className={styles.tocList}>
-              {tableOfContents.map((heading) => (
-                <li
-                  key={heading.id}
-                  className={`${styles.tocListItem} ${styles[`ml${(heading.level - 2) * 2}`]} ${
-                    activeId === heading.id ? styles.active : ''
-                  }`}
+          <>
+            {/* Mobile Overlay */}
+            {isTocOpen && <div className={styles.tocOverlay} onClick={() => setIsTocOpen(false)} />}
+            
+            <nav
+              aria-label="Table of contents"
+              className={`${styles.tocNav} ${isTocOpen ? styles.tocNavOpen : ''}`}
+            >
+              <div className={styles.tocHeader}>
+                <h2 className={styles.tocTitle}>Table of Contents</h2>
+                <button
+                  className={styles.tocCloseBtn}
+                  onClick={() => setIsTocOpen(false)}
+                  aria-label="Close table of contents"
                 >
-                  <a
-                    href={`#${heading.id}`}
-                    className={styles.tocLink}
-                    onClick={(e) => handleTocClick(e, heading.id)}
-                  >
-                    {heading.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+                  ×
+                </button>
+              </div>
+              <ul className={styles.tocList}>
+                {renderTocItems(tableOfContents)}
+              </ul>
+            </nav>
+          </>
         )}
 
         {/* Article Content */}

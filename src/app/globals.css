@@ -131,8 +131,14 @@
 }
 
 /* Fix overscroll white space globally */
-html, body {
+html {
+  overscroll-behavior: none;
+  height: 100%;
+}
+
+body {
   overscroll-behavior: none;
   overscroll-behavior-y: none;
+  touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
 }

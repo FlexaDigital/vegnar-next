@@ -191,6 +191,58 @@
   color: #718096;
 }
 
+/* Mobile TOC Toggle Button */
+.tocMobileToggle {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background-color: #38a169;
+  color: white;
+  border: none;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.tocMobileToggle:hover {
+  background-color: #2f855a;
+  transform: translateY(-50%) translateX(2px);
+}
+
+@media (min-width: 1024px) {
+  .tocMobileToggle {
+    display: none;
+  }
+}
+
+/* Mobile Overlay */
+.tocOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 45;
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .tocOverlay {
+    display: block;
+  }
+}
+
 /* Table of Contents (TOC) */
 .tocNav {
   background-color: #f0f9f0;
@@ -214,23 +266,69 @@
 
 @media (max-width: 1023px) {
   .tocNav {
-    position: relative;
+    position: fixed;
     top: 0;
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 2rem;
+    left: -100%;
+    width: 320px;
+    max-width: 85vw;
+    height: 100vh;
+    z-index: 50;
+    margin-bottom: 0;
+    border-radius: 0;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+  }
+  
+  .tocNavOpen {
+    left: 0;
+  }
+}
+
+.tocHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.tocCloseBtn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #3a7a3a;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.tocCloseBtn:hover {
+  background-color: #e2f2e2;
+  color: #2b6c4a;
+}
+
+@media (max-width: 1023px) {
+  .tocCloseBtn {
+    display: block;
   }
 }
 
 .tocTitle {
-  margin-bottom: 1.25rem;
+  margin-bottom: 0;
   text-transform: uppercase;
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   color: #2b6c4a;
-  border-bottom: 2px solid #d4f5e1;
-  padding-bottom: 0.75rem;
   font-weight: 600;
+}
+
+@media (min-width: 1024px) {
+  .tocTitle {
+    margin-bottom: 1.25rem;
+    border-bottom: 2px solid #d4f5e1;
+    padding-bottom: 0.75rem;
+  }
 }
 
 .tocList {
@@ -245,6 +343,43 @@
   transition: all 0.3s ease;
 }
 
+.tocItemWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tocToggle {
+  background: none;
+  border: none;
+  color: #3a7a3a;
+  cursor: pointer;
+  padding: 0.25rem;
+  margin-left: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tocToggle:hover {
+  background-color: #e2f2e2;
+  color: #2b6c4a;
+}
+
+.tocSubList {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.5rem 0 0 0;
+  border-left: 2px solid #e2f2e2;
+  padding-left: 0.75rem;
+}
+
 .tocLink {
   color: #3a7a3a;
   text-decoration: none;
@@ -255,6 +390,7 @@
   line-height: 1.4;
   border: 1px solid transparent;
   position: relative;
+  flex: 1;
 }
 
 .tocLink:hover {
