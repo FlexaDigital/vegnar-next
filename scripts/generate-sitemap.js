@@ -10,22 +10,42 @@ function httpsGet(url) {
     https.get(url, (resp) => {
       let data = '';
       resp.on('data', (chunk) => { data += chunk; });
-      resp.on('end', () => resolve(JSON.parse(data)));
-    }).on('error', reject);
+      resp.on('end', () => {
+        try {
+          if (resp.statusCode !== 200) {
+            console.warn(`API returned status ${resp.statusCode} for ${url}`);
+            resolve([]);
+            return;
+          }
+          resolve(JSON.parse(data));
+        } catch (error) {
+          console.warn(`Failed to parse JSON from ${url}:`, error.message);
+          resolve([]);
+        }
+      });
+    }).on('error', (error) => {
+      console.warn(`Request failed for ${url}:`, error.message);
+      resolve([]);
+    });
   });
 }
 
 // Generate sitemap XML
 async function generateSitemap() {
   try {
+    console.log('Fetching data from WordPress API...');
+    
     // Fetch all products
     const products = await httpsGet(`${WORDPRESS_API}/products?per_page=100&_embed`);
+    console.log(`Fetched ${products.length} products`);
     
     // Fetch all product categories
     const categories = await httpsGet(`${WORDPRESS_API}/product_category?per_page=100`);
+    console.log(`Fetched ${categories.length} categories`);
     
     // Fetch all blog posts
     const posts = await httpsGet(`${WORDPRESS_API}/posts?per_page=100`);
+    console.log(`Fetched ${posts.length} posts`);
 
     // Start XML content
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -65,42 +85,62 @@ async function generateSitemap() {
   <!-- Product Categories -->
 `;
 
-    // Add product categories
-    categories.forEach(category => {
-      xml += `  <url>
+    // Add static product categories as fallback
+    const staticCategories = ['bowls', 'clamshells', 'meal-trays', 'round-plates', 'sipper-lid', 'takeaway-container', 'tray'];
+    
+    if (categories.length > 0) {
+      // Add product categories from API
+      categories.forEach(category => {
+        xml += `  <url>
     <loc>${SITE_URL}/products/${category.slug}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 `;
-    });
+      });
+    } else {
+      // Add static categories as fallback
+      staticCategories.forEach(category => {
+        xml += `  <url>
+    <loc>${SITE_URL}/products/${category}</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+`;
+      });
+    }
 
-    // Add individual products
-    products.forEach(product => {
-      // Find the product's category
-      const category = categories.find(cat => product.product_category.includes(cat.id));
-      const categorySlug = category ? category.slug : 'uncategorized';
-      
-      xml += `  <url>
+    // Add individual products if available
+    if (products.length > 0) {
+      products.forEach(product => {
+        // Find the product's category
+        const category = categories.find(cat => product.product_category && product.product_category.includes(cat.id));
+        const categorySlug = category ? category.slug : 'uncategorized';
+        
+        xml += `  <url>
     <loc>${SITE_URL}/products/${categorySlug}/${product.slug}</loc>
-    <lastmod>${product.modified.split('T')[0]}</lastmod>
+    <lastmod>${product.modified ? product.modified.split('T')[0] : new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 `;
-    });
+      });
+    }
 
-    // Add blog posts
-    posts.forEach(post => {
-      xml += `  <url>
+    // Add blog posts if available
+    if (posts.length > 0) {
+      posts.forEach(post => {
+        xml += `  <url>
     <loc>${SITE_URL}/blog/${post.slug}</loc>
-    <lastmod>${post.modified.split('T')[0]}</lastmod>
+    <lastmod>${post.modified ? post.modified.split('T')[0] : new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 `;
-    });
+      });
+    }
 
     // Close XML
     xml += '</urlset>';
