@@ -2,13 +2,8 @@
 .mainContainer {
   scroll-padding-top: 100px;
   scroll-behavior: smooth;
-}
-
-/* Fix overscroll white space */
-html, body {
   overscroll-behavior: none;
   overscroll-behavior-y: none;
-  -webkit-overflow-scrolling: touch;
 }
 
 .contentWrapper {
@@ -319,4 +314,31 @@ html, body {
 .article h5,
 .article h6 {
   scroll-margin-top: 100px;
+}
+
+/* WordPress Button Styles */
+.article .wp-block-button {
+  margin: 1.5rem 0 !important;
+}
+
+.article .wp-block-button__link,
+.article .wp-element-button {
+  background-color: #38a169 !important;
+  color: white !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 0.5rem !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  display: inline-block !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid #38a169 !important;
+}
+
+.article .wp-block-button__link:hover,
+.article .wp-element-button:hover {
+  background-color: #2f855a !important;
+  border-color: #2f855a !important;
+  color: white !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(56, 161, 105, 0.3) !important;
 }

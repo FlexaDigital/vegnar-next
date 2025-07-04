@@ -128,4 +128,11 @@
 .product-slider .swiper-button-prev:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 122, 62, 0.3), 0 4px 12px rgba(0, 122, 62, 0.15);
-} 
+}
+
+/* Fix overscroll white space globally */
+html, body {
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
