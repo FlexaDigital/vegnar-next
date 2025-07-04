@@ -11,6 +11,7 @@ import Image from 'next/image';
 import styles from './SingleBlog.module.css';
 import '@/app/blog/blog-global.css';
 import { Post } from '@/types/blog';
+import CompanyProfileCard from '@/components/CompanyProfileCard';
 
 interface Heading {
   level: number;
@@ -219,35 +220,49 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
             className={`prose max-w-none prose-green prose-headings:scroll-mt-20 ${styles.article}`}
           />
 
+          {/* Company Profile Card */}
+          <div className="mt-12 mb-8">
+            <CompanyProfileCard />
+          </div>
+
           {/* Related Posts */}
           {relatedPosts.length > 0 && (
             <section className="mt-16 border-t pt-12">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Articles</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {relatedPosts.map((relatedPost) => (
-                  <button
+                  <article
                     key={relatedPost.id}
-                    onClick={() => {
-                      setIsLoading(true);
-                      router.push(`/blog/${relatedPost.slug}`);
-                    }}
-                    className="group relative bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+                    className="group relative bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow border border-gray-200"
                   >
-                    <div className="aspect-w-16 aspect-h-9 relative">
+                    <div className="relative h-48 w-full">
                       <Image
-                        src={relatedPost._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/img/default-blog.jpg'}
+                        src={relatedPost._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/assets/img/default-blog.jpg'}
                         alt={relatedPost.title.rendered}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 768px) 100vw, 33vw"
                       />
                     </div>
                     <div className="p-4">
                       <h3
-                        className="font-semibold text-gray-900 group-hover:text-green-600 transition-colors line-clamp-2"
+                        className="font-semibold text-gray-900 group-hover:text-green-600 transition-colors line-clamp-2 mb-3"
                         dangerouslySetInnerHTML={{ __html: relatedPost.title.rendered }}
                       />
+                      <button
+                        onClick={() => {
+                          setIsLoading(true);
+                          router.push(`/blog/${relatedPost.slug}`);
+                        }}
+                        className="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm transition-colors"
+                      >
+                        Read Article
+                        <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
                     </div>
-                  </button>
+                  </article>
                 ))}
               </div>
             </section>
