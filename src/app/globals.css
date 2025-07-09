@@ -142,3 +142,63 @@ body {
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
 }
+
+/* WordPress Button Styles */
+.wp-block-button {
+  margin: 1.5rem 0 !important;
+  text-align: center;
+}
+
+.wp-block-button__link,
+.wp-element-button {
+  background-color: #38a169 !important;
+  color: white !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 0.5rem !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  display: inline-block !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid #38a169 !important;
+}
+
+.wp-block-button__link:hover,
+.wp-element-button:hover {
+  background-color: #2f855a !important;
+  border-color: #2f855a !important;
+  color: white !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(56, 161, 105, 0.3) !important;
+}
+
+/* WordPress Image Block Styles */
+.wp-block-image {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.wp-block-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wp-block-image img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.wp-block-image.size-full,
+.wp-block-image.size-large {
+  margin: 2.5rem 0;
+}
+
+.wp-block-image figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-style: italic;
+  text-align: center;
+}

@@ -5,4 +5,76 @@ main {
 
 body {
   scroll-padding-top: 100px;
-} 
+}
+
+/* WordPress Button Styles - Direct Override */
+.wp-block-button {
+  margin: 1.5rem 0 !important;
+  text-align: center !important;
+}
+
+.wp-block-button__link,
+.wp-element-button,
+a.wp-block-button__link,
+a.wp-element-button {
+  background-color: #38a169 !important;
+  color: white !important;
+  padding: 12px 24px !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  display: inline-block !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid #38a169 !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+.wp-block-button__link:hover,
+.wp-element-button:hover,
+a.wp-block-button__link:hover,
+a.wp-element-button:hover {
+  background-color: #2f855a !important;
+  border-color: #2f855a !important;
+  color: white !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(56, 161, 105, 0.3) !important;
+}
+
+/* WordPress Image Styles */
+.wp-block-image {
+  margin: 1rem 0 !important;
+  text-align: center !important;
+}
+
+.wp-block-image img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 2-Column Grid for Consecutive Images */
+.wp-block-image {
+  display: inline-block !important;
+  width: calc(50% - 1rem) !important;
+  margin: 0.5rem !important;
+  vertical-align: top !important;
+}
+
+.wp-block-image img {
+  width: 100% !important;
+  height: 300px !important;
+  object-fit: cover !important;
+}
+
+@media (max-width: 768px) {
+  .wp-block-image {
+    width: 100% !important;
+    display: block !important;
+    margin: 1rem 0 !important;
+  }
+  
+  .wp-block-image img {
+    height: auto !important;
+  }
+}
