@@ -155,6 +155,24 @@ const Footer: React.FC = () => {
           </p>
         </div>
       </div>
+      
+      {/* Copyright Section */}
+      <div className="border-t border-white/20 py-4">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center text-sm text-white/80">
+          <p>&copy; {new Date().getFullYear()} Vegnar Green. All rights reserved.</p>
+          <p>
+            Developed by{' '}
+            <a 
+              href="https://flexadigital.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#7ED6A3] hover:text-white transition-colors font-medium"
+            >
+              Flexa Digital
+            </a>
+          </p>
+        </div>
+      </div>
     </footer>
   );
 };
