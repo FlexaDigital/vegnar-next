@@ -246,6 +246,9 @@ export default async function RootLayout({
           referrerPolicy="no-referrer"
         />
 
+        {/* Yandex Verification */}
+        <meta name="yandex-verification" content="1018fbb453ba6c20" />
+
         {/* ✅ GA4 Analytics Script */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-1SB6WR71EG"
