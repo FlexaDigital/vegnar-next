@@ -77,7 +77,7 @@ const ContactInfo: React.FC = () => {
           </div>
           <address className="not-italic text-sm text-[#4a4a4a] leading-relaxed">
             Vegnar Green Headquarters<br />
-             256,Jasal Complex Nanavati Chowk,<br />
+             B623, RK Iconic, Sheetal Park<br />
             150 Feet Ring Rd<br />
             Rajkot, Gujarat 360007
           </address>
