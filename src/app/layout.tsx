@@ -202,6 +202,7 @@ export const metadata = {
   },
   verification: {
     google: "RVHX2AHo39dHrvLKRZbcn2aQh8_UX8wasOwCrKR5SMM",
+    yandex: "c904a809eacce6d1",
   },
   alternates: {
     canonical: "https://www.vegnar.com",
@@ -247,7 +248,7 @@ export default async function RootLayout({
         />
 
         {/* Yandex Verification */}
-        <meta name="yandex-verification" content="1018fbb453ba6c20" />
+        <meta name="yandex-verification" content="c904a809eacce6d1" />
 
         {/* ✅ GA4 Analytics Script */}
         <Script

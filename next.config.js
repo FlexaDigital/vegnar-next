@@ -51,6 +51,14 @@ const nextConfig = {
           {
             key: 'X-XSS-Protection',
             value: '1; mode=block'
+          },
+          {
+            key: 'X-Powered-By',
+            value: ''
+          },
+          {
+            key: 'Server',
+            value: ''
           }
         ],
       },
