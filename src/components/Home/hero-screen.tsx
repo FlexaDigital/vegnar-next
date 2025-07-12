@@ -88,7 +88,7 @@ const HeroSection = () => {
             </p>
             <div className="mt-6 flex flex-wrap gap-4">
               <a href="/products">
-                <button className="bg-vegnar-green hover:bg-green-800 transition text-white font-semibold rounded-full px-6 py-3 text-sm sm:text-base flex items-center">
+                <button className="bg-vegnar-green hover:bg-green-800 transition text-white font-semibold rounded-full px-8 py-4 text-sm sm:text-base flex items-center min-h-[44px] min-w-[44px]">
                   Explore Products
                   <svg
                     className="ml-2 w-4 h-4"
@@ -104,7 +104,7 @@ const HeroSection = () => {
                 </button>
               </a>
               <Link href="/contact">
-                <button className="border border-white/60 hover:border-white transition text-white font-semibold rounded-full px-6 py-3 text-sm sm:text-base">
+                <button className="border border-white/60 hover:border-white transition text-white font-semibold rounded-full px-8 py-4 text-sm sm:text-base min-h-[44px] min-w-[44px]">
                   Get a Sample
                 </button>
               </Link>
@@ -150,7 +150,7 @@ const HeroSection = () => {
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
-            className={`w-3 h-3 rounded-full transition-colors ${
+            className={`w-4 h-4 rounded-full transition-colors min-h-[44px] min-w-[44px] p-2 ${
               currentIndex === idx
                 ? "bg-vegnar-green"
                 : "bg-white bg-opacity-50"
