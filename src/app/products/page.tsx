@@ -151,6 +151,22 @@ export default function ProductsPage() {
             ))}
           </section>
 
+          <section className="text-center mb-12">
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-8 border border-green-100">
+              <h2 className="text-2xl font-bold text-[#0b3d13] mb-4">Need Detailed Product Specifications?</h2>
+              <p className="text-[#0b3d13]/70 mb-6 max-w-2xl mx-auto">
+                Access our comprehensive packing list with detailed specifications, pricing, and technical data for all products.
+              </p>
+              <Link
+                href="/packing-list"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#1a7a2b] to-[#2d8f3f] text-white font-semibold rounded-lg px-6 py-3 hover:from-[#0f5a1f] hover:to-[#1a7a2b] transition-all duration-300 shadow-md hover:shadow-lg"
+              >
+                View Packing List
+                <FontAwesomeIcon icon={faArrowRight} className="text-sm" />
+              </Link>
+            </div>
+          </section>
+
           <section className="bg-white rounded-2xl p-8 mb-16 shadow-lg">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-[#0b3d13] mb-4">Why Choose Sugarcane Bagasse?</h2>

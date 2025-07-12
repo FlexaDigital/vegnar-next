@@ -238,19 +238,14 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Font Awesome - Preload for performance */}
+        {/* Font Awesome */}
         <link
-          rel="preload"
+          rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-          as="style"
-          onLoad="this.onload=null;this.rel='stylesheet'"
+          integrity="sha512-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7x+qE9+lq6+Tz4pX8mRsvF+eQ2Lg3LrU9qD7oE7e/Jz9gn0JZ6jY2N0xQ=="
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
         />
-        <noscript>
-          <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-          />
-        </noscript>
 
         {/* Yandex Verification */}
         <meta name="yandex-verification" content="c904a809eacce6d1" />
