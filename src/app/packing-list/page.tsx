@@ -17,6 +17,10 @@ interface Product {
   pcs_per_carton: number;
   price_per_carton_inr: number;
   fob_price_per_carton_usd: number | null;
+  net_weight_kg: number;
+  length_m: number | null;
+  width_m: number | null;
+  height_m: number | null;
 }
 
 const products: Product[] = productsData;
@@ -131,7 +135,7 @@ export default function PackingListPage() {
                 </button>
                 <button
                   onClick={() => setShowQuoteForm(true)}
-                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 relative"
+                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#1a7a2b] hover:bg-[#0f5a1f] relative transition-colors"
                 >
                   <ShoppingCart className="h-4 w-4 mr-2" />
                   Quote Cart ({cart.length})
@@ -201,8 +205,8 @@ export default function PackingListPage() {
             </p>
           </div>
 
-          {/* Products Table */}
-          <div className="overflow-x-auto">
+          {/* Products Table - Desktop */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -246,7 +250,7 @@ export default function PackingListPage() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button
                         onClick={() => addToCart(product)}
-                        className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                        className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-[#1a7a2b] hover:bg-[#0f5a1f] transition-colors"
                       >
                         <Plus className="h-4 w-4 mr-1" />
                         Add
@@ -256,6 +260,50 @@ export default function PackingListPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Products Cards - Mobile */}
+          <div className="md:hidden space-y-4 p-4">
+            {filteredProducts.map((product) => (
+              <div key={product.item_code} className="bg-white border rounded-lg p-4 shadow-sm">
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex-1">
+                    <h3 className="font-medium text-gray-900">{product.product}</h3>
+                    <p className="text-sm text-gray-500">{product.item_code}</p>
+                    <p className="text-sm text-blue-600">{product.sub_category}</p>
+                  </div>
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-[#1a7a2b] hover:bg-[#0f5a1f] transition-colors"
+                  >
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add
+                  </button>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <span className="text-gray-500">Weight:</span>
+                    <span className="ml-1 font-medium">{product.product_weight_g}g</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Pcs/Pack:</span>
+                    <span className="ml-1 font-medium">{product.pcs_per_pack}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Packs/Carton:</span>
+                    <span className="ml-1 font-medium">{product.packs_per_carton}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Pcs/Carton:</span>
+                    <span className="ml-1 font-medium">{product.pcs_per_carton.toLocaleString()}</span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="text-gray-500">Net Weight:</span>
+                    <span className="ml-1 font-medium">{product.net_weight_kg} kg</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
 
           {filteredProducts.length === 0 && (
@@ -283,43 +331,102 @@ export default function PackingListPage() {
 
               {/* Cart Items */}
               <div className="mb-6">
-                <h3 className="text-lg font-semibold mb-4">Selected Products</h3>
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-semibold">Selected Products</h3>
+                  <button
+                    onClick={() => setShowQuoteForm(false)}
+                    className="bg-[#1a7a2b] hover:bg-[#0f5a1f] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                  >
+                    + Add More Products
+                  </button>
+                </div>
                 {cart.length === 0 ? (
                   <p className="text-gray-500">No products selected</p>
                 ) : (
-                  <div className="space-y-4">
-                    {cart.map((item) => (
-                      <div key={item.product.item_code} className="flex items-center justify-between p-4 border rounded-lg">
-                        <div className="flex-1">
-                          <h4 className="font-medium">{item.product.product}</h4>
-                          <p className="text-sm text-gray-500">{item.product.item_code}</p>
+                  <>
+                    <div className="space-y-4 mb-6">
+                      {cart.map((item) => (
+                        <div key={item.product.item_code} className="flex items-center justify-between p-4 border rounded-lg">
+                          <div className="flex-1">
+                            <h4 className="font-medium">{item.product.product}</h4>
+                            <p className="text-sm text-gray-500">{item.product.item_code}</p>
+                            <p className="text-sm text-green-600 font-medium">
+                              {item.unit === 'cartons' 
+                                ? `Total: ${(item.quantity * item.product.pcs_per_carton).toLocaleString()} pieces`
+                                : `≈ ${Math.ceil(item.quantity / item.product.pcs_per_carton)} cartons`
+                              }
+                            </p>
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <select
+                              value={item.unit}
+                              onChange={(e) => updateCartUnit(item.product.item_code, e.target.value as 'pieces' | 'cartons')}
+                              className="border rounded px-2 py-1"
+                            >
+                              <option value="pieces">Pieces</option>
+                              <option value="cartons">Cartons</option>
+                            </select>
+                            <input
+                              type="number"
+                              min="1"
+                              value={item.quantity}
+                              onChange={(e) => updateCartQuantity(item.product.item_code, parseInt(e.target.value))}
+                              className="border rounded px-2 py-1 w-20"
+                            />
+                            <button
+                              onClick={() => removeFromCart(item.product.item_code)}
+                              className="text-red-600 hover:text-red-800"
+                            >
+                              Remove
+                            </button>
+                          </div>
                         </div>
-                        <div className="flex items-center space-x-4">
-                          <select
-                            value={item.unit}
-                            onChange={(e) => updateCartUnit(item.product.item_code, e.target.value as 'pieces' | 'cartons')}
-                            className="border rounded px-2 py-1"
-                          >
-                            <option value="pieces">Pieces</option>
-                            <option value="cartons">Cartons</option>
-                          </select>
-                          <input
-                            type="number"
-                            min="1"
-                            value={item.quantity}
-                            onChange={(e) => updateCartQuantity(item.product.item_code, parseInt(e.target.value))}
-                            className="border rounded px-2 py-1 w-20"
-                          />
-                          <button
-                            onClick={() => removeFromCart(item.product.item_code)}
-                            className="text-red-600 hover:text-red-800"
-                          >
-                            Remove
-                          </button>
+                      ))}
+                    </div>
+                    
+                    {/* Totals */}
+                    <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                      <h4 className="font-semibold text-green-800 mb-3">Quote Summary</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div className="bg-white p-3 rounded border">
+                          <span className="text-gray-600">Total Pieces:</span>
+                          <div className="font-bold text-lg text-green-700">
+                            {cart.reduce((total, item) => {
+                              const pieces = item.unit === 'cartons' 
+                                ? item.quantity * item.product.pcs_per_carton
+                                : item.quantity;
+                              return total + pieces;
+                            }, 0).toLocaleString()}
+                          </div>
+                        </div>
+                        <div className="bg-white p-3 rounded border">
+                          <span className="text-gray-600">Total Weight:</span>
+                          <div className="font-bold text-lg text-green-700">
+                            {cart.reduce((total, item) => {
+                              const cartons = item.unit === 'cartons' 
+                                ? item.quantity 
+                                : Math.ceil(item.quantity / item.product.pcs_per_carton);
+                              return total + (cartons * item.product.net_weight_kg);
+                            }, 0).toFixed(1)} kg
+                          </div>
+                        </div>
+                        <div className="bg-white p-3 rounded border">
+                          <span className="text-gray-600">Total CBM:</span>
+                          <div className="font-bold text-lg text-green-700">
+                            {cart.reduce((total, item) => {
+                              const cartons = item.unit === 'cartons' 
+                                ? item.quantity 
+                                : Math.ceil(item.quantity / item.product.pcs_per_carton);
+                              const cbm = item.product.length_m && item.product.width_m && item.product.height_m
+                                ? item.product.length_m * item.product.width_m * item.product.height_m
+                                : 0;
+                              return total + (cartons * cbm);
+                            }, 0).toFixed(3)} m³
+                          </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  </>
                 )}
               </div>
 
@@ -357,7 +464,7 @@ export default function PackingListPage() {
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                    className="px-4 py-2 bg-[#1a7a2b] hover:bg-[#0f5a1f] text-white rounded-md transition-colors font-medium"
                   >
                     Request Quote
                   </button>
