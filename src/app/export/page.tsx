@@ -1,0 +1,354 @@
+import React from 'react';
+import Image from 'next/image';
+import { Metadata } from 'next';
+import { Globe, Award, Shield, Truck, CheckCircle, Users } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: "Global Sugarcane Bagasse Exporter | Premium Biodegradable Tableware Supplier - Vegnar Green",
+  description: "Leading sugarcane bagasse exporter from India to USA, UK, Germany & Europe. ISO certified biodegradable tableware supplier with international quality standards. Export-oriented manufacturing with global shipping.",
+  keywords: [
+    "sugarcane bagasse exporter India",
+    "sugarcane bagasse tableware supplier USA",
+    "sugarcane bagasse supplier UK",
+    "biodegradable tableware exporter Germany",
+    "bagasse products supplier Europe",
+    "international bagasse tableware supplier",
+    "export oriented sugarcane products",
+    "global biodegradable packaging supplier",
+    "ISO certified bagasse exporter",
+    "international quality bagasse products",
+    "eco-friendly tableware export India",
+    "sustainable packaging supplier worldwide",
+    "bagasse plates bowls export",
+    "compostable tableware international supplier",
+    "FDA approved bagasse products exporter"
+  ],
+  openGraph: {
+    title: "Global Sugarcane Bagasse Exporter | International Quality Standards",
+    description: "Premium biodegradable tableware exporter from India. Serving USA, UK, Germany & Europe with ISO certified, FDA approved bagasse products.",
+    url: "https://www.vegnar.com/export",
+    type: "website",
+    siteName: "Vegnar Green",
+    images: [
+      {
+        url: "https://www.vegnar.com/images/export-banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Vegnar Green Global Export Operations",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@VegnarGreens",
+    creator: "@VegnarGreens",
+    title: "Global Sugarcane Bagasse Exporter - Vegnar Green",
+    description: "Leading exporter of biodegradable bagasse tableware to USA, UK, Germany & Europe. ISO certified with international quality standards.",
+    images: ["https://www.vegnar.com/images/export-banner.jpg"],
+  },
+  alternates: {
+    canonical: "https://www.vegnar.com/export",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    'max-image-preview': 'large',
+    'max-video-preview': -1,
+    'max-snippet': -1,
+  },
+};
+
+export default function ExportPage() {
+  const exportMarkets = [
+    { country: "United States", flag: "🇺🇸" },
+    { country: "United Kingdom", flag: "🇬🇧" },
+    { country: "Germany", flag: "🇩🇪" },
+    { country: "France", flag: "🇫🇷" },
+    { country: "Netherlands", flag: "🇳🇱" },
+    { country: "Australia", flag: "🇦🇺" },
+    { country: "Canada", flag: "🇨🇦" },
+    { country: "Italy", flag: "🇮🇹" },
+    { country: "Spain", flag: "🇪🇸" },
+    { country: "Belgium", flag: "🇧🇪" },
+    { country: "Sweden", flag: "🇸🇪" },
+    { country: "Norway", flag: "🇳🇴" }
+  ];
+
+  const certifications = [
+    { name: "ISO 9001:2015", desc: "Quality Management" },
+    { name: "FDA Approved", desc: "Food Safety Standards" },
+    { name: "BRC Certified", desc: "Global Food Safety" },
+    { name: "HACCP", desc: "Hazard Analysis" },
+    { name: "SGS Tested", desc: "International Testing" },
+    { name: "CE Marking", desc: "European Conformity" }
+  ];
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-r from-green-800 to-green-600 text-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="flex justify-center mb-6">
+              <Globe className="h-16 w-16 text-green-200" />
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              Global Sugarcane Bagasse Exporter
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 max-w-4xl mx-auto">
+              Leading supplier of premium biodegradable tableware from India to USA, UK, Germany & Europe
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm">
+              <span className="bg-white/20 px-4 py-2 rounded-full">ISO 9001:2015 Certified</span>
+              <span className="bg-white/20 px-4 py-2 rounded-full">FDA Approved</span>
+              <span className="bg-white/20 px-4 py-2 rounded-full">Export to 25+ Countries</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Export Markets */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Global Presence</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Trusted sugarcane bagasse tableware supplier serving premium markets worldwide with consistent quality and reliable delivery
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {exportMarkets.map((market, index) => (
+              <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center">
+                <span className="text-6xl mb-4 block">{market.flag}</span>
+                <h3 className="font-semibold text-gray-900">{market.country}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quality Standards */}
+      <section className="py-16 relative">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-15"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">International Quality Standards</h2>
+              <p className="text-lg text-gray-600 mb-8">
+                As a leading sugarcane bagasse exporter from India, we maintain the highest international quality standards to serve global markets including USA, UK, Germany, and across Europe.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                {certifications.map((cert, index) => (
+                  <div key={index} className="flex items-center p-4 border rounded-lg">
+                    <Award className="h-8 w-8 text-green-600 mr-3" />
+                    <div>
+                      <h4 className="font-semibold text-sm">{cert.name}</h4>
+                      <p className="text-xs text-gray-600">{cert.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="bg-green-50 p-8 rounded-lg">
+              <h3 className="text-2xl font-bold text-green-800 mb-6">Export Capabilities</h3>
+              <div className="space-y-4">
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span>Monthly capacity: 15+ containers</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span>Lead time: 15-20 days</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span>Custom packaging & branding</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span>FOB, CIF, DDP terms available</span>
+                </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                  <span>24/7 export support team</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Global Brands Choose Vegnar Green</h2>
+            <p className="text-lg text-gray-600">
+              Your trusted partner for sustainable bagasse tableware export from India
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <Shield className="h-12 w-12 text-green-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-3">Quality Assurance</h3>
+              <p className="text-gray-600">
+                Rigorous quality control with international testing standards. Every shipment meets FDA, CE, and local regulatory requirements.
+              </p>
+            </div>
+            <div className="text-center">
+              <Truck className="h-12 w-12 text-green-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-3">Reliable Logistics</h3>
+              <p className="text-gray-600">
+                Seamless export operations with trusted shipping partners. On-time delivery to USA, UK, Germany, and Europe.
+              </p>
+            </div>
+            <div className="text-center">
+              <Users className="h-12 w-12 text-green-600 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-3">Dedicated Support</h3>
+              <p className="text-gray-600">
+                Experienced export team providing end-to-end support from order to delivery. Multi-language customer service.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SEO Content Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">Leading Sugarcane Bagasse Exporter from India</h2>
+              <div className="prose prose-lg text-gray-600">
+                <p className="mb-4">
+                  Vegnar Green stands as India's premier <strong>sugarcane bagasse exporter</strong>, specializing in biodegradable tableware supply to international markets. Our export-oriented manufacturing facility produces premium quality bagasse plates, bowls, containers, and meal trays that meet stringent international standards.
+                </p>
+                <p className="mb-4">
+                  As a trusted <strong>sugarcane bagasse tableware supplier in USA</strong>, we serve major distributors and retailers across North America with consistent quality and reliable delivery schedules. Our FDA-approved products comply with all US food safety regulations.
+                </p>
+                <p className="mb-4">
+                  Our presence as a <strong>sugarcane bagasse supplier UK</strong> has grown significantly, serving the British market's increasing demand for sustainable packaging solutions. We work closely with UK importers to ensure compliance with British standards and regulations.
+                </p>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">European Market Leadership</h3>
+              <div className="prose prose-lg text-gray-600">
+                <p className="mb-4">
+                  As a leading <strong>biodegradable tableware exporter Germany</strong>, we supply to major German distributors who value our commitment to environmental sustainability and product quality. Our CE-marked products meet all European Union standards.
+                </p>
+                <p className="mb-4">
+                  Our role as a <strong>bagasse products supplier Europe</strong> extends across multiple countries including France, Netherlands, Belgium, and Scandinavia. We understand the diverse regulatory requirements across European markets and ensure full compliance.
+                </p>
+                <p className="mb-4">
+                  With over 5 years of experience as an <strong>international bagasse tableware supplier</strong>, we have built strong relationships with importers, distributors, and end-users worldwide, establishing Vegnar Green as a reliable partner for sustainable packaging needs.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Product Range Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Export Product Range</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <h3 className="text-xl font-semibold mb-3">Bagasse Plates</h3>
+              <p className="text-gray-600">Round plates 6" to 12", compartment plates, microwave-safe, FDA approved for international export.</p>
+            </div>
+            <div className="text-center">
+              <h3 className="text-xl font-semibold mb-3">Bagasse Bowls</h3>
+              <p className="text-gray-600">Various sizes from 6oz to 32oz, perfect for soups, salads, and hot foods. Export quality with international certifications.</p>
+            </div>
+            <div className="text-center">
+              <h3 className="text-xl font-semibold mb-3">Takeaway Containers</h3>
+              <p className="text-gray-600">Clamshells, rectangular containers with lids, ideal for food delivery services across global markets.</p>
+            </div>
+            <div className="text-center">
+              <h3 className="text-xl font-semibold mb-3">Custom Solutions</h3>
+              <p className="text-gray-600">Private labeling, custom packaging, and branding solutions for international distributors and retailers.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              {
+                question: "What makes Vegnar Green a reliable sugarcane bagasse exporter from India?",
+                answer: "We are ISO 9001:2015 certified with FDA approval, maintaining consistent quality standards. Our export-oriented facility has a monthly capacity of 15+ containers with dedicated quality control teams ensuring every shipment meets international standards."
+              },
+              {
+                question: "Do you provide custom packaging for international markets?",
+                answer: "Yes, we offer private labeling, custom packaging designs, and branding solutions tailored for different international markets including USA, UK, Germany, and other European countries."
+              },
+              {
+                question: "What are your export terms and delivery options?",
+                answer: "We offer flexible terms including FOB, CIF, and DDP. Our experienced logistics team ensures timely delivery to major ports worldwide with complete documentation support for smooth customs clearance."
+              },
+              {
+                question: "Are your products certified for international markets?",
+                answer: "All our products are FDA approved for USA, CE marked for Europe, and comply with international food safety standards. We provide complete certification documentation with every export shipment."
+              }
+            ].map((faq, index) => (
+              <details key={index} className="border border-gray-200 rounded-lg">
+                <summary className="cursor-pointer p-4 font-semibold text-gray-900 hover:bg-gray-50">
+                  {faq.question}
+                </summary>
+                <div className="p-4 pt-0 text-gray-600">
+                  {faq.answer}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Partner CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Become Our Distribution Partner</h2>
+          <p className="text-xl text-gray-600 mb-8">
+            Join our global network of partners and distribute premium sustainable products in your region
+          </p>
+          <a
+            href="/partner"
+            className="inline-flex items-center bg-gradient-to-r from-[#1a7a2b] to-[#2d8f3f] text-white font-semibold rounded-lg px-8 py-4 hover:from-[#0f5a1f] hover:to-[#1a7a2b] transition-all duration-300 shadow-md hover:shadow-lg"
+          >
+            Become Our Partner
+          </a>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-green-600 text-white">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold mb-4">Partner with India's Leading Bagasse Exporter</h2>
+          <p className="text-xl mb-8">
+            Join 500+ international brands who trust Vegnar Green for their sustainable packaging needs
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/contact"
+              className="bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            >
+              Get Export Quote
+            </a>
+            <a
+              href="/quote"
+              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-colors"
+            >
+              Get Quote
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

@@ -81,6 +81,7 @@ const Header = ({ categories }: HeaderProps) => {
       name: "Sustainability",
       submenu: [{ name: "Eco Initiatives", link: "/sustainability/eco-initiatives" }],
     },
+    { name: "Export", link: "/export" },
     { name: "Eco-Talks", link: "/blog" },
     { name: "Contact", link: "/contact" },
   ];
@@ -198,8 +199,12 @@ const Header = ({ categories }: HeaderProps) => {
             >
               Become a Partner
             </Link>
-
-            
+            <Link
+              href="/quote"
+              className="bg-gradient-to-r from-[#1a7a2b] to-[#2d8f3f] text-white font-semibold rounded-full px-6 py-2 hover:from-[#0f5a1f] hover:to-[#1a7a2b] transition-all duration-300 shadow-md hover:shadow-lg text-sm"
+            >
+              Get Quote
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}

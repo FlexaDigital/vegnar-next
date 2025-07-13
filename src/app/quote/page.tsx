@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { Search, Filter, Download, ShoppingCart, Plus } from 'lucide-react';
+import { useState, useMemo, useEffect } from 'react';
+import { Search, Filter, Download, ShoppingCart, Plus, Check } from 'lucide-react';
 import productsData from '@/data/products.json';
+import Head from 'next/head';
 
 interface Product {
   item_code: string;
@@ -32,6 +33,7 @@ export default function PackingListPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [cart, setCart] = useState<{product: Product, quantity: number, unit: 'pieces' | 'cartons'}[]>([]);
   const [showQuoteForm, setShowQuoteForm] = useState(false);
+  const [showSampleForm, setShowSampleForm] = useState(false);
 
   const categories = [...new Set(products.map(p => p.category))];
   const subCategories = [...new Set(products.map(p => p.sub_category))];
@@ -114,16 +116,32 @@ export default function PackingListPage() {
     window.URL.revokeObjectURL(url);
   };
 
+  useEffect(() => {
+    document.title = "Get Quote - Sugarcane Bagasse Products | Biodegradable Tableware Pricing - Vegnar Green";
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Request instant quotes for premium sugarcane bagasse tableware. Compare prices, specifications, and get bulk pricing for biodegradable plates, bowls, containers.');
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <>
+      <Head>
+        <title>Get Quote - Sugarcane Bagasse Products | Biodegradable Tableware Pricing - Vegnar Green</title>
+        <meta name="description" content="Request instant quotes for premium sugarcane bagasse tableware. Compare prices, specifications, and get bulk pricing for biodegradable plates, bowls, containers." />
+        <meta name="keywords" content="sugarcane bagasse quote, biodegradable tableware pricing, bagasse products price list, eco-friendly tableware quote, bulk biodegradable plates pricing" />
+        <link rel="canonical" href="https://www.vegnar.com/quote" />
+      </Head>
+      <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-lg shadow-sm">
           {/* Header */}
           <div className="px-6 py-4 border-b border-gray-200">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Sugarcane Bagasse Products</h1>
-                <p className="mt-1 text-sm text-gray-500">Complete packing list with specifications</p>
+                <h1 className="text-2xl font-bold text-gray-900">Get Quote - Biodegradable Tableware</h1>
+                <p className="mt-1 text-sm text-gray-500">Premium sugarcane bagasse products with instant pricing and specifications</p>
               </div>
               <div className="mt-4 sm:mt-0 flex space-x-3">
                 <button
@@ -144,6 +162,12 @@ export default function PackingListPage() {
                       {cart.length}
                     </span>
                   )}
+                </button>
+                <button
+                  onClick={() => setShowSampleForm(true)}
+                  className="inline-flex items-center px-4 py-2 border border-[#1a7a2b] rounded-md shadow-sm text-sm font-medium text-[#1a7a2b] bg-white hover:bg-green-50 transition-colors"
+                >
+                  Request Sample
                 </button>
                 <button
                   onClick={exportToCSV}
@@ -248,13 +272,22 @@ export default function PackingListPage() {
                       {product.net_weight_kg} kg
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <button
-                        onClick={() => addToCart(product)}
-                        className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-[#1a7a2b] hover:bg-[#0f5a1f] transition-colors"
-                      >
-                        <Plus className="h-4 w-4 mr-1" />
-                        Add
-                      </button>
+                      {cart.some(item => item.product.item_code === product.item_code) ? (
+                        <button
+                          className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 cursor-default"
+                        >
+                          <Check className="h-4 w-4 mr-1" />
+                          Added
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => addToCart(product)}
+                          className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-[#1a7a2b] hover:bg-[#0f5a1f] transition-colors"
+                        >
+                          <Plus className="h-4 w-4 mr-1" />
+                          Add
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -272,13 +305,22 @@ export default function PackingListPage() {
                     <p className="text-sm text-gray-500">{product.item_code}</p>
                     <p className="text-sm text-blue-600">{product.sub_category}</p>
                   </div>
-                  <button
-                    onClick={() => addToCart(product)}
-                    className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-[#1a7a2b] hover:bg-[#0f5a1f] transition-colors"
-                  >
-                    <Plus className="h-4 w-4 mr-1" />
-                    Add
-                  </button>
+                  {cart.some(item => item.product.item_code === product.item_code) ? (
+                    <button
+                      className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 cursor-default"
+                    >
+                      <Check className="h-4 w-4 mr-1" />
+                      Added
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => addToCart(product)}
+                      className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-[#1a7a2b] hover:bg-[#0f5a1f] transition-colors"
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add
+                    </button>
+                  )}
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div>
@@ -446,12 +488,36 @@ export default function PackingListPage() {
                   </select>
                 </div>
                 <textarea placeholder="Address" className="border rounded px-3 py-2 w-full" rows={3} required></textarea>
-                <select className="border rounded px-3 py-2 w-full" required>
+                <select 
+                  className="border rounded px-3 py-2 w-full" 
+                  required
+                  onChange={(e) => {
+                    const deliveryTerms = e.target.value;
+                    const cifField = document.getElementById('cifPort') as HTMLInputElement;
+                    const ddpField = document.getElementById('ddpAddress') as HTMLTextAreaElement;
+                    if (cifField) cifField.style.display = deliveryTerms === 'CIF' ? 'block' : 'none';
+                    if (ddpField) ddpField.style.display = deliveryTerms === 'DDP' ? 'block' : 'none';
+                  }}
+                >
                   <option value="">Select Delivery Terms</option>
                   <option value="FOB">FOB (Free on Board)</option>
                   <option value="CIF">CIF (Cost, Insurance & Freight)</option>
                   <option value="DDP">DDP (Delivered Duty Paid)</option>
                 </select>
+                <input 
+                  id="cifPort"
+                  type="text" 
+                  placeholder="Port of Discharge" 
+                  className="border rounded px-3 py-2 w-full" 
+                  style={{display: 'none'}}
+                />
+                <textarea 
+                  id="ddpAddress"
+                  placeholder="Final Delivery Address" 
+                  className="border rounded px-3 py-2 w-full" 
+                  rows={3}
+                  style={{display: 'none'}}
+                ></textarea>
                 <textarea placeholder="Additional Requirements" className="border rounded px-3 py-2 w-full" rows={3}></textarea>
                 
                 <div className="flex justify-end space-x-4">
@@ -461,6 +527,13 @@ export default function PackingListPage() {
                     className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
                   >
                     Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowSampleForm(true)}
+                    className="px-4 py-2 border border-[#1a7a2b] text-[#1a7a2b] rounded-md hover:bg-green-50 transition-colors font-medium"
+                  >
+                    Request Sample
                   </button>
                   <button
                     type="submit"
@@ -475,5 +548,6 @@ export default function PackingListPage() {
         </div>
       )}
     </div>
+    </>
   );
 }
