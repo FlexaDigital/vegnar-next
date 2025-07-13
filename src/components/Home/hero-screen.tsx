@@ -145,17 +145,16 @@ const HeroSection = () => {
       ))}
 
       {/* Slide Dots */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 sm:gap-3 z-30">
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-30">
         {slides.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
-            className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-colors touch-manipulation ${
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors p-2 ${
               currentIndex === idx
                 ? "bg-vegnar-green"
                 : "bg-white bg-opacity-50"
             }`}
-            style={{ minHeight: '44px', minWidth: '44px', padding: '20px 20px' }}
             aria-label={`Go to slide ${idx + 1}`}
           />
         ))}
