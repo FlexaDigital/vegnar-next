@@ -11,6 +11,7 @@ import {
   faRecycle,
 } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import BecomePartnerSection from '@/components/BecomePartnerSection';
 
 // Add the icons to the library
 library.add(
@@ -444,6 +445,7 @@ export default function OurStory() {
           ))}
         </div>
       </section>
+      <BecomePartnerSection />
     </main>
   );
 }

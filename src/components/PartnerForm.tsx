@@ -211,42 +211,34 @@ export default function PartnerForm() {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     
-    // Get selected product interests
-    const interests = formData.getAll('interest');
     
-    // Create the payload
-    const formPayload = new FormData();
-    formPayload.append('Full Name', formData.get('fullname') as string);
-    formPayload.append('Company', formData.get('company') as string);
-    formPayload.append('Email', formData.get('email') as string);
-    formPayload.append('Country', formData.get('country') as string);
-    formPayload.append('Product Interests', interests.join(', '));
-    formPayload.append('Message', formData.get('message') as string);
-    
-    // Add form configuration
-    formPayload.append('_subject', 'New Partnership Inquiry - Vegnar Green');
-    formPayload.append('_template', 'table');
-    formPayload.append('_captcha', 'false');
-    formPayload.append('_replyto', formData.get('email') as string);
+    const payload = {
+      formType: 'PartnerForm',
+      'Full Name': formData.get('fullname') as string,
+      'Company Name': formData.get('company') as string,
+      'Email Address': formData.get('email') as string,
+      'Country': formData.get('country') as string,
+      'Business Type': formData.get('businessType') as string,
+      'Message': formData.get('message') as string
+    };
 
     try {
+      console.log('Sending payload:', payload);
       const response = await fetch(
-        "https://formsubmit.co/ajax/vegnargreens@gmail.com",
+        "https://script.google.com/macros/s/AKfycbys6WK8uBmZQM2vP5KMOu16UWd1qwsUbBmdvp9qxeioPb3B6F2mSpyai2pT1PJYQsZQJQ/exec",
         {
           method: "POST",
+          mode: "no-cors",
           headers: {
-            'Accept': 'application/json',
+            "Content-Type": "application/json",
           },
-          body: formPayload,
+          body: JSON.stringify(payload),
         }
       );
 
-      if (response.ok) {
-        setSubmitStatus('success');
-        form.reset();
-      } else {
-        setSubmitStatus('error');
-      }
+      // With no-cors, we can't read the response, so assume success
+      setSubmitStatus('success');
+      form.reset();
     } catch (error) {
       setSubmitStatus('error');
       console.error('Form submission error:', error);
@@ -359,21 +351,22 @@ export default function PartnerForm() {
           </div>
           <fieldset className="space-y-3">
             <legend className="font-medium text-[#1a254f]">
-              Product Interest (Select all that apply)
+              Business Type*
             </legend>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-[#1a254f]">
               {[
-                { value: 'bagasse tableware', label: 'Bagasse Tableware' },
-                { value: 'bio-bags', label: 'Bio  Bags' },
-                { value: 'compostable-cutlery', label: 'Compostable Cutlery' },
-                { value: 'areca palm leaf tableware', label: 'arecapalm leaf tableware' }
+                { value: 'importer', label: 'Importer' },
+                { value: 'distributor', label: 'Distributor' },
+                { value: 'wholesaler', label: 'Wholesaler' },
+                { value: 'retailer', label: 'Retailer' }
               ].map((item) => (
                 <label key={item.value} className="inline-flex items-center space-x-2">
                   <input
-                    type="checkbox"
-                    name="interest"
+                    type="radio"
+                    name="businessType"
                     value={item.value}
-                    className="rounded border-gray-300 text-[#0a6a52] focus:ring-[#0a6a52]"
+                    required
+                    className="border-gray-300 text-[#0a6a52] focus:ring-[#0a6a52]"
                   />
                   <span>{item.label}</span>
                 </label>

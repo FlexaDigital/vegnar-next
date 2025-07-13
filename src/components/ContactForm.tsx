@@ -92,35 +92,43 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
     formPayload.append('_captcha', 'false');
     formPayload.append('_replyto', formValues.email);
 
+    // Prepare data for Google Apps Script
+    const payload = {
+      formType: 'ContactForm',
+      'Full Name': formValues.fullname,
+      'Email Address': formValues.email,
+      'Phone Number': `${selectedDialCode} ${formValues.phone}`,
+      'Company Name': formValues.company,
+      'Country': formValues.country,
+      'Message': formValues.message
+    };
+
     try {
       const response = await fetch(
-        "https://formsubmit.co/ajax/vegnarglobal@gmail.com",
+        "https://script.google.com/macros/s/AKfycbys6WK8uBmZQM2vP5KMOu16UWd1qwsUbBmdvp9qxeioPb3B6F2mSpyai2pT1PJYQsZQJQ/exec",
         {
           method: "POST",
+          mode: "no-cors",
           headers: {
-            'Accept': 'application/json',
+            "Content-Type": "application/json",
           },
-          body: formPayload,
+          body: JSON.stringify(payload),
         }
       );
 
-      if (response.ok) {
-        setFormSubmitted(true);
-        setFormValues({
-          fullname: "",
-          email: "",
-          phone: "",
-          company: "",
-          country: "India",
-          message: "",
-        });
-        
-        // Call the onSubmit prop if provided
-        if (onSubmit) {
-          await onSubmit(formValues, selectedDialCode);
-        }
-      } else {
-        setFormError("Failed to send message. Please try again later.");
+      // With no-cors, assume success
+      setFormSubmitted(true);
+      setFormValues({
+        fullname: "",
+        email: "",
+        phone: "",
+        company: "",
+        country: "India",
+        message: "",
+      });
+      
+      if (onSubmit) {
+        await onSubmit(formValues, selectedDialCode);
       }
     } catch (error) {
       console.error('Form submission error:', error);

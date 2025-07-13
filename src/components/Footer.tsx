@@ -16,27 +16,27 @@ const Footer: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const formData = new FormData();
-    formData.append("your-email", email);
+    const payload = {
+      formType: 'NewsletterForm',
+      'Email Address': email
+    };
 
     try {
       const response = await fetch(
-        "https://cms.vegnar.com/wp-json/contact-form-7/v1/contact-forms/127/feedback",
+        "https://script.google.com/macros/s/AKfycbys6WK8uBmZQM2vP5KMOu16UWd1qwsUbBmdvp9qxeioPb3B6F2mSpyai2pT1PJYQsZQJQ/exec",
         {
           method: "POST",
-          body: formData,
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         }
       );
 
-      const result = await response.json();
-
-      if (result.status === "mail_sent") {
-        setStatus("Subscribed successfully!");
-        setEmail("");
-      } else {
-        console.error(result);
-        setStatus("Subscription failed. Please try again.");
-      }
+      // With no-cors, assume success
+      setStatus("Subscribed successfully!");
+      setEmail("");
     } catch (error) {
       console.error("Error during form submission:", error);
       setStatus("An error occurred. Please try again.");

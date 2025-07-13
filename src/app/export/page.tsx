@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { Globe, Award, Shield, Truck, CheckCircle, Users } from 'lucide-react';
+import BecomePartnerSection from '@/components/BecomePartnerSection';
 
 export const metadata: Metadata = {
   title: "Global Sugarcane Bagasse Exporter | Premium Biodegradable Tableware Supplier - Vegnar Green",
@@ -310,45 +311,7 @@ export default function ExportPage() {
         </div>
       </section>
 
-      {/* Partner CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Become Our Distribution Partner</h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Join our global network of partners and distribute premium sustainable products in your region
-          </p>
-          <a
-            href="/partner"
-            className="inline-flex items-center bg-gradient-to-r from-[#1a7a2b] to-[#2d8f3f] text-white font-semibold rounded-lg px-8 py-4 hover:from-[#0f5a1f] hover:to-[#1a7a2b] transition-all duration-300 shadow-md hover:shadow-lg"
-          >
-            Become Our Partner
-          </a>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-green-600 text-white">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-4">Partner with India's Leading Bagasse Exporter</h2>
-          <p className="text-xl mb-8">
-            Join 500+ international brands who trust Vegnar Green for their sustainable packaging needs
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/contact"
-              className="bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-            >
-              Get Export Quote
-            </a>
-            <a
-              href="/quote"
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-colors"
-            >
-              Get Quote
-            </a>
-          </div>
-        </div>
-      </section>
+      <BecomePartnerSection />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { Metadata, Viewport } from "next"; // Import Metadata and Viewport types
 import Image from "next/image"; // Import Image component for optimized images
 import Link from "next/link";
 import CertificationsSection from "@/components/CertificationsSection";
-import ContactSection from "@/components/ContactSection";
+
 import CustomizationSection from "@/components/CustomizationSection";
 import { FaCheckCircle } from "react-icons/fa";
 import {
@@ -17,6 +17,7 @@ import { IconType } from "react-icons";
 import ProductCategories from "@/components/ProductCategories";
 import BrochureSection from "@/components/BrochureSection";
 import ProductSection from "@/components/ProductSection";
+import BecomePartnerSection from "@/components/BecomePartnerSection";
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -193,10 +194,7 @@ export default function Home() {
     <CertificationsSection/>
     <BrochureSection />
     <CustomizationSection />
-    <ContactSection />
-
-   
-      
+    <BecomePartnerSection />
     </>
   );
 }

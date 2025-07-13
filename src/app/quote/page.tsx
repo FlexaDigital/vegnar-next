@@ -34,6 +34,8 @@ export default function PackingListPage() {
   const [cart, setCart] = useState<{product: Product, quantity: number, unit: 'pieces' | 'cartons'}[]>([]);
   const [showQuoteForm, setShowQuoteForm] = useState(false);
   const [showSampleForm, setShowSampleForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const categories = [...new Set(products.map(p => p.category))];
   const subCategories = [...new Set(products.map(p => p.sub_category))];
@@ -82,6 +84,157 @@ export default function PackingListPage() {
         ? {...item, unit}
         : item
     ));
+  };
+
+  const handleQuoteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError(false);
+
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const payload = {
+      formType: 'QuoteCartForm',
+      'Company Name': formData.get('companyName'),
+      'Email': formData.get('email'),
+      'Mobile Number': formData.get('mobile'),
+      'Country': formData.get('country'),
+      'Address': formData.get('address'),
+      'Delivery Terms': formData.get('deliveryTerms'),
+      'Port of Discharge': formData.get('portOfDischarge'),
+      'Final Delivery Address': formData.get('finalDeliveryAddress'),
+      'Additional Requirements': formData.get('additionalRequirements'),
+      'Products Count': cart.length,
+      ...cart.reduce((acc, item, index) => {
+        const productNum = index + 1;
+        acc[`Product ${productNum} Name`] = item.product.product;
+        acc[`Product ${productNum} Code`] = item.product.item_code;
+        acc[`Product ${productNum} Quantity`] = item.quantity;
+        acc[`Product ${productNum} Unit`] = item.unit;
+        acc[`Product ${productNum} Weight`] = item.product.product_weight_g + 'g';
+        acc[`Product ${productNum} Pcs Per Carton`] = item.product.pcs_per_carton;
+        return acc;
+      }, {} as Record<string, any>),
+      'Total Pieces': cart.reduce((total, item) => {
+        const pieces = item.unit === 'cartons' 
+          ? item.quantity * item.product.pcs_per_carton
+          : item.quantity;
+        return total + pieces;
+      }, 0),
+      'Total Weight': cart.reduce((total, item) => {
+        const cartons = item.unit === 'cartons' 
+          ? item.quantity 
+          : Math.ceil(item.quantity / item.product.pcs_per_carton);
+        return total + (cartons * item.product.net_weight_kg);
+      }, 0).toFixed(1) + ' kg',
+      'Total CBM': cart.reduce((total, item) => {
+        const cartons = item.unit === 'cartons' 
+          ? item.quantity 
+          : Math.ceil(item.quantity / item.product.pcs_per_carton);
+        const cbm = item.product.length_m && item.product.width_m && item.product.height_m
+          ? item.product.length_m * item.product.width_m * item.product.height_m
+          : 0;
+        return total + (cartons * cbm);
+      }, 0).toFixed(3) + ' m³'
+    };
+
+    try {
+      const response = await fetch(
+        "https://script.google.com/macros/s/AKfycbys6WK8uBmZQM2vP5KMOu16UWd1qwsUbBmdvp9qxeioPb3B6F2mSpyai2pT1PJYQsZQJQ/exec",
+        {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      // Assume success with no-cors
+      alert('Quote request submitted successfully!');
+      setShowQuoteForm(false);
+      form.reset();
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const downloadPDF = () => {
+    const form = document.querySelector('form') as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    const content = `
+VEGNAR GREEN - QUOTE REQUEST
+============================
+
+CUSTOMER INFORMATION:
+--------------------
+Company Name: ${formData.get('companyName') || '[Not filled]'}
+Email: ${formData.get('email') || '[Not filled]'}
+Mobile Number: ${formData.get('mobile') || '[Not filled]'}
+Country: ${formData.get('country') || '[Not filled]'}
+Address: ${formData.get('address') || '[Not filled]'}
+Delivery Terms: ${formData.get('deliveryTerms') || '[Not filled]'}
+Port of Discharge: ${formData.get('portOfDischarge') || 'N/A'}
+Final Delivery Address: ${formData.get('finalDeliveryAddress') || 'N/A'}
+Additional Requirements: ${formData.get('additionalRequirements') || 'None'}
+
+PRODUCT DETAILS:
+================
+${'Product Name'.padEnd(25)} | ${'Item Code'.padEnd(12)} | ${'Qty'.padEnd(6)} | ${'Unit'.padEnd(8)} | ${'Weight'.padEnd(8)} | ${'Pcs/Carton'.padEnd(12)} | ${'Total Pcs'.padEnd(10)}
+${'-'.repeat(95)}
+${cart.map(item => {
+  const totalPcs = item.unit === 'cartons' 
+    ? (item.quantity * item.product.pcs_per_carton).toLocaleString()
+    : item.quantity.toLocaleString();
+  return `${item.product.product.padEnd(25)} | ${item.product.item_code.padEnd(12)} | ${item.quantity.toString().padEnd(6)} | ${item.unit.padEnd(8)} | ${(item.product.product_weight_g + 'g').padEnd(8)} | ${item.product.pcs_per_carton.toString().padEnd(12)} | ${totalPcs.padEnd(10)}`;
+}).join('\n')}
+
+SUMMARY:
+========
+Total Products: ${cart.length}
+Total Pieces: ${cart.reduce((total, item) => {
+  const pieces = item.unit === 'cartons' 
+    ? item.quantity * item.product.pcs_per_carton
+    : item.quantity;
+  return total + pieces;
+}, 0).toLocaleString()}
+Total Weight: ${cart.reduce((total, item) => {
+  const cartons = item.unit === 'cartons' 
+    ? item.quantity 
+    : Math.ceil(item.quantity / item.product.pcs_per_carton);
+  return total + (cartons * item.product.net_weight_kg);
+}, 0).toFixed(1)} kg
+Total CBM: ${cart.reduce((total, item) => {
+  const cartons = item.unit === 'cartons' 
+    ? item.quantity 
+    : Math.ceil(item.quantity / item.product.pcs_per_carton);
+  const cbm = item.product.length_m && item.product.width_m && item.product.height_m
+    ? item.product.length_m * item.product.width_m * item.product.height_m
+    : 0;
+  return total + (cartons * cbm);
+}, 0).toFixed(3)} m³
+
+INSTRUCTIONS:
+=============
+Please send this complete quote request to: connect@vegnar.com
+Include this file as attachment in your email.
+
+Generated on: ${new Date().toLocaleString()}
+    `;
+    
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'vegnar-complete-quote-request.txt';
+    a.click();
+    window.URL.revokeObjectURL(url);
   };
 
   const exportToCSV = () => {
@@ -163,12 +316,7 @@ export default function PackingListPage() {
                     </span>
                   )}
                 </button>
-                <button
-                  onClick={() => setShowSampleForm(true)}
-                  className="inline-flex items-center px-4 py-2 border border-[#1a7a2b] rounded-md shadow-sm text-sm font-medium text-[#1a7a2b] bg-white hover:bg-green-50 transition-colors"
-                >
-                  Request Sample
-                </button>
+
                 <button
                   onClick={exportToCSV}
                   className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
@@ -473,12 +621,12 @@ export default function PackingListPage() {
               </div>
 
               {/* Quote Form */}
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleQuoteSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input type="text" placeholder="Company Name" className="border rounded px-3 py-2" required />
-                  <input type="email" placeholder="Email" className="border rounded px-3 py-2" required />
-                  <input type="text" placeholder="Mobile Number" className="border rounded px-3 py-2" required />
-                  <select className="border rounded px-3 py-2" required>
+                  <input name="companyName" type="text" placeholder="Company Name" className="border rounded px-3 py-2" required />
+                  <input name="email" type="email" placeholder="Email" className="border rounded px-3 py-2" required />
+                  <input name="mobile" type="text" placeholder="Mobile Number" className="border rounded px-3 py-2" required />
+                  <select name="country" className="border rounded px-3 py-2" required>
                     <option value="">Select Country</option>
                     <option value="US">United States</option>
                     <option value="UK">United Kingdom</option>
@@ -487,8 +635,9 @@ export default function PackingListPage() {
                     <option value="FR">France</option>
                   </select>
                 </div>
-                <textarea placeholder="Address" className="border rounded px-3 py-2 w-full" rows={3} required></textarea>
+                <textarea name="address" placeholder="Address" className="border rounded px-3 py-2 w-full" rows={3} required></textarea>
                 <select 
+                  name="deliveryTerms"
                   className="border rounded px-3 py-2 w-full" 
                   required
                   onChange={(e) => {
@@ -506,6 +655,7 @@ export default function PackingListPage() {
                 </select>
                 <input 
                   id="cifPort"
+                  name="portOfDischarge"
                   type="text" 
                   placeholder="Port of Discharge" 
                   className="border rounded px-3 py-2 w-full" 
@@ -513,12 +663,28 @@ export default function PackingListPage() {
                 />
                 <textarea 
                   id="ddpAddress"
+                  name="finalDeliveryAddress"
                   placeholder="Final Delivery Address" 
                   className="border rounded px-3 py-2 w-full" 
                   rows={3}
                   style={{display: 'none'}}
                 ></textarea>
-                <textarea placeholder="Additional Requirements" className="border rounded px-3 py-2 w-full" rows={3}></textarea>
+                <textarea name="additionalRequirements" placeholder="Additional Requirements" className="border rounded px-3 py-2 w-full" rows={3}></textarea>
+                
+                {submitError && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-red-800 mb-2">Technical Error</h4>
+                    <p className="text-red-700 text-sm mb-3">
+                      Please mail us your requirements directly:
+                    </p>
+                    <div className="bg-white p-3 rounded border">
+                      <p className="text-sm font-medium">Email: connect@vegnar.com</p>
+                      <p className="text-xs text-gray-600 mt-1">
+                        Add products to cart, fill the form, and download PDF to send us your requirements.
+                      </p>
+                    </div>
+                  </div>
+                )}
                 
                 <div className="flex justify-end space-x-4">
                   <button
@@ -530,16 +696,17 @@ export default function PackingListPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setShowSampleForm(true)}
-                    className="px-4 py-2 border border-[#1a7a2b] text-[#1a7a2b] rounded-md hover:bg-green-50 transition-colors font-medium"
+                    onClick={downloadPDF}
+                    className="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition-colors font-medium"
                   >
-                    Request Sample
+                    Download PDF
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-[#1a7a2b] hover:bg-[#0f5a1f] text-white rounded-md transition-colors font-medium"
+                    disabled={isSubmitting}
+                    className="px-4 py-2 bg-[#1a7a2b] hover:bg-[#0f5a1f] text-white rounded-md transition-colors font-medium disabled:opacity-50"
                   >
-                    Request Quote
+                    {isSubmitting ? 'Submitting...' : 'Request Quote'}
                   </button>
                 </div>
               </form>

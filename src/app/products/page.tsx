@@ -199,8 +199,10 @@ export default function ProductsPage() {
 
           <div className="space-y-16">
             <CustomizationSection />
-            <BecomePartnerSection />
           </div>
+        </div>
+      </div>
+      <BecomePartnerSection />
         </div>
       </div>
     </div>
