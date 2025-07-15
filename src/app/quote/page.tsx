@@ -214,9 +214,10 @@ Total CBM: ${cart.reduce((total, item) => {
   const cartons = item.unit === 'cartons' 
     ? item.quantity 
     : Math.ceil(item.quantity / item.product.pcs_per_carton);
-  const cbm = item.product.length_m && item.product.width_m && item.product.height_m
+  const cbm = (item.product.length_m && item.product.width_m && item.product.height_m && 
+              item.product.length_m > 0 && item.product.width_m > 0 && item.product.height_m > 0)
     ? item.product.length_m * item.product.width_m * item.product.height_m
-    : 0;
+    : 0.001;
   return total + (cartons * cbm);
 }, 0).toFixed(3)} m³
 
@@ -607,9 +608,10 @@ Generated on: ${new Date().toLocaleString()}
                               const cartons = item.unit === 'cartons' 
                                 ? item.quantity 
                                 : Math.ceil(item.quantity / item.product.pcs_per_carton);
-                              const cbm = item.product.length_m && item.product.width_m && item.product.height_m
+                              const cbm = (item.product.length_m && item.product.width_m && item.product.height_m && 
+                                          item.product.length_m > 0 && item.product.width_m > 0 && item.product.height_m > 0)
                                 ? item.product.length_m * item.product.width_m * item.product.height_m
-                                : 0;
+                                : 0.001;
                               return total + (cartons * cbm);
                             }, 0).toFixed(3)} m³
                           </div>
