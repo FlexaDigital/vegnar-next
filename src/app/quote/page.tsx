@@ -36,13 +36,15 @@ export default function PackingListPage() {
   const [showSampleForm, setShowSampleForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 10;
 
   const categories = [...new Set(products.map(p => p.category))];
   const subCategories = [...new Set(products.map(p => p.sub_category))];
 
 
   const filteredProducts = useMemo(() => {
-    return products.filter(product => {
+    const filtered = products.filter(product => {
       const matchesSearch = product.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            product.item_code.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = !selectedCategory || product.category === selectedCategory;
@@ -51,7 +53,18 @@ export default function PackingListPage() {
       
       return matchesSearch && matchesCategory && matchesSubCategory;
     });
+    setCurrentPage(1); // Reset to first page when filters change
+    return filtered;
   }, [searchTerm, selectedCategory, selectedSubCategory]);
+
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const currentProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const addToCart = (product: Product) => {
     const existingItem = cart.find(item => item.product.item_code === product.item_code);
@@ -374,7 +387,7 @@ Generated on: ${new Date().toLocaleString()}
           {/* Results Count */}
           <div className="px-6 py-3 bg-gray-50 border-b border-gray-200">
             <p className="text-sm text-gray-600">
-              Showing {filteredProducts.length} of {products.length} products
+              Showing {startIndex + 1}-{Math.min(startIndex + productsPerPage, filteredProducts.length)} of {filteredProducts.length} products
             </p>
           </div>
 
@@ -394,7 +407,7 @@ Generated on: ${new Date().toLocaleString()}
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredProducts.map((product) => (
+                {currentProducts.map((product) => (
                   <tr key={product.item_code} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
@@ -446,7 +459,7 @@ Generated on: ${new Date().toLocaleString()}
 
           {/* Products Cards - Mobile */}
           <div className="md:hidden space-y-4 p-4">
-            {filteredProducts.map((product) => (
+            {currentProducts.map((product) => (
               <div key={product.item_code} className="bg-white border rounded-lg p-4 shadow-sm">
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex-1">
@@ -500,6 +513,64 @@ Generated on: ${new Date().toLocaleString()}
           {filteredProducts.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500">No products found matching your criteria.</p>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="px-6 py-4 border-t border-gray-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Previous
+                  </button>
+                  
+                  <div className="flex space-x-1">
+                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                      let pageNum;
+                      if (totalPages <= 5) {
+                        pageNum = i + 1;
+                      } else if (currentPage <= 3) {
+                        pageNum = i + 1;
+                      } else if (currentPage >= totalPages - 2) {
+                        pageNum = totalPages - 4 + i;
+                      } else {
+                        pageNum = currentPage - 2 + i;
+                      }
+                      
+                      return (
+                        <button
+                          key={pageNum}
+                          onClick={() => handlePageChange(pageNum)}
+                          className={`px-3 py-2 text-sm font-medium rounded-md ${
+                            currentPage === pageNum
+                              ? 'bg-green-600 text-white'
+                              : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Next
+                  </button>
+                </div>
+                
+                <div className="text-sm text-gray-700">
+                  Page {currentPage} of {totalPages}
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -709,6 +780,107 @@ Generated on: ${new Date().toLocaleString()}
                     className="px-4 py-2 bg-[#1a7a2b] hover:bg-[#0f5a1f] text-white rounded-md transition-colors font-medium disabled:opacity-50"
                   >
                     {isSubmitting ? 'Submitting...' : 'Request Quote'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Free Samples CTA Card */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-lg shadow-lg p-8 text-white">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold mb-4">Need to Test Quality First?</h2>
+            <p className="text-xl mb-6 text-green-100">
+              Request free samples of our premium sugarcane bagasse products before placing bulk orders
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <button
+                onClick={() => setShowSampleForm(true)}
+                className="bg-white text-green-700 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors"
+              >
+                Request Free Samples
+              </button>
+              <span className="text-green-200 text-sm">
+                ✓ Free shipping worldwide • ✓ 3-5 business days delivery
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Sample Request Form Modal */}
+      {showSampleForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-md w-full">
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">Request Free Samples</h2>
+                <button
+                  onClick={() => setShowSampleForm(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  ×
+                </button>
+              </div>
+              <form className="space-y-4" onSubmit={async (e) => {
+                e.preventDefault();
+                const form = e.target as HTMLFormElement;
+                const formData = new FormData(form);
+                
+                try {
+                  await fetch(
+                    "https://script.google.com/macros/s/AKfycbys6WK8uBmZQM2vP5KMOu16UWd1qwsUbBmdvp9qxeioPb3B6F2mSpyai2pT1PJYQsZQJQ/exec",
+                    {
+                      method: "POST",
+                      mode: "no-cors",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        formType: 'SampleRequest',
+                        'Company Name': formData.get('companyName'),
+                        'Email': formData.get('email'),
+                        'Mobile Number': formData.get('mobile'),
+                        'Country': formData.get('country'),
+                        'Address': formData.get('address'),
+                        'Products Interest': formData.get('products')
+                      })
+                    }
+                  );
+                  alert('Sample request submitted successfully!');
+                  setShowSampleForm(false);
+                  form.reset();
+                } catch (error) {
+                  alert('Please email us at connect@vegnar.com for sample requests.');
+                }
+              }}>
+                <input name="companyName" type="text" placeholder="Company Name" className="border rounded px-3 py-2 w-full" required />
+                <input name="email" type="email" placeholder="Email" className="border rounded px-3 py-2 w-full" required />
+                <input name="mobile" type="text" placeholder="Mobile Number" className="border rounded px-3 py-2 w-full" required />
+                <select name="country" className="border rounded px-3 py-2 w-full" required>
+                  <option value="">Select Country</option>
+                  <option value="US">United States</option>
+                  <option value="UK">United Kingdom</option>
+                  <option value="IN">India</option>
+                  <option value="DE">Germany</option>
+                  <option value="FR">France</option>
+                </select>
+                <textarea name="address" placeholder="Shipping Address" className="border rounded px-3 py-2 w-full" rows={3} required></textarea>
+                <textarea name="products" placeholder="Which products are you interested in?" className="border rounded px-3 py-2 w-full" rows={2}></textarea>
+                <div className="flex justify-end space-x-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowSampleForm(false)}
+                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors font-medium"
+                  >
+                    Request Samples
                   </button>
                 </div>
               </form>
