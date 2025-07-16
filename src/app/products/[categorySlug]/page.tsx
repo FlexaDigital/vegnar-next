@@ -169,11 +169,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (categorySlug === 'bagasse-products') {
     return {
-      title: 'Sugarcane Bagasse Tableware | Vegnar Green',
-      description:
-        "Premium biodegradable tableware made from sugarcane bagasse. Explore our eco-friendly plates, bowls, trays, and containers - perfect for restaurants and sustainable packaging needs.",
-      keywords:
-        'sugarcane bagasse products, bagasse tableware, biodegradable plates, compostable bowls, eco-friendly cutlery, bagasse compartment plates, round bagasse plates, bagasse trays, sugarcane fiber lids, disposable eco tableware, sustainable packaging, bagasse clamshells, bagasse lunch trays, bagasse soup bowls, biodegradable food containers, round eco plates, square bagasse plates, eco lids for containers, sugarcane takeout boxes, disposable party plates, natural fiber cutlery, plant-based tableware, compostable lunch boxes, bagasse food trays, molded fiber tableware, bagasse dinnerware, eco plates and bowls, biodegradable tableware manufacturer, eco-friendly food packaging, bagasse cups and lids, 3 compartment bagasse plates, 5 compartment biodegradable tray, sustainable restaurant supplies, bulk eco plates and bowls, export quality bagasse plates, bagasse tableware exporter, FSC certified tableware, disposable eco lids, microwave safe bagasse products, plastic-free food packaging',
+      title: 'Vegnar Bagasse Products - Sugarcane Bagasse Tableware | Vegnar Greens',
+      description: 'Premium Vegnar bagasse products made from sugarcane bagasse. Complete range of biodegradable tableware including plates, bowls, clamshells & cups from Vegnar Greens.',
+      keywords: 'Vegnar bagasse products, Vegnar Greens tableware, sugarcane bagasse products, biodegradable tableware, eco-friendly packaging, compostable tableware, sustainable products, Vegnar plates, Vegnar bowls, Vegnar clamshells, Vegnar cups, bagasse tableware manufacturer, wholesale bagasse products, bulk biodegradable tableware',
       openGraph: {
         title: 'Sugarcane Bagasse Tableware - Compostable Plates, Bowls & Cutlery | Vegnar',
         description:
@@ -188,13 +186,136 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       authors: [{ name: 'Vegnar Greens' }],
       publisher: 'Vegnar Greens',
     };
+  } else if (categorySlug === 'plates') {
+    return {
+      title: 'Vegnar Plates - Sugarcane Bagasse Plates | Vegnar Greens',
+      description: 'Premium sugarcane bagasse plates by Vegnar Greens. Biodegradable bagasse plates including round plates, compartment plates & square plates for restaurants.',
+      keywords: 'Vegnar plates, Vegnar Greens plates, Vegnar round plates, Vegnar compartment plates, sugarcane bagasse plates, biodegradable plates, eco-friendly plates, compostable plates, restaurant plates, catering plates, disposable plates, microwave safe plates, wholesale plates, bulk plates, plate manufacturer',
+      openGraph: {
+        title: 'Vegnar Plates - Premium Sugarcane Bagasse Plates | Vegnar Greens',
+        description: 'Discover Vegnar plates made from sugarcane bagasse. Perfect eco-friendly solution for restaurants and food service businesses.',
+        url: 'https://vegnar.com/products/plates',
+        type: 'website',
+      },
+      alternates: { canonical: 'https://vegnar.com/products/plates' },
+      robots: 'index, follow',
+      authors: [{ name: 'Vegnar Greens' }],
+      publisher: 'Vegnar Greens',
+    };
+  } else if (categorySlug === 'cups') {
+    return {
+      title: 'Vegnar Cups - Sugarcane Bagasse Cups | Vegnar Greens',
+      description: 'Premium sugarcane bagasse cups by Vegnar Greens. Biodegradable bagasse cups for hot & cold beverages. Microwave safe compostable cups.',
+      keywords: 'Vegnar cups, Vegnar Greens cups, Vegnar bagasse cups, sugarcane bagasse cups, biodegradable cups, eco-friendly cups, compostable cups, disposable cups, coffee cups, tea cups, beverage cups, microwave safe cups, wholesale cups, bulk cups, cup manufacturer',
+      openGraph: {
+        title: 'Vegnar Cups - Premium Beverage Cups | Vegnar Greens',
+        description: 'Discover Vegnar cups made from sugarcane bagasse. Perfect for hot and cold beverages.',
+        url: 'https://vegnar.com/products/cups',
+        type: 'website',
+      },
+      alternates: { canonical: 'https://vegnar.com/products/cups' },
+      robots: 'index, follow',
+      authors: [{ name: 'Vegnar Greens' }],
+      publisher: 'Vegnar Greens',
+    };
+  } else if (categorySlug === 'wooden-cutlery') {
+    return {
+      title: 'Vegnar Wooden Cutlery - Eco-Friendly Cutlery | Vegnar Greens',
+      description: 'Premium wooden cutlery by Vegnar Greens. Biodegradable wooden spoons, forks & knives. Eco-friendly alternative to plastic cutlery.',
+      keywords: 'Vegnar wooden cutlery, Vegnar Greens cutlery, wooden spoons, wooden forks, wooden knives, biodegradable cutlery, eco-friendly cutlery, sustainable cutlery, disposable wooden cutlery, restaurant cutlery, catering cutlery, wholesale cutlery, bulk cutlery, cutlery manufacturer',
+      openGraph: {
+        title: 'Vegnar Wooden Cutlery - Sustainable Cutlery | Vegnar Greens',
+        description: 'Discover Vegnar wooden cutlery made from sustainable wood. Perfect eco-friendly alternative to plastic.',
+        url: 'https://vegnar.com/products/wooden-cutlery',
+        type: 'website',
+      },
+      alternates: { canonical: 'https://vegnar.com/products/wooden-cutlery' },
+      robots: 'index, follow',
+      authors: [{ name: 'Vegnar Greens' }],
+      publisher: 'Vegnar Greens',
+    };
+  } else if (categorySlug === 'trays') {
+    return {
+      title: 'Vegnar Trays - Sugarcane Bagasse Trays | Vegnar Greens',
+      description: 'Premium sugarcane bagasse trays by Vegnar Greens. Biodegradable bagasse trays including compartment trays & meal trays for food service.',
+      keywords: 'Vegnar trays, Vegnar Greens trays, Vegnar meal trays, Vegnar compartment trays, sugarcane bagasse trays, biodegradable trays, eco-friendly trays, compostable trays, food service trays, restaurant trays, catering trays, disposable trays, wholesale trays, bulk trays, tray manufacturer',
+      openGraph: {
+        title: 'Vegnar Trays - Premium Food Service Trays | Vegnar Greens',
+        description: 'Discover Vegnar trays made from sugarcane bagasse. Perfect for food service and catering.',
+        url: 'https://vegnar.com/products/trays',
+        type: 'website',
+      },
+      alternates: { canonical: 'https://vegnar.com/products/trays' },
+      robots: 'index, follow',
+      authors: [{ name: 'Vegnar Greens' }],
+      publisher: 'Vegnar Greens',
+    };
+  } else if (categorySlug === 'containers') {
+    return {
+      title: 'Vegnar Containers - Sugarcane Bagasse Containers | Vegnar Greens',
+      description: 'Premium sugarcane bagasse containers by Vegnar Greens. Biodegradable bagasse containers for food packaging & takeaway delivery.',
+      keywords: 'Vegnar containers, Vegnar Greens containers, Vegnar food containers, sugarcane bagasse containers, biodegradable containers, eco-friendly containers, compostable containers, takeaway containers, food packaging, restaurant containers, wholesale containers, bulk containers, container manufacturer',
+      openGraph: {
+        title: 'Vegnar Containers - Premium Food Containers | Vegnar Greens',
+        description: 'Discover Vegnar containers made from sugarcane bagasse. Perfect for food packaging and takeaway.',
+        url: 'https://vegnar.com/products/containers',
+        type: 'website',
+      },
+      alternates: { canonical: 'https://vegnar.com/products/containers' },
+      robots: 'index, follow',
+      authors: [{ name: 'Vegnar Greens' }],
+      publisher: 'Vegnar Greens',
+    };
+  } else if (categorySlug === 'meal-trays') {
+    return {
+      title: 'Vegnar Meal Trays - Compartment Meal Trays | Vegnar Greens',
+      description: 'Premium Vegnar meal trays with compartments made from sugarcane bagasse. Perfect for restaurants, catering & food service. Microwave safe & biodegradable.',
+      keywords: 'Vegnar meal trays, Vegnar Greens meal trays, compartment meal trays, sugarcane bagasse meal trays, biodegradable meal trays, eco-friendly meal trays, restaurant meal trays, catering trays, food service trays, disposable meal trays, wholesale meal trays, bulk meal trays',
+      openGraph: { title: 'Vegnar Meal Trays | Vegnar Greens', description: 'Premium compartment meal trays made from sugarcane bagasse', url: 'https://vegnar.com/products/meal-trays', type: 'website' },
+      alternates: { canonical: 'https://vegnar.com/products/meal-trays' },
+      robots: 'index, follow', authors: [{ name: 'Vegnar Greens' }], publisher: 'Vegnar Greens'
+    };
+  } else if (categorySlug === 'round-plates') {
+    return {
+      title: 'Vegnar Round Plates - Sugarcane Bagasse Round Plates | Vegnar Greens',
+      description: 'Premium Vegnar round plates made from sugarcane bagasse. Available in multiple sizes. Eco-friendly biodegradable round plates for restaurants & events.',
+      keywords: 'Vegnar round plates, Vegnar Greens round plates, sugarcane bagasse round plates, biodegradable round plates, eco-friendly round plates, compostable round plates, restaurant round plates, disposable round plates, wholesale round plates, bulk round plates',
+      openGraph: { title: 'Vegnar Round Plates | Vegnar Greens', description: 'Premium round plates made from sugarcane bagasse', url: 'https://vegnar.com/products/round-plates', type: 'website' },
+      alternates: { canonical: 'https://vegnar.com/products/round-plates' },
+      robots: 'index, follow', authors: [{ name: 'Vegnar Greens' }], publisher: 'Vegnar Greens'
+    };
+  } else if (categorySlug === 'sipper-lid') {
+    return {
+      title: 'Vegnar Sipper Lids - Biodegradable Cup Lids | Vegnar Greens',
+      description: 'Premium Vegnar sipper lids made from sugarcane bagasse. Perfect for hot & cold beverages. Eco-friendly biodegradable lids for cups & containers.',
+      keywords: 'Vegnar sipper lids, Vegnar Greens lids, sugarcane bagasse lids, biodegradable lids, eco-friendly lids, compostable lids, cup lids, beverage lids, coffee lids, tea lids, wholesale lids, bulk lids',
+      openGraph: { title: 'Vegnar Sipper Lids | Vegnar Greens', description: 'Premium sipper lids made from sugarcane bagasse', url: 'https://vegnar.com/products/sipper-lid', type: 'website' },
+      alternates: { canonical: 'https://vegnar.com/products/sipper-lid' },
+      robots: 'index, follow', authors: [{ name: 'Vegnar Greens' }], publisher: 'Vegnar Greens'
+    };
+  } else if (categorySlug === 'takeaway-container') {
+    return {
+      title: 'Vegnar Takeaway Containers - Food Delivery Containers | Vegnar Greens',
+      description: 'Premium Vegnar takeaway containers made from sugarcane bagasse. Perfect for food delivery, takeaway & packaging. Leak-proof & microwave safe.',
+      keywords: 'Vegnar takeaway containers, Vegnar Greens containers, sugarcane bagasse containers, biodegradable takeaway containers, eco-friendly food containers, food delivery containers, takeaway boxes, restaurant containers, wholesale containers, bulk containers',
+      openGraph: { title: 'Vegnar Takeaway Containers | Vegnar Greens', description: 'Premium takeaway containers made from sugarcane bagasse', url: 'https://vegnar.com/products/takeaway-container', type: 'website' },
+      alternates: { canonical: 'https://vegnar.com/products/takeaway-container' },
+      robots: 'index, follow', authors: [{ name: 'Vegnar Greens' }], publisher: 'Vegnar Greens'
+    };
+  } else if (categorySlug === 'bagasse-tray') {
+    return {
+      title: 'Vegnar Bagasse Trays - Sugarcane Bagasse Trays | Vegnar Greens',
+      description: 'Premium Vegnar bagasse trays made from sugarcane bagasse. Food service trays, serving trays & compartment trays. Biodegradable & microwave safe.',
+      keywords: 'Vegnar bagasse trays, Vegnar Greens trays, sugarcane bagasse trays, biodegradable trays, eco-friendly trays, food service trays, serving trays, compartment trays, restaurant trays, wholesale trays, bulk trays',
+      openGraph: { title: 'Vegnar Bagasse Trays | Vegnar Greens', description: 'Premium bagasse trays made from sugarcane bagasse', url: 'https://vegnar.com/products/bagasse-tray', type: 'website' },
+      alternates: { canonical: 'https://vegnar.com/products/bagasse-tray' },
+      robots: 'index, follow', authors: [{ name: 'Vegnar Greens' }], publisher: 'Vegnar Greens'
+    };
   } else if (categorySlug === 'bio-bags') {
     return {
-      title: 'Eco-Friendly Bio Bags | Vegnar Green',
-      description:
-        'Discover our innovative biodegradable bags made from plant-based materials. Available in various sizes for retail, courier, and waste management applications.',
-      keywords:
-        'biodegradable bags, compostable bags, eco-friendly bags, plastic-free bags, sustainable bags, compostable shopping bags, biodegradable plastic bags',
+      title: 'Vegnar Bio Bags - Biodegradable Bags | Vegnar Greens',
+      description: 'Premium Vegnar bio bags made from plant-based materials. Compostable shopping bags, carry bags & packaging bags. Eco-friendly alternative to plastic bags.',
+      keywords: 'Vegnar bio bags, Vegnar Greens bags, biodegradable bags, compostable bags, eco-friendly bags, sustainable bags, shopping bags, carry bags, packaging bags, plastic-free bags, wholesale bags, bulk bags, bag manufacturer',
       openGraph: {
         title: 'Biodegradable and Compostable Bags | Vegnar Greens',
         description:
@@ -206,6 +327,106 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         canonical: 'https://vegnar.com/products/bio-bags',
       },
       robots: 'index, follow',
+    };
+  } else if (categorySlug === 'bowls') {
+    return {
+      title: 'Vegnar Bowls - Sugarcane Bagasse Bowls | Vegnar Greens',
+      description: 'Premium sugarcane bagasse bowls by Vegnar Greens. Biodegradable bagasse bowls perfect for restaurants & food service. Microwave safe compostable bowls.',
+      keywords: [
+        // Brand Keywords
+        'Vegnar bowls',
+        'Vegnar Greens bowls',
+        'Vegnar bagasse bowls',
+        
+        // Product Specific
+        'sugarcane bagasse bowls',
+        'biodegradable bowls',
+        'eco-friendly bowls',
+        'compostable bowls',
+        'sustainable bowls',
+        
+        // Applications
+        'restaurant bowls',
+        'catering bowls',
+        'food service bowls',
+        'disposable bowls',
+        'takeaway bowls',
+        
+        // Features
+        'microwave safe bowls',
+        'leak proof bowls',
+        'grease resistant bowls',
+        'freezer safe bowls',
+        
+        // Business Terms
+        'wholesale bowls',
+        'bulk bowls',
+        'bowl manufacturer',
+        'bowl supplier',
+        'export quality bowls'
+      ].join(', '),
+      openGraph: {
+        title: 'Vegnar Bowls - Premium Sugarcane Bagasse Bowls | Vegnar Greens',
+        description: 'Discover Vegnar bowls made from sugarcane bagasse. Perfect eco-friendly solution for restaurants and food service businesses.',
+        url: 'https://vegnar.com/products/bowls',
+        type: 'website',
+      },
+      alternates: {
+        canonical: 'https://vegnar.com/products/bowls',
+      },
+      robots: 'index, follow',
+      authors: [{ name: 'Vegnar Greens' }],
+      publisher: 'Vegnar Greens',
+    };
+  } else if (categorySlug === 'clamshells') {
+    return {
+      title: 'Vegnar Clamshells - Sugarcane Bagasse Clamshells | Vegnar Greens',
+      description: 'Premium sugarcane bagasse clamshells by Vegnar Greens. Biodegradable bagasse clamshells perfect for takeaway & food delivery packaging.',
+      keywords: [
+        // Brand Keywords
+        'Vegnar clamshells',
+        'Vegnar Greens clamshells',
+        'Vegnar bagasse clamshells',
+        
+        // Product Specific
+        'sugarcane bagasse clamshells',
+        'biodegradable clamshells',
+        'eco-friendly clamshells',
+        'compostable clamshells',
+        'sustainable clamshells',
+        
+        // Applications
+        'takeaway containers',
+        'food delivery containers',
+        'restaurant containers',
+        'to-go boxes',
+        'food packaging containers',
+        
+        // Features
+        'leak proof clamshells',
+        'secure lid clamshells',
+        'microwave safe containers',
+        'grease resistant containers',
+        
+        // Business Terms
+        'wholesale clamshells',
+        'bulk food containers',
+        'clamshell manufacturer',
+        'container supplier',
+        'export quality containers'
+      ].join(', '),
+      openGraph: {
+        title: 'Vegnar Clamshells - Premium Food Containers | Vegnar Greens',
+        description: 'Discover Vegnar clamshells made from sugarcane bagasse. Perfect eco-friendly packaging solution for takeaway and food delivery.',
+        url: 'https://vegnar.com/products/clamshells',
+        type: 'website',
+      },
+      alternates: {
+        canonical: 'https://vegnar.com/products/clamshells',
+      },
+      robots: 'index, follow',
+      authors: [{ name: 'Vegnar Greens' }],
+      publisher: 'Vegnar Greens',
     };
   } else if (categorySlug === 'areca-palm-tableware') {
     return {

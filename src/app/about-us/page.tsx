@@ -24,42 +24,52 @@ library.add(
 );
 
 export const metadata: Metadata = {
-  title: 'About Vegnar Green | Leading Biodegradable Products Manufacturer',
-  description: 'Discover Vegnar, India\’s trusted manufacturer of biodegradable tableware, eco-friendly bags, and compostable packaging made from sugarcane bagasse & areca.',
+  title: 'About Vegnar Greens | Sugarcane Bagasse Product Manufacturer in India',
+  description: 'Learn about Vegnar Greens, a leading manufacturer and exporter of biodegradable tableware, sugarcane bagasse products, and eco-friendly packaging solutions made in Gujarat, India.',
   keywords: [
-    // Primary Keywords
+    // Brand & Identity
+    'Vegnar Greens',
+    'Vegnar Bagasse',
+    'Vegnar biodegradable products',
+    'Vegnar sugarcane bagasse company',
+
+    // Product Specific
     'biodegradable tableware manufacturer',
     'eco-friendly packaging company',
-    'sustainable products manufacturer',
     'compostable packaging solutions',
-    
-    // Product Specific
     'sugarcane bagasse products',
-    'areca palm leaf tableware',
     'biodegradable plates manufacturer',
-    'eco-friendly bowls supplier',
-    'compostable bio bags',
+    'compostable tableware India',
     'biodegradable food containers',
-    
-    // Materials & Process
-    'agricultural waste upcycling',
-    'sustainable materials',
-    'eco-friendly manufacturing',
+    'eco-friendly bowls supplier',
+    'biodegradable clamshells',
+    'bagasse round plates',
+    'compartment plates manufacturer',
+    'eco-friendly cups and bowls',
+
+    // Materials & Sustainability
+    'sugarcane bagasse company in India',
+    'sustainable materials manufacturer',
     'zero waste production',
-    
-    // Business & Location
-    'Indian eco manufacturer',
-    'Gujarat green company',
-    'wholesale eco products',
+    'agricultural waste upcycling',
+    'eco-friendly manufacturing',
+    'areca palm leaf tableware',
+
+    // Business & Export
+    'Bagasse products manufacturers in Gujarat',
+    'Sugarcane Bagasse Plates Manufacturers in Gujarat',
+    'Bagasse plates manufacturers in India',
     'bulk biodegradable supplier',
-    'export quality eco products',
-    'sustainable packaging exporter'
+    'wholesale eco products India',
+    'sustainable packaging exporter',
+    'sugarcane bagasse company near me',
+    'sugarcane bagasse company contact number'
   ].join(', '),
   openGraph: {
-    title: 'About Vegnar Green | Leading Biodegradable Products Manufacturer',
-    description: 'Join us in revolutionizing sustainable packaging. Discover how we transform agricultural waste into premium biodegradable products that protect both your products and our planet.',
+    title: 'About Vegnar Greens | Sugarcane Bagasse Product Manufacturer in India',
+    description: 'Explore Vegnar Greens — India’s trusted brand for eco-conscious bagasse and biodegradable packaging products. From design to export, we deliver sustainable innovation.',
     url: 'https://www.vegnar.com/about-us',
-    siteName: 'Vegnar Green',
+    siteName: 'Vegnar Greens',
     type: 'website',
   },
   alternates: {
@@ -69,6 +79,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Vegnar Greens' }],
   publisher: 'Vegnar Greens',
 };
+
 
 const coreValues = [
   {
@@ -176,21 +187,21 @@ export default function OurStory() {
           </div>
           
           <h1 className="text-5xl sm:text-7xl font-bold mb-8 leading-tight">
-            Pioneering
+            Vegnar Greens
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300">
-              Sustainable Future
+              Bagasse Products Manufacturers
             </span>
           </h1>
           
           <p className="text-xl sm:text-2xl max-w-4xl mx-auto mb-12 text-gray-200 leading-relaxed">
-            From agricultural waste to premium biodegradable products — we're revolutionizing how the world thinks about packaging
+            Leading sugarcane bagasse products manufacturers in Gujarat, India — transforming agricultural waste into premium Vegnar round plates, bowls, clamshells & cups
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+            <button className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-full font-semibold text-base transition-all duration-300 transform hover:scale-105 shadow-xl">
               Our Story
             </button>
-            <button className="border-2 border-white/30 backdrop-blur-sm text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300">
+            <button className="border-2 border-white/30 backdrop-blur-sm text-white px-6 py-3 rounded-full font-semibold text-base hover:bg-white/10 transition-all duration-300">
               View Products
             </button>
           </div>
@@ -207,30 +218,20 @@ export default function OurStory() {
       </section>
 
       {/* Our Story Section */}
-      <section className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 py-24 bg-white rounded-md shadow-md px-6 mx-4 -mt-32 relative z-10">
+      <section className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 py-24 bg-white rounded-md shadow-md px-6 mx-4 mt-16 relative z-10">
         <article className="lg:w-1/2">
           <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
             OUR STORY
           </span>
-          <h2 className="text-3xl font-semibold mb-6">About Vegnar Green</h2>
+          <h2 className="text-3xl font-semibold mb-6">About Vegnar Greens - Sugarcane Bagasse Company in India</h2>
           <p className="mb-6 text-justify">
-            Vegnar Greens began with a simple but powerful observation — the
-            devastating impact of plastic waste on nature. Motivated by the need
-            for change, our founder envisioned a sustainable future where
-            everyday convenience doesn't compromise the environment.
+            Vegnar Greens is a leading sugarcane bagasse products manufacturer in Gujarat, India. We began with a simple but powerful observation — the devastating impact of plastic waste on nature. Motivated by the need for change, our founder envisioned a sustainable future where everyday convenience doesn't compromise the environment.
           </p>
           <p className="mb-6 text-justify">
-            What started as a small initiative has grown into a mission-driven
-            movement. A team of engineers, designers, and environmental experts
-            came together to create eco-friendly alternatives to plastic, driven
-            by a shared commitment to innovation and sustainability.
+            What started as a small initiative has grown into a mission-driven movement. Our team of engineers, designers, and environmental experts came together to create Vegnar round plates, Vegnar compartment plates, Vegnar bowls, Vegnar clamshells, and Vegnar cups - driven by a shared commitment to innovation and sustainability.
           </p>
           <p className="mb-6 text-justify">
-            Today, Vegnar Greens leads in sustainable packaging, transforming
-            agricultural waste and renewable resources into high-quality,
-            biodegradable products. Our solutions are designed to perform like
-            conventional plastics—while leaving a positive footprint on the
-            planet.
+            Today, Vegnar Greens leads as bagasse products manufacturers in Gujarat, transforming agricultural waste into high-quality, biodegradable tableware. Our Vegnar bagasse products are designed to perform like conventional plastics—while leaving a positive footprint on the planet.
           </p>
         </article>
         <figure className="lg:w-1/2 max-w-md w-full rounded-md overflow-hidden shadow-lg mx-auto">
@@ -253,11 +254,11 @@ export default function OurStory() {
               🌍 Leading the Green Revolution
             </span>
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-              Transforming Agricultural Waste
-              <span className="block text-green-600">Into Premium Products</span>
+              Vegnar Bagasse Products
+              <span className="block text-green-600">Manufacturers in Gujarat India</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              We're not just manufacturing products — we're crafting a sustainable future where every meal served contributes to healing our planet
+              As leading bagasse plates manufacturers in India, we're crafting a sustainable future with Vegnar round plates, compartment plates, bowls, clamshells, cups & wooden cutlery for eco-conscious businesses worldwide
             </p>
           </div>
           
@@ -313,9 +314,9 @@ export default function OurStory() {
               </div>
               
               <div className="p-12 flex flex-col justify-center">
-                <h3 className="text-4xl font-bold text-gray-900 mb-4">Sugarcane Bagasse Tableware</h3>
+                <h3 className="text-4xl font-bold text-gray-900 mb-4">Vegnar Bagasse Products - Premium Quality</h3>
                 <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                  Our flagship product line transforms agricultural waste into premium biodegradable tableware. Made from sugarcane bagasse - the fibrous residue left after juice extraction - our products offer the perfect blend of sustainability and functionality.
+                  Our flagship Vegnar bagasse products transform agricultural waste into premium biodegradable tableware. As trusted sugarcane bagasse products manufacturers in India, we create Vegnar round plates, compartment plates, bowls, clamshells, and cups from sugarcane bagasse - offering the perfect blend of sustainability and functionality.
                 </p>
                 
                 <div className="grid grid-cols-2 gap-6 mb-8">
@@ -356,7 +357,7 @@ export default function OurStory() {
                   </div>
                 </div>
                 
-                <div className="flex gap-4">
+                <div className="flex gap-4 mt-6">
                   <button className="bg-gradient-to-r from-green-600 to-emerald-700 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-800 transition-all duration-300">
                     View Products
                   </button>

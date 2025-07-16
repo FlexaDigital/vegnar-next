@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Search, Filter, Download, ShoppingCart, Plus, Check } from 'lucide-react';
 import productsData from '@/data/products.json';
+import countryList from '@/data/country-list.json';
 import Head from 'next/head';
 
 interface Product {
@@ -436,7 +437,8 @@ Generated on: ${new Date().toLocaleString()}
                     <td className="px-6 py-4 whitespace-nowrap">
                       {cart.some(item => item.product.item_code === product.item_code) ? (
                         <button
-                          className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 cursor-default"
+                          onClick={() => removeFromCart(product.item_code)}
+                          className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-red-600 transition-colors"
                         >
                           <Check className="h-4 w-4 mr-1" />
                           Added
@@ -469,7 +471,8 @@ Generated on: ${new Date().toLocaleString()}
                   </div>
                   {cart.some(item => item.product.item_code === product.item_code) ? (
                     <button
-                      className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 cursor-default"
+                      onClick={() => removeFromCart(product.item_code)}
+                      className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-red-600 transition-colors"
                     >
                       <Check className="h-4 w-4 mr-1" />
                       Added
@@ -839,12 +842,12 @@ Generated on: ${new Date().toLocaleString()}
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({
                         formType: 'SampleRequest',
+                        'Timestamp': new Date().toISOString(),
                         'Company Name': formData.get('companyName'),
                         'Email': formData.get('email'),
                         'Mobile Number': formData.get('mobile'),
                         'Country': formData.get('country'),
-                        'Address': formData.get('address'),
-                        'Products Interest': formData.get('products')
+                        'Address': formData.get('address')
                       })
                     }
                   );
@@ -860,11 +863,9 @@ Generated on: ${new Date().toLocaleString()}
                 <input name="mobile" type="text" placeholder="Mobile Number" className="border rounded px-3 py-2 w-full" required />
                 <select name="country" className="border rounded px-3 py-2 w-full" required>
                   <option value="">Select Country</option>
-                  <option value="US">United States</option>
-                  <option value="UK">United Kingdom</option>
-                  <option value="IN">India</option>
-                  <option value="DE">Germany</option>
-                  <option value="FR">France</option>
+                  {countryList.map(country => (
+                    <option key={country.code} value={country.code}>{country.name}</option>
+                  ))}
                 </select>
                 <textarea name="address" placeholder="Shipping Address" className="border rounded px-3 py-2 w-full" rows={3} required></textarea>
                 <textarea name="products" placeholder="Which products are you interested in?" className="border rounded px-3 py-2 w-full" rows={2}></textarea>

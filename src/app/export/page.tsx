@@ -120,7 +120,7 @@ export default function ExportPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {exportMarkets.map((market, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center">
-                <span className="text-6xl mb-4 block">{market.flag}</span>
+                <span className="text-6xl mb-4 block" style={{fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif', lineHeight: '1'}}>{market.flag}</span>
                 <h3 className="font-semibold text-gray-900">{market.country}</h3>
               </div>
             ))}
