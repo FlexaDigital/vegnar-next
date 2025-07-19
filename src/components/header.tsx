@@ -76,12 +76,21 @@ const Header = ({ categories }: HeaderProps) => {
     setActiveDropdown((prev) => (prev === index ? null : index));
 
   const staticMenuItems = [
-    { name: "About Us", link: "/about-us" },
+    {
+      name: "Company",
+      submenu: [
+        { name: "About Us", link: "/about-us" },
+        { name: "Export", link: "/export" },
+        { name: "Career", link: "/career" }
+      ],
+    },
     {
       name: "Sustainability",
-      submenu: [{ name: "Eco Initiatives", link: "/sustainability/eco-initiatives" }],
+      submenu: [
+        { name: "Eco Initiatives", link: "/sustainability/eco-initiatives" },
+        { name: "Eco Activities", link: "/sustainability/eco-activities" }
+      ],
     },
-    { name: "Export", link: "/export" },
     { name: "Eco-Talks", link: "/blog" },
     { name: "Contact", link: "/contact" },
   ];

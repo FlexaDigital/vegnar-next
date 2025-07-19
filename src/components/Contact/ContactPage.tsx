@@ -45,25 +45,6 @@ const ContactPage: React.FC = () => {
               <p className="mt-2 max-w-2xl text-sm sm:text-base font-normal text-white">
                 We're here to help you make eco-friendly choices.
               </p>
-              <button
-                className="mt-6 bg-[#0f4d3a] hover:bg-[#0d3f2d] inline-flex items-center text-sm font-semibold rounded-full px-4 py-2"
-                type="button"
-              >
-                Contact Us Now
-                <svg
-                  aria-hidden="true"
-                  className="ml-2 w-3.5 h-3.5"
-                  fill="none"
-                  focusable="false"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M13 5l7 7-7 7"></path>
-                </svg>
-              </button>
             </div>
           </div>
         </section>

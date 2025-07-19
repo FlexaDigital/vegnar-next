@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faUtensils, faBowlFood, faBowlRice, faBox, faBurger, faPlateWheat, faMugHot, faLeaf, faDumbbell, faRecycle } from '@fortawesome/free-solid-svg-icons';
 import CustomizationSection from '@/components/CustomizationSection';
 import BecomePartnerSection from '@/components/BecomePartnerSection';
 import { Metadata } from 'next';
@@ -110,16 +110,16 @@ export default function ProductsPage() {
 
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto mb-16">
             {[
-              { name: 'Bagasse Plates', slug: 'round-plates', desc: 'Durable round plates in multiple sizes', icon: '🍽️' },
-              { name: 'Bagasse Bowls', slug: 'bowls', desc: 'Deep bowls perfect for soups and salads', icon: '🥣' },
-              { name: 'Meal Trays', slug: 'meal-trays', desc: 'Compartment trays for complete meals', icon: '🍱' },
-              { name: 'Takeaway Containers', slug: 'takeaway-container', desc: 'Secure containers for food delivery', icon: '📦' },
-              { name: 'Clamshells', slug: 'clamshells', desc: 'Hinged containers for burgers and sandwiches', icon: '🥪' },
-              { name: 'Food Trays', slug: 'tray', desc: 'Flat trays for serving and presentation', icon: '🍴' },
-              { name: 'Sipper Lids', slug: 'sipper-lid', desc: 'Leak-proof lids for hot and cold beverages', icon: '☕' }
+              { name: 'Bagasse Plates', slug: 'round-plates', desc: 'Durable round plates in multiple sizes', icon: faPlateWheat },
+              { name: 'Bagasse Bowls', slug: 'bowls', desc: 'Deep bowls perfect for soups and salads', icon: faBowlFood },
+              { name: 'Meal Trays', slug: 'meal-trays', desc: 'Compartment trays for complete meals', icon: faBowlRice },
+              { name: 'Takeaway Containers', slug: 'takeaway-container', desc: 'Secure containers for food delivery', icon: faBox },
+              { name: 'Clamshells', slug: 'clamshells', desc: 'Hinged containers for burgers and sandwiches', icon: faBurger },
+              { name: 'Food Trays', slug: 'tray', desc: 'Flat trays for serving and presentation', icon: faUtensils },
+              { name: 'Sipper Lids', slug: 'sipper-lid', desc: 'Leak-proof lids for hot and cold beverages', icon: faMugHot }
             ].map((product) => (
               <article key={product.slug} className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
-                <div className="text-4xl mb-4 text-center">{product.icon}</div>
+                <div className="text-4xl mb-4 text-center"><FontAwesomeIcon icon={product.icon} /></div>
                 <h3 className="font-bold text-[#0b3d13] mb-3 text-lg text-center">
                   {product.name}
                 </h3>
@@ -158,7 +158,7 @@ export default function ProductsPage() {
                 Access our comprehensive packing list with detailed specifications, pricing, and technical data for all products.
               </p>
               <Link
-                href="/packing-list"
+                href="/quote"
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-[#1a7a2b] to-[#2d8f3f] text-white font-semibold rounded-lg px-6 py-3 hover:from-[#0f5a1f] hover:to-[#1a7a2b] transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 View Packing List
@@ -175,21 +175,21 @@ export default function ProductsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🌱</span>
+                  <FontAwesomeIcon icon={faLeaf} className="text-2xl text-green-600" />
                 </div>
                 <h3 className="font-semibold text-[#0b3d13] mb-2">100% Natural</h3>
                 <p className="text-sm text-[#0b3d13]/70">Made from agricultural waste with no harmful chemicals or plastic coatings</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">💪</span>
+                  <FontAwesomeIcon icon={faDumbbell} className="text-2xl text-green-600" />
                 </div>
                 <h3 className="font-semibold text-[#0b3d13] mb-2">Superior Strength</h3>
                 <p className="text-sm text-[#0b3d13]/70">Stronger than paper plates, handles hot and cold foods without breaking</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">♻️</span>
+                  <FontAwesomeIcon icon={faRecycle} className="text-2xl text-green-600" />
                 </div>
                 <h3 className="font-semibold text-[#0b3d13] mb-2">Fully Compostable</h3>
                 <p className="text-sm text-[#0b3d13]/70">Breaks down completely in 90 days, enriching soil instead of polluting it</p>
