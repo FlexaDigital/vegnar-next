@@ -16,7 +16,7 @@ const brochures: Brochure[] = [
     icon: <FaFilePdf className="text-lg text-[#2B7A5B]" />,
     title: "Sugarcane Bagasse Tableware",
     description: "Explore our range of sugarcane bagasse tableware.",
-    downloadLink: "/assets/downloads/VEGNAR-GREEN-BAGASSE-TABLEWARE.PDF",
+    downloadLink: "/assets/downloads/Vegnar-greens-sugarcane-bagasse-tableware.pdf",
   },
   {
     icon: <FaFilePdf className="text-lg text-[#2B7A5B]" />,
