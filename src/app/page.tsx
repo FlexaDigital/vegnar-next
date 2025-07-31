@@ -71,12 +71,12 @@ const GreenPromiseCard = ({
   title: string;
   description: string;
 }) => (
-  <div className="bg-white rounded-xl p-6 flex flex-col items-center text-center shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:translate-y-1">
-    <div className="bg-[#D4F5E1] text-[#007A3E] rounded-full p-4 mb-4 flex items-center justify-center text-2xl">
+  <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center text-center shadow-lg border border-green-100 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white hover:border-green-200">
+    <div className="bg-[#D4F5E1] text-[#007A3E] rounded-full p-4 mb-4 flex items-center justify-center text-2xl shadow-md">
       <Icon className="w-6 h-6" />
     </div>
-    <h3 className="font-extrabold text-lg mb-2 whitespace-pre-line">{title}</h3>
-    <p className="text-base leading-relaxed max-w-[280px]">{description}</p>
+    <h3 className="font-extrabold text-lg mb-3 whitespace-pre-line text-gray-800">{title}</h3>
+    <p className="text-sm leading-relaxed max-w-[280px] text-gray-600">{description}</p>
   </div>
 );
 
@@ -113,9 +113,10 @@ export default function Home() {
       <HeroSection />
       <section
         id="green-promises" // Added an ID for the anchor link
-        className="bg-[#F0F9F4] text-[#004D40] py-16 px-4 sm:px-6 lg:px-20"
+        className="text-[#004D40] py-16 px-4 sm:px-6 lg:px-20 relative"
       >
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'url(/assets/bg-green.png)', backgroundRepeat: 'repeat', backgroundSize: '300px auto', backgroundAttachment: 'fixed'}}></div>
+        <div className="max-w-7xl mx-auto text-center relative z-10">
           <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
             ECO-FRIENDLY
           </span>
@@ -141,8 +142,9 @@ export default function Home() {
       </section>
     
 
-       <section className="bg-[#F6F6F6] py-16 px-4 sm:px-6 lg:px-20">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-12">
+       <section className="py-16 px-4 sm:px-6 lg:px-20 relative">
+        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'url(/assets/bg-green.png)', backgroundRepeat: 'repeat', backgroundSize: '300px auto', backgroundAttachment: 'fixed'}}></div>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-12 relative z-10">
         <Image
   src="/assets/img/waste-to-worth.jpg"
   alt="About us | Vagnar Green"

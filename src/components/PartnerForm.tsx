@@ -217,6 +217,7 @@ export default function PartnerForm() {
       'Full Name': formData.get('fullname') as string,
       'Company Name': formData.get('company') as string,
       'Email Address': formData.get('email') as string,
+      'Mobile Number': formData.get('mobile') as string,
       'Country': formData.get('country') as string,
       'Business Type': formData.get('businessType') as string,
       'Message': formData.get('message') as string
@@ -330,6 +331,18 @@ export default function PartnerForm() {
               />
             </div>
             <div className="flex flex-col">
+              <label htmlFor="mobile" className="font-medium text-[#1a254f]">
+                Mobile Number*
+              </label>
+              <input
+                id="mobile"
+                name="mobile"
+                type="tel"
+                required
+                className="mt-1 rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0a6a52] focus:border-transparent"
+              />
+            </div>
+            <div className="flex flex-col">
               <label htmlFor="country" className="font-medium text-[#1a254f]">
                 Country*
               </label>
@@ -357,7 +370,7 @@ export default function PartnerForm() {
               {[
                 { value: 'importer', label: 'Importer' },
                 { value: 'distributor', label: 'Distributor' },
-                { value: 'wholesaler', label: 'Wholesaler' },
+                { value: 'HoReCa', label: 'HoReCa' },
                 { value: 'retailer', label: 'Retailer' }
               ].map((item) => (
                 <label key={item.value} className="inline-flex items-center space-x-2">

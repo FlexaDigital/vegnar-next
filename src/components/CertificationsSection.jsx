@@ -36,8 +36,9 @@ const certifications = [
 
 const CertificationsSection = () => {
   return (
-    <section className="bg-white text-center px-4 py-16">
-      <div className="max-w-5xl mx-auto">
+    <section className="text-center px-4 py-16 relative">
+      <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'url(/assets/bg-green.png)', backgroundRepeat: 'repeat', backgroundSize: '300px auto', backgroundAttachment: 'fixed'}}></div>
+      <div className="max-w-5xl mx-auto relative z-10">
         <div>
           <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
             QUALITY ASSURED

@@ -301,8 +301,9 @@ Generated on: ${new Date().toLocaleString()}
         <meta name="keywords" content="sugarcane bagasse quote, biodegradable tableware pricing, bagasse products price list, eco-friendly tableware quote, bulk biodegradable plates pricing" />
         <link rel="canonical" href="https://www.vegnar.com/quote" />
       </Head>
-      <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-50 py-8 relative">
+        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'url(/assets/bg-green.png)', backgroundRepeat: 'repeat', backgroundSize: '300px auto', backgroundAttachment: 'fixed'}}></div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="bg-white rounded-lg shadow-sm">
           {/* Header */}
           <div className="px-6 py-4 border-b border-gray-200">
@@ -332,13 +333,7 @@ Generated on: ${new Date().toLocaleString()}
                   )}
                 </button>
 
-                <button
-                  onClick={exportToCSV}
-                  className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Export CSV
-                </button>
+
               </div>
             </div>
           </div>
@@ -404,6 +399,7 @@ Generated on: ${new Date().toLocaleString()}
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Packs/Carton</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pcs/Carton</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net Weight (kg)</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                 </tr>
               </thead>
@@ -433,6 +429,44 @@ Generated on: ${new Date().toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {product.net_weight_kg} kg
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {cart.some(item => item.product.item_code === product.item_code) ? (
+                        <div className="flex items-center space-x-2">
+                          <div className="flex items-center border rounded">
+                            <button
+                              onClick={() => {
+                                const item = cart.find(item => item.product.item_code === product.item_code);
+                                if (item && item.quantity > 1) {
+                                  updateCartQuantity(product.item_code, item.quantity - 1);
+                                }
+                              }}
+                              className="px-2 py-1 hover:bg-gray-100 text-sm"
+                            >
+                              -
+                            </button>
+                            <span className="px-2 py-1 text-sm min-w-[40px] text-center">
+                              {cart.find(item => item.product.item_code === product.item_code)?.quantity || 0}
+                              <span className="text-xs text-gray-500 ml-1">
+                                {cart.find(item => item.product.item_code === product.item_code)?.unit === 'cartons' ? 'ctns' : 'pcs'}
+                              </span>
+                            </span>
+                            <button
+                              onClick={() => {
+                                const item = cart.find(item => item.product.item_code === product.item_code);
+                                if (item) {
+                                  updateCartQuantity(product.item_code, item.quantity + 1);
+                                }
+                              }}
+                              className="px-2 py-1 hover:bg-gray-100 text-sm"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-gray-400 text-sm">-</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {cart.some(item => item.product.item_code === product.item_code) ? (
@@ -631,13 +665,28 @@ Generated on: ${new Date().toLocaleString()}
                               <option value="pieces">Pieces</option>
                               <option value="cartons">Cartons</option>
                             </select>
-                            <input
-                              type="number"
-                              min="1"
-                              value={item.quantity}
-                              onChange={(e) => updateCartQuantity(item.product.item_code, parseInt(e.target.value))}
-                              className="border rounded px-2 py-1 w-20"
-                            />
+                            <div className="flex items-center border rounded">
+                              <button
+                                onClick={() => updateCartQuantity(item.product.item_code, item.quantity - 1)}
+                                className="px-2 py-1 hover:bg-gray-100"
+                                disabled={item.quantity <= 1}
+                              >
+                                -
+                              </button>
+                              <input
+                                type="number"
+                                min="1"
+                                value={item.quantity}
+                                onChange={(e) => updateCartQuantity(item.product.item_code, parseInt(e.target.value) || 1)}
+                                className="w-16 text-center border-0 focus:outline-none"
+                              />
+                              <button
+                                onClick={() => updateCartQuantity(item.product.item_code, item.quantity + 1)}
+                                className="px-2 py-1 hover:bg-gray-100"
+                              >
+                                +
+                              </button>
+                            </div>
                             <button
                               onClick={() => removeFromCart(item.product.item_code)}
                               className="text-red-600 hover:text-red-800"

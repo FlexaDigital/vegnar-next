@@ -141,6 +141,11 @@ body {
   overscroll-behavior-y: none;
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
+  background-image: url('/assets/bg-green.png');
+  background-repeat: repeat;
+  background-size: 1000px auto;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 /* WordPress Button Styles */

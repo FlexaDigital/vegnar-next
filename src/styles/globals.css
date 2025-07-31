@@ -16,7 +16,7 @@
   }
 
   body {
-    @apply bg-white text-gray-900;
+    @apply text-gray-900;
     position: relative;
     min-height: 100vh;
     /* Prevent pull-to-refresh on mobile */
@@ -24,6 +24,8 @@
     /* Prevent bounce effect on iOS */
     -webkit-overflow-scrolling: touch;
   }
+
+
 
   #__next {
     min-height: 100vh;

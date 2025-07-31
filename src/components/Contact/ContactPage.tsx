@@ -25,7 +25,7 @@ const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen">
       <main>
         <section
           className="relative text-white px-6 sm:px-8 lg:px-12 py-12 overflow-hidden"

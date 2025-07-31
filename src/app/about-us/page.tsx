@@ -175,7 +175,7 @@ export default function OurStory() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30"></div>
         </div>
         
-        {/* Floating Elements */}
+       
         <div className="absolute top-20 left-10 w-20 h-20 bg-green-400/20 rounded-full blur-xl animate-pulse"></div>
         <div className="absolute bottom-32 right-16 w-32 h-32 bg-emerald-400/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
         
