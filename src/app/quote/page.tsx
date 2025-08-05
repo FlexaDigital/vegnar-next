@@ -168,8 +168,8 @@ export default function PackingListPage() {
 
       // Assume success with no-cors
       alert('Quote request submitted successfully!');
-      setShowQuoteForm(false);
       form.reset();
+      setShowQuoteForm(false);
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitError(true);
@@ -302,7 +302,7 @@ Generated on: ${new Date().toLocaleString()}
         <link rel="canonical" href="https://www.vegnar.com/quote" />
       </Head>
       <div className="min-h-screen bg-gray-50 py-8 relative">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'url(/assets/bg-green.png)', backgroundRepeat: 'repeat', backgroundSize: '300px auto', backgroundAttachment: 'fixed'}}></div>
+        <div className="absolute inset-0 bg-[url('/assets/bg-green.png')] bg-repeat opacity-15 pointer-events-none" style={{backgroundSize: '200px'}}></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="bg-white rounded-lg shadow-sm">
           {/* Header */}
@@ -665,28 +665,13 @@ Generated on: ${new Date().toLocaleString()}
                               <option value="pieces">Pieces</option>
                               <option value="cartons">Cartons</option>
                             </select>
-                            <div className="flex items-center border rounded">
-                              <button
-                                onClick={() => updateCartQuantity(item.product.item_code, item.quantity - 1)}
-                                className="px-2 py-1 hover:bg-gray-100"
-                                disabled={item.quantity <= 1}
-                              >
-                                -
-                              </button>
-                              <input
-                                type="number"
-                                min="1"
-                                value={item.quantity}
-                                onChange={(e) => updateCartQuantity(item.product.item_code, parseInt(e.target.value) || 1)}
-                                className="w-16 text-center border-0 focus:outline-none"
-                              />
-                              <button
-                                onClick={() => updateCartQuantity(item.product.item_code, item.quantity + 1)}
-                                className="px-2 py-1 hover:bg-gray-100"
-                              >
-                                +
-                              </button>
-                            </div>
+                            <input
+                              type="number"
+                              min="1"
+                              value={item.quantity}
+                              onChange={(e) => updateCartQuantity(item.product.item_code, parseInt(e.target.value) || 1)}
+                              className="w-20 text-center border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+                            />
                             <button
                               onClick={() => removeFromCart(item.product.item_code)}
                               className="text-red-600 hover:text-red-800"
@@ -753,11 +738,9 @@ Generated on: ${new Date().toLocaleString()}
                   <input name="mobile" type="text" placeholder="Mobile Number" className="border rounded px-3 py-2" required />
                   <select name="country" className="border rounded px-3 py-2" required>
                     <option value="">Select Country</option>
-                    <option value="US">United States</option>
-                    <option value="UK">United Kingdom</option>
-                    <option value="IN">India</option>
-                    <option value="DE">Germany</option>
-                    <option value="FR">France</option>
+                    {countryList.map(country => (
+                      <option key={country.code} value={country.code}>{country.name}</option>
+                    ))}
                   </select>
                 </div>
                 <textarea name="address" placeholder="Address" className="border rounded px-3 py-2 w-full" rows={3} required></textarea>

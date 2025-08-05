@@ -551,8 +551,9 @@ export default async function ProductCategoryPage({ params }: Props) {
             __html: JSON.stringify(generateSchemaOrgData(category, products)),
           }}
         />
-        <main className="p-4 sm:p-6 md:p-8 pt-[80px]">
-          <section className="relative min-h-[250px] sm:min-h-[300px] md:h-[400px] bg-green-100 flex flex-col justify-center items-start px-4 sm:px-8 md:px-16 mb-6 sm:mb-8 md:mb-10 rounded-xl sm:rounded-2xl shadow-md overflow-hidden">
+        <main className="relative p-4 sm:p-6 md:p-8 pt-[80px]">
+          <div className="absolute inset-0 bg-[url('/assets/bg-green.png')] bg-repeat opacity-15 pointer-events-none" style={{backgroundSize: '200px'}}></div>
+          <section className="relative min-h-[250px] sm:min-h-[300px] md:h-[400px] bg-green-100 flex flex-col justify-center items-start px-4 sm:px-8 md:px-16 mb-6 sm:mb-8 md:mb-10 rounded-xl sm:rounded-2xl shadow-md overflow-hidden z-10">
             <div className="z-10 w-full md:max-w-3xl">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-green-900 mb-2 sm:mb-3">{category.name}</h1>
               <p className="text-gray-700 mt-2 sm:mt-3 md:mt-4 max-w-2xl text-sm sm:text-base md:text-lg">{category.description || 'No description available.'}</p>

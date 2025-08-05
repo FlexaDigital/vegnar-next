@@ -149,8 +149,9 @@ const BlogPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#f6fbf9] text-[#0f4d3f] pt-[50px]">
-      <section className="bg-[#d9f1e3] py-12 px-4 sm:px-6 lg:px-8 text-center">
+    <div className="relative bg-[#f6fbf9] text-[#0f4d3f]">
+      <div className="absolute inset-0 bg-[url('/assets/bg-green.png')] bg-repeat opacity-15 pointer-events-none" style={{backgroundSize: '200px'}}></div>
+      <section className="relative bg-[#d9f1e3] py-12 px-4 sm:px-6 lg:px-8 text-center z-10">
         <h1 className="text-[#0f4d3f] font-extrabold text-xl sm:text-2xl md:text-3xl max-w-3xl mx-auto leading-tight">
           Green Insights – Biodegradable Living with Vegnar Green
         </h1>
@@ -201,7 +202,7 @@ const BlogPage: React.FC = () => {
           </a>
         </nav>
       </section>
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 mb-16 grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 mb-16 grid grid-cols-1 lg:grid-cols-4 gap-8 z-10">
         <section className="lg:col-span-3 space-y-6">
           <h2 className="font-semibold text-[#0f4d3f] text-lg">Latest Articles</h2>
           {isInitialLoading ? (

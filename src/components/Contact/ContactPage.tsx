@@ -25,7 +25,8 @@ const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="relative min-h-screen">
+      <div className="absolute inset-0 bg-[url('/assets/bg-green.png')] bg-repeat opacity-15 pointer-events-none" style={{backgroundSize: '200px'}}></div>
       <main>
         <section
           className="relative text-white px-6 sm:px-8 lg:px-12 py-12 overflow-hidden"
@@ -48,7 +49,7 @@ const ContactPage: React.FC = () => {
             </div>
           </div>
         </section>
-        <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 flex flex-col md:flex-row gap-10">
+        <section className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 flex flex-col md:flex-row gap-10 z-10">
           <div className="flex-1">
             <ContactForm onSubmit={handleFormSubmit} />
           </div>
