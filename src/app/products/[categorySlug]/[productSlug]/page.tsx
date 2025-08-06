@@ -284,41 +284,7 @@ const SingleProductPage = async ({ params }: PageProps) => {
                     </span>
                   </div>
                 </div>
-                <div className="mb-6">
-                  <h2 className="text-sm font-semibold text-gray-900 mb-2">
-                    Certifications
-                  </h2>
-                  <div className="flex flex-wrap gap-2 text-xs text-green-800">
-                    <span className="flex items-center space-x-1 bg-green-100 border border-green-300 rounded-full px-3 py-1">
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className="text-[10px]"
-                      />
-                      <span>SGS Tested</span>
-                    </span>
-                    <span className="flex items-center space-x-1 bg-green-100 border border-green-300 rounded-full px-3 py-1">
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className="text-[10px]"
-                      />
-                      <span>FDA Approved</span>
-                    </span>
-                    <span className="flex items-center space-x-1 bg-green-100 border border-green-300 rounded-full px-3 py-1">
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className="text-[10px]"
-                      />
-                      <span>OKComposite</span>
-                    </span>
-                    <span className="flex items-center space-x-1 bg-green-100 border border-green-300 rounded-full px-3 py-1">
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className="text-[10px]"
-                      />
-                      <span>ISO 14001</span>
-                    </span>
-                  </div>
-                </div>
+
                 <div className="mb-6">
                   <h2 className="text-sm font-semibold text-gray-900 mb-2">
                     Product Details
