@@ -56,7 +56,9 @@ const Footer: React.FC = () => {
     { to: "/contact", label: "Contact" },
     { to: "/partner", label: "Become Our Partner" },
     { to: "/quote", label: "Get Quote" },
-   
+    { to: "/shipping-policy", label: "Shipping Policy" },
+    { to: "/payments", label: "Payments" },
+    { to: "/return-cancellation", label: "Return & Cancellation" },
   ];
 
   const productLinks = [
