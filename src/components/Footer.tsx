@@ -48,12 +48,16 @@ const Footer: React.FC = () => {
   const quickLinks = [
     { to: "/products", label: "Products" },
     { to: "/about-us", label: "About Us" },
+    { to: "/manufacturing", label: "Manufacturing" },
     { to: "/career", label: "Career" },
     { to: "/export", label: "Export" },
-    { to: "/sustainability/eco-initiatives", label: "Eco-Initiatives" },
-    { to: "/sustainability/eco-activities", label: "Eco-Activities" },
     { to: "/blog", label: "Blog" },
     { to: "/contact", label: "Contact" },
+  ];
+
+  const servicesLinks = [
+    { to: "/sustainability/eco-initiatives", label: "Eco-Initiatives" },
+    { to: "/sustainability/eco-activities", label: "Eco-Activities" },
     { to: "/partner", label: "Become Our Partner" },
     { to: "/quote", label: "Get Quote" },
     { to: "/shipping-policy", label: "Shipping Policy" },
@@ -104,30 +108,45 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex flex-col space-y-4 min-w-[120px]">
-          <h3 className="font-semibold text-white text-base">Quick Links</h3>
-          <ul className="space-y-2 text-sm font-normal text-white">
-            {quickLinks.map((link, index) => (
-              <li key={index}>
-                <Link href={link.to} className="hover:text-[#7ED6A3]">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 flex-1 max-w-2xl">
+          <div className="flex flex-col space-y-4">
+            <h3 className="font-semibold text-white text-base">Quick Links</h3>
+            <ul className="space-y-2 text-sm font-normal text-white">
+              {quickLinks.map((link, index) => (
+                <li key={index}>
+                  <Link href={link.to} className="hover:text-[#7ED6A3]">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <div className="flex flex-col space-y-4 min-w-[140px]">
-          <h3 className="font-semibold text-white text-base">Products</h3>
-          <ul className="space-y-2 text-sm font-normal text-white">
-            {productLinks.map((link, index) => (
-              <li key={index}>
-                <Link href={link.to} className="hover:text-[#7ED6A3]">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="flex flex-col space-y-4">
+            <h3 className="font-semibold text-white text-base">Products</h3>
+            <ul className="space-y-2 text-sm font-normal text-white">
+              {productLinks.map((link, index) => (
+                <li key={index}>
+                  <Link href={link.to} className="hover:text-[#7ED6A3]">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex flex-col space-y-4">
+            <h3 className="font-semibold text-white text-base">Services & Policies</h3>
+            <ul className="space-y-2 text-sm font-normal text-white">
+              {servicesLinks.map((link, index) => (
+                <li key={index}>
+                  <Link href={link.to} className="hover:text-[#7ED6A3]">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="flex flex-col space-y-4 max-w-xs">

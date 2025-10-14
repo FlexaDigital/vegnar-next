@@ -25,7 +25,7 @@ const ContactInfo: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8">
         {/* Email */}
         <div className="bg-white rounded-lg p-6 shadow-sm w-full">
           <div className="flex items-center mb-2">
@@ -36,17 +36,17 @@ const ContactInfo: React.FC = () => {
           </div>
           <p className="text-sm text-[#4a4a4a] mb-1">General Inquiries:</p>
           <a
-            href="mailto:connect@vegnargreen.com"
+            href="mailto:connect@vegnar.com"
             className="text-[#0f4d3a] text-sm block mb-2 hover:underline"
           >
             connect@vegnar.com
           </a>
           <p className="text-sm text-[#4a4a4a] mb-1">Become a Partner:</p>
           <a
-            href="mailto:partners@vegnargreen.com"
+            href="mailto:partner@vegnar.com"
             className="text-[#0f4d3a] text-sm hover:underline"
           >
-            partners@vegnar.com
+            partner@vegnar.com
           </a>
         </div>
 
@@ -67,13 +67,13 @@ const ContactInfo: React.FC = () => {
           </a>
         </div>
 
-        {/* Address */}
+        {/* Address - India */}
         <div className="bg-white rounded-lg p-6 shadow-sm w-full">
           <div className="flex items-center mb-2">
             <div className="bg-[#d9f5e8] text-[#0f4d3a] rounded-full p-3 mr-3">
               <FontAwesomeIcon icon={faMapMarkerAlt} className="w-5 h-5" />
             </div>
-            <h4 className="font-semibold text-sm">Visit Us</h4>
+            <h4 className="font-semibold text-sm">India Office</h4>
           </div>
           <address className="not-italic text-sm text-[#4a4a4a] leading-relaxed">
             Vegnar Green Headquarters<br />
@@ -81,6 +81,27 @@ const ContactInfo: React.FC = () => {
             150 Feet Ring Rd<br />
             Rajkot, Gujarat 360007
           </address>
+        </div>
+
+        {/* Address - USA */}
+        <div className="bg-white rounded-lg p-6 shadow-sm w-full">
+          <div className="flex items-center mb-2">
+            <div className="bg-[#d9f5e8] text-[#0f4d3a] rounded-full p-3 mr-3">
+              <FontAwesomeIcon icon={faMapMarkerAlt} className="w-5 h-5" />
+            </div>
+            <h4 className="font-semibold text-sm">USA Office</h4>
+          </div>
+          <address className="not-italic text-sm text-[#4a4a4a] leading-relaxed">
+            30 N Gould St Ste R<br />
+            Sheridan, WY 82801-6317<br />
+            United States
+          </address>
+          <a
+            href="mailto:usa@vegnar.com"
+            className="text-[#0f4d3a] text-sm hover:underline"
+          >
+            usa@vegnar.com
+          </a>
         </div>
 
        
