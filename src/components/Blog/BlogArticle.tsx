@@ -36,10 +36,37 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
 
   useEffect(() => {
     if (post?.content?.rendered && contentRef.current) {
-      // First, modify the content to add IDs to headings
+      // First, modify the content to add IDs to headings and process images
       const content = post.content.rendered;
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = content;
+
+      // Process images to use actual sizes
+      const images = tempDiv.querySelectorAll('img');
+      images.forEach((img) => {
+        // Remove width and height attributes to use actual image size
+        img.removeAttribute('width');
+        img.removeAttribute('height');
+        
+        // If srcset exists, use the largest available image
+        const srcset = img.getAttribute('srcset');
+        if (srcset) {
+          const sources = srcset.split(',').map(s => s.trim());
+          const largestSource = sources[sources.length - 1]; // Last one is usually largest
+          const largestUrl = largestSource.split(' ')[0];
+          img.src = largestUrl;
+        }
+        
+        // Remove sizes attribute to prevent browser from selecting smaller images
+        img.removeAttribute('sizes');
+        
+        // Add styles for actual size display
+        img.style.width = 'auto';
+        img.style.height = 'auto';
+        img.style.maxWidth = 'none';
+        img.style.display = 'block';
+        img.style.margin = '0 auto';
+      });
 
       const headings = tempDiv.querySelectorAll('h2, h3, h4, h5, h6');
       const flatToc: Heading[] = [];
@@ -78,7 +105,7 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
         stack.push(newHeading);
       });
 
-      // Update the content with IDs
+      // Update the content with IDs and processed images
       contentRef.current.innerHTML = tempDiv.innerHTML;
       setTableOfContents(toc);
 
