@@ -213,7 +213,7 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
   return (
     <div className="bg-white text-gray-900 relative min-h-screen font-sans">
       {/* Hero Section */}
-      <div className="relative min-h-[400px] w-full overflow-hidden mt-20">
+      <div className="relative min-h-[400px] w-full overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src={image}
