@@ -282,20 +282,36 @@ export default function ExportPage() {
           <div className="space-y-4">
             {[
               {
-                question: "What makes Vegnar Green a reliable sugarcane bagasse exporter from India?",
-                answer: "We are ISO 9001:2015 certified with FDA approval, maintaining consistent quality standards. Our export-oriented facility has a monthly capacity of 15+ containers with dedicated quality control teams ensuring every shipment meets international standards."
+                question: "Why choose Vegnar Greens as your bagasse manufacturer worldwide?",
+                answer: "As a leading bagasse manufacturer worldwide, we operate ISO 9001:2015 certified facilities with 50M+ annual production capacity. Our global bagasse products manufacturer status is backed by FDA approval, CE marking, and consistent quality delivery to 25+ countries with 99.8% quality consistency rate."
               },
               {
-                question: "Do you provide custom packaging for international markets?",
-                answer: "Yes, we offer private labeling, custom packaging designs, and branding solutions tailored for different international markets including USA, UK, Germany, and other European countries."
+                question: "What makes you a trusted bagasse exporter global partner?",
+                answer: "Our bagasse exporter global operations include dedicated export teams, international certifications, and established logistics networks. We serve as a reliable worldwide bagasse supplier with monthly capacity of 15+ containers and complete documentation support for seamless international trade."
               },
               {
-                question: "What are your export terms and delivery options?",
-                answer: "We offer flexible terms including FOB, CIF, and DDP. Our experienced logistics team ensures timely delivery to major ports worldwide with complete documentation support for smooth customs clearance."
+                question: "Do you offer OEM and private label manufacturing services?",
+                answer: "Yes, as an OEM bagasse products manufacturer, we provide comprehensive private label solutions including custom packaging design, brand-specific product development, and market-specific customization for international distributors and retailers worldwide."
               },
               {
-                question: "Are your products certified for international markets?",
-                answer: "All our products are FDA approved for USA, CE marked for Europe, and comply with international food safety standards. We provide complete certification documentation with every export shipment."
+                question: "Which international markets do you serve as a bagasse manufacturer?",
+                answer: "We serve as bagasse manufacturer USA, bagasse exporter UK, bagasse supplier Germany, bagasse manufacturer Australia, and bagasse exporter Canada. Our operations extend across Europe, Asia-Pacific, Middle East, and North America with region-specific compliance and certifications."
+              },
+              {
+                question: "What certifications do you have as an ISO certified bagasse manufacturer?",
+                answer: "As an ISO certified bagasse manufacturer, we hold ISO 9001:2015, FDA approval, CE marking, BRC certification, HACCP compliance, and SGS testing. All products meet international food safety standards with complete certification documentation for global markets."
+              },
+              {
+                question: "What is your capacity as a wholesale bagasse manufacturer worldwide?",
+                answer: "Our wholesale bagasse manufacturer worldwide capacity includes 50M+ pieces annually, 15+ containers monthly export volume, and flexible production scheduling. As a bulk bagasse exporter global partner, we handle large volume orders with consistent quality and timely delivery."
+              },
+              {
+                question: "How do you ensure quality as a sugarcane bagasse manufacturer international?",
+                answer: "Our sugarcane bagasse manufacturer international quality system includes multi-stage quality control, international testing standards, batch tracking, and continuous monitoring. Every shipment undergoes rigorous testing to meet destination country requirements and international food safety standards."
+              },
+              {
+                question: "What export terms do you offer as a bagasse exporter global company?",
+                answer: "As a bagasse exporter global company, we offer flexible terms including FOB, CIF, DDP, and EXW. Our experienced international trade team provides complete logistics support, customs documentation, and shipping coordination to ensure smooth delivery worldwide."
               }
             ].map((faq, index) => (
               <details key={index} className="border border-gray-200 rounded-lg">

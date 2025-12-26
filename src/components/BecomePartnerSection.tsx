@@ -22,7 +22,7 @@ const BecomePartnerSection = () => {
         };
       case '/export':
         return {
-          title: 'Start Your Export Journey',
+          title: 'Join with us for greener future',
           subtitle: 'Partner with us for global distribution or request export quotes for international markets.'
         };
       case '/products':

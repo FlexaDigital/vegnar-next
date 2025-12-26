@@ -226,7 +226,7 @@ export default function PartnerForm() {
     try {
       console.log('Sending payload:', payload);
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbys6WK8uBmZQM2vP5KMOu16UWd1qwsUbBmdvp9qxeioPb3B6F2mSpyai2pT1PJYQsZQJQ/exec",
+        "https://script.google.com/macros/s/AKfycbw9m5rimawXXH97OGFYu6Ji8Uin4b-9GFpYN8A3p_isdvak9gQ7nMPXr3eJ3A9a86rqCA/exec",
         {
           method: "POST",
           mode: "no-cors",
