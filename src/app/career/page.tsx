@@ -269,7 +269,7 @@ export default function CareerPage() {
                       </div>
                     </div>
                     <Link 
-                      href={`/contact?job=${job.title}`}
+                      href={`/contact?job=${job.title.toLowerCase().replace(/\s+/g, '-')}`}
                       className="mt-4 md:mt-0 inline-flex items-center justify-center bg-gradient-to-r from-[#1a7a2b] to-[#2d8f3f] text-white font-semibold rounded-lg px-6 py-2 hover:from-[#0f5a1f] hover:to-[#1a7a2b] transition-all duration-300 shadow-md hover:shadow-lg"
                     >
                       Apply Now
