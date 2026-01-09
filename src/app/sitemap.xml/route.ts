@@ -1,71 +1,181 @@
 import { NextResponse } from 'next/server';
 
-const SITE_URL = 'https://www.vegnar.com';
-const WORDPRESS_API = 'https://cms.vegnar.com/wp-json/wp/v2';
+interface Product {
+  id: number;
+  slug: string;
+  modified: string;
+  product_category?: number[];
+}
 
-async function fetchData(endpoint: string) {
+interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  parent: number;
+}
+
+interface BlogPost {
+  id: number;
+  slug: string;
+  modified: string;
+}
+
+async function fetchProducts(): Promise<Product[]> {
   try {
-    const res = await fetch(`${WORDPRESS_API}${endpoint}`, { next: { revalidate: 3600 } });
-    return res.ok ? await res.json() : [];
+    const res = await fetch('https://cms.vegnar.com/wp-json/wp/v2/products?per_page=100&_fields=id,slug,modified,product_category', {
+      next: { revalidate: 3600 }
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch {
+    return [];
+  }
+}
+
+async function fetchCategories(): Promise<Category[]> {
+  try {
+    const res = await fetch('https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100&_fields=id,name,slug,parent', {
+      next: { revalidate: 3600 }
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch {
+    return [];
+  }
+}
+
+async function fetchBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const res = await fetch('https://cms.vegnar.com/wp-json/wp/v2/posts?per_page=100&_fields=id,slug,modified', {
+      next: { revalidate: 3600 }
+    });
+    if (!res.ok) return [];
+    return await res.json();
   } catch {
     return [];
   }
 }
 
 export async function GET() {
-  try {
-    const [products, categories, posts] = await Promise.all([
-      fetchData('/products?per_page=100&_embed'),
-      fetchData('/product_category?per_page=100'),
-      fetchData('/posts?per_page=100')
-    ]);
+  const [products, categories, blogPosts] = await Promise.all([
+    fetchProducts(),
+    fetchCategories(),
+    fetchBlogPosts()
+  ]);
 
-    const staticCategories = ['bowls', 'clamshells', 'meal-trays', 'round-plates', 'sipper-lid', 'takeaway-container', 'tray'];
-    const currentDate = new Date().toISOString().split('T')[0];
+  const baseUrl = 'https://www.vegnar.com';
+  const currentDate = new Date().toISOString().split('T')[0];
 
-    let xml = `<?xml version="1.0" encoding="UTF-8"?>
+  let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>${SITE_URL}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>${SITE_URL}/about-us</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>${SITE_URL}/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>${SITE_URL}/blog</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>${SITE_URL}/products</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>${SITE_URL}/partner</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-`;
+  <url>
+    <loc>${baseUrl}/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <lastmod>${currentDate}</lastmod>
+  </url>
+  <url>
+    <loc>${baseUrl}/about-us</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>${currentDate}</lastmod>
+  </url>
+  <url>
+    <loc>${baseUrl}/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>${currentDate}</lastmod>
+  </url>
+  <url>
+    <loc>${baseUrl}/blog</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <lastmod>${currentDate}</lastmod>
+  </url>
+  <url>
+    <loc>${baseUrl}/products</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <lastmod>${currentDate}</lastmod>
+  </url>
+  <url>
+    <loc>${baseUrl}/partner</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>${currentDate}</lastmod>
+  </url>
+  <url>
+    <loc>${baseUrl}/quote</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>${currentDate}</lastmod>
+  </url>`;
 
-    // Add categories
-    (categories.length > 0 ? categories : staticCategories.map(slug => ({ slug }))).forEach((cat: any) => {
-      xml += `  <url><loc>${SITE_URL}/products/${cat.slug}</loc><lastmod>${currentDate}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-`;
-    });
+  // Add category URLs
+  categories.forEach(category => {
+    const lastmod = new Date().toISOString().split('T')[0];
+    const parentCategory = categories.find(cat => cat.id === category.parent);
+    
+    if (parentCategory) {
+      sitemap += `
+  <url>
+    <loc>${baseUrl}/products/${parentCategory.slug}/${category.slug}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+    } else {
+      sitemap += `
+  <url>
+    <loc>${baseUrl}/products/${category.slug}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+    }
+  });
 
-    // Add products
-    products.forEach((product: any) => {
-      const category = categories.find((cat: any) => product.product_category?.includes(cat.id));
-      const categorySlug = category?.slug || 'uncategorized';
-      const lastmod = product.modified?.split('T')[0] || currentDate;
-      xml += `  <url><loc>${SITE_URL}/products/${categorySlug}/${product.slug}</loc><lastmod>${lastmod}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-`;
-    });
+  // Add product URLs
+  products.forEach(product => {
+    const lastmod = new Date(product.modified).toISOString().split('T')[0];
+    const productCategory = product.product_category?.[0];
+    const category = categories.find(cat => cat.id === productCategory);
+    
+    if (category) {
+      const parentCategory = categories.find(cat => cat.id === category.parent);
+      const categoryPath = parentCategory 
+        ? `${parentCategory.slug}/${category.slug}`
+        : category.slug;
+      
+      sitemap += `
+  <url>
+    <loc>${baseUrl}/products/${categoryPath}/${product.slug}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+    }
+  });
 
-    // Add blog posts
-    posts.forEach((post: any) => {
-      const lastmod = post.modified?.split('T')[0] || currentDate;
-      xml += `  <url><loc>${SITE_URL}/blog/${post.slug}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-`;
-    });
+  // Add blog post URLs
+  blogPosts.forEach(post => {
+    const lastmod = new Date(post.modified).toISOString().split('T')[0];
+    sitemap += `
+  <url>
+    <loc>${baseUrl}/blog/${post.slug}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+  });
 
-    xml += '</urlset>';
+  sitemap += `
+</urlset>`;
 
-    return new NextResponse(xml, {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600',
-      },
-    });
-  } catch (error) {
-    console.error('Error generating sitemap:', error);
-    return new NextResponse('Error generating sitemap', { status: 500 });
-  }
+  return new NextResponse(sitemap, {
+    headers: {
+      'Content-Type': 'application/xml',
+      'Cache-Control': 'public, max-age=3600, s-maxage=3600'
+    }
+  });
 }

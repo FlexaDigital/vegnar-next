@@ -32,7 +32,6 @@ const nextConfig = {
         pathname: '/avatar/**',
       }
     ],
-    domains: ['cms.vegnar.com', 'www.vegnar.com'],
   },
   async headers() {
     return [
@@ -50,10 +49,6 @@ const nextConfig = {
           {
             key: 'X-Frame-Options',
             value: 'DENY'
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
           },
           {
             key: 'X-Powered-By',
