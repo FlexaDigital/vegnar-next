@@ -595,7 +595,17 @@ export async function generateMetadata({ params }: { params: { categorySlug: str
       creator: '@VegnarGreens',
       site: '@VegnarGreens'
     },
-    robots: { index: true, follow: true },
+    robots: { 
+      index: true, 
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     authors: [{ name: 'Vegnar Green' }],
     publisher: 'Vegnar Green'
   };

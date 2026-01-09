@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
-import { FaBars, FaChevronDown, FaTimes } from "react-icons/fa";
+import { FaBars, FaChevronDown, FaTimes, FaSearch } from "react-icons/fa";
+import SearchBar from "./SearchBar";
 
 import logo from "../../public/assets/img/vegnar-green.png";
 
@@ -23,6 +24,7 @@ interface HeaderProps {
 const Header = ({ categories }: HeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [productSubmenu, setProductSubmenu] = useState<ProductCategory[]>(categories || []);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -112,6 +114,21 @@ const Header = ({ categories }: HeaderProps) => {
 
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center space-x-6">
+            <div className="relative">
+              <button 
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className="p-2 text-gray-700 hover:text-vegnar-green rounded-full hover:bg-vegnar-light transition-colors duration-200"
+              >
+                <FaSearch className="text-lg" />
+              </button>
+              {/* Search Bar Overlay */}
+              {isSearchOpen && (
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-40">
+                  <SearchBar onItemClick={() => setIsSearchOpen(false)} />
+                </div>
+              )}
+            </div>
+            
             {/* Products Dynamic Dropdown */}
             <div
               className="relative group"
@@ -216,20 +233,35 @@ const Header = ({ categories }: HeaderProps) => {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-green-900 hover:text-vegnar-green p-2 rounded-md"
-            onClick={toggleMobileMenu}
-            aria-label="Toggle mobile menu"
-          >
-            {isMobileMenuOpen ? <FaTimes className="text-lg" /> : <FaBars className="text-lg" />}
-          </button>
+          {/* Mobile Icons */}
+          <div className="md:hidden flex items-center space-x-2">
+            <button 
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="p-2 text-gray-700 hover:text-vegnar-green rounded-full hover:bg-vegnar-light transition-colors duration-200"
+            >
+              <FaSearch className="text-lg" />
+            </button>
+            <button
+              className="text-green-900 hover:text-vegnar-green p-2 rounded-md"
+              onClick={toggleMobileMenu}
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <FaTimes className="text-lg" /> : <FaBars className="text-lg" />}
+            </button>
+          </div>
         </div>
       </div>
+
+
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <nav ref={mobileMenuRef} className="md:hidden bg-white border-t border-gray-200 shadow-md">
+          {/* Mobile Search Bar */}
+          <div className="px-4 py-3 border-b border-gray-100">
+            <SearchBar />
+          </div>
+          
           <ul className="flex flex-col px-4 py-4 space-y-1">
             {/* Dynamic Products */}
             <li>

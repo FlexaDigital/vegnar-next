@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiFilter, FiX } from 'react-icons/fi';
 import Link from 'next/link';
+import SearchBar from './SearchBar';
 
 type Category = {
     id: number;
@@ -61,6 +62,12 @@ const ProductList: React.FC<ProductListProps> = ({ products, allCategories, subC
     const CategoryContent = () => {
         return (
             <>
+                {/* Search Bar Section */}
+                <section className="p-4 rounded-md shadow-md bg-white mb-4">
+                    <h3 className="text-lg font-semibold text-green-800 mb-3">Search Products</h3>
+                    <SearchBar className="w-full" />
+                </section>
+                
                 {allCategories.length > 0 && (
                     <section className="p-4 rounded-md shadow-md bg-white">
                         <div className="flex justify-between items-center mb-3">
