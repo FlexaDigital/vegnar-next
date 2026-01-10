@@ -7,12 +7,7 @@ import CertificationsSection from "@/components/CertificationsSection";
 
 import CustomizationSection from "@/components/CustomizationSection";
 import { FaCheckCircle } from "react-icons/fa";
-import {
-  GiSprout,
-  GiCancel,
-  GiHourglass,
-  GiRecycle,
-} from "react-icons/gi";
+import { GiSprout, GiCancel, GiHourglass, GiRecycle } from "react-icons/gi";
 import { IconType } from "react-icons";
 import ProductCategories from "@/components/ProductCategories";
 import BrochureSection from "@/components/BrochureSection";
@@ -20,15 +15,16 @@ import ProductSection from "@/components/ProductSection";
 import BecomePartnerSection from "@/components/BecomePartnerSection";
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#ffffff',
+  themeColor: "#ffffff",
 };
 
 export const metadata: Metadata = {
-  title: "Vegnar Greens | Leading Manufacturer of Biodegradable Tableware & Eco-Friendly Packaging in India",
+  title:
+    "Vegnar Greens | Leading Manufacturer of Biodegradable Tableware & Eco-Friendly Packaging in India",
   description:
     "Vegnar is India’s leading manufacturer of biodegradable tableware and eco-friendly packaging. Offering compostable products made from sugarcane bagasse, areca palm leaves, and more — perfect for sustainable foodservice, exports, and a plastic-free future.",
   keywords:
@@ -41,7 +37,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://www.vegnar.com/images/og-banner.jpg", 
+        url: "https://www.vegnar.com/images/og-banner.jpg",
       },
     ],
   },
@@ -50,9 +46,7 @@ export const metadata: Metadata = {
     title: "Vegnar Green | Biodegradable Tableware & Eco-Friendly Bags",
     description:
       "Sustainable, compostable, and plastic-free tableware and bags by Vegnar Green – leading the change with bio-innovation from sugarcane bagasse and areca palm leaf.",
-    images: [
-      "https://www.vegnar.com/images/twitter-banner.jpg",
-    ],
+    images: ["https://www.vegnar.com/images/twitter-banner.jpg"],
   },
   alternates: {
     canonical: "https://www.vegnar.com",
@@ -75,8 +69,12 @@ const GreenPromiseCard = ({
     <div className="bg-[#D4F5E1] text-[#007A3E] rounded-full p-4 mb-4 flex items-center justify-center text-2xl shadow-md">
       <Icon className="w-6 h-6" />
     </div>
-    <h3 className="font-extrabold text-lg mb-3 whitespace-pre-line text-gray-800">{title}</h3>
-    <p className="text-sm leading-relaxed max-w-[280px] text-gray-600">{description}</p>
+    <h3 className="font-extrabold text-lg mb-3 whitespace-pre-line text-gray-800">
+      {title}
+    </h3>
+    <p className="text-sm leading-relaxed max-w-[280px] text-gray-600">
+      {description}
+    </p>
   </div>
 );
 
@@ -115,7 +113,15 @@ export default function Home() {
         id="green-promises" // Added an ID for the anchor link
         className="text-[#004D40] py-16 px-4 sm:px-6 lg:px-20 relative"
       >
-        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'url(/assets/bg-green.png)', backgroundRepeat: 'repeat', backgroundSize: '300px auto', backgroundAttachment: 'fixed'}}></div>
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage: "url(/assets/bg-green.png)",
+            backgroundRepeat: "repeat",
+            backgroundSize: "300px auto",
+            backgroundAttachment: "fixed",
+          }}
+        ></div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
             ECO-FRIENDLY
@@ -140,17 +146,24 @@ export default function Home() {
           ))}
         </div>
       </section>
-    
 
-       <section className="py-16 px-4 sm:px-6 lg:px-20 relative">
-        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'url(/assets/bg-green.png)', backgroundRepeat: 'repeat', backgroundSize: '300px auto', backgroundAttachment: 'fixed'}}></div>
+      <section className="py-16 px-4 sm:px-6 lg:px-20 relative">
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage: "url(/assets/bg-green.png)",
+            backgroundRepeat: "repeat",
+            backgroundSize: "300px auto",
+            backgroundAttachment: "fixed",
+          }}
+        ></div>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-12 relative z-10">
-        <Image
-  src="/assets/img/waste-to-worth.jpg"
-  alt="About us | Vagnar Green"
-  width={500}
-  height={300}
-/>
+          <Image
+            src="/assets/img/waste-to-worth.jpg"
+            alt="About us | Vagnar Green"
+            width={500}
+            height={300}
+          />
           <div className="flex-1">
             <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
               OUR STORY
@@ -186,17 +199,16 @@ export default function Home() {
           </div>
         </div>
       </section>
-<section id="ProductCatagories">
+      <section id="ProductCatagories">
         <ProductCategories />
       </section>
 
       <ProductSection />
 
-   
-    <CertificationsSection/>
-    <BrochureSection />
-    <CustomizationSection />
-    <BecomePartnerSection />
+      <CertificationsSection />
+      <BrochureSection />
+      <CustomizationSection />
+      <BecomePartnerSection />
     </>
   );
 }

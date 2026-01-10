@@ -5,7 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { faFacebookF, faInstagram, faLinkedinIn, faPinterestP } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFacebookF,
+  faInstagram,
+  faLinkedinIn,
+  faPinterestP,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -17,8 +22,8 @@ const Footer: React.FC = () => {
     setIsSubmitting(true);
 
     const payload = {
-      formType: 'NewsletterForm',
-      'Email Address': email
+      formType: "NewsletterForm",
+      "Email Address": email,
     };
 
     try {
@@ -48,7 +53,7 @@ const Footer: React.FC = () => {
   const quickLinks = [
     { to: "/products", label: "Products" },
     { to: "/about-us", label: "About Us" },
-    { to: "/manufacturing", label: "Manufacturing" },
+    { to: "/", label: "Manufacturing" },
     { to: "/career", label: "Career" },
     { to: "/export", label: "Export" },
     { to: "/blog", label: "Blog" },
@@ -73,7 +78,6 @@ const Footer: React.FC = () => {
     { to: "/products/sipper-lid", label: "Sipper Lids" },
     { to: "/products/takeaway-container", label: "Takeaway Container" },
     { to: "/products/bagasse-tray", label: "Tray" },
-
   ];
 
   return (
@@ -93,16 +97,32 @@ const Footer: React.FC = () => {
             solutions. Join us in creating a plastic-free future.
           </p>
           <div className="flex space-x-4">
-            <a href="https://www.facebook.com/vegnargreens" aria-label="Facebook" className="text-white hover:text-[#7ED6A3] transition-colors">
+            <a
+              href="https://www.facebook.com/vegnargreens"
+              aria-label="Facebook"
+              className="text-white hover:text-[#7ED6A3] transition-colors"
+            >
               <FontAwesomeIcon icon={faFacebookF} className="text-xl" />
             </a>
-            <a href="https://www.instagram.com/vegnargreens/" aria-label="Instagram" className="text-white hover:text-[#7ED6A3] transition-colors">
+            <a
+              href="https://www.instagram.com/vegnargreens/"
+              aria-label="Instagram"
+              className="text-white hover:text-[#7ED6A3] transition-colors"
+            >
               <FontAwesomeIcon icon={faInstagram} className="text-xl" />
             </a>
-            <a href="https://www.linkedin.com/company/vegnargreens/" aria-label="LinkedIn" className="text-white hover:text-[#7ED6A3] transition-colors">
+            <a
+              href="https://www.linkedin.com/company/vegnargreens/"
+              aria-label="LinkedIn"
+              className="text-white hover:text-[#7ED6A3] transition-colors"
+            >
               <FontAwesomeIcon icon={faLinkedinIn} className="text-xl" />
             </a>
-            <a href="https://in.pinterest.com/vegnargreens/" aria-label="Pinterest" className="text-white hover:text-[#7ED6A3] transition-colors">
+            <a
+              href="https://in.pinterest.com/vegnargreens/"
+              aria-label="Pinterest"
+              className="text-white hover:text-[#7ED6A3] transition-colors"
+            >
               <FontAwesomeIcon icon={faPinterestP} className="text-xl" />
             </a>
           </div>
@@ -136,7 +156,9 @@ const Footer: React.FC = () => {
           </div>
 
           <div className="flex flex-col space-y-4">
-            <h3 className="font-semibold text-white text-base">Services & Policies</h3>
+            <h3 className="font-semibold text-white text-base">
+              Services & Policies
+            </h3>
             <ul className="space-y-2 text-sm font-normal text-white">
               {servicesLinks.map((link, index) => (
                 <li key={index}>
@@ -171,7 +193,10 @@ const Footer: React.FC = () => {
               className="bg-[#0D7B52] rounded-r-md px-4 py-2 flex items-center justify-center hover:bg-[#0a5a3a] disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Subscribe"
             >
-              <FontAwesomeIcon icon={faPaperPlane} className="text-white w-4 h-4" />
+              <FontAwesomeIcon
+                icon={faPaperPlane}
+                className="text-white w-4 h-4"
+              />
             </button>
           </form>
           {status && (
@@ -182,16 +207,18 @@ const Footer: React.FC = () => {
           </p>
         </div>
       </div>
-      
+
       {/* Copyright Section */}
       <div className="border-t border-white/20 py-4">
         <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center text-sm text-white/80">
-          <p>&copy; {new Date().getFullYear()} Vegnar Green. All rights reserved.</p>
           <p>
-            Developed by{' '}
-            <a 
-              href="https://flexadigital.com" 
-              target="_blank" 
+            &copy; {new Date().getFullYear()} Vegnar Green. All rights reserved.
+          </p>
+          <p>
+            Developed by{" "}
+            <a
+              href="https://flexadigital.com"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-[#7ED6A3] hover:text-white transition-colors font-medium"
             >

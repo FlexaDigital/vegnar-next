@@ -18,18 +18,6 @@ const brochures: Brochure[] = [
     description: "Explore our range of sugarcane bagasse tableware.",
     downloadLink: "/assets/downloads/Vegnar-greens-sugarcane-bagasse-tableware.pdf",
   },
-  {
-    icon: <FaFilePdf className="text-lg text-[#2B7A5B]" />,
-    title: "Areca Palm Tableware",
-    description: "Discover our areca palm tableware options.",
-    downloadLink: "/assets/downloads/Vegnar-Areca-Tableware.pdf",
-  },
-  {
-    icon: <FaFilePdf className="text-lg text-[#2B7A5B]" />,
-    title: "Bio Bags",
-    description: "Find specifications of all types of bio bags.",
-    downloadLink: "/assets/downloads/Vegnar-Bio-Bags-Export.pdf",
-  },
 ];
 
 const BrochureSection: React.FC = () => {
@@ -58,11 +46,11 @@ const BrochureSection: React.FC = () => {
     </div>
 
     {/* Brochure Cards */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4 max-w-7xl mx-auto">
+    <div className="flex justify-center px-4">
       {brochures.map((item, index) => (
         <div
           key={index}
-          className="bg-white/60 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center text-center shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl"
+          className="bg-white/60 backdrop-blur-md rounded-2xl p-8 flex flex-col items-center text-center shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl max-w-sm w-full"
         >
           <div className="bg-[#C6F1D6] text-[#2B7A5B] rounded-full w-12 h-12 flex items-center justify-center mb-4 shadow-md">
             {item.icon}

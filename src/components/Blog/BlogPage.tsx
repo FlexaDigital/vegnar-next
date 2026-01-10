@@ -234,7 +234,8 @@ const BlogPage: React.FC = () => {
               {currentPosts.map((article) => (
                 <article
                   key={article.id}
-                  className="bg-white rounded-lg shadow p-4 flex flex-col"
+                  className="bg-white rounded-lg shadow p-4 flex flex-col cursor-pointer hover:shadow-lg transition-shadow"
+                  onClick={() => handleLinkClick(article.url)}
                 >
                   <img
                     src={article.image}
@@ -254,9 +255,9 @@ const BlogPage: React.FC = () => {
                   <h3 className="text-base font-semibold mb-1">{article.title}</h3>
                   <p className="text-sm text-gray-600 flex-grow">{article.summary}</p>
                   <div className="mt-3 flex justify-between items-center text-sm text-green-700 font-semibold">
-                    <Link href={article.url} onClick={() => handleLinkClick(article.url)} className="hover:underline">
+                    <span className="hover:underline">
                       Read More →
-                    </Link>
+                    </span>
                     <span>{article.readTime}</span>
                   </div>
                 </article>

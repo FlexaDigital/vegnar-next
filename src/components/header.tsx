@@ -25,19 +25,25 @@ const Header = ({ categories }: HeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [productSubmenu, setProductSubmenu] = useState<ProductCategory[]>(categories || []);
+  const [productSubmenu, setProductSubmenu] = useState<ProductCategory[]>(
+    categories || []
+  );
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     if (!categories) {
-      fetch("https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100")
+      fetch(
+        "https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100"
+      )
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data)) {
             // Filter to get only parent categories (parent === 0)
-            const parentCategories = data.filter((cat: ProductCategory) => cat.parent === 0);
+            const parentCategories = data.filter(
+              (cat: ProductCategory) => cat.parent === 0
+            );
             setProductSubmenu(parentCategories);
           }
         })
@@ -83,14 +89,14 @@ const Header = ({ categories }: HeaderProps) => {
       submenu: [
         { name: "About Us", link: "/about-us" },
         { name: "Export", link: "/export" },
-        { name: "Career", link: "/career" }
+        { name: "Career", link: "/career" },
       ],
     },
     {
       name: "Sustainability",
       submenu: [
         { name: "Eco Initiatives", link: "/sustainability/eco-initiatives" },
-        { name: "Eco Activities", link: "/sustainability/eco-activities" }
+        { name: "Eco Activities", link: "/sustainability/eco-activities" },
       ],
     },
     { name: "Eco-Talks", link: "/blog" },
@@ -115,7 +121,7 @@ const Header = ({ categories }: HeaderProps) => {
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center space-x-6">
             <div className="relative">
-              <button 
+              <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                 className="p-2 text-gray-700 hover:text-vegnar-green rounded-full hover:bg-vegnar-light transition-colors duration-200"
               >
@@ -128,7 +134,7 @@ const Header = ({ categories }: HeaderProps) => {
                 </div>
               )}
             </div>
-            
+
             {/* Products Dynamic Dropdown */}
             <div
               className="relative group"
@@ -149,7 +155,9 @@ const Header = ({ categories }: HeaderProps) => {
 
               <div
                 className={`absolute left-0 top-full mt-0 w-64 bg-white rounded-md shadow-lg py-1 z-10 transition-all duration-200 ${
-                  activeDropdown === 0 ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-1"
+                  activeDropdown === 0
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-1"
                 }`}
               >
                 <div className="absolute top-0 left-0 right-0 h-2 -translate-y-2" />
@@ -235,7 +243,7 @@ const Header = ({ categories }: HeaderProps) => {
 
           {/* Mobile Icons */}
           <div className="md:hidden flex items-center space-x-2">
-            <button 
+            <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2 text-gray-700 hover:text-vegnar-green rounded-full hover:bg-vegnar-light transition-colors duration-200"
             >
@@ -246,22 +254,36 @@ const Header = ({ categories }: HeaderProps) => {
               onClick={toggleMobileMenu}
               aria-label="Toggle mobile menu"
             >
-              {isMobileMenuOpen ? <FaTimes className="text-lg" /> : <FaBars className="text-lg" />}
+              {isMobileMenuOpen ? (
+                <FaTimes className="text-lg" />
+              ) : (
+                <FaBars className="text-lg" />
+              )}
             </button>
           </div>
         </div>
       </div>
 
-
+      {/* Mobile Search Overlay - Full Width */}
+      {isSearchOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200 shadow-md">
+          <div className="px-4 py-3">
+            <SearchBar onItemClick={() => setIsSearchOpen(false)} />
+          </div>
+        </div>
+      )}
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <nav ref={mobileMenuRef} className="md:hidden bg-white border-t border-gray-200 shadow-md">
+        <nav
+          ref={mobileMenuRef}
+          className="md:hidden bg-white border-t border-gray-200 shadow-md"
+        >
           {/* Mobile Search Bar */}
           <div className="px-4 py-3 border-b border-gray-100">
             <SearchBar />
           </div>
-          
+
           <ul className="flex flex-col px-4 py-4 space-y-1">
             {/* Dynamic Products */}
             <li>
@@ -364,4 +386,3 @@ const Header = ({ categories }: HeaderProps) => {
 };
 
 export default Header;
-
