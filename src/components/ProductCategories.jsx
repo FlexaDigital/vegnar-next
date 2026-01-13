@@ -75,11 +75,14 @@ const ProductCategories = () => {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/20"></div>
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/60 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <div className="text-center text-white p-4">
               <h3 className="font-bold text-lg mb-2">{categories[0].name}</h3>
               <p className="text-sm">{categories[0].description}</p>
             </div>
+          </div>
+          <div className="absolute bottom-2 left-2 md:hidden">
+            <h3 className="font-bold text-white text-sm bg-black/50 px-2 py-1 rounded">{categories[0].name}</h3>
           </div>
         </Link>
         
@@ -91,11 +94,14 @@ const ProductCategories = () => {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/20"></div>
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/60 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <div className="text-center text-white p-4">
               <h3 className="font-bold text-lg mb-2">{categories[1].name}</h3>
               <p className="text-sm">{categories[1].description}</p>
             </div>
+          </div>
+          <div className="absolute bottom-2 left-2 md:hidden">
+            <h3 className="font-bold text-white text-sm bg-black/50 px-2 py-1 rounded">{categories[1].name}</h3>
           </div>
         </Link>
         
@@ -107,11 +113,14 @@ const ProductCategories = () => {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/20"></div>
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/60 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <div className="text-center text-white p-4">
               <h3 className="font-bold text-lg mb-2">{categories[2].name}</h3>
               <p className="text-sm">{categories[2].description}</p>
             </div>
+          </div>
+          <div className="absolute bottom-2 left-2 md:hidden">
+            <h3 className="font-bold text-white text-sm bg-black/50 px-2 py-1 rounded">{categories[2].name}</h3>
           </div>
         </Link>
         
@@ -123,11 +132,14 @@ const ProductCategories = () => {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/20"></div>
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/60 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <div className="text-center text-white p-4">
               <h3 className="font-bold text-lg mb-2">{categories[3].name}</h3>
               <p className="text-sm">{categories[3].description}</p>
             </div>
+          </div>
+          <div className="absolute bottom-2 left-2 md:hidden">
+            <h3 className="font-bold text-white text-xs bg-black/50 px-2 py-1 rounded">{categories[3].name}</h3>
           </div>
         </Link>
         
@@ -140,11 +152,14 @@ const ProductCategories = () => {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/20"></div>
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/60 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <div className="text-center text-white p-4">
               <h3 className="font-bold text-lg mb-2">{categories[4].name}</h3>
               <p className="text-sm">{categories[4].description}</p>
             </div>
+          </div>
+          <div className="absolute bottom-2 left-2 md:hidden">
+            <h3 className="font-bold text-white text-xs bg-black/50 px-2 py-1 rounded">{categories[4].name}</h3>
           </div>
         </Link>
         
@@ -156,11 +171,14 @@ const ProductCategories = () => {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/20"></div>
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/60 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <div className="text-center text-white p-4">
               <h3 className="font-bold text-xl mb-2">{categories[5].name}</h3>
               <p className="text-sm">{categories[5].description}</p>
             </div>
+          </div>
+          <div className="absolute bottom-2 left-2 md:hidden">
+            <h3 className="font-bold text-white text-sm bg-black/50 px-2 py-1 rounded">{categories[5].name}</h3>
           </div>
         </Link>
       </div>
