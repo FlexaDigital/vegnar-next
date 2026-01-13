@@ -81,8 +81,11 @@ const ProductCategories = () => {
               <p className="text-sm">{categories[0].description}</p>
             </div>
           </div>
-          <div className="absolute bottom-2 left-2 md:hidden">
-            <h3 className="font-bold text-white text-sm bg-black/50 px-2 py-1 rounded">{categories[0].name}</h3>
+          <div className="absolute bottom-2 left-2 right-2 md:hidden">
+            <div className="flex items-center justify-between bg-black/50 px-2 py-1 rounded">
+              <h3 className="font-bold text-white text-sm">{categories[0].name}</h3>
+              <span className="text-white">→</span>
+            </div>
           </div>
         </Link>
         
@@ -100,8 +103,11 @@ const ProductCategories = () => {
               <p className="text-sm">{categories[1].description}</p>
             </div>
           </div>
-          <div className="absolute bottom-2 left-2 md:hidden">
-            <h3 className="font-bold text-white text-sm bg-black/50 px-2 py-1 rounded">{categories[1].name}</h3>
+          <div className="absolute bottom-2 left-2 right-2 md:hidden">
+            <div className="flex items-center justify-between bg-black/50 px-2 py-1 rounded">
+              <h3 className="font-bold text-white text-sm">{categories[1].name}</h3>
+              <span className="text-white">→</span>
+            </div>
           </div>
         </Link>
         
@@ -119,8 +125,11 @@ const ProductCategories = () => {
               <p className="text-sm">{categories[2].description}</p>
             </div>
           </div>
-          <div className="absolute bottom-2 left-2 md:hidden">
-            <h3 className="font-bold text-white text-sm bg-black/50 px-2 py-1 rounded">{categories[2].name}</h3>
+          <div className="absolute bottom-2 left-2 right-2 md:hidden">
+            <div className="flex items-center justify-between bg-black/50 px-2 py-1 rounded">
+              <h3 className="font-bold text-white text-sm">{categories[2].name}</h3>
+              <span className="text-white">→</span>
+            </div>
           </div>
         </Link>
         
@@ -138,8 +147,13 @@ const ProductCategories = () => {
               <p className="text-sm">{categories[3].description}</p>
             </div>
           </div>
-          <div className="absolute bottom-2 left-2 md:hidden">
-            <h3 className="font-bold text-white text-xs bg-black/50 px-2 py-1 rounded">{categories[3].name}</h3>
+          <div className="absolute bottom-0.5 left-0.5 right-0.5 md:hidden">
+            <div className="bg-black/50 px-0.5 py-0.5 rounded-sm">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-white text-xs leading-none">{categories[3].name}</h3>
+                <span className="text-white text-xs">→</span>
+              </div>
+            </div>
           </div>
         </Link>
         
@@ -158,8 +172,13 @@ const ProductCategories = () => {
               <p className="text-sm">{categories[4].description}</p>
             </div>
           </div>
-          <div className="absolute bottom-2 left-2 md:hidden">
-            <h3 className="font-bold text-white text-xs bg-black/50 px-2 py-1 rounded">{categories[4].name}</h3>
+          <div className="absolute bottom-0.5 left-0.5 right-0.5 md:hidden">
+            <div className="bg-black/50 px-0.5 py-0.5 rounded-sm">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-white text-xs leading-none">{categories[4].name}</h3>
+                <span className="text-white text-xs">→</span>
+              </div>
+            </div>
           </div>
         </Link>
         
@@ -177,8 +196,11 @@ const ProductCategories = () => {
               <p className="text-sm">{categories[5].description}</p>
             </div>
           </div>
-          <div className="absolute bottom-2 left-2 md:hidden">
-            <h3 className="font-bold text-white text-sm bg-black/50 px-2 py-1 rounded">{categories[5].name}</h3>
+          <div className="absolute bottom-2 left-2 right-2 md:hidden">
+            <div className="flex items-center justify-between bg-black/50 px-2 py-1 rounded">
+              <h3 className="font-bold text-white text-sm">{categories[5].name}</h3>
+              <span className="text-white">→</span>
+            </div>
           </div>
         </Link>
       </div>
