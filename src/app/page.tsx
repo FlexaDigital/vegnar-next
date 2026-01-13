@@ -203,7 +203,7 @@ export default function Home() {
         <ProductCategories />
       </section>
 
-      <ProductSection />
+      {/* <ProductSection /> */}
 
       <CertificationsSection />
       <BrochureSection />
