@@ -1,11 +1,55 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { FaIndustry, FaLeaf, FaCogs, FaCertificate, FaRecycle, FaShieldAlt, FaGlobeAsia, FaWater } from 'react-icons/fa';
 import { GiFactory, GiWheat, GiCheckMark } from 'react-icons/gi';
 
 const ManufacturingSection = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const viewportCenter = window.scrollY + window.innerHeight / 2;
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+      
+      sectionRefs.current.forEach((section, index) => {
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          const sectionCenter = window.scrollY + rect.top + rect.height / 2;
+          const distance = Math.abs(viewportCenter - sectionCenter);
+          
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        }
+      });
+      
+      setActiveIndex(closestIndex);
+      
+      const activeSection = sectionRefs.current[closestIndex];
+      if (activeSection) {
+        const rect = activeSection.getBoundingClientRect();
+        const sectionTop = rect.top;
+        const sectionHeight = rect.height;
+        const viewportMiddle = window.innerHeight / 2;
+        
+        // Calculate progress: 0 when section enters, 1 when section exits
+        const progress = Math.max(0, Math.min(1, (viewportMiddle - sectionTop) / sectionHeight));
+        setScrollProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -62,7 +106,7 @@ const ManufacturingSection = () => {
             </div>
             <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
               <Image
-                src="/assets/img/manufacturing-facility.jpg"
+                src="/assets/img/manufacturing-facility.webp"
                 alt="Vegnar Manufacturing Facility"
                 fill
                 className="object-cover"
@@ -112,37 +156,193 @@ const ManufacturingSection = () => {
         </div>
       </section>
 
-      {/* Production Process */}
-      <section className="py-16 px-4 sm:px-6 lg:px-20 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-block bg-green-100 text-green-800 text-sm font-semibold rounded-full px-4 py-1 mb-4">
-              PRODUCTION FLOW
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Our Manufacturing Process
+      {/* Production Process - Zig-Zag Timeline with Arrows */}
+      <section className="py-20 px-4 sm:px-6 lg:px-20 bg-gradient-to-b from-amber-50/40 to-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12 md:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-3 md:mb-4">
+              Product Life Cycle
             </h2>
-            <p className="text-gray-700 max-w-2xl mx-auto">
-              A streamlined, eco-conscious production line that transforms raw bagasse into export-quality tableware.
+            <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto px-4">
+              From sugarcane fields to natural compost—a complete sustainable journey
             </p>
           </div>
+          
           <div className="relative">
-            <div className="space-y-8">
+            {/* Vertical Center Line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-300 transform -translate-x-1/2 hidden md:block"></div>
+            
+            <div className="space-y-8 md:space-y-20">
               {[
-                { step: '01', title: 'Raw Material Preparation', desc: 'Bagasse is cleaned, dried, and pulped into fine fibers ready for molding.' },
-                { step: '02', title: 'Pulp Formation', desc: 'Fibers are mixed with water to create a uniform pulp mixture with optimal consistency.' },
-                { step: '03', title: 'High-Pressure Molding', desc: 'Pulp is pressed into molds using heat (200°C) and pressure to form tableware shapes.' },
-                { step: '04', title: 'Drying & Curing', desc: 'Products are dried in controlled environments to achieve strength and durability.' },
-                { step: '05', title: 'Quality Inspection', desc: 'Every batch undergoes rigorous testing for strength, leak resistance, and food safety.' },
-                { step: '06', title: 'Packaging & Export', desc: 'Products are packed in recyclable materials and prepared for B2B and export shipments.' }
+                { 
+                  title: 'Sugarcane Cultivation', 
+                  desc: 'Sugarcane is cultivated as a fast-growing, renewable resource. It absorbs CO₂ during growth, making it carbon-negative from the start.',
+                  image: '/assets/img/fixed-sugarcane_1.png',
+                  side: 'right',
+                  nextIcon: '🚜'
+                },
+                { 
+                  title: 'Harvesting', 
+                  desc: 'Mature sugarcane stalks are harvested and transported to processing facilities where bagasse is separated.',
+                  image: '/assets/img/moving-sugarcane.png',
+                  side: 'left',
+                  nextIcon: '⚙️'
+                },
+                { 
+                  title: 'Pulp Extraction', 
+                  desc: 'After juice extraction, sugarcane bagasse is processed into pulp. This agricultural waste is transformed into valuable raw material.',
+                  image: '/assets/img/fixed-paper_3.png',
+                  side: 'right',
+                  nextIcon: '📋'
+                },
+                { 
+                  title: 'Sheet Formation', 
+                  desc: 'The bagasse pulp is molded and pressed into uniform sheets using heat and pressure, creating the base material.',
+                  image: '/assets/img/fixed-product_4.png',
+                  side: 'left',
+                  nextIcon: '🏭'
+                },
+                { 
+                  title: 'Product Manufacturing', 
+                  desc: 'Eco-friendly sheets are cut, shaped, and molded into final tableware products like plates, bowls, and containers.',
+                  image: '/assets/img/fixed-factory.gif',
+                  side: 'right',
+                  nextIcon: '🍽️'
+                },
+                { 
+                  title: 'Usage Phase', 
+                  desc: 'Products are used by consumers for serving food. They are microwave-safe, leak-proof, and suitable for hot and cold items.',
+                  image: '/assets/img/fixed-disposal_5.png',
+                  side: 'left',
+                  nextIcon: '♻️'
+                },
+                { 
+                  title: 'Biodegradation', 
+                  desc: 'After use, products naturally decompose within 60-90 days in composting conditions, returning nutrients to the soil.',
+                  image: '/assets/img/fixed-compost_6.png',
+                  side: 'right'
+                }
               ].map((item, idx) => (
-                <div key={idx} className="flex gap-6 items-start">
-                  <div className="flex-shrink-0 w-16 h-16 bg-green-700 text-white rounded-full flex items-center justify-center font-bold text-xl">
-                    {item.step}
-                  </div>
-                  <div className="flex-1 bg-green-50 p-6 rounded-lg">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
-                    <p className="text-gray-700">{item.desc}</p>
+                <div 
+                  key={idx}
+                  ref={(el) => (sectionRefs.current[idx] = el)}
+                  className="timeline-item transition-all duration-700 ease-out"
+                >
+                  <div className="relative flex items-center justify-center">
+                    {/* Desktop Layout */}
+                    <div className="hidden md:grid md:grid-cols-2 gap-16 w-full items-center">
+                      {/* Left Side */}
+                      <div className={`${item.side === 'left' ? 'block' : 'invisible'}`}>
+                        {item.side === 'left' && (
+                          <div className="relative">
+                            <div className="bg-gradient-to-br from-white to-green-50/30 rounded-2xl p-8 shadow-lg border-2 border-green-200 hover:shadow-2xl hover:border-green-400 transition-all duration-300 ml-auto max-w-md group">
+                              
+                              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-green-700 transition-colors">
+                                {item.title}
+                              </h3>
+                              <p className="text-gray-600 text-sm leading-relaxed">
+                                {item.desc}
+                              </p>
+                            </div>
+                            {/* Process Icon pointing to center */}
+                            <div className="absolute right-0 top-1/2 transform translate-x-8 -translate-y-1/2">
+                              <div className="timeline-item w-12 h-12 bg-white border-2 border-green-400 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-all duration-300">
+                                <span className="text-xl">→</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Right Side */}
+                      <div className={`${item.side === 'right' ? 'block' : 'invisible'}`}>
+                        {item.side === 'right' && (
+                          <div className="relative">
+                            <div className="bg-gradient-to-br from-white to-green-50/30 rounded-2xl p-8 shadow-lg border-2 border-green-200 hover:shadow-2xl hover:border-green-400 transition-all duration-300 mr-auto max-w-md group">
+                              
+                              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-green-700 transition-colors">
+                                {item.title}
+                              </h3>
+                              <p className="text-gray-600 text-sm leading-relaxed">
+                                {item.desc}
+                              </p>
+                            </div>
+                            {/* Process Icon pointing to center */}
+                            <div className="absolute left-0 top-1/2 transform -translate-x-8 -translate-y-1/2">
+                              <div className="timeline-item w-12 h-12 bg-white border-2 border-green-400 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-all duration-300">
+                                <span className="text-xl">←</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {/* Mobile Layout */}
+                    <div className="md:hidden w-full relative">
+                      {/* Vertical Line for mobile */}
+                      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-300 transform -translate-x-1/2"></div>
+                      
+                      {/* Center Icon - Mobile */}
+                      <div className={`absolute left-1/2 top-8 transform -translate-x-1/2 w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full border-3 border-white flex items-center justify-center shadow-xl z-20 overflow-hidden transition-all duration-500 ${
+                        activeIndex === idx ? 'opacity-100 scale-110' : 'opacity-0 scale-75'
+                      }`}>
+                        <img src={item.image} alt={item.title} className="w-9 h-9 object-contain" />
+                      </div>
+                      
+                      <div className="flex items-start gap-3 relative z-10 pt-16">
+                        
+                        <div className="flex-1 bg-gradient-to-br from-white to-green-50/30 rounded-lg p-4 shadow-md border border-green-200">
+                          <h3 className="text-sm font-bold text-gray-900 mb-1.5">
+                            {item.title}
+                          </h3>
+                          <p className="text-gray-600 text-xs leading-relaxed">
+                            {item.desc}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* Process Icon for mobile - Moves with scroll */}
+                      {item.nextIcon && (
+                        <div 
+                          className={`absolute left-1/2 transform -translate-x-1/2 z-10 ${
+                            activeIndex === idx ? 'opacity-100' : 'opacity-0'
+                          }`}
+                          style={{
+                            top: `${120 + (activeIndex === idx ? scrollProgress * 200 : 0)}px`,
+                            transition: 'opacity 0.5s ease'
+                          }}
+                        >
+                          <div className="w-10 h-10 bg-white border-2 border-green-400 rounded-full flex items-center justify-center shadow-md">
+                            <span className="text-base">{item.nextIcon}</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Center Icon - Desktop Only */}
+                    <div className={`hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full border-4 border-white items-center justify-center shadow-xl z-10 overflow-hidden transition-all duration-500 ${
+                      activeIndex === idx ? 'opacity-100 scale-110' : 'opacity-0 scale-75'
+                    }`}>
+                      <img src={item.image} alt={item.title} className="w-12 h-12 object-contain" />
+                    </div>
+                    
+                    {/* Process Icon - Desktop Only - Moves with scroll */}
+                    {item.nextIcon && (
+                      <div 
+                        className={`hidden md:block absolute left-1/2 transform -translate-x-1/2 z-0 ${
+                          activeIndex === idx ? 'opacity-100' : 'opacity-0'
+                        }`}
+                        style={{
+                          bottom: `${-40 - (activeIndex === idx ? scrollProgress * 200 : 0)}px`,
+                          transition: 'opacity 0.5s ease'
+                        }}
+                      >
+                        <div className="w-12 h-12 bg-white border-2 border-green-400 rounded-full flex items-center justify-center shadow-md">
+                          <span className="text-xl">{item.nextIcon}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
