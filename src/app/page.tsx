@@ -184,7 +184,7 @@ export default function Home() {
               circular manufacturing process ensures every product returns to
               the earth without leaving a trace.
             </p>
-            <div className="flex flex-wrap gap-12 max-w-2xl">
+            <div className="flex gap-6 sm:gap-12 max-w-2xl">
               <div>
                 <p className="font-extrabold text-2xl text-[#007A3E]">12M+</p>
                 <p className="text-base text-[#004D40]">Products Sold</p>

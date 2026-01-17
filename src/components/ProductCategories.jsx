@@ -65,8 +65,7 @@ const ProductCategories = () => {
 </div>
 
 
-      <div className="grid grid-cols-4 grid-rows-2 gap-1 h-[400px]">
-        {/* Top row - 4 equal cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-1 h-[600px] md:h-[400px]">
         <Link href={categories[0].href} className="group relative overflow-hidden rounded-lg">
           <Image
             src={categories[0].image}
@@ -89,7 +88,7 @@ const ProductCategories = () => {
           </div>
         </Link>
         
-        <Link href={categories[1].href} className="group relative overflow-hidden rounded-lg row-span-2">
+        <Link href={categories[1].href} className="group relative overflow-hidden rounded-lg row-span-2 md:row-span-2">
           <Image
             src={categories[1].image}
             alt={categories[1].name}
@@ -147,17 +146,14 @@ const ProductCategories = () => {
               <p className="text-sm">{categories[3].description}</p>
             </div>
           </div>
-          <div className="absolute bottom-0.5 left-0.5 right-0.5 md:hidden">
-            <div className="bg-black/50 px-0.5 py-0.5 rounded-sm">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-white text-xs leading-none">{categories[3].name}</h3>
-                <span className="text-white text-xs">→</span>
-              </div>
+          <div className="absolute bottom-2 left-2 right-2 md:hidden">
+            <div className="flex items-center justify-between bg-black/50 px-2 py-1 rounded">
+              <h3 className="font-bold text-white text-sm">{categories[3].name}</h3>
+              <span className="text-white">→</span>
             </div>
           </div>
         </Link>
         
-        {/* Bottom row - 4 equal cards */}
         <Link href={categories[4].href} className="group relative overflow-hidden rounded-lg">
           <Image
             src={categories[4].image}
@@ -172,17 +168,15 @@ const ProductCategories = () => {
               <p className="text-sm">{categories[4].description}</p>
             </div>
           </div>
-          <div className="absolute bottom-0.5 left-0.5 right-0.5 md:hidden">
-            <div className="bg-black/50 px-0.5 py-0.5 rounded-sm">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-white text-xs leading-none">{categories[4].name}</h3>
-                <span className="text-white text-xs">→</span>
-              </div>
+          <div className="absolute bottom-2 left-2 right-2 md:hidden">
+            <div className="flex items-center justify-between bg-black/50 px-2 py-1 rounded">
+              <h3 className="font-bold text-white text-sm">{categories[4].name}</h3>
+              <span className="text-white">→</span>
             </div>
           </div>
         </Link>
         
-        <Link href={categories[5].href} className="group relative overflow-hidden rounded-lg col-span-2">
+        <Link href={categories[5].href} className="group relative overflow-hidden rounded-lg col-span-2 md:col-span-2">
           <Image
             src={categories[5].image}
             alt={categories[5].name}
