@@ -159,7 +159,7 @@ export default function Home() {
         ></div>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-12 relative z-10">
           <Image
-            src="/assets/img/waste-to-worth.jpg"
+            src="/assets/img/waste-to-worth.webp"
             alt="About us | Vagnar Green"
             width={500}
             height={300}
@@ -169,18 +169,20 @@ export default function Home() {
               OUR STORY
             </span>
             <h3 className="text-2xl sm:text-3xl font-extrabold mb-4">
-              Turning Waste into Worth
+              The Leading Sugarcane Bagasse Tableware Manufacturer
             </h3>
             <p className="text-base text-[#004D40] leading-relaxed mb-6 max-w-2xl">
-              Vagnar Greens was founded with a simple mission: to create
-              beautiful, functional products that help reduce the world's
-              reliance on single-use plastics.
+              we bridge the gap between industrial scale and environmental
+              ethics. As a premier manufacturer of bagasse products, we
+              specialize in transforming agricultural by-products, specifically
+              sugarcane bagasse, into high-performance compostable solutions.
             </p>
             <p className="text-base text-[#004D40] leading-relaxed mb-8 max-w-2xl">
-              We transform agricultural waste – specifically sugarcane bagasse
-              and rice husk – into premium tableware and packaging solutions
-              that are both stylish and sustainable. Our products decompose
-              naturally, leaving no harmful residues.
+              We provide businesses worldwide with a reliable alternative to
+              single-use plastics by offering wholesale bagasse plates and
+              packaging that meet rigorous global durability standards. Our
+              circular manufacturing process ensures every product returns to
+              the earth without leaving a trace.
             </p>
             <div className="flex flex-wrap gap-12 max-w-2xl">
               <div>

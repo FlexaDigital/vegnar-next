@@ -9,7 +9,6 @@ interface Product {
 
 interface Category {
   id: number;
-  name: string;
   slug: string;
   parent: number;
 }
@@ -20,13 +19,17 @@ interface BlogPost {
   modified: string;
 }
 
+/* 
+   FETCH FUNCTIONS
+ */
+
 async function fetchProducts(): Promise<Product[]> {
   try {
-    const res = await fetch('https://cms.vegnar.com/wp-json/wp/v2/products?per_page=100&_fields=id,slug,modified,product_category', {
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return [];
-    return await res.json();
+    const res = await fetch(
+      'https://cms.vegnar.com/wp-json/wp/v2/products?status=publish&per_page=100&_fields=id,slug,modified,product_category',
+      { next: { revalidate: 3600 } }
+    );
+    return res.ok ? res.json() : [];
   } catch {
     return [];
   }
@@ -34,11 +37,11 @@ async function fetchProducts(): Promise<Product[]> {
 
 async function fetchCategories(): Promise<Category[]> {
   try {
-    const res = await fetch('https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100&_fields=id,name,slug,parent', {
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return [];
-    return await res.json();
+    const res = await fetch(
+      'https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100&_fields=id,slug,parent',
+      { next: { revalidate: 3600 } }
+    );
+    return res.ok ? res.json() : [];
   } catch {
     return [];
   }
@@ -46,113 +49,118 @@ async function fetchCategories(): Promise<Category[]> {
 
 async function fetchBlogPosts(): Promise<BlogPost[]> {
   try {
-    const res = await fetch('https://cms.vegnar.com/wp-json/wp/v2/posts?per_page=100&_fields=id,slug,modified', {
-      next: { revalidate: 3600 }
-    });
-    if (!res.ok) return [];
-    return await res.json();
+    const res = await fetch(
+      'https://cms.vegnar.com/wp-json/wp/v2/posts?status=publish&per_page=100&_fields=id,slug,modified',
+      { next: { revalidate: 3600 } }
+    );
+    return res.ok ? res.json() : [];
   } catch {
     return [];
   }
 }
 
+/*  SITEMAP */
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [products, categories, blogPosts] = await Promise.all([
     fetchProducts(),
     fetchCategories(),
-    fetchBlogPosts()
+    fetchBlogPosts(),
   ]);
 
   const baseUrl = 'https://www.vegnar.com';
-  const currentDate = new Date();
+
+  // 🔒 Static pages should NOT use current date
+  const STATIC_LAST_MODIFIED = new Date('2025-01-01');
+
+  // Fast category lookup
+  const categoryMap = new Map<number, Category>();
+  categories.forEach(cat => categoryMap.set(cat.id, cat));
 
   const routes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: currentDate,
+      lastModified: STATIC_LAST_MODIFIED,
       changeFrequency: 'daily',
       priority: 1.0,
     },
     {
       url: `${baseUrl}/about-us`,
-      lastModified: currentDate,
+      lastModified: STATIC_LAST_MODIFIED,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: currentDate,
+      lastModified: STATIC_LAST_MODIFIED,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: currentDate,
+      lastModified: STATIC_LAST_MODIFIED,
       changeFrequency: 'daily',
       priority: 0.9,
     },
     {
       url: `${baseUrl}/products`,
-      lastModified: currentDate,
+      lastModified: STATIC_LAST_MODIFIED,
       changeFrequency: 'daily',
       priority: 0.9,
     },
     {
       url: `${baseUrl}/partner`,
-      lastModified: currentDate,
+      lastModified: STATIC_LAST_MODIFIED,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/quote`,
-      lastModified: currentDate,
+      lastModified: STATIC_LAST_MODIFIED,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
   ];
 
-  // Add category URLs
+  /*     CATEGORY URLs   */
+
   categories.forEach(category => {
-    const parentCategory = categories.find(cat => cat.id === category.parent);
-    
-    if (parentCategory) {
-      routes.push({
-        url: `${baseUrl}/products/${parentCategory.slug}/${category.slug}`,
-        lastModified: currentDate,
-        changeFrequency: 'weekly',
-        priority: 0.8,
-      });
-    } else {
-      routes.push({
-        url: `${baseUrl}/products/${category.slug}`,
-        lastModified: currentDate,
-        changeFrequency: 'weekly',
-        priority: 0.8,
-      });
-    }
+    const parent = categoryMap.get(category.parent);
+
+    routes.push({
+      url: parent
+        ? `${baseUrl}/products/${parent.slug}/${category.slug}`
+        : `${baseUrl}/products/${category.slug}`,
+      lastModified: STATIC_LAST_MODIFIED,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    });
   });
 
-  // Add product URLs
+  /*     PRODUCT URLs */
+
   products.forEach(product => {
-    const productCategory = product.product_category?.[0];
-    const category = categories.find(cat => cat.id === productCategory);
-    
-    if (category) {
-      const parentCategory = categories.find(cat => cat.id === category.parent);
-      const categoryPath = parentCategory 
-        ? `${parentCategory.slug}/${category.slug}`
-        : category.slug;
-      
-      routes.push({
-        url: `${baseUrl}/products/${categoryPath}/${product.slug}`,
-        lastModified: new Date(product.modified),
-        changeFrequency: 'weekly',
-        priority: 0.7,
-      });
-    }
+    const categoryId = product.product_category?.[0];
+    if (!categoryId) return;
+
+    const category = categoryMap.get(categoryId);
+    if (!category) return;
+
+    const parent = categoryMap.get(category.parent);
+    const categoryPath = parent
+      ? `${parent.slug}/${category.slug}`
+      : category.slug;
+
+    routes.push({
+      url: `${baseUrl}/products/${categoryPath}/${product.slug}`,
+      lastModified: new Date(product.modified),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    });
   });
 
-  // Add blog post URLs
+  /* BLOG URLs */
+
   blogPosts.forEach(post => {
     routes.push({
       url: `${baseUrl}/blog/${post.slug}`,

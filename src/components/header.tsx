@@ -88,6 +88,7 @@ const Header = ({ categories }: HeaderProps) => {
       name: "Company",
       submenu: [
         { name: "About Us", link: "/about-us" },
+        { name: "Manufacturing", link: "/manufacturing" },
         { name: "Export", link: "/export" },
         { name: "Career", link: "/career" },
       ],
