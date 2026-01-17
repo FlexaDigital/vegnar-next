@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
   const quickLinks = [
     { to: "/products", label: "Products" },
     { to: "/about-us", label: "About Us" },
-    { to: "/", label: "Manufacturing" },
+    { to: "/manufacturing", label: "Manufacturing" },
     { to: "/career", label: "Career" },
     { to: "/export", label: "Export" },
     { to: "/blog", label: "Blog" },
@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
   const productLinks = [
     { to: "/products/round-plates", label: "Round Plates" },
     { to: "/products/bowls", label: "Bowls" },
-    { to: "/products/clasmshells", label: "Clamshells" },
+    { to: "/products/clamshells", label: "Clamshells" },
     { to: "/products/meal-trays", label: "Meal Trays" },
     { to: "/products/sipper-lid", label: "Sipper Lids" },
     { to: "/products/takeaway-container", label: "Takeaway Container" },
