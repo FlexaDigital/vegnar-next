@@ -1,9 +1,18 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { FaIndustry, FaLeaf, FaCogs, FaCertificate, FaRecycle, FaShieldAlt, FaGlobeAsia, FaWater } from 'react-icons/fa';
-import { GiFactory, GiWheat, GiCheckMark } from 'react-icons/gi';
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import {
+  FaIndustry,
+  FaLeaf,
+  FaCogs,
+  FaCertificate,
+  FaRecycle,
+  FaShieldAlt,
+  FaGlobeAsia,
+  FaWater,
+} from "react-icons/fa";
+import { GiFactory, GiWheat, GiCheckMark } from "react-icons/gi";
 
 const ManufacturingSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -15,39 +24,42 @@ const ManufacturingSection = () => {
       const viewportCenter = window.scrollY + window.innerHeight / 2;
       let closestIndex = 0;
       let closestDistance = Infinity;
-      
+
       sectionRefs.current.forEach((section, index) => {
         if (section) {
           const rect = section.getBoundingClientRect();
           const sectionCenter = window.scrollY + rect.top + rect.height / 2;
           const distance = Math.abs(viewportCenter - sectionCenter);
-          
+
           if (distance < closestDistance) {
             closestDistance = distance;
             closestIndex = index;
           }
         }
       });
-      
+
       setActiveIndex(closestIndex);
-      
+
       const activeSection = sectionRefs.current[closestIndex];
       if (activeSection) {
         const rect = activeSection.getBoundingClientRect();
         const sectionTop = rect.top;
         const sectionHeight = rect.height;
         const viewportMiddle = window.innerHeight / 2;
-        
+
         // Calculate progress: 0 when section enters, 1 when section exits
-        const progress = Math.max(0, Math.min(1, (viewportMiddle - sectionTop) / sectionHeight));
+        const progress = Math.max(
+          0,
+          Math.min(1, (viewportMiddle - sectionTop) / sectionHeight),
+        );
         setScrollProgress(progress);
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -62,7 +74,8 @@ const ManufacturingSection = () => {
             Where Innovation Meets Sustainability
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            State-of-the-art facility transforming agricultural waste into premium biodegradable tableware for global markets
+            State-of-the-art facility transforming agricultural waste into
+            premium biodegradable tableware for global markets
           </p>
         </div>
       </section>
@@ -79,7 +92,11 @@ const ManufacturingSection = () => {
                 Manufacturing Excellence at Scale
               </h2>
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Our ISO-certified manufacturing facility spans over 50,000 sq. ft., equipped with advanced machinery and automated production lines. Located strategically for raw material access and export logistics, we maintain the highest standards of quality and sustainability.
+                Our ISO-certified manufacturing facility spans over 50,000 sq.
+                ft., equipped with advanced machinery and automated production
+                lines. Located strategically for raw material access and export
+                logistics, we maintain the highest standards of quality and
+                sustainability.
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-green-50 p-4 rounded-lg">
@@ -127,29 +144,40 @@ const ManufacturingSection = () => {
               From Farm Waste to Premium Material
             </h2>
             <p className="text-gray-700 max-w-2xl mx-auto">
-              We partner directly with sugarcane farmers and mills to source bagasse—a fibrous byproduct that would otherwise be burned or discarded.
+              We partner directly with sugarcane farmers and mills to source
+              bagasse—a fibrous byproduct that would otherwise be burned or
+              discarded.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow">
               <GiWheat className="text-green-700 text-5xl mb-4" />
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Direct Farmer Partnerships</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                Direct Farmer Partnerships
+              </h3>
               <p className="text-gray-600">
-                We work with 200+ local farmers, ensuring fair prices while collecting agricultural waste that supports their income.
+                We work with 200+ local farmers, ensuring fair prices while
+                collecting agricultural waste that supports their income.
               </p>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow">
               <FaLeaf className="text-green-700 text-5xl mb-4" />
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Zero Chemical Processing</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                Zero Chemical Processing
+              </h3>
               <p className="text-gray-600">
-                Our bagasse is cleaned and processed using only water and heat—no bleaching agents or harmful chemicals.
+                Our bagasse is cleaned and processed using only water and
+                heat—no bleaching agents or harmful chemicals.
               </p>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow">
               <FaRecycle className="text-green-700 text-5xl mb-4" />
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Waste Reduction Impact</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                Waste Reduction Impact
+              </h3>
               <p className="text-gray-600">
-                Every ton of bagasse we use prevents 1.5 tons of CO₂ emissions from open burning—a common disposal method.
+                Every ton of bagasse we use prevents 1.5 tons of CO₂ emissions
+                from open burning—a common disposal method.
               </p>
             </div>
           </div>
@@ -157,73 +185,83 @@ const ManufacturingSection = () => {
       </section>
 
       {/* Production Process - Zig-Zag Timeline with Arrows */}
-      <section className="py-20 px-4 sm:px-6 lg:px-20 bg-gradient-to-b from-amber-50/40 to-white">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 lg:px-20 bg-gradient-to-b from-amber-50/40 to-white relative">
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage: "url(/assets/bg-green.png)",
+            backgroundRepeat: "repeat",
+            backgroundSize: "300px auto",
+            backgroundAttachment: "fixed",
+          }}
+        ></div>
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-12 md:mb-20">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-3 md:mb-4">
               Product Life Cycle
             </h2>
             <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto px-4">
-              From sugarcane fields to natural compost—a complete sustainable journey
+              From sugarcane fields to natural compost—a complete sustainable
+              journey
             </p>
           </div>
-          
+
           <div className="relative">
             {/* Vertical Center Line */}
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-300 transform -translate-x-1/2 hidden md:block"></div>
-            
+
             <div className="space-y-8 md:space-y-20">
               {[
-                { 
-                  title: 'Sugarcane Cultivation', 
-                  desc: 'Sugarcane is cultivated as a fast-growing, renewable resource. It absorbs CO₂ during growth, making it carbon-negative from the start.',
-                  image: '/assets/img/fixed-sugarcane_1.png',
-                  side: 'right',
-                  nextIcon: '🚜'
+                {
+                  title: "Sugarcane Cultivation",
+                  desc: "Sugarcane is cultivated as a fast-growing, renewable resource. It absorbs CO₂ during growth, making it carbon-negative from the start.",
+                  image: "/assets/img/fixed-sugarcane_1.png",
+                  side: "right",
+                  nextIcon: "🚜",
                 },
-                { 
-                  title: 'Harvesting', 
-                  desc: 'Mature sugarcane stalks are harvested and transported to processing facilities where bagasse is separated.',
-                  image: '/assets/img/moving-sugarcane.png',
-                  side: 'left',
-                  nextIcon: '⚙️'
+                {
+                  title: "Harvesting",
+                  desc: "Mature sugarcane stalks are harvested and transported to processing facilities where bagasse is separated.",
+                  image: "/assets/img/moving-sugarcane.png",
+                  side: "left",
+                  nextIcon: "⚙️",
                 },
-                { 
-                  title: 'Pulp Extraction', 
-                  desc: 'After juice extraction, sugarcane bagasse is processed into pulp. This agricultural waste is transformed into valuable raw material.',
-                  image: '/assets/img/fixed-paper_3.png',
-                  side: 'right',
-                  nextIcon: '📋'
+                {
+                  title: "Pulp Extraction",
+                  desc: "After juice extraction, sugarcane bagasse is processed into pulp. This agricultural waste is transformed into valuable raw material.",
+                  image: "/assets/img/fixed-paper_3.png",
+                  side: "right",
+                  nextIcon: "📋",
                 },
-                { 
-                  title: 'Sheet Formation', 
-                  desc: 'The bagasse pulp is molded and pressed into uniform sheets using heat and pressure, creating the base material.',
-                  image: '/assets/img/fixed-product_4.png',
-                  side: 'left',
-                  nextIcon: '🏭'
+                {
+                  title: "Sheet Formation",
+                  desc: "The bagasse pulp is molded and pressed into uniform sheets using heat and pressure, creating the base material.",
+                  image: "/assets/img/fixed-product_4.png",
+                  side: "left",
+                  nextIcon: "🏭",
                 },
-                { 
-                  title: 'Product Manufacturing', 
-                  desc: 'Eco-friendly sheets are cut, shaped, and molded into final tableware products like plates, bowls, and containers.',
-                  image: '/assets/img/fixed-factory.gif',
-                  side: 'right',
-                  nextIcon: '🍽️'
+                {
+                  title: "Product Manufacturing",
+                  desc: "Eco-friendly sheets are cut, shaped, and molded into final tableware products like plates, bowls, and containers.",
+                  image: "/assets/img/fixed-factory.gif",
+                  side: "right",
+                  nextIcon: "🍽️",
                 },
-                { 
-                  title: 'Usage Phase', 
-                  desc: 'Products are used by consumers for serving food. They are microwave-safe, leak-proof, and suitable for hot and cold items.',
-                  image: '/assets/img/fixed-disposal_5.png',
-                  side: 'left',
-                  nextIcon: '♻️'
+                {
+                  title: "Usage Phase",
+                  desc: "Products are used by consumers for serving food. They are microwave-safe, leak-proof, and suitable for hot and cold items.",
+                  image: "/assets/img/fixed-disposal_5.png",
+                  side: "left",
+                  nextIcon: "♻️",
                 },
-                { 
-                  title: 'Biodegradation', 
-                  desc: 'After use, products naturally decompose within 60-90 days in composting conditions, returning nutrients to the soil.',
-                  image: '/assets/img/fixed-compost_6.png',
-                  side: 'right'
-                }
+                {
+                  title: "Biodegradation",
+                  desc: "After use, products naturally decompose within 60-90 days in composting conditions, returning nutrients to the soil.",
+                  image: "/assets/img/fixed-compost_6.png",
+                  side: "right",
+                },
               ].map((item, idx) => (
-                <div 
+                <div
                   key={idx}
                   ref={(el) => (sectionRefs.current[idx] = el)}
                   className="timeline-item transition-all duration-700 ease-out"
@@ -232,11 +270,12 @@ const ManufacturingSection = () => {
                     {/* Desktop Layout */}
                     <div className="hidden md:grid md:grid-cols-2 gap-16 w-full items-center">
                       {/* Left Side */}
-                      <div className={`${item.side === 'left' ? 'block' : 'invisible'}`}>
-                        {item.side === 'left' && (
+                      <div
+                        className={`${item.side === "left" ? "block" : "invisible"}`}
+                      >
+                        {item.side === "left" && (
                           <div className="relative">
                             <div className="bg-gradient-to-br from-white to-green-50/30 rounded-2xl p-8 shadow-lg border-2 border-green-200 hover:shadow-2xl hover:border-green-400 transition-all duration-300 ml-auto max-w-md group">
-                              
                               <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-green-700 transition-colors">
                                 {item.title}
                               </h3>
@@ -253,13 +292,14 @@ const ManufacturingSection = () => {
                           </div>
                         )}
                       </div>
-                      
+
                       {/* Right Side */}
-                      <div className={`${item.side === 'right' ? 'block' : 'invisible'}`}>
-                        {item.side === 'right' && (
+                      <div
+                        className={`${item.side === "right" ? "block" : "invisible"}`}
+                      >
+                        {item.side === "right" && (
                           <div className="relative">
                             <div className="bg-gradient-to-br from-white to-green-50/30 rounded-2xl p-8 shadow-lg border-2 border-green-200 hover:shadow-2xl hover:border-green-400 transition-all duration-300 mr-auto max-w-md group">
-                              
                               <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-green-700 transition-colors">
                                 {item.title}
                               </h3>
@@ -277,21 +317,28 @@ const ManufacturingSection = () => {
                         )}
                       </div>
                     </div>
-                    
+
                     {/* Mobile Layout */}
                     <div className="md:hidden w-full relative">
                       {/* Vertical Line for mobile */}
                       <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-300 transform -translate-x-1/2"></div>
-                      
+
                       {/* Center Icon - Mobile */}
-                      <div className={`absolute left-1/2 top-8 transform -translate-x-1/2 w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full border-3 border-white flex items-center justify-center shadow-xl z-20 overflow-hidden transition-all duration-500 ${
-                        activeIndex === idx ? 'opacity-100 scale-110' : 'opacity-0 scale-75'
-                      }`}>
-                        <img src={item.image} alt={item.title} className="w-9 h-9 object-contain" />
+                      <div
+                        className={`absolute left-1/2 top-8 transform -translate-x-1/2 w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full border-3 border-white flex items-center justify-center shadow-xl z-20 overflow-hidden transition-all duration-500 ${
+                          activeIndex === idx
+                            ? "opacity-100 scale-110"
+                            : "opacity-0 scale-75"
+                        }`}
+                      >
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-9 h-9 object-contain"
+                        />
                       </div>
-                      
+
                       <div className="flex items-start gap-3 relative z-10 pt-16">
-                        
                         <div className="flex-1 bg-gradient-to-br from-white to-green-50/30 rounded-lg p-4 shadow-md border border-green-200">
                           <h3 className="text-sm font-bold text-gray-900 mb-1.5">
                             {item.title}
@@ -301,16 +348,16 @@ const ManufacturingSection = () => {
                           </p>
                         </div>
                       </div>
-                      
+
                       {/* Process Icon for mobile - Moves with scroll */}
                       {item.nextIcon && (
-                        <div 
+                        <div
                           className={`absolute left-1/2 transform -translate-x-1/2 z-10 ${
-                            activeIndex === idx ? 'opacity-100' : 'opacity-0'
+                            activeIndex === idx ? "opacity-100" : "opacity-0"
                           }`}
                           style={{
                             top: `${120 + (activeIndex === idx ? scrollProgress * 200 : 0)}px`,
-                            transition: 'opacity 0.5s ease'
+                            transition: "opacity 0.5s ease",
                           }}
                         >
                           <div className="w-10 h-10 bg-white border-2 border-green-400 rounded-full flex items-center justify-center shadow-md">
@@ -319,23 +366,31 @@ const ManufacturingSection = () => {
                         </div>
                       )}
                     </div>
-                    
+
                     {/* Center Icon - Desktop Only */}
-                    <div className={`hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full border-4 border-white items-center justify-center shadow-xl z-10 overflow-hidden transition-all duration-500 ${
-                      activeIndex === idx ? 'opacity-100 scale-110' : 'opacity-0 scale-75'
-                    }`}>
-                      <img src={item.image} alt={item.title} className="w-12 h-12 object-contain" />
+                    <div
+                      className={`hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full border-4 border-white items-center justify-center shadow-xl z-10 overflow-hidden transition-all duration-500 ${
+                        activeIndex === idx
+                          ? "opacity-100 scale-110"
+                          : "opacity-0 scale-75"
+                      }`}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-12 h-12 object-contain"
+                      />
                     </div>
-                    
+
                     {/* Process Icon - Desktop Only - Moves with scroll */}
                     {item.nextIcon && (
-                      <div 
+                      <div
                         className={`hidden md:block absolute left-1/2 transform -translate-x-1/2 z-0 ${
-                          activeIndex === idx ? 'opacity-100' : 'opacity-0'
+                          activeIndex === idx ? "opacity-100" : "opacity-0"
                         }`}
                         style={{
                           bottom: `${-40 - (activeIndex === idx ? scrollProgress * 200 : 0)}px`,
-                          transition: 'opacity 0.5s ease'
+                          transition: "opacity 0.5s ease",
                         }}
                       >
                         <div className="w-12 h-12 bg-white border-2 border-green-400 rounded-full flex items-center justify-center shadow-md">
@@ -346,49 +401,6 @@ const ManufacturingSection = () => {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Quality Control & Certifications */}
-      <section className="py-16 px-4 sm:px-6 lg:px-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-block bg-green-100 text-green-800 text-sm font-semibold rounded-full px-4 py-1 mb-4">
-              QUALITY ASSURANCE
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Export-Ready Quality Standards
-            </h2>
-            <p className="text-gray-700 max-w-2xl mx-auto">
-              Our products meet international food safety and environmental standards, backed by globally recognized certifications.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <div className="bg-white p-8 rounded-xl shadow-md">
-              <FaCertificate className="text-green-700 text-4xl mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Certifications</h3>
-              <ul className="space-y-3">
-                {['ISO 9001:2015 (Quality Management)', 'FDA Approved (Food Contact Safe)', 'BRC Certified (Global Standards)', 'Compostable Certification (EN 13432)', 'HACCP Compliant'].map((cert, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <GiCheckMark className="text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-gray-700">{cert}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-md">
-              <FaShieldAlt className="text-green-700 text-4xl mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Quality Testing</h3>
-              <ul className="space-y-3">
-                {['Leak & Grease Resistance Tests', 'Microwave & Freezer Safety', 'Load-Bearing Capacity Analysis', 'Biodegradability Verification', 'Heavy Metal & Toxin Screening'].map((test, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <GiCheckMark className="text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-gray-700">{test}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
@@ -405,7 +417,9 @@ const ManufacturingSection = () => {
               Sustainability at Every Step
             </h2>
             <p className="text-gray-700 max-w-2xl mx-auto">
-              Our commitment to the planet extends beyond our products—our manufacturing process itself is designed to minimize environmental impact.
+              Our commitment to the planet extends beyond our products—our
+              manufacturing process itself is designed to minimize environmental
+              impact.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -413,55 +427,38 @@ const ManufacturingSection = () => {
               <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FaWater className="text-green-700 text-4xl" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Water Recycling System</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                Water Recycling System
+              </h3>
               <p className="text-gray-600">
-                90% of water used in production is recycled through our closed-loop system, reducing freshwater consumption.
+                90% of water used in production is recycled through our
+                closed-loop system, reducing freshwater consumption.
               </p>
             </div>
             <div className="text-center">
               <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <GiFactory className="text-green-700 text-4xl" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Renewable Energy Use</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                Renewable Energy Use
+              </h3>
               <p className="text-gray-600">
-                40% of our energy comes from solar panels installed on-site, with plans to reach 100% renewable by 2026.
+                40% of our energy comes from solar panels installed on-site,
+                with plans to reach 100% renewable by 2026.
               </p>
             </div>
             <div className="text-center">
               <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FaRecycle className="text-green-700 text-4xl" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Zero Plastic Policy</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                Zero Plastic Policy
+              </h3>
               <p className="text-gray-600">
-                All packaging materials are recyclable or compostable—no plastic is used anywhere in our facility.
+                All packaging materials are recyclable or compostable—no plastic
+                is used anywhere in our facility.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-20 bg-gradient-to-br from-green-700 to-green-900 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-            Partner with a Trusted Manufacturer
-          </h2>
-          <p className="text-lg mb-8 opacity-90">
-            Looking for bulk orders or export partnerships? Our team is ready to support your sustainable business goals.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/contact"
-              className="bg-white text-green-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
-            >
-              Request Factory Visit
-            </a>
-            <a
-              href="/export"
-              className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-700 transition"
-            >
-              Export Inquiry
-            </a>
           </div>
         </div>
       </section>
