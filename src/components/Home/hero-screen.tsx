@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaLeaf, FaCheckCircle } from "react-icons/fa";
-import HeroImage1 from "../../../public/assets/img/Hero-screen.jpg";
-import HeroImage2 from "../../../public/assets/img/hero-2.jpg";
-import HeroImage3 from "../../../public/assets/img/hero-3.jpg";
+import HeroImage1 from "../../../public/assets/img/Newbanner3.png";
+import HeroImage2 from "../../../public/assets/img/Newbanner1.png";
+import HeroImage3 from "../../../public/assets/img/Newbanner2.png";
 
 const slides = [
   {
     id: 1,
-    image: HeroImage1,
+    image: HeroImage2,
     alt: "Eco-friendly tableware on wooden table",
     title: (
       <>
@@ -23,7 +23,7 @@ const slides = [
   },
   {
     id: 2,
-    image: HeroImage2,
+    image: HeroImage1,
     alt: "Sustainable packaging slide",
     title: (
       <>
@@ -55,13 +55,25 @@ const HeroSection = () => {
   useEffect(() => {
     const interval = setInterval(
       () => setCurrentIndex((prev) => (prev + 1) % slides.length),
-      7000
+      7000,
     );
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowLeft") {
+        setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+      } else if (e.key === "ArrowRight") {
+        setCurrentIndex((prev) => (prev + 1) % slides.length);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
-    <div className="relative h-screen pt-20 overflow-hidden">
+    <div className="relative h-screen sm:h-screen pt-16 sm:pt-20 overflow-hidden">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -70,25 +82,24 @@ const HeroSection = () => {
           }`}
         >
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/40 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/30 z-10" />
           <Image
             src={slide.image}
             alt={slide.alt}
             fill
             priority={index === 0}
-            className="object-cover object-center w-full h-full"
+            className="object-cover object-center sm:object-center object-top w-full h-full"
           />
-          <div className="relative z-20 max-w-7xl mx-auto px-6 h-screen flex flex-col justify-center text-white">
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl">
+          <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 h-full flex flex-col justify-center sm:justify-center justify-end pb-20 sm:pb-0 text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight max-w-3xl">
               {slide.title}
             </h1>
-            <p className="mt-4 max-w-2xl text-lg sm:text-xl font-medium">
+            <p className="mt-3 sm:mt-4 max-w-2xl text-base sm:text-lg md:text-xl font-medium">
               {slide.description}
             </p>
-            <div className="mt-6 flex flex-wrap gap-4">
+            <div className="mt-4 sm:mt-6 flex flex-wrap gap-3 sm:gap-4">
               <a href="/products">
-                <button className="bg-vegnar-green hover:bg-green-800 transition text-white font-semibold rounded-full px-8 py-4 text-sm sm:text-base flex items-center min-h-[44px] min-w-[44px]">
+                <button className="bg-vegnar-green hover:bg-green-800 transition text-white font-semibold rounded-full px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base flex items-center min-h-[44px] min-w-[44px]">
                   Explore Products
                   <svg
                     className="ml-2 w-4 h-4"
@@ -104,7 +115,7 @@ const HeroSection = () => {
                 </button>
               </a>
               <Link href="/contact">
-                <button className="border border-white/60 hover:border-white transition text-white font-semibold rounded-full px-8 py-4 text-sm sm:text-base min-h-[44px] min-w-[44px]">
+                <button className="border border-white/60 hover:border-white transition text-white font-semibold rounded-full px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base min-h-[44px] min-w-[44px]">
                   Get a Sample
                 </button>
               </Link>
@@ -112,29 +123,31 @@ const HeroSection = () => {
 
             {index === 0 && (
               <>
-                <div className="mt-6 flex flex-wrap items-center gap-6 max-w-4xl">
-                  <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-5 py-3 max-w-xs">
+                <div className="mt-4 sm:mt-6 flex flex-wrap items-center gap-3 sm:gap-6 max-w-4xl">
+                  <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 sm:px-5 py-2 sm:py-3 max-w-xs">
                     <FaLeaf className="text-green-400 text-lg mr-3" />
                     <div>
-                      <p className="font-bold text-white text-lg">630+ tons</p>
+                      <p className="font-bold text-white text-base sm:text-lg">630+ tons</p>
                       <p className="text-white text-xs font-semibold -mt-1">
                         of plastic replaced
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 text-white text-sm font-medium flex-wrap">
+                  <div className="flex items-center gap-2 sm:gap-3 text-white text-xs sm:text-sm font-medium flex-wrap">
                     <span>Certified by:</span>
-                    {["OKComposite", "US FDA", "SGS Tested", "CE"].map((cert) => (
-                      <span
-                        key={cert}
-                        className="bg-white text-gray-900 font-semibold text-xs rounded-md px-3 py-1"
-                      >
-                        {cert}
-                      </span>
-                    ))}
+                    {["OKComposite", "US FDA", "SGS Tested", "CE"].map(
+                      (cert) => (
+                        <span
+                          key={cert}
+                          className="bg-white text-gray-900 font-semibold text-xs rounded-md px-2 sm:px-3 py-1"
+                        >
+                          {cert}
+                        </span>
+                      ),
+                    )}
                   </div>
                 </div>
-                <div className="mt-4 inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-5 py-2 max-w-max text-white text-sm font-semibold">
+                <div className="mt-3 sm:mt-4 inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-3 sm:px-5 py-2 max-w-max text-white text-xs sm:text-sm font-semibold">
                   <FaCheckCircle className="text-green-400 mr-2" />
                   Trusted by eco-conscious businesses worldwide
                 </div>
