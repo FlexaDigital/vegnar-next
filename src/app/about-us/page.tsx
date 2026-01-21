@@ -169,51 +169,17 @@ export default function OurStory() {
   return (
     <main className="w-full bg-gray-50 text-gray-900 font-sans text-base leading-relaxed">
 
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 overflow-hidden">
-        <div className="absolute inset-0">
-         
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30"></div>
-        </div>
-        
-       
-        <div className="absolute top-20 left-10 w-20 h-20 bg-green-400/20 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-32 right-16 w-32 h-32 bg-emerald-400/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
-        
-        <div className="relative z-10 text-center text-white px-6 max-w-6xl mx-auto">
-          <div className="mb-8">
-            <span className="inline-block bg-green-500/20 backdrop-blur-sm text-green-200 text-sm font-semibold rounded-full px-6 py-2 mb-6 border border-green-400/30">
-              🌱 Transforming Tomorrow, Today
-            </span>
-          </div>
-          
-          <h1 className="text-5xl sm:text-7xl font-bold mb-8 leading-tight">
-            Vegnar Greens
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300">
-              India's Top Bagasse Products Manufacturer
-            </span>
+      <section className="relative bg-gradient-to-br from-green-50 to-green-100 py-20 px-4 sm:px-6 lg:px-20">
+        <div className="max-w-7xl mx-auto text-center">
+          <span className="inline-block bg-green-700 text-white text-sm font-semibold rounded-full px-4 py-1 mb-4">
+            ABOUT VEGNAR GREENS
+          </span>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6">
+            India's Top Bagasse Products Manufacturer
           </h1>
-          
-          <p className="text-xl sm:text-2xl max-w-4xl mx-auto mb-12 text-gray-200 leading-relaxed">
-            Pioneering sustainable innovation — India's premier manufacturer of premium bagasse tableware, transforming agricultural waste into eco-friendly solutions
+          <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            Pioneering sustainable innovation — transforming agricultural waste into premium biodegradable solutions for a greener tomorrow
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
-            <button className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-full font-semibold text-base transition-all duration-300 transform hover:scale-105 shadow-xl">
-              Our Story
-            </button>
-            <button className="border-2 border-white/30 backdrop-blur-sm text-white px-6 py-3 rounded-full font-semibold text-base hover:bg-white/10 transition-all duration-300">
-              View Products
-            </button>
-          </div>
-          
-
-        </div>
-        
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
-          </div>
         </div>
       </section>
 

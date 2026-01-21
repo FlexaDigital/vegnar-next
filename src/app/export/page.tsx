@@ -87,26 +87,19 @@ export default function ExportPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-green-800 to-green-600 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <Globe className="h-16 w-16 text-green-200" />
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Global Sugarcane Bagasse Exporter
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-4xl mx-auto">
-              Leading supplier of premium biodegradable tableware from India to USA, UK, Germany & Europe
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm">
-              <span className="bg-white/20 px-4 py-2 rounded-full">ISO 9001:2015 Certified</span>
-              <span className="bg-white/20 px-4 py-2 rounded-full">FDA Approved</span>
-              <span className="bg-white/20 px-4 py-2 rounded-full">Export to 25+ Countries</span>
-            </div>
-          </div>
+      <section className="relative bg-gradient-to-br from-green-50 to-green-100 py-20 px-4 sm:px-6 lg:px-20">
+        <div className="max-w-7xl mx-auto text-center">
+          <span className="inline-block bg-green-700 text-white text-sm font-semibold rounded-full px-4 py-1 mb-4">
+            GLOBAL EXPORT EXCELLENCE
+          </span>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6">
+            Leading Sugarcane Bagasse Exporter
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            Premium biodegradable tableware supplier from India to USA, UK, Germany & Europe with international quality standards
+          </p>
         </div>
-      </div>
+      </section>
 
       {/* Export Markets */}
       <section className="py-16 bg-gray-50">
