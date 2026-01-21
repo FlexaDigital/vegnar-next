@@ -24,6 +24,12 @@ interface Article {
   slug: string;
 }
 
+const decodeHtmlEntities = (text: string): string => {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
 const BlogPage: React.FC = () => {
   const router = useRouter();
   const { setLoading } = useLoading();
@@ -85,8 +91,8 @@ const BlogPage: React.FC = () => {
 
         const formatted: Article[] = data.map((post: any) => ({
           id: post.id,
-          title: post.title.rendered,
-          summary: post.excerpt.rendered.replace(/<[^>]+>/g, "").slice(0, 120) + "...",
+          title: decodeHtmlEntities(post.title.rendered),
+          summary: decodeHtmlEntities(post.excerpt.rendered.replace(/<[^>]+>/g, "")).slice(0, 120) + "...",
           url: `/blog/${post.slug}`,
           image: post._embedded["wp:featuredmedia"]?.[0]?.source_url || "https://via.placeholder.com/400x240",
           alt: post.title.rendered,
