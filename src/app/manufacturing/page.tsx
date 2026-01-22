@@ -1,10 +1,22 @@
-import { Metadata } from 'next';
-import ManufacturingSection from '@/components/ManufacturingSection';
+import { Metadata } from "next";
+import ManufacturingSection from "@/components/ManufacturingSection";
 
 export const metadata: Metadata = {
-  title: 'Manufacturing Excellence | Vegnar Greens - Eco-Friendly Tableware Production',
-  description: 'Discover Vegnar\'s state-of-the-art manufacturing facility producing biodegradable tableware from sugarcane bagasse. Export-ready quality with sustainable practices.',
-  keywords: 'bagasse manufacturing, eco-friendly production, biodegradable tableware factory, sugarcane bagasse processing, sustainable manufacturing India',
+  title:
+    "Sugarcane Bagasse Manufacturer in India | Vegnar Green Manufacturing Unit",
+  description:
+    "Vegnar Green is a leading sugarcane bagasse manufacturer in India with in-house manufacturing facilities producing eco-friendly biodegradable tableware for domestic and export markets.",
+  keywords: [
+    "sugarcane bagasse manufacturer in India",
+    "bagasse tableware manufacturer",
+    "biodegradable tableware factory India",
+    "eco friendly disposable manufacturer",
+    "bagasse plates bowls manufacturer",
+    "bagasse products exporter India",
+  ],
+  alternates: {
+    canonical: "https://www.vegnar.com/manufacturing",
+  },
 };
 
 export default function ManufacturingPage() {

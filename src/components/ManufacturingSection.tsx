@@ -71,11 +71,12 @@ const ManufacturingSection = () => {
             MANUFACTURING EXCELLENCE
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6">
-            Where Innovation Meets Sustainability
+            Sugarcane Bagasse Manufacturer in India
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            State-of-the-art facility transforming agricultural waste into
-            premium biodegradable tableware for global markets
+            Vegnar Green is a leading sugarcane bagasse manufacturer in India,
+            producing eco-friendly biodegradable tableware for domestic and
+            international export markets.
           </p>
         </div>
       </section>
@@ -89,7 +90,7 @@ const ManufacturingSection = () => {
                 OUR FACILITY
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
-                Manufacturing Excellence at Scale
+                In-House Sugarcane Bagasse Manufacturing Facility in India
               </h2>
               <p className="text-gray-700 mb-6 leading-relaxed">
                 Our ISO-certified manufacturing facility spans over 50,000 sq.
@@ -124,7 +125,7 @@ const ManufacturingSection = () => {
             <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
               <Image
                 src="/assets/img/manufacturing-facility.webp"
-                alt="Vegnar Manufacturing Facility"
+                alt="Sugarcane bagasse manufacturing facility in India by Vegnar Green"
                 fill
                 className="object-cover"
               />
@@ -186,6 +187,11 @@ const ManufacturingSection = () => {
 
       {/* Production Process - Zig-Zag Timeline with Arrows */}
       <section className="py-20 px-4 sm:px-6 lg:px-20 bg-gradient-to-b from-amber-50/40 to-white relative">
+        <p className="sr-only">
+          Vegnar Green operates an advanced sugarcane bagasse manufacturing unit
+          in India, converting agricultural waste into biodegradable plates,
+          bowls, and food containers using eco-friendly production processes.
+        </p>
         <div
           className="absolute inset-0 opacity-10 pointer-events-none"
           style={{
@@ -198,7 +204,7 @@ const ManufacturingSection = () => {
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-12 md:mb-20">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-3 md:mb-4">
-              Product Life Cycle
+              Sugarcane Bagasse Manufacturing Process
             </h2>
             <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto px-4">
               From sugarcane fields to natural compost—a complete sustainable
@@ -414,7 +420,7 @@ const ManufacturingSection = () => {
               GREEN MANUFACTURING
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              Sustainability at Every Step
+              Sustainable Sugarcane Bagasse Manufacturing Practices
             </h2>
             <p className="text-gray-700 max-w-2xl mx-auto">
               Our commitment to the planet extends beyond our products—our
@@ -462,6 +468,13 @@ const ManufacturingSection = () => {
           </div>
         </div>
       </section>
+      <div className="sr-only">
+        <h2>Frequently Asked Questions</h2>
+        <p>
+          Are you a sugarcane bagasse manufacturer in India? Yes, Vegnar Green
+          is an in-house manufacturer...
+        </p>
+      </div>
     </div>
   );
 };
