@@ -28,11 +28,11 @@ export const metadata: Metadata = {
   description:
     "Vegnar is India’s leading manufacturer of biodegradable tableware and eco-friendly packaging. Offering compostable products made from sugarcane bagasse, areca palm leaves, and more — perfect for sustainable foodservice, exports, and a plastic-free future.",
   keywords:
-    "biodegradable tableware, eco-friendly bags, sugarcane bagasse, bagasse products, bagasse plates, bagasse bowls, bagasse compartment trays, areca palm leaf plates, areca leaf bowls, areca tableware, bio bags, compostable bags, biodegradable garbage bags, compostable carry bags, courier bags, nursery bags, garment bags, plastic-free packaging, eco packaging, green packaging, sustainable disposables, biodegradable containers, disposable food containers, biodegradable utensils, eco-friendly packaging supplier, compostable packaging, natural packaging, zero waste tableware, planet-friendly products, Vegnar Green, leading manufacturer and exporter of biodegradable products, bio bag manufacturer India, areca leaf plate exporter, sugarcane bagasse tableware manufacturer",
+    "Sugarcane Bagasse Products Manufacturer, Bagasse Tableware Manufacturer India,Biodegradable Tableware Supplier, Eco-Friendly Disposable Tableware,Compostable Food Packaging Manufacturer,Areca Leaf Tableware Manufacturer,Plastic-Free Food Packaging,Vegnar Green",
   openGraph: {
     title: "Vegnar Green | Biodegradable Tableware & Eco-Friendly Bags",
     description:
-      "Premium biodegradable tableware and eco-friendly bags made from sugarcane bagasse and areca palm leaves. 100% compostable packaging solutions for a sustainable future.",
+      "Premium biodegradable tableware and eco-friendly bags made from sugarcane bagasse and areca palm leaves. 100% compostable packaging solutions for a sustainable future",
     url: "https://www.vegnar.com/",
     type: "website",
     images: [

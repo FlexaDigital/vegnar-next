@@ -3,49 +3,49 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaLeaf, FaCheckCircle } from "react-icons/fa";
-import HeroImage1 from "../../../public/assets/img/Newbanner3.png";
-import HeroImage2 from "../../../public/assets/img/Newbanner1.png";
-import HeroImage3 from "../../../public/assets/img/Newbanner2.png";
+import HeroImage1 from "../../../public/assets/img/Newbanner3.webp";
+import HeroImage2 from "../../../public/assets/img/Newbanner1.webp";
+import HeroImage3 from "../../../public/assets/img/Newbanner2.webp";
 
 const slides = [
   {
     id: 1,
     image: HeroImage2,
-    alt: "Eco-friendly tableware on wooden table",
+    alt: "Sugarcane bagasse plates and bowls eco-friendly tableware",
     title: (
       <>
-        Nature-Friendly <br />
-        Tableware for a <span className="font-bold">Better</span> Tomorrow
+        Biodegradable <br />
+        <span className="font-bold">Sugarcane Bagasse</span> Tableware
       </>
     ),
     description:
-      "100% Biodegradable. Made from Sugarcane Waste. Compostable. Stylish.",
+      "Premium bagasse plates, bowls & compartment trays. Plastic-free, compostable & planet-friendly.",
   },
   {
     id: 2,
     image: HeroImage1,
-    alt: "Sustainable packaging slide",
+    alt: "Eco-friendly compostable packaging bags and containers",
     title: (
       <>
-        Sustainable <br />
-        Packaging for a <span className="font-bold">Greener</span> Future
+        Compostable <br />
+        <span className="font-bold">Eco-Friendly</span> Packaging Solutions
       </>
     ),
     description:
-      "Eco-friendly materials. Durable and compostable. Designed for sustainability.",
+      "Bio bags, carry bags, courier & garbage bags. Sustainable packaging made for a greener future.",
   },
   {
     id: 3,
     image: HeroImage3,
-    alt: "Innovative biodegradable tableware",
+    alt: "Areca palm leaf plates and sustainable disposable tableware",
     title: (
       <>
-        Innovative <br />
-        Designs for a <span className="font-bold">Cleaner</span> Planet
+        Natural <br />
+        <span className="font-bold">Areca Leaf</span> Tableware
       </>
     ),
     description:
-      "Stylish, biodegradable tableware. Made with care for nature’s future.",
+      "Elegant areca palm leaf plates & bowls. Zero-waste, chemical-free & naturally compostable.",
   },
 ];
 
@@ -127,7 +127,9 @@ const HeroSection = () => {
                   <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 sm:px-5 py-2 sm:py-3 max-w-xs">
                     <FaLeaf className="text-green-400 text-lg mr-3" />
                     <div>
-                      <p className="font-bold text-white text-base sm:text-lg">630+ tons</p>
+                      <p className="font-bold text-white text-base sm:text-lg">
+                        630+ tons
+                      </p>
                       <p className="text-white text-xs font-semibold -mt-1">
                         of plastic replaced
                       </p>
