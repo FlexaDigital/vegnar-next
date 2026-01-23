@@ -105,6 +105,9 @@ export default async function RootLayout({
 
         {/* Yandex Verification */}
         <meta name="yandex-verification" content="c904a809eacce6d1" />
+        
+        {/* Pinterest Verification */}
+        <meta name="p:domain_verify" content="533a7ee4b7e07145debeaf8599d031f3" />
       </head>
 
       <body className="min-h-screen flex flex-col antialiased overflow-x-hidden">
