@@ -40,12 +40,12 @@ const slides = [
     alt: "Areca palm leaf plates and sustainable disposable tableware",
     title: (
       <>
-        Natural <br />
-        <span className="font-bold">Areca Leaf</span> Tableware
+        Sustainable <br />
+        <span className="font-bold">Disposable</span> Tableware
       </>
     ),
     description:
-      "Elegant areca palm leaf plates & bowls. Zero-waste, chemical-free & naturally compostable.",
+      "Eco-friendly disposable plates, bowls & food containers made from natural plant fibers.",
   },
 ];
 
