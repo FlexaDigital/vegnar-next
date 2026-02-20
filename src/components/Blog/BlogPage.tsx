@@ -74,7 +74,7 @@ const BlogPage: React.FC = () => {
         const timeoutId = setTimeout(() => controller.abort(), 10000);
 
         const response = await fetch(
-          "https://cms.vegnar.com/wp-json/wp/v2/posts?_embed",
+          "https://cms.vegnar.com/wp-json/wp/v2/posts?_embed&per_page=100",
           {
             signal: controller.signal,
             next: { revalidate: 60 }
