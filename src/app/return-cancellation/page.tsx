@@ -3,6 +3,12 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Return & Cancellation Policy | Vegnar Green',
   description: 'Learn about our return and cancellation policy for retail and bulk orders. Terms, conditions, and process for returns.',
+  alternates: {
+    canonical: "https://www.vegnar.com/return-cancellation",
+  },
+  robots: "index, follow",
+  authors: [{ name: "Vegnar Greens" }],
+  publisher: "Vegnar Greens",
 };
 
 export default function ReturnCancellation() {

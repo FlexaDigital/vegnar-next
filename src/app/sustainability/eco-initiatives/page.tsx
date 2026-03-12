@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: 'Eco Initiatives at Vegnar - Driving Sustainable Change',
     description:
       'Learn how Vegnar champions sustainability with eco-driven innovations and a commitment to biodegradable, zero-waste, and planet-friendly manufacturing practices.',
-    url: 'http://localhost:3000/sustainability/eco-initiatives', // Ensure this URL is correct for production
+    url: 'https://www.vegnar.com/sustainability/eco-initiatives',
     images: [
       {
         url: 'https://vegnar.com/images/sustainability-banner.jpg', // Ensure this image is accessible
@@ -72,6 +72,12 @@ export const metadata: Metadata = {
       'Vegnar is committed to sustainability through biodegradable production, renewable resources, and zero-waste operations. Join us in our eco mission.',
     images: ['https://vegnar.com/images/sustainability-banner.jpg'], // Ensure this image is accessible
   },
+  alternates: {
+    canonical: "https://www.vegnar.com/sustainability/eco-initiatives",
+  },
+  robots: "index, follow",
+  authors: [{ name: "Vegnar Greens" }],
+  publisher: "Vegnar Greens",
 };
 
 // --- Data for the three commitment cards ---

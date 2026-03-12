@@ -540,7 +540,7 @@ export async function generateMetadata({ params }: { params: { categorySlug: str
   }
 
   const productTitle = decodeHtmlEntities(decodeAndStripHtml(product.title.rendered));
-  const title = `${productTitle} | Sugarcane Bagasse Tableware | Vegnar Green`;
+  const title = `${productTitle} Wholesale India | Biodegradable Sugarcane ${productTitle} Manufacturer | Vegnar Green`;
 
   const description = seoData?.seo_description || `Premium ${productTitle} made from sugarcane bagasse. Eco-friendly, biodegradable tableware perfect for restaurants, catering, and sustainable dining solutions.`;
   

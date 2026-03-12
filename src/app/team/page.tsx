@@ -5,6 +5,12 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: "Coming Soon | Vegnar Green",
   description: "This page is currently under development.",
+  alternates: {
+    canonical: "https://www.vegnar.com/team",
+  },
+  robots: "index, follow",
+  authors: [{ name: "Vegnar Greens" }],
+  publisher: "Vegnar Greens",
 };
 
 export default function ComingSoonPage() {

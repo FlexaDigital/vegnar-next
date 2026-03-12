@@ -3,6 +3,12 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Payment Policy | Vegnar Green',
   description: 'Learn about our secure payment methods, terms, and conditions for retail and bulk orders.',
+  alternates: {
+    canonical: "https://www.vegnar.com/payments",
+  },
+  robots: "index, follow",
+  authors: [{ name: "Vegnar Greens" }],
+  publisher: "Vegnar Greens",
 };
 
 export default function Payments() {
