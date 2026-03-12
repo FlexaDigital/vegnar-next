@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Metadata } from 'next';
 import { Globe, Award, Shield, Truck, CheckCircle, Users } from 'lucide-react';
 import BecomePartnerSection from '@/components/BecomePartnerSection';
@@ -96,7 +97,15 @@ export default function ExportPage() {
             Leading Sugarcane Bagasse Exporter
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Premium biodegradable tableware supplier from India to USA, UK, Germany & Europe with international quality standards
+            Premium{" "}
+            <Link href="/products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              biodegradable tableware supplier
+            </Link>{" "}
+            from India to USA, UK, Germany & Europe with international quality standards. Our{" "}
+            <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              ISO-certified manufacturing facility
+            </Link>{" "}
+            ensures consistent quality for global markets.
           </p>
         </div>
       </section>
@@ -107,7 +116,15 @@ export default function ExportPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Global Presence</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Trusted sugarcane bagasse tableware supplier serving premium markets worldwide with consistent quality and reliable delivery
+              Trusted{" "}
+              <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                sugarcane bagasse tableware supplier
+              </Link>{" "}
+              serving premium markets worldwide with consistent quality and reliable delivery. Get instant{" "}
+              <Link href="/quote" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                export pricing and specifications
+              </Link>{" "}
+              for bulk orders.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -129,7 +146,11 @@ export default function ExportPage() {
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">International Quality Standards</h2>
               <p className="text-lg text-gray-600 mb-8">
-                As a leading sugarcane bagasse exporter from India, we maintain the highest international quality standards to serve global markets including USA, UK, Germany, and across Europe.
+                As a leading sugarcane bagasse exporter from India, we maintain the highest international quality standards to serve global markets including USA, UK, Germany, and across Europe. Our{" "}
+                <Link href="/products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  comprehensive product range
+                </Link>{" "}
+                includes plates, bowls, containers, and custom packaging solutions.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 {certifications.map((cert, index) => (
@@ -186,7 +207,11 @@ export default function ExportPage() {
               <Shield className="h-12 w-12 text-green-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-3">Quality Assurance</h3>
               <p className="text-gray-600">
-                Rigorous quality control with international testing standards. Every shipment meets FDA, CE, and local regulatory requirements.
+                Rigorous quality control with international testing standards. Every shipment meets FDA, CE, and local regulatory requirements. Visit our{" "}
+                <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  manufacturing facility page
+                </Link>{" "}
+                to learn more about our quality processes.
               </p>
             </div>
             <div className="text-center">
@@ -200,7 +225,11 @@ export default function ExportPage() {
               <Users className="h-12 w-12 text-green-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-3">Dedicated Support</h3>
               <p className="text-gray-600">
-                Experienced export team providing end-to-end support from order to delivery. Multi-language customer service.
+                Experienced export team providing end-to-end support from order to delivery. Multi-language customer service and{" "}
+                <Link href="/contact" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  dedicated account management
+                </Link>{" "}
+                for international clients.
               </p>
             </div>
           </div>

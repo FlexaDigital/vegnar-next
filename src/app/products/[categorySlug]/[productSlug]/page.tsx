@@ -236,7 +236,14 @@ const SingleProductPage = async ({ params }: PageProps) => {
                   </span>
                 </div>
                 <p className="text-lg text-gray-700 mb-6">
-                  Premium eco-friendly {acf.product_size} made from sustainable sugarcane bagasse. Perfect for restaurants, catering, and eco-conscious consumers.
+                  Premium eco-friendly {acf.product_size} made from sustainable{" "}
+                  <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    sugarcane bagasse
+                  </Link>. Perfect for restaurants, catering, and eco-conscious consumers. Available for{" "}
+                  <Link href="/quote" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    bulk wholesale orders
+                  </Link>{" "}
+                  with competitive pricing.
                 </p>
                 <div
                   className="text-sm leading-relaxed mb-8 max-w-xl prose prose-sm"
@@ -340,7 +347,14 @@ const SingleProductPage = async ({ params }: PageProps) => {
        
                 <div className="text-center mt-6">
                   <p className="text-xs text-gray-400 mb-4 max-w-xl mx-auto">
-                    Bulk orders available with customization options
+                    Bulk orders available with customization options. Visit our{" "}
+                    <Link href="/manufacturing" className="text-green-600 hover:underline">
+                      manufacturing facility
+                    </Link>{" "}
+                    page to learn about our quality processes, or explore our{" "}
+                    <Link href="/export" className="text-green-600 hover:underline">
+                      international shipping options
+                    </Link>.
                   </p>
                   <Link href="/quote" className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors">
                     Get Quote
@@ -393,7 +407,12 @@ const SingleProductPage = async ({ params }: PageProps) => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">100% Natural & Safe</h3>
-                    <p className="text-gray-600 text-sm">Made from sugarcane bagasse with no harmful chemicals or plastic coatings.</p>
+                    <p className="text-gray-600 text-sm">Made from{" "}
+                      <Link href="/products/bagasse-products" className="text-green-700 hover:underline">
+                        sugarcane bagasse
+                      </Link>{" "}
+                      with no harmful chemicals or plastic coatings.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
@@ -475,7 +494,11 @@ const SingleProductPage = async ({ params }: PageProps) => {
                 <span className="transform group-open:rotate-180 transition-transform">▼</span>
               </summary>
               <div className="px-6 pb-6 text-gray-600">
-                <p>We hold multiple certifications including FDA approval for food contact, SGS testing for safety, OKComposite certification for compostability, and ISO 14001 for environmental management.</p>
+                <p>We hold multiple certifications including FDA approval for food contact, SGS testing for safety, OKComposite certification for compostability, and ISO 14001 for environmental management. Learn more about our{" "}
+                  <Link href="/manufacturing" className="text-green-700 hover:underline">
+                    quality certifications and manufacturing standards
+                  </Link>.
+                </p>
               </div>
             </details>
             
@@ -485,7 +508,12 @@ const SingleProductPage = async ({ params }: PageProps) => {
                 <span className="transform group-open:rotate-180 transition-transform">▼</span>
               </summary>
               <div className="px-6 pb-6 text-gray-600">
-                <p>Yes! We offer custom printing and branding options for bulk orders. Contact our team to discuss your customization requirements and minimum order quantities.</p>
+                <p>Yes! We offer custom printing and branding options for bulk orders.{" "}
+                  <Link href="/contact" className="text-green-700 hover:underline">
+                    Contact our team
+                  </Link>{" "}
+                  to discuss your customization requirements and minimum order quantities.
+                </p>
               </div>
             </details>
             
@@ -505,7 +533,16 @@ const SingleProductPage = async ({ params }: PageProps) => {
                 <span className="transform group-open:rotate-180 transition-transform">▼</span>
               </summary>
               <div className="px-6 pb-6 text-gray-600">
-                <p>Yes, we export to over 15 countries worldwide. We handle all export documentation and can arrange shipping via sea or air freight. Contact us for international shipping quotes and lead times.</p>
+                <p>Yes, we export to over 15 countries worldwide. We handle all export documentation and can arrange shipping via sea or air freight. Visit our{" "}
+                  <Link href="/export" className="text-green-700 hover:underline">
+                    export page
+                  </Link>{" "}
+                  for more details or{" "}
+                  <Link href="/contact" className="text-green-700 hover:underline">
+                    contact us
+                  </Link>{" "}
+                  for international shipping quotes and lead times.
+                </p>
               </div>
             </details>
           </div>
