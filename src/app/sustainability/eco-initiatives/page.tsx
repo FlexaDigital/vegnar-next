@@ -173,7 +173,15 @@ const EcoInitiativesPage = () => {
           <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-10">
             At Vegnar Greens, sustainability isn't just a buzzword—it's our core mission. 
             We're committed to creating a positive environmental impact through innovative, 
-            eco-conscious tableware solutions that protect our planet for future generations.
+            eco-conscious{" "}
+            <Link href="/products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              tableware solutions
+            </Link>{" "}
+            that protect our planet for future generations. Our{" "}
+            <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              sustainable manufacturing processes
+            </Link>{" "}
+            ensure every product meets the highest environmental standards.
           </p>
           <div className="flex justify-center gap-4 flex-wrap">
             <Link href="/products">
@@ -197,7 +205,14 @@ const EcoInitiativesPage = () => {
             </h2>
             <p className="text-gray-700 text-lg mb-12 leading-relaxed">
               Our approach to sustainability spans sourcing, manufacturing, packaging, and logistics. 
-              We continually refine processes to minimize impact while delivering planet-friendly solutions.
+              We continually refine processes to minimize impact while delivering{" "}
+              <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                planet-friendly bagasse solutions
+              </Link>. Get instant{" "}
+              <Link href="/quote" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                pricing for bulk orders
+              </Link>{" "}
+              and join the sustainable packaging revolution.
             </p>
 
             <div className="grid md:grid-cols-3 gap-8">

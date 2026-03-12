@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   FaIndustry,
   FaLeaf,
@@ -74,9 +75,19 @@ const ManufacturingSection = () => {
             Sugarcane Bagasse Manufacturer in India
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Vegnar Green is a leading sugarcane bagasse manufacturer in India,
+            Vegnar Green is a leading{" "}
+            <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              sugarcane bagasse manufacturer in India
+            </Link>,
             producing eco-friendly biodegradable tableware for domestic and
-            international export markets.
+            international{" "}
+            <Link href="/export" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              export markets
+            </Link>. Get instant{" "}
+            <Link href="/quote" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              bulk pricing and specifications
+            </Link>{" "}
+            for our premium products.
           </p>
         </div>
       </section>
@@ -95,9 +106,15 @@ const ManufacturingSection = () => {
               <p className="text-gray-700 mb-6 leading-relaxed">
                 Our ISO-certified manufacturing facility spans over 50,000 sq.
                 ft., equipped with advanced machinery and automated production
-                lines. Located strategically for raw material access and export
-                logistics, we maintain the highest standards of quality and
-                sustainability.
+                lines. Located strategically for raw material access and{" "}
+                <Link href="/export" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  export logistics
+                </Link>, we maintain the highest standards of quality and
+                sustainability. Our{" "}
+                <Link href="/products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  comprehensive product range
+                </Link>{" "}
+                includes plates, bowls, containers, and custom packaging.
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-green-50 p-4 rounded-lg">
@@ -147,7 +164,11 @@ const ManufacturingSection = () => {
             <p className="text-gray-700 max-w-2xl mx-auto">
               We partner directly with sugarcane farmers and mills to source
               bagasse—a fibrous byproduct that would otherwise be burned or
-              discarded.
+              discarded. This sustainable approach supports our{" "}
+              <Link href="/products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                eco-friendly product manufacturing
+              </Link>{" "}
+              while providing additional income to farming communities.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">

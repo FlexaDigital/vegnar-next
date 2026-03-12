@@ -1,5 +1,6 @@
 "use client"
 import React from 'react';
+import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
 import ContactInfo from '@/components/ContactInfo';
 import BecomePartnerSection from '@/components/BecomePartnerSection';
@@ -44,7 +45,16 @@ const ContactPage: React.FC = () => {
                 Get in Touch with Vegnar Green
               </h1>
               <p className="mt-2 max-w-2xl text-sm sm:text-base font-normal text-white">
-                We're here to help you make eco-friendly choices.
+                We're here to help you make eco-friendly choices. Whether you need{" "}
+                <Link href="/products" className="text-green-300 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  product information
+                </Link>,{" "}
+                <Link href="/quote" className="text-green-300 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  bulk pricing
+                </Link>, or details about our{" "}
+                <Link href="/export" className="text-green-300 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  international shipping
+                </Link>, our team is ready to assist.
               </p>
             </div>
           </div>

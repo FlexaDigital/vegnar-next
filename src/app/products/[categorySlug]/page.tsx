@@ -409,7 +409,15 @@ export default async function ProductCategoryPage({ params }: Props) {
                 {category.name}
               </h1>
               <p className="text-gray-700 mt-2 sm:mt-3 md:mt-4 max-w-2xl text-sm sm:text-base md:text-lg">
-                {category.description || "No description available."}
+                {category.description || "No description available."} Browse our{" "}
+                <Link href="/products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  complete product range
+                </Link>{" "}
+                or{" "}
+                <Link href="/quote" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  request bulk pricing
+                </Link>{" "}
+                for wholesale orders.
               </p>
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-green-200 to-white opacity-60 z-0"></div>

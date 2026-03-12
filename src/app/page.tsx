@@ -172,13 +172,21 @@ export default function Home() {
                 exporter
               </Link>
               , specializing in premium{" "}
-              <strong className="text-[#004D40]">biodegradable plates</strong>,{" "}
-              <strong className="text-[#004D40]">sugarcane bagasse bowls</strong>, meal trays, and{" "}
+              <Link href="/products/round-plates" className="text-[#007A3E] font-bold hover:underline decoration-2 underline-offset-2 transition-all">
+                biodegradable plates
+              </Link>,{" "}
+              <Link href="/products/bowls" className="text-[#007A3E] font-bold hover:underline decoration-2 underline-offset-2 transition-all">
+                sugarcane bagasse bowls
+              </Link>, meal trays, and{" "}
               <strong className="text-[#004D40]">eco-friendly packaging</strong> solutions.
             </p>
             
             <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-8">
-              As a trusted <strong>wholesale manufacturer in India</strong>, we transform agricultural waste into certified compostable products that meet international quality standards. Our FDA-approved, SGS-certified range serves restaurants, caterers, hotels, and distributors across <strong>7+ countries</strong>. Whether you need bulk orders or custom branding, we deliver sustainable alternatives that don't compromise on durability or performance.
+              As a trusted <strong>wholesale manufacturer in India</strong>, we transform agricultural waste into certified compostable products that meet international quality standards. Our{" "}
+              <Link href="/manufacturing" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                FDA-approved manufacturing facility
+              </Link>{" "}
+              produces SGS-certified range that serves restaurants, caterers, hotels, and distributors across <strong>7+ countries</strong>. Whether you need bulk orders or custom branding, we deliver sustainable alternatives that don't compromise on durability or performance.
             </p>
             
             {/* CTA Button */}
@@ -279,15 +287,21 @@ export default function Home() {
               The Leading Sugarcane Bagasse Tableware Manufacturer
             </h3>
             <p className="text-base text-[#004D40] leading-relaxed mb-6 max-w-2xl">
-              we bridge the gap between industrial scale and environmental
-              ethics. As a premier manufacturer of bagasse products, we
+              We bridge the gap between industrial scale and environmental
+              ethics. As a premier{" "}
+              <Link href="/products" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                manufacturer of bagasse products
+              </Link>, we
               specialize in transforming agricultural by-products, specifically
               sugarcane bagasse, into high-performance compostable solutions.
             </p>
             <p className="text-base text-[#004D40] leading-relaxed mb-8 max-w-2xl">
               We provide businesses worldwide with a reliable alternative to
-              single-use plastics by offering wholesale bagasse plates and
-              packaging that meet rigorous global durability standards. Our
+              single-use plastics by offering{" "}
+              <Link href="/quote" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                wholesale bagasse plates and packaging
+              </Link>{" "}
+              that meet rigorous global durability standards. Our
               circular manufacturing process ensures every product returns to
               the earth without leaving a trace.
             </p>
