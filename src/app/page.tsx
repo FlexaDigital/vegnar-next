@@ -66,24 +66,26 @@ const GreenPromiseCard = ({
   title: string;
   description: string;
 }) => (
-  <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center text-center shadow-lg border border-green-100 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white hover:border-green-200">
-    <div className="bg-[#D4F5E1] text-[#007A3E] rounded-full p-4 mb-4 flex items-center justify-center text-2xl shadow-md">
-      <Icon className="w-6 h-6" />
+  <Link href="/sustainability/eco-initiatives">
+    <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center text-center shadow-lg border border-green-100 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white hover:border-green-200 cursor-pointer">
+      <div className="bg-[#D4F5E1] text-[#007A3E] rounded-full p-4 mb-4 flex items-center justify-center text-2xl shadow-md">
+        <Icon className="w-6 h-6" />
+      </div>
+      <h3 className="font-extrabold text-lg mb-3 whitespace-pre-line text-gray-800">
+        {title}
+      </h3>
+      <p className="text-sm leading-relaxed max-w-[280px] text-gray-600">
+        {description}
+      </p>
     </div>
-    <h3 className="font-extrabold text-lg mb-3 whitespace-pre-line text-gray-800">
-      {title}
-    </h3>
-    <p className="text-sm leading-relaxed max-w-[280px] text-gray-600">
-      {description}
-    </p>
-  </div>
+  </Link>
 );
 
 export default function Home() {
   const greenPromises = [
     {
       icon: GiSprout,
-      title: "100% Biodegradable",
+      title: "100% biodegradable certified",
       description:
         "Our products naturally break down into non-toxic components, returning to the earth without harm.",
     },
@@ -289,36 +291,39 @@ export default function Home() {
             <p className="text-base text-[#004D40] leading-relaxed mb-6 max-w-2xl">
               We bridge the gap between industrial scale and environmental
               ethics. As a premier{" "}
-              <Link href="/products" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/products/bagasse-products" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
                 manufacturer of bagasse products
               </Link>, we
               specialize in transforming agricultural by-products, specifically
               sugarcane bagasse, into high-performance compostable solutions.
             </p>
             <p className="text-base text-[#004D40] leading-relaxed mb-8 max-w-2xl">
-              We provide businesses worldwide with a reliable alternative to
-              single-use plastics by offering{" "}
-              <Link href="/quote" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
-                wholesale bagasse plates and packaging
+              We provide
+              {" "}
+              <Link href="/export" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+               exporting to 7+ countries
               </Link>{" "}
-              that meet rigorous global durability standards. Our
-              circular manufacturing process ensures every product returns to
+               with a reliable alternative to
+              single-use plastics by offering{" "}
+              <Link href="/products/round-plates" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                wholesale bagasse plates 
+              </Link>{" "}
+              that meet rigorous global durability standards. Our {" "}
+              <Link href="/manufacturing" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+our manufacturing process
+              </Link>{" "}
+              process ensures every product returns to
               the earth without leaving a trace.
             </p>
-            <div className="flex gap-6 sm:gap-12 max-w-2xl">
-              <div>
-                <p className="font-extrabold text-2xl text-[#007A3E]">12M+</p>
-                <p className="text-base text-[#004D40]">Products Sold</p>
-              </div>
-              <div>
-                <p className="font-extrabold text-2xl text-[#007A3E]">7+</p>
-                <p className="text-base text-[#004D40]">Countries Served</p>
-              </div>
-              <div>
-                <p className="font-extrabold text-2xl text-[#007A3E]">100%</p>
-                <p className="text-base text-[#004D40]">Eco-Friendly</p>
-              </div>
-            </div>
+            <Link 
+              href="/about-us" 
+              className="inline-flex items-center gap-2 text-[#007A3E] font-semibold hover:text-[#006332] transition-colors group"
+            >
+              Learn more about our story
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
@@ -357,6 +362,65 @@ export default function Home() {
       </section>
 
       <FAQSection />
+
+      {/* From Our Blog Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-20 bg-gradient-to-b from-green-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
+              FROM OUR BLOG
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#004D40] mb-4">
+              From Our Blog
+            </h2>
+            <p className="text-base sm:text-lg text-gray-700 max-w-2xl mx-auto mb-6">
+              <Link href="/blog" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                Read our eco-packaging guides
+              </Link>
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Article 1 */}
+            <Link href="/blog/what-is-bagasse" className="group">
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-green-100 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
+                <div className="flex items-start gap-4">
+                  <div className="bg-[#D4F5E1] text-[#007A3E] rounded-full p-3 flex items-center justify-center flex-shrink-0">
+                    <GiSprout className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-gray-800 mb-2 group-hover:text-[#007A3E] transition-colors">
+                      What is bagasse tableware?
+                    </h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      Discover the sustainable alternative to plastic tableware made from sugarcane waste.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+
+            {/* Article 2 */}
+            <Link href="/blog/are-bagasse-plates-microwave-safe" className="group">
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-green-100 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
+                <div className="flex items-start gap-4">
+                  <div className="bg-[#D4F5E1] text-[#007A3E] rounded-full p-3 flex items-center justify-center flex-shrink-0">
+                    <GiRecycle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg text-gray-800 mb-2 group-hover:text-[#007A3E] transition-colors">
+                      Are bagasse plates microwave safe?
+                    </h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      Learn about the safety and durability of bagasse plates in microwave use.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* <ProductSection /> */}
 

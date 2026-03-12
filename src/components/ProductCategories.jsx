@@ -5,31 +5,31 @@ import Link from 'next/link';
 
 const categories = [
   {
-    name: 'Plates',
+    name: 'biodegradable bagasse plates',
     description: 'Sustainable bagasse plates designed for everyday meals, parties, and eco-conscious food service.',
     image: '/assets/category-photo/baggase-plates.webp',
     href: '/products/round-plates'
   },
   {
-    name: 'Meal Trays',
+    name: 'sugarcane bagasse meal trays',
     description: 'Multi-compartment bagasse meal trays that keep food neatly separated and easy to serve.',
     image: '/assets/category-photo/meal-tray.webp',
     href: '/products/meal-trays'
   },
   {
-    name: 'Bowls',
+    name: 'compostable bagasse bowls',
     description: 'Sturdy biodegradable bowls ideal for soups, curries, salads, and hot or cold dishes.',
     image: '/assets/category-photo/bowl.webp',
     href: '/products/bowls'
   },
   {
-    name: 'Clamshell',
+    name: 'eco-friendly clamshell containers',
     description: 'Eco-friendly clamshell containers built for secure takeaway packaging and food delivery.',
     image: '/assets/category-photo/clam-shell.webp',
     href: '/products/clamshells'
   },
   {
-    name: 'Containers',
+    name: 'biodegradable takeaway containers ',
     description: 'Versatile bagasse food containers with lids, perfect for storage, takeaway, and catering use.',
     image: '/assets/category-photo/container.webp',
     href: '/products/takeaway-container'
@@ -48,21 +48,21 @@ const ProductCategories = () => {
   return (
     <section className="max-w-7xl mx-auto px-6 py-12">
       <div className="text-center mb-10">
-  <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
-    SUSTAINABLE DINING SOLUTIONS
-  </span>
-  <h2 className="text-2xl sm:text-3xl font-extrabold mb-2">
-    Discover Our Eco-Conscious Product Range
-  </h2>
-  <h3 className="text-lg font-semibold mb-4 text-[#007A3E]">
-    Thoughtfully Designed for a Greener Future
-  </h3>
-  <p className="text-sm text-[#4a4a4a] max-w-4xl mx-auto leading-relaxed">
-    Vegnar delivers responsibly crafted tableware made from renewable materials such as bagasse and PLA. 
-    Our products are designed to balance strength, safety, and sustainability — making them ideal for 
-    modern dining, food service, and eco-driven businesses committed to reducing environmental impact.
-  </p>
-</div>
+        <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
+          SUSTAINABLE DINING SOLUTIONS
+        </span>
+        <h2 className="text-2xl sm:text-3xl font-extrabold mb-2">
+          Discover Our Eco-Conscious Product Range
+        </h2>
+        <h3 className="text-lg font-semibold mb-4 text-[#007A3E]">
+          Thoughtfully Designed for a Greener Future
+        </h3>
+        <p className="text-sm text-[#4a4a4a] max-w-4xl mx-auto leading-relaxed">
+          Vegnar delivers responsibly crafted tableware made from renewable materials such as bagasse and PLA.
+          Our products are designed to balance strength, safety, and sustainability — making them ideal for
+          modern dining, food service, and eco-driven businesses committed to reducing environmental impact.
+        </p>
+      </div>
 
 
       <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-1 h-[600px] md:h-[400px]">
@@ -87,7 +87,7 @@ const ProductCategories = () => {
             </div>
           </div>
         </Link>
-        
+
         <Link href={categories[1].href} className="group relative overflow-hidden rounded-lg row-span-2 md:row-span-2">
           <Image
             src={categories[1].image}
@@ -109,7 +109,7 @@ const ProductCategories = () => {
             </div>
           </div>
         </Link>
-        
+
         <Link href={categories[2].href} className="group relative overflow-hidden rounded-lg">
           <Image
             src={categories[2].image}
@@ -131,7 +131,7 @@ const ProductCategories = () => {
             </div>
           </div>
         </Link>
-        
+
         <Link href={categories[3].href} className="group relative overflow-hidden rounded-lg">
           <Image
             src={categories[3].image}
@@ -153,7 +153,7 @@ const ProductCategories = () => {
             </div>
           </div>
         </Link>
-        
+
         <Link href={categories[4].href} className="group relative overflow-hidden rounded-lg">
           <Image
             src={categories[4].image}
@@ -175,7 +175,7 @@ const ProductCategories = () => {
             </div>
           </div>
         </Link>
-        
+
         <Link href={categories[5].href} className="group relative overflow-hidden rounded-lg col-span-2 md:col-span-2">
           <Image
             src={categories[5].image}

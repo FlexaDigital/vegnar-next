@@ -98,9 +98,9 @@ const HeroSection = () => {
               {slide.description}
             </p>
             <div className="mt-4 sm:mt-6 flex flex-wrap gap-3 sm:gap-4">
-              <a href="/products">
+              <a href="/products/bagasse-products">
                 <button className="bg-vegnar-green hover:bg-green-800 transition text-white font-semibold rounded-full px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base flex items-center min-h-[44px] min-w-[44px]">
-                  Explore Products
+                  Explore our bagasse products 
                   <svg
                     className="ml-2 w-4 h-4"
                     fill="none"
@@ -116,7 +116,7 @@ const HeroSection = () => {
               </a>
               <Link href="/contact">
                 <button className="border border-white/60 hover:border-white transition text-white font-semibold rounded-full px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base min-h-[44px] min-w-[44px]">
-                  Get a Sample
+               Get a free sample
                 </button>
               </Link>
             </div>
