@@ -21,6 +21,12 @@ export const metadata: Metadata = {
     "bagasse products impact",
     "vegnar green initiatives"
   ],
+  alternates: {
+    canonical: "https://www.vegnar.com/sustainability/eco-activities",
+  },
+  robots: "index, follow",
+  authors: [{ name: "Vegnar Greens" }],
+  publisher: "Vegnar Greens",
 };
 
 export default function EcoActivitiesPage() {

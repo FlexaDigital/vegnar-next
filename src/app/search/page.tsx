@@ -1,5 +1,17 @@
 import { Suspense } from 'react';
+import { Metadata } from 'next';
 import SearchResults from '@/components/SearchResults';
+
+export const metadata: Metadata = {
+  title: 'Search Products | Vegnar Green',
+  description: 'Search our complete range of biodegradable tableware and eco-friendly packaging products. Find the perfect sustainable solution for your needs.',
+  alternates: {
+    canonical: "https://www.vegnar.com/search",
+  },
+  robots: "index, follow",
+  authors: [{ name: "Vegnar Greens" }],
+  publisher: "Vegnar Greens",
+};
 
 export default function SearchPage() {
   return (

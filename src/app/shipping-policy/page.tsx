@@ -3,6 +3,12 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Shipping Policy | Vegnar Green',
   description: 'Learn about our shipping policy for domestic, international, and bulk orders. Production timelines, delivery estimates, and shipping terms.',
+  alternates: {
+    canonical: "https://www.vegnar.com/shipping-policy",
+  },
+  robots: "index, follow",
+  authors: [{ name: "Vegnar Greens" }],
+  publisher: "Vegnar Greens",
 };
 
 export default function ShippingPolicy() {

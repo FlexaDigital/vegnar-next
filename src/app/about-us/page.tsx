@@ -9,7 +9,14 @@ import {
   faGlobe,
   faSeedling,
   faRecycle,
+  faIndustry,
+  faMapMarkerAlt,
+  faClock,
+  faCubes,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  faLinkedin,
+} from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import BecomePartnerSection from '@/components/BecomePartnerSection';
 
@@ -20,7 +27,12 @@ library.add(
   faHandshake,
   faGlobe,
   faSeedling,
-  faRecycle
+  faRecycle,
+  faIndustry,
+  faMapMarkerAlt,
+  faClock,
+  faCubes,
+  faLinkedin
 );
 
 export const metadata: Metadata = {
@@ -67,7 +79,7 @@ export const metadata: Metadata = {
   ].join(', '),
   openGraph: {
     title: 'About Vegnar Greens | Sugarcane Bagasse Product Manufacturer in India',
-    description: 'Explore Vegnar Greens — India’s trusted brand for eco-conscious bagasse and biodegradable packaging products. From design to export, we deliver sustainable innovation.',
+    description: 'Explore Vegnar Greens — India\'s trusted brand for eco-conscious bagasse and biodegradable packaging products. From design to export, we deliver sustainable innovation.',
     url: 'https://www.vegnar.com/about-us',
     siteName: 'Vegnar Greens',
     type: 'website',
@@ -79,7 +91,6 @@ export const metadata: Metadata = {
   authors: [{ name: 'Vegnar Greens' }],
   publisher: 'Vegnar Greens',
 };
-
 
 const coreValues = [
   {
@@ -144,38 +155,97 @@ const goals = [
   },
 ];
 
-const Button = ({
-  as: Component = 'button',
-  className,
-  children,
-  ...props
-}: {
-  as?: React.ElementType;
-  className?: string;
-  children: React.ReactNode;
-  [key: string]: any;
-}) => {
-  let baseClasses =
-    'inline-flex items-center justify-center rounded-md font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
-  let combinedClasses = className ? `${baseClasses} ${className}` : baseClasses;
-  return (
-    <Component className={combinedClasses} {...props}>
-      {children}
-    </Component>
-  );
-};
+const certifications = [
+  {
+    id: 'okcompost',
+    title: 'OK Compost',
+    image: '/assets/img/certifications/okcompost.png',
+    description: 'Certified compostable by TÜV Austria — products break down fully in industrial composting.',
+  },
+  {
+    id: 'sgs',
+    title: 'SGS Tested',
+    image: '/assets/img/certifications/sgs.png',
+    description: 'Independently tested by SGS, the world\'s leading inspection and certification company.',
+  },
+  {
+    id: 'fda',
+    title: 'FDA Approved',
+    image: '/assets/img/certifications/fda.png',
+    description: 'Compliant with U.S. FDA standards for food-contact safety.',
+  },
+  {
+    id: 'iso9001',
+    title: 'ISO 9001:2015',
+    image: '/assets/img/certifications/certification-badges.png',
+    description: 'Quality Management System certified — ensuring consistent product excellence.',
+  },
+  {
+    id: 'iso14001',
+    title: 'ISO 14001:2015',
+    image: '/assets/img/certifications/certification-badges.png',
+    description: 'Environmental Management System certified — minimizing our ecological footprint.',
+  },
+];
+
+const teamMembers = [
+  {
+    id: 'tushar',
+    name: 'Tushar Hirani',
+    role: 'Co-Founder & CEO',
+    image: '/assets/img/team/tushar-hirani.png',
+    linkedin: 'https://www.linkedin.com/in/tushar-hirani/',
+    bio: 'A visionary entrepreneur with deep expertise in sustainable manufacturing, Tushar leads Vegnar Greens\' strategic growth and global expansion. His passion for eliminating single-use plastics drives the company\'s mission to build a greener future. Under his leadership, Vegnar Greens has become India\'s most trusted name in premium bagasse tableware.',
+  },
+  {
+    id: 'ashish',
+    name: 'Ashish Chauhan',
+    role: 'Co-Founder & COO',
+    image: '/assets/img/team/ashish-chauhan.png',
+    linkedin: 'https://www.linkedin.com/in/ashish-chauhan/',
+    bio: 'With a strong background in operations and supply chain management, Ashish oversees Vegnar Greens\' manufacturing excellence from the Gujarat facility. His hands-on approach to quality control and process optimization ensures every product meets international standards while maintaining cost efficiency for partners worldwide.',
+  },
+];
+
+const factoryStats = [
+  {
+    icon: faMapMarkerAlt,
+    label: 'Location',
+    value: 'Gujarat, India',
+    detail: 'State-of-the-art facility in the heart of India\'s industrial hub',
+  },
+  {
+    icon: faIndustry,
+    label: 'Production Capacity',
+    value: '500,000+ pcs/day',
+    detail: 'Fully automated production lines with scalable output',
+  },
+  {
+    icon: faClock,
+    label: 'Years in Business',
+    value: '5+ Years',
+    detail: 'Trusted by partners across 15+ countries since inception',
+  },
+  {
+    icon: faCubes,
+    label: 'Product Range',
+    value: '50+ SKUs',
+    detail: 'Plates, bowls, clamshells, cups, trays, and custom designs',
+  },
+];
 
 export default function OurStory() {
   return (
     <main className="w-full bg-gray-50 text-gray-900 font-sans text-base leading-relaxed">
 
+      {/* ═══════════ HERO SECTION ═══════════ */}
       <section className="relative bg-gradient-to-br from-green-50 to-green-100 py-20 px-4 sm:px-6 lg:px-20">
         <div className="max-w-7xl mx-auto text-center">
           <span className="inline-block bg-green-700 text-white text-sm font-semibold rounded-full px-4 py-1 mb-4">
             ABOUT VEGNAR GREENS
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6">
-            India's Top Bagasse Products Manufacturer
+            India&apos;s Top Bagasse Products Manufacturer
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Pioneering sustainable innovation — transforming agricultural waste into premium biodegradable solutions for a greener tomorrow
@@ -183,27 +253,35 @@ export default function OurStory() {
         </div>
       </section>
 
-      {/* Our Story Section */}
-      <section className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 py-24 bg-white rounded-md shadow-md px-6 mx-4 mt-16 relative z-10">
+      {/* ═══════════ FOUNDING STORY (E-E-A-T) ═══════════ */}
+      <section className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20 py-24 bg-white rounded-md shadow-md px-6 sm:px-12 mx-4 mt-16 relative z-10">
         <article className="lg:w-1/2">
           <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
-            OUR STORY
+            OUR FOUNDING STORY
           </span>
-          <h2 className="text-3xl font-semibold mb-6">About Vegnar Greens - India's Top Bagasse Products Manufacturer</h2>
-          <p className="mb-6 text-justify">
-            Vegnar Greens stands as India's top bagasse products manufacturer, revolutionizing sustainable packaging from our state-of-the-art facility in Gujarat. Founded on the vision of eliminating plastic waste, we've become the nation's most trusted name in premium bagasse tableware.
+          <h2 className="text-3xl font-bold mb-6 text-gray-900">
+            From a Bold Idea to India&apos;s Leading Bagasse Manufacturer
+          </h2>
+          <p className="mb-5 text-gray-700 text-justify leading-relaxed">
+            Vegnar Greens was born from a simple but powerful observation: every single day, millions of single-use plastic plates, cups, and containers end up in India&apos;s landfills and oceans. In 2019, co-founders <strong>Tushar Hirani</strong> and <strong>Ashish Chauhan</strong> — both raised in Gujarat&apos;s vibrant entrepreneurial culture — decided enough was enough.
           </p>
-          <p className="mb-6 text-justify">
-            Our cutting-edge manufacturing processes transform sugarcane bagasse into superior-quality biodegradable products. From Vegnar round plates to compartment plates, bowls, clamshells, and cups — each product represents our commitment to environmental excellence and uncompromising quality.
+          <p className="mb-5 text-gray-700 text-justify leading-relaxed">
+            Having grown up surrounded by sugarcane farms, they saw an untapped opportunity. Sugarcane processing generates massive amounts of bagasse — fibrous residue that was largely burned or discarded. What if this agricultural &ldquo;waste&rdquo; could become the raw material for premium, fully compostable tableware?
           </p>
-          <p className="mb-6 text-justify">
-            As India's leading bagasse manufacturer, we've set new industry standards for sustainability, innovation, and performance. Our products deliver the durability of conventional tableware while ensuring complete biodegradability within 90 days.
+          <p className="mb-5 text-gray-700 text-justify leading-relaxed">
+            With personal savings and relentless determination, they set up their first production line in a small facility in Gujarat. The early days were tough — perfecting the molding process, achieving the right thickness and water resistance, and convincing buyers that bagasse products could truly rival plastic in performance were all uphill battles.
+          </p>
+          <p className="mb-5 text-gray-700 text-justify leading-relaxed">
+            But quality spoke for itself. Within two years, word-of-mouth referrals from hotels, caterers, and export houses turned Vegnar Greens into one of India&apos;s fastest-growing eco-packaging brands. Today, the company operates a <strong>state-of-the-art manufacturing facility in Gujarat</strong> with a production capacity exceeding <strong>500,000 pieces per day</strong>, serving partners in over <strong>15 countries</strong>.
+          </p>
+          <p className="text-gray-700 text-justify leading-relaxed">
+            Over <strong>5+ years</strong> in business, Vegnar Greens has stayed true to its founding promise: delivering uncompromising quality, complete biodegradability, and tangible impact against plastic pollution — one plate at a time.
           </p>
         </article>
         <figure className="lg:w-1/2 max-w-md w-full rounded-md overflow-hidden shadow-lg mx-auto">
           <Image
             src="/assets/img/about-us-hero.jpg"
-            alt="Sustainable packaging products"
+            alt="Vegnar Greens sustainable packaging products and bagasse tableware"
             width={600}
             height={400}
             className="w-full h-auto object-cover"
@@ -212,53 +290,37 @@ export default function OurStory() {
         </figure>
       </section>
 
-      {/* Company Overview */}
+      {/* ═══════════ FACTORY & PRODUCTION DETAILS ═══════════ */}
       <section className="bg-white py-24 px-4 relative z-10">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <span className="inline-block bg-green-100 text-green-800 text-sm font-semibold rounded-full px-6 py-2 mb-6">
-              🌍 Leading the Green Revolution
+              🏭 OUR MANUFACTURING EXCELLENCE
             </span>
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-              India's Premier
-              <span className="block text-green-600">Bagasse Products Manufacturer</span>
+              World-Class Facility,
+              <span className="block text-green-600">Made in Gujarat, India</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Setting the gold standard in sustainable tableware manufacturing. Our advanced Gujarat facility produces premium bagasse products that combine environmental responsibility with exceptional performance for global markets.
+              Our advanced manufacturing facility combines cutting-edge automation with rigorous quality control to produce premium bagasse products at scale — sustainably and efficiently.
             </p>
           </div>
-          
-          {/* Timeline */}
-          <div className="mb-20">
-            <div className="flex flex-col md:flex-row items-center justify-between max-w-4xl mx-auto">
-              <div className="flex flex-col items-center text-center mb-8 md:mb-0">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
-                  <span className="text-white font-bold text-lg">1</span>
+
+          {/* Factory Stats Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {factoryStats.map((stat, index) => (
+              <div
+                key={index}
+                className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-green-100"
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg">
+                  <FontAwesomeIcon icon={stat.icon} className="text-white w-6 h-6" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Vision Born</h3>
-                <p className="text-gray-600 text-sm max-w-xs">Recognized the urgent need for plastic alternatives</p>
+                <p className="text-xs font-bold text-green-700 uppercase tracking-wider mb-2">{stat.label}</p>
+                <p className="text-2xl font-extrabold text-gray-900 mb-2">{stat.value}</p>
+                <p className="text-sm text-gray-600 leading-relaxed">{stat.detail}</p>
               </div>
-              
-              <div className="hidden md:block flex-1 h-0.5 bg-gradient-to-r from-green-500 to-emerald-600 mx-4"></div>
-              
-              <div className="flex flex-col items-center text-center mb-8 md:mb-0">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
-                  <span className="text-white font-bold text-lg">2</span>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Innovation</h3>
-                <p className="text-gray-600 text-sm max-w-xs">Developed breakthrough bagasse processing technology</p>
-              </div>
-              
-              <div className="hidden md:block flex-1 h-0.5 bg-gradient-to-r from-green-500 to-emerald-600 mx-4"></div>
-              
-              <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
-                  <span className="text-white font-bold text-lg">3</span>
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Global Impact</h3>
-                <p className="text-gray-600 text-sm max-w-xs">Expanding worldwide to eliminate plastic waste</p>
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Product Showcase */}
@@ -267,7 +329,7 @@ export default function OurStory() {
               <div className="relative h-96 lg:h-auto overflow-hidden">
                 <Image
                   src="/assets/img/bagasse.webp"
-                  alt="Biodegradable tableware collection"
+                  alt="Biodegradable tableware collection by Vegnar Greens"
                   fill
                   className="object-cover"
                 />
@@ -278,13 +340,13 @@ export default function OurStory() {
                   </span>
                 </div>
               </div>
-              
+
               <div className="p-12 flex flex-col justify-center">
-                <h3 className="text-4xl font-bold text-gray-900 mb-4">India's Top Quality Bagasse Products</h3>
+                <h3 className="text-4xl font-bold text-gray-900 mb-4">India&apos;s Top Quality Bagasse Products</h3>
                 <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                   Our premium bagasse products represent the pinnacle of sustainable manufacturing in India. Using advanced technology and superior sugarcane bagasse, we create tableware that exceeds international quality standards while maintaining complete biodegradability.
                 </p>
-                
+
                 <div className="grid grid-cols-2 gap-6 mb-8">
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Performance Features</h4>
@@ -295,7 +357,7 @@ export default function OurStory() {
                       </li>
                       <li className="flex items-center text-gray-700">
                         <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                        <span className="text-sm">Oil & Water Resistant</span>
+                        <span className="text-sm">Oil &amp; Water Resistant</span>
                       </li>
                       <li className="flex items-center text-gray-700">
                         <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
@@ -303,7 +365,7 @@ export default function OurStory() {
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Certifications</h4>
                     <ul className="space-y-2">
@@ -322,14 +384,14 @@ export default function OurStory() {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="flex gap-4 mt-6">
-                  <button className="bg-gradient-to-r from-green-600 to-emerald-700 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-800 transition-all duration-300">
+                  <a href="/products" className="bg-gradient-to-r from-green-600 to-emerald-700 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-800 transition-all duration-300">
                     View Products
-                  </button>
-                  <button className="border-2 border-green-600 text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition-all duration-300">
-                    Download Catalog
-                  </button>
+                  </a>
+                  <a href="/quote" className="border-2 border-green-600 text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition-all duration-300">
+                    Request Quote
+                  </a>
                 </div>
               </div>
             </div>
@@ -337,26 +399,68 @@ export default function OurStory() {
         </div>
       </section>
 
+    
 
+      {/* ═══════════ CERTIFICATIONS WITH IMAGES ═══════════ */}
+      <section className="py-24 px-4 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'url(/assets/bg-green.png)', backgroundRepeat: 'repeat', backgroundSize: '300px auto' }}></div>
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
+              QUALITY ASSURED
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+              Globally Certified <span className="text-green-600">Quality</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Our products are rigorously tested and certified by the world&apos;s leading standards organizations, ensuring safety, quality, and environmental responsibility.
+            </p>
+          </div>
 
-      {/* Mission Section */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+            {certifications.map((cert) => (
+              <div
+                key={cert.id}
+                className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-6 text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-green-100 group"
+              >
+                <div className="w-28 h-28 mx-auto mb-5 relative rounded-full overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                  <Image
+                    src={cert.image}
+                    alt={`${cert.title} certification badge`}
+                    fill
+                    className="object-contain p-1"
+                  />
+                </div>
+                <h3 className="font-bold text-gray-900 text-lg mb-2">{cert.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{cert.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-center text-gray-500 text-sm mt-12 max-w-2xl mx-auto">
+            All our products are lab-tested and meet the highest global standards for food safety, compostability, and environmental impact.
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════════ MISSION SECTION ═══════════ */}
       <section className="bg-[#008060] text-white py-16 px-8 sm:px-16 rounded-md my-24 text-center max-w-4xl mx-auto">
         <span className="inline-block bg-white/20 text-white text-sm font-semibold rounded-full px-4 py-1 mb-3">
           OUR MISSION
         </span>
         <h2 className="text-3xl font-semibold mb-4">Our Mission</h2>
         <p className="text-lg max-w-xl mx-auto">
-          To establish India as the global leader in sustainable packaging by manufacturing world-class bagasse products that eliminate plastic waste. We're committed to transforming agricultural waste into premium biodegradable solutions that protect our planet for future generations.
+          To establish India as the global leader in sustainable packaging by manufacturing world-class bagasse products that eliminate plastic waste. We&apos;re committed to transforming agricultural waste into premium biodegradable solutions that protect our planet for future generations.
         </p>
         <div className="border-b border-white w-16 mx-auto mt-8"></div>
       </section>
 
-      {/* Vision & Core Values */}
+      {/* ═══════════ VISION & CORE VALUES ═══════════ */}
       <section className="mb-24 text-center max-w-5xl mx-auto px-4 sm:px-8">
         <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
           OUR VALUES
         </span>
-        <h2 className="text-3xl font-semibold mb-2">Our Vision & Core Values</h2>
+        <h2 className="text-3xl font-semibold mb-2">Our Vision &amp; Core Values</h2>
         <p className="text-lg text-[#004D40]/70 mb-10">
           The principles that guide every decision we make and every product we create
         </p>
@@ -383,7 +487,7 @@ export default function OurStory() {
         </div>
       </section>
 
-      {/* Goals Section */}
+      {/* ═══════════ GOALS SECTION ═══════════ */}
       <section className="mb-24 text-center max-w-6xl mx-auto px-4 sm:px-8 bg-white py-16 rounded-lg shadow-md">
         <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
           OUR GOALS
@@ -407,8 +511,9 @@ export default function OurStory() {
           ))}
         </div>
       </section>
+
+    
       <BecomePartnerSection />
     </main>
   );
 }
-
