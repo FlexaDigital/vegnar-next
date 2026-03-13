@@ -79,7 +79,9 @@ const ManufacturingSection = () => {
             <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
               sugarcane bagasse manufacturer in India
             </Link>,
-            producing eco-friendly biodegradable tableware for domestic and
+            producing <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              eco-friendly biodegradable tableware
+            </Link> for domestic and
             international{" "}
             <Link href="/export" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
               export markets
@@ -130,7 +132,9 @@ const ManufacturingSection = () => {
                 <div className="bg-green-50 p-4 rounded-lg">
                   <FaGlobeAsia className="text-green-700 text-3xl mb-2" />
                   <p className="font-bold text-2xl text-green-900">15+</p>
-                  <p className="text-sm text-gray-600">Export Countries</p>
+                  <p className="text-sm text-gray-600"><Link href="/export" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    View our global export capabilities
+                  </Link></p>
                 </div>
                 <div className="bg-green-50 p-4 rounded-lg">
                   <FaShieldAlt className="text-green-700 text-3xl mb-2" />
@@ -164,11 +168,9 @@ const ManufacturingSection = () => {
             <p className="text-gray-700 max-w-2xl mx-auto">
               We partner directly with sugarcane farmers and mills to source
               bagasse—a fibrous byproduct that would otherwise be burned or
-              discarded. This sustainable approach supports our{" "}
-              <Link href="/products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
-                eco-friendly product manufacturing
-              </Link>{" "}
-              while providing additional income to farming communities.
+              discarded. This sustainable approach supports <Link href="/sustainability/eco-initiatives" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                our agricultural waste upcycling initiative
+              </Link> while providing additional income to farming communities.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -269,7 +271,7 @@ const ManufacturingSection = () => {
                 },
                 {
                   title: "Product Manufacturing",
-                  desc: "Eco-friendly sheets are cut, shaped, and molded into final tableware products like plates, bowls, and containers.",
+                  desc: "Eco-friendly sheets are cut, shaped, and molded into final tableware products like bagasse plates, bagasse bowls, food containers, and meal trays.",
                   image: "/assets/img/fixed-factory.gif",
                   side: "right",
                   nextIcon: "🍽️",
@@ -283,7 +285,7 @@ const ManufacturingSection = () => {
                 },
                 {
                   title: "Biodegradation",
-                  desc: "After use, products naturally decompose within 60-90 days in composting conditions, returning nutrients to the soil.",
+                  desc: "After use, products naturally decompose within 60-90 days in composting conditions, returning nutrients to the soil through our compostability certifications.",
                   image: "/assets/img/fixed-compost_6.png",
                   side: "right",
                 },
@@ -471,7 +473,9 @@ const ManufacturingSection = () => {
               </h3>
               <p className="text-gray-600">
                 40% of our energy comes from solar panels installed on-site,
-                with plans to reach 100% renewable by 2026.
+                with plans to reach 100% renewable by 2026. <Link href="/about-us" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  Learn more about our values
+                </Link>.
               </p>
             </div>
             <div className="text-center">
@@ -489,6 +493,81 @@ const ManufacturingSection = () => {
           </div>
         </div>
       </section>
+      
+      {/* FAQ Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-20 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="inline-block bg-green-100 text-green-800 text-sm font-semibold rounded-full px-4 py-1 mb-4">
+              FREQUENTLY ASKED QUESTIONS
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Manufacturing FAQs
+            </h2>
+          </div>
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <h3 className="text-lg font-bold text-gray-900 mb-3">
+                What products do you manufacture?
+              </h3>
+              <p className="text-gray-600">
+                We manufacture a comprehensive range of <Link href="/products/round-plates" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  bagasse plates
+                </Link>, <Link href="/products/bowls" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  bagasse bowls
+                </Link>, <Link href="/products/takeaway-container" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  food containers
+                </Link>, and <Link href="/products/meal-trays" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  meal trays
+                </Link>. View <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  our complete product catalog
+                </Link> for detailed specifications.
+              </p>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <h3 className="text-lg font-bold text-gray-900 mb-3">
+                What certifications do you have?
+              </h3>
+              <p className="text-gray-600">
+                Our facility is ISO 9001:2015 and ISO 14001:2015 certified. All products are FDA approved, SGS tested, and OK Compost certified. Learn more about <Link href="/about-us" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  our certifications and quality standards
+                </Link>.
+              </p>
+            </div>
+            <div className="bg-white rounded-lg p-6 shadow-md">
+              <h3 className="text-lg font-bold text-gray-900 mb-3">
+                How do your products biodegrade?
+              </h3>
+              <p className="text-gray-600">
+                Our bagasse products are certified compostable and break down completely within 60-90 days in industrial composting conditions. Learn more about <Link href="/sustainability/eco-initiatives" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  our compostability certifications
+                </Link>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* End of Page CTAs */}
+      <section className="py-16 px-4 sm:px-6 lg:px-20 bg-green-600">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+            Ready to Partner with India's Leading Bagasse Manufacturer?
+          </h2>
+          <p className="text-green-100 text-lg mb-8 max-w-2xl mx-auto">
+            Get custom manufacturing solutions, bulk pricing, and export support for your sustainable packaging needs.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/quote" className="bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300">
+              Request a manufacturing quote
+            </Link>
+            <Link href="/partner" className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-all duration-300">
+              Become a distribution partner
+            </Link>
+          </div>
+        </div>
+      </section>
+      
       <div className="sr-only">
         <h2>Frequently Asked Questions</h2>
         <p>

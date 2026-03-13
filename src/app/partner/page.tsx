@@ -1,6 +1,7 @@
 import React from 'react';
 import { Metadata } from "next";
 import ProductHero from "@/components/Product/ProductHero";
+import Link from 'next/link';
 import {
   Leaf,
   Briefcase,
@@ -17,12 +18,16 @@ interface Benefit {
   title: string;
   description: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  link?: string;
+  linkText?: string;
 }
 
 interface Step {
   number: number;
   title: string;
   description: string;
+  link?: string;
+  linkText?: string;
 }
 
 const benefits: Benefit[] = [
@@ -37,17 +42,23 @@ const benefits: Benefit[] = [
     description:
       "All products meet international compostability and food safety standards",
     icon: Verified, // Changed from Certificate to Verified
+    link: "/about-us",
+    linkText: "view our international certifications"
   },
   {
     title: "OEM/White Label",
     description: "Custom branding and packaging solutions for your business",
     icon: Tag,
+    link: "/quote",
+    linkText: "request a custom OEM quote"
   },
   {
     title: "Global Shipping",
     description:
       "Reliable logistics network serving partners across 45+ countries",
     icon: Truck,
+    link: "/export",
+    linkText: "see our global export capabilities"
   },
 
 ];
@@ -68,7 +79,9 @@ const steps: Step[] = [
   {
     number: 3,
     title: "Approve",
-    description: "Review samples and finalize your order specifications",
+    description: "Review samples and finalize your order specifications. You can browse products before ordering samples.",
+    link: "/products/bagasse-products",
+    linkText: "browse products before ordering samples"
   },
   {
     number: 4,
@@ -156,7 +169,9 @@ export default function PartnerPage() {
           </h2>
           <p className="text-gray-600 max-w-xl mx-auto mb-12">
             Join our global network of distributors and retailers committed to
-            offering sustainable alternatives to single-use plastic products.
+            offering <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              sustainable alternatives to single-use plastic
+            </Link> products.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
@@ -170,9 +185,14 @@ export default function PartnerPage() {
                 <h3 className="font-bold text-green-800 text-lg leading-snug mb-2">
                   {benefit.title}
                 </h3>
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-gray-700 text-sm leading-relaxed mb-3">
                   {benefit.description}
                 </p>
+                {benefit.link && benefit.linkText && (
+                  <Link href={benefit.link} className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all text-sm">
+                    {benefit.linkText}
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -199,12 +219,60 @@ export default function PartnerPage() {
               <h3 className="text-[#005943] font-bold text-lg mb-1">
                 {step.title}
               </h3>
-              <p className="text-sm leading-relaxed">{step.description}</p>
+              <p className="text-sm leading-relaxed mb-3">{step.description}</p>
+              {step.link && step.linkText && (
+                <Link href={step.link} className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all text-sm">
+                  {step.linkText}
+                </Link>
+              )}
             </div>
           ))}
         </div>
       </section>
       <PartnerForm />
+      
+      {/* Additional CTAs */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-8">
+          <div className="bg-white rounded-xl p-8 shadow-md">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              Not ready to partner? Buy wholesale
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Get competitive wholesale pricing for bulk orders without a formal partnership agreement.
+            </p>
+            <Link href="/quote" className="inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-all">
+              Request a wholesale quote
+            </Link>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-xl p-6 shadow-md">
+              <h4 className="text-xl font-bold text-gray-900 mb-3">
+                Learn about our manufacturing quality
+              </h4>
+              <p className="text-gray-600 mb-4">
+                Discover our state-of-the-art production facilities and quality control processes.
+              </p>
+              <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                Our manufacturing process
+              </Link>
+            </div>
+            
+            <div className="bg-white rounded-xl p-6 shadow-md">
+              <h4 className="text-xl font-bold text-gray-900 mb-3">
+                See what products you can distribute
+              </h4>
+              <p className="text-gray-600 mb-4">
+                Browse our complete catalog of eco-friendly bagasse products available for distribution.
+              </p>
+              <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                Explore our complete product range
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

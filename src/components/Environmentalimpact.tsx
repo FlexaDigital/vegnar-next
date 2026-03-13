@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import {
   GiSprout,
   GiCancel,
@@ -12,22 +13,28 @@ const environmentalImpactData = [
     icon: <GiRecycle size={40} className="text-green-600" />,
     value: "12M",
     description: "Plastic items prevented",
+    hasLink: true,
+    linkUrl: "/products/bagasse-products",
+    linkText: "products driving this impact"
   },
   
   {
     icon: <GiHourglass size={40} className="text-green-600" />,
     value: "850T",
     description: "Agricultural waste upcycled",
+    hasLink: false
   },
   {
     icon: <GiCancel size={40} className="text-green-600" />,
     value: "3,600T",
     description: "CO₂ emissions prevented",
+    hasLink: false
   },
   {
     icon: <GiWaterDrop size={40} className="text-green-600" />,
     value: "1.2M",
     description: "Liters of water saved",
+    hasLink: false
   }
 ];
 
@@ -47,7 +54,12 @@ const EnvironmentalImpact = () => {
               {impact.icon}
             </div>
             <h3 className="text-3xl font-bold mb-2 text-green-800">{impact.value}</h3>
-            <p className="text-slate-600 text-base">{impact.description}</p>
+            <p className="text-slate-600 text-base mb-2">{impact.description}</p>
+            {impact.hasLink && (
+              <Link href={impact.linkUrl!} className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all text-sm">
+                {impact.linkText}
+              </Link>
+            )}
           </div>
         ))}
       </div>

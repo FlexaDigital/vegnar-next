@@ -2,6 +2,7 @@
 
 import { FaCheck, FaEnvelope, FaPhone } from 'react-icons/fa';
 import { useState } from 'react';
+import Link from 'next/link';
 
 // Add countries array at the top of the file
 const countries = [
@@ -277,7 +278,9 @@ export default function PartnerForm() {
             </ul>
           </div>
           <div className="mt-6 max-w-md space-y-2">
-            <p className="font-bold">Have questions?</p>
+            <p className="font-bold">Have questions? <Link href="/contact" className="text-green-300 hover:underline decoration-2 underline-offset-2 transition-all">
+              Reach us via our contact page
+            </Link></p>
             <p className="flex items-center space-x-2">
               <FaEnvelope />
               <span>partner@vegnar.com</span>

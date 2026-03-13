@@ -68,7 +68,7 @@ const BecomePartnerSection = () => {
                 "transition-colors duration-200"
               )}
             >
-              Become a Partner
+              become a distribution partner
               <ArrowRight className="ml-2 w-4 h-4" />
             </a>
           </div>
@@ -90,7 +90,7 @@ const BecomePartnerSection = () => {
                 "transition-colors duration-200"
               )}
             >
-              Request Quote
+              request a bulk quote
               <ArrowRight className="ml-2 w-4 h-4" />
             </a>
           </div>

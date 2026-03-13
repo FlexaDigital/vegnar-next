@@ -125,9 +125,9 @@ const initiatives: InitiativeData[] = [
     icon: faBan, // Use imported IconDefinition
     title: 'Plastic Waste Reduction',
     description:
-      'We provide sustainable alternatives that eliminate single-use plastics. Our products decompose within 180 days, with over 5 million plastic items avoided so far.',
-    linkText: '→ Learn about our plastic-free commitment',
-    linkUrl: '#plastic-free', // Example link
+      'We provide sustainable alternatives that eliminate single-use plastics. Our products decompose within 180 days, with over 5 million plastic items avoided so far. Learn more about our company story and impact.',
+    linkText: '→ Read about our company story and impact',
+    linkUrl: '/about-us', // Updated link
   },
   {
     id: 2,
@@ -135,8 +135,8 @@ const initiatives: InitiativeData[] = [
     title: 'Agricultural Waste Upcycling',
     description:
       'We transform agricultural waste into durable tableware. This supports farmers and prevents pollution from burning crop residues.',
-    linkText: '→ Explore our material sourcing process',
-    linkUrl: '#material-sourcing', // Example link
+    linkText: '→ See how we manufacture from agricultural waste',
+    linkUrl: '/manufacturing', // Updated link
   },
   {
     id: 3,
@@ -144,8 +144,8 @@ const initiatives: InitiativeData[] = [
     title: 'Zero-Waste Packaging',
     description:
       'All Vegnar products arrive in recyclable or compostable packaging. Even our shipping materials are reusable or compostable.',
-    linkText: '→ See our packaging innovations',
-    linkUrl: '#packaging-innovations', // Example link
+    linkText: '→ Explore our plastic-free product range',
+    linkUrl: '/products/bagasse-products', // Updated link
   },
 
   {
@@ -154,8 +154,8 @@ const initiatives: InitiativeData[] = [
     title: 'Green Manufacturing Processes',
     description:
       'Our facilities run on 40% renewable energy, recycle 95% of water, and use 60% less energy than plastic factories. Zero-landfill policy in place.',
-    linkText: '→ Tour our green manufacturing',
-    linkUrl: '#green-manufacturing', // Example link
+    linkText: '→ Visit our green manufacturing facility',
+    linkUrl: '/manufacturing', // Updated link
   },
 ];
 
@@ -173,9 +173,8 @@ const EcoInitiativesPage = () => {
           <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-10">
             At Vegnar Greens, sustainability isn't just a buzzword—it's our core mission. 
             We're committed to creating a positive environmental impact through innovative, 
-            eco-conscious{" "}
-            <Link href="/products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
-              tableware solutions
+            <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              eco-conscious tableware solutions
             </Link>{" "}
             that protect our planet for future generations. Our{" "}
             <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
@@ -282,6 +281,54 @@ const EcoInitiativesPage = () => {
       {/* Make sure these components are correctly imported and exist */}
       <EnvironmentalImpactComponent />
       <EcoMovement />
+      
+      {/* Additional Links Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            Explore More Sustainability Content
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white p-8 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Active Eco Campaigns
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Discover our ongoing environmental initiatives and community programs making a real difference.
+              </p>
+              <Link href="/sustainability/eco-activities" className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-all">
+                See our active eco campaigns
+              </Link>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Sustainability Guides
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Learn best practices for eco-friendly packaging and sustainable business operations.
+              </p>
+              <Link href="/blog" className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-all">
+                Read our eco-packaging guides
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* End of Page CTA */}
+      <section className="py-16 bg-green-600">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">
+            Ready to Make a Sustainable Impact?
+          </h2>
+          <p className="text-green-100 text-lg mb-8 max-w-2xl mx-auto">
+            Join thousands of businesses choosing eco-friendly packaging solutions. Get custom pricing for your sustainable packaging needs.
+          </p>
+          <Link href="/quote" className="inline-block bg-white text-green-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all text-lg">
+            Request eco-friendly packaging for your business
+          </Link>
+        </div>
+      </section>
     </>
   );
 };

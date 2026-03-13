@@ -47,7 +47,7 @@ const EcoMovement = () => {
                                 className="bg-white text-[#058a5e] font-semibold rounded-full px-6 py-3 hover:bg-white/90 transition font-sans"
                                 type="button"
                             >
-                                Become a Partner
+                                Become an eco-distribution partner
                             </button>
                         </Link>
                         {/* <button
@@ -65,7 +65,9 @@ const EcoMovement = () => {
                     <h3 className="font-bold text-lg mb-2 font-sans">Our 2025 Pledge</h3>
                     <p className="mb-6 font-sans text-base leading-relaxed">
                         We're committed to preventing 30 million plastic items from entering
-                        the environment by 2025.
+                        the environment by 2025. <Link href="/about-us" className="text-green-200 hover:text-white underline decoration-2 underline-offset-2 transition-all">
+                          Read about our 2025 mission
+                        </Link>.
                     </p>
                     <div className="w-full max-w-xs mx-auto mb-3 bg-[#01492f] rounded-full h-5 overflow-hidden">
                         <div

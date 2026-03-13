@@ -248,7 +248,7 @@ export default function OurStory() {
             India&apos;s Top Bagasse Products Manufacturer
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Pioneering sustainable innovation — transforming agricultural waste into premium biodegradable solutions for a greener tomorrow
+            Pioneering sustainable innovation — transforming agricultural waste into premium <a href="/products/bagasse-products" className="text-green-600 hover:text-green-700 underline">bagasse products</a> for a greener tomorrow
           </p>
         </div>
       </section>
@@ -266,16 +266,16 @@ export default function OurStory() {
             Vegnar Greens was born from a simple but powerful observation: every single day, millions of single-use plastic plates, cups, and containers end up in India&apos;s landfills and oceans. In 2019, co-founders <strong>Tushar Hirani</strong> and <strong>Ashish Chauhan</strong> — both raised in Gujarat&apos;s vibrant entrepreneurial culture — decided enough was enough.
           </p>
           <p className="mb-5 text-gray-700 text-justify leading-relaxed">
-            Having grown up surrounded by sugarcane farms, they saw an untapped opportunity. Sugarcane processing generates massive amounts of bagasse — fibrous residue that was largely burned or discarded. What if this agricultural &ldquo;waste&rdquo; could become the raw material for premium, fully compostable tableware?
+            Having grown up surrounded by sugarcane farms, they saw an untapped opportunity. Sugarcane processing generates massive amounts of bagasse — fibrous residue that was largely burned or discarded. What if this agricultural &ldquo;waste&rdquo; could become the raw material for premium, fully compostable tableware like <a href="/products/round-plates" className="text-green-600 hover:text-green-700 underline">Vegnar round plates</a>, <a href="/products/bowls" className="text-green-600 hover:text-green-700 underline">bowls</a>, and <a href="/products/clamshells" className="text-green-600 hover:text-green-700 underline">clamshells</a>?
           </p>
           <p className="mb-5 text-gray-700 text-justify leading-relaxed">
             With personal savings and relentless determination, they set up their first production line in a small facility in Gujarat. The early days were tough — perfecting the molding process, achieving the right thickness and water resistance, and convincing buyers that bagasse products could truly rival plastic in performance were all uphill battles.
           </p>
           <p className="mb-5 text-gray-700 text-justify leading-relaxed">
-            But quality spoke for itself. Within two years, word-of-mouth referrals from hotels, caterers, and export houses turned Vegnar Greens into one of India&apos;s fastest-growing eco-packaging brands. Today, the company operates a <strong>state-of-the-art manufacturing facility in Gujarat</strong> with a production capacity exceeding <strong>500,000 pieces per day</strong>, serving partners in over <strong>15 countries</strong>.
+            But quality spoke for itself. Within two years, word-of-mouth referrals from hotels, caterers, and export houses turned Vegnar Greens into one of India&apos;s fastest-growing eco-packaging brands. Today, the company operates a <strong><a href="/manufacturing" className="text-green-600 hover:text-green-700 underline">our advanced Gujarat facility</a></strong> with a production capacity exceeding <strong>500,000 pieces per day</strong>, serving partners in over <strong>15 countries</strong>.
           </p>
           <p className="text-gray-700 text-justify leading-relaxed">
-            Over <strong>5+ years</strong> in business, Vegnar Greens has stayed true to its founding promise: delivering uncompromising quality, complete biodegradability, and tangible impact against plastic pollution — one plate at a time.
+            Over <strong>5+ years</strong> in business, Vegnar Greens has stayed true to its founding promise: delivering uncompromising quality, complete <a href="/sustainability/eco-initiatives" className="text-green-600 hover:text-green-700 underline">biodegradable within 90 days</a>, and tangible impact against plastic pollution — one plate at a time.
           </p>
         </article>
         <figure className="lg:w-1/2 max-w-md w-full rounded-md overflow-hidden shadow-lg mx-auto">
@@ -344,7 +344,7 @@ export default function OurStory() {
               <div className="p-12 flex flex-col justify-center">
                 <h3 className="text-4xl font-bold text-gray-900 mb-4">India&apos;s Top Quality Bagasse Products</h3>
                 <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                  Our premium bagasse products represent the pinnacle of sustainable manufacturing in India. Using advanced technology and superior sugarcane bagasse, we create tableware that exceeds international quality standards while maintaining complete biodegradability.
+                  Our premium bagasse products represent the pinnacle of sustainable manufacturing in India. Using advanced technology and superior sugarcane bagasse, we create tableware that exceeds international quality standards while maintaining complete biodegradability through our <a href="/sustainability/eco-initiatives" className="text-green-600 hover:text-green-700 underline">sustainable packaging initiatives</a>.
                 </p>
 
                 <div className="grid grid-cols-2 gap-6 mb-8">
@@ -386,11 +386,11 @@ export default function OurStory() {
                 </div>
 
                 <div className="flex gap-4 mt-6">
-                  <a href="/products" className="bg-gradient-to-r from-green-600 to-emerald-700 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-800 transition-all duration-300">
-                    View Products
+                  <a href="/products/bagasse-products" className="bg-gradient-to-r from-green-600 to-emerald-700 text-white px-8 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-800 transition-all duration-300">
+                    View all bagasse products
                   </a>
                   <a href="/quote" className="border-2 border-green-600 text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition-all duration-300">
-                    Request Quote
+                    request a bulk quote
                   </a>
                 </div>
               </div>
@@ -438,7 +438,7 @@ export default function OurStory() {
           </div>
 
           <p className="text-center text-gray-500 text-sm mt-12 max-w-2xl mx-auto">
-            All our products are lab-tested and meet the highest global standards for food safety, compostability, and environmental impact.
+            All our products are lab-tested and meet the highest global standards for food safety, compostability, and environmental impact. <a href="/manufacturing" className="text-green-600 hover:text-green-700 underline">See our ISO certified manufacturing</a> process.
           </p>
         </div>
       </section>
@@ -506,7 +506,15 @@ export default function OurStory() {
               <h3 className="text-xl font-semibold text-slate-900 mb-2">
                 {goal.title}
               </h3>
-              <p className="text-slate-600">{goal.description}</p>
+              <p className="text-slate-600">
+                {index === 0 ? (
+                  <>Over 12 million premium bagasse products delivered globally. <a href="/products/bagasse-products" className="text-green-600 hover:text-green-700 underline">explore our full product range</a></>
+                ) : index === 1 ? (
+                  <>India's top bagasse products manufacturer by quality and volume. We <a href="/export" className="text-green-600 hover:text-green-700 underline">export to global markets</a>.</>
+                ) : (
+                  goal.description
+                )}
+              </p>
             </div>
           ))}
         </div>
@@ -514,6 +522,13 @@ export default function OurStory() {
 
     
       <BecomePartnerSection />
+      
+      {/* ═══════════ BLOG LINK SECTION ═══════════ */}
+      <section className="text-center py-12 px-4">
+        <p className="text-gray-600">
+          Learn more about our sustainability journey and initiatives. <a href="/blog" className="text-green-600 hover:text-green-700 underline font-medium">Read our sustainability blog</a>
+        </p>
+      </section>
     </main>
   );
 }
