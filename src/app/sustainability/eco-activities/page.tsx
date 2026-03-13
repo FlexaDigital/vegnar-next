@@ -42,7 +42,9 @@ export default function EcoActivitiesPage() {
             Our Eco-Activities
           </h1>
           <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-10">
-            When you choose Vegnar, you're not just using bagasse over plastic – you're directly supporting our environmental initiatives that help protect and restore our planet.
+            When you choose Vegnar, you're not just using <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              bagasse products
+            </Link> over plastic – you're directly supporting our environmental initiatives that help protect and restore our planet.
           </p>
           
         </div>
@@ -120,7 +122,9 @@ export default function EcoActivitiesPage() {
               <div>
                 <h3 className="text-xl font-bold text-[#0b3d13] mb-4">First Impact: Choosing Bagasse</h3>
                 <p className="mb-4 text-[#0b3d13]/80">
-                  By selecting bagasse products over plastic alternatives, you're already making a significant environmental difference:
+                  By selecting bagasse products over plastic alternatives, you're already making a significant environmental difference. Explore <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    our full range of bagasse products
+                  </Link> to see all available options:
                 </p>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start gap-3">
@@ -133,14 +137,18 @@ export default function EcoActivitiesPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <FontAwesomeIcon icon={faLeaf} className="text-green-600 mt-1" />
-                    <span>Supporting fully compostable products that break down in 90 days</span>
+                    <span>Supporting <Link href="/sustainability/eco-initiatives" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                      fully compostable products that break down in 90 days
+                    </Link></span>
                   </li>
                 </ul>
               </div>
               <div>
                 <h3 className="text-xl font-bold text-[#0b3d13] mb-4">Second Impact: Vegnar's Eco Activities</h3>
                 <p className="mb-4 text-[#0b3d13]/80">
-                  When you choose Vegnar specifically, a portion of our profits directly funds:
+                  When you choose Vegnar specifically, a portion of our profits directly funds environmental programs. <Link href="/about-us" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    Learn more about Vegnar's mission
+                  </Link> and our commitment to sustainability:
                 </p>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start gap-3">
@@ -173,7 +181,9 @@ export default function EcoActivitiesPage() {
               <div className="bg-white rounded-xl p-6 shadow-md">
                 <h3 className="font-bold text-[#0b3d13] mb-3 text-xl">The Problem We're Addressing</h3>
                 <p className="text-[#0b3d13]/70 mb-4">
-                  Every year, over 300 million tons of plastic are produced worldwide, with nearly 50% being single-use items. Much of this ends up in our oceans and forests, taking hundreds of years to decompose while releasing harmful chemicals.
+                  Every year, over 300 million tons of plastic are produced worldwide, with nearly 50% being single-use items. Much of this ends up in our oceans and forests, taking hundreds of years to decompose while releasing harmful chemicals. Learn about <Link href="/sustainability/eco-initiatives" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    our commitment to plastic reduction
+                  </Link>.
                 </p>
                 <p className="text-[#0b3d13]/70">
                   Meanwhile, agricultural waste like sugarcane bagasse is often burned, releasing CO2 and particulate matter that harms air quality and contributes to climate change.
@@ -183,7 +193,9 @@ export default function EcoActivitiesPage() {
               <div className="bg-white rounded-xl p-6 shadow-md">
                 <h3 className="font-bold text-[#0b3d13] mb-3 text-xl">Our Solution: A Dual Approach</h3>
                 <p className="text-[#0b3d13]/70 mb-4">
-                  First, we transform agricultural waste into high-quality tableware, preventing both the burning of bagasse and the production of plastic alternatives.
+                  First, we transform agricultural waste into <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    high-quality bagasse tableware
+                  </Link>, preventing both the burning of bagasse and the production of plastic alternatives.
                 </p>
                 <p className="text-[#0b3d13]/70">
                   Second, we dedicate a significant portion of our profits to direct environmental action - planting trees, cleaning forests and shorelines, and educating communities about sustainable practices.
@@ -230,7 +242,9 @@ export default function EcoActivitiesPage() {
                 </div>
                 <h3 className="font-bold text-[#0b3d13] mb-3">Tree Plantation</h3>
                 <p className="text-[#0b3d13]/70 mb-3">
-                  We regularly organize tree planting events in areas affected by deforestation. Each purchase contributes to our goal of planting 10,000 trees annually.
+                  We regularly organize tree planting events in areas affected by deforestation. Each purchase contributes to our goal of planting 10,000 trees annually. <Link href="/contact" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    Contact us to get involved
+                  </Link> in our next planting event.
                 </p>
                 <p className="text-[#0b3d13]/70 text-sm">
                   <strong>Recent Achievement:</strong> Planted 2,500 native trees in collaboration with local communities in deforested regions, creating carbon sinks and restoring biodiversity.
@@ -293,6 +307,37 @@ export default function EcoActivitiesPage() {
           </section>
         </div>
       </section>
+      
+      {/* Link to Eco-Initiatives Sibling */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            Learn More About Our Sustainability Efforts
+          </h2>
+          <p className="text-gray-600 text-lg mb-8">
+            Our eco-activities are just one part of our comprehensive sustainability approach. Discover our broader environmental initiatives and commitments.
+          </p>
+          <Link href="/sustainability/eco-initiatives" className="inline-block bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-all text-lg">
+            See our eco-initiatives program
+          </Link>
+        </div>
+      </section>
+      
+      {/* End CTA */}
+      <section className="py-16 bg-green-600">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">
+            Ready to Make a Difference?
+          </h2>
+          <p className="text-green-100 text-lg mb-8 max-w-2xl mx-auto">
+            Join thousands of businesses making a positive environmental impact. Every order supports our eco-activities and helps create a sustainable future.
+          </p>
+          <Link href="/quote" className="inline-block bg-white text-green-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all text-lg">
+            Choose Vegnar for your eco-packaging needs
+          </Link>
+        </div>
+      </section>
+      
       <BecomePartnerSection />
     </div>
   );
