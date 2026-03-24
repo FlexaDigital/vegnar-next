@@ -410,11 +410,11 @@ export default async function ProductCategoryPage({ params }: Props) {
               </h1>
               <p className="text-gray-700 mt-2 sm:mt-3 md:mt-4 max-w-2xl text-sm sm:text-base md:text-lg">
                 {category.description || "No description available."} Browse our{" "}
-                <Link href="/products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                <Link href="/products" className="text-green-700 font-semibold transition-all">
                   complete product range
                 </Link>{" "}
                 or{" "}
-                <Link href="/quote" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                <Link href="/quote" className="text-green-700 font-semibold transition-all">
                   request bulk pricing
                 </Link>{" "}
                 for wholesale orders.
@@ -428,7 +428,7 @@ export default async function ProductCategoryPage({ params }: Props) {
               <li>
                 <Link
                   href="/"
-                  className="hover:underline text-green-800 font-medium"
+                  className=" text-green-800 font-medium"
                 >
                   Home
                 </Link>
@@ -437,7 +437,7 @@ export default async function ProductCategoryPage({ params }: Props) {
               <li>
                 <Link
                   href="/products"
-                  className="hover:underline text-green-800 font-medium"
+                  className=" text-green-800 font-medium"
                 >
                   Products
                 </Link>
@@ -446,7 +446,7 @@ export default async function ProductCategoryPage({ params }: Props) {
               <li>
                 <Link
                   href={`/products/${category.slug}`}
-                  className="hover:underline text-green-800 font-medium"
+                  className=" text-green-800 font-medium"
                 >
                   {category.name}
                 </Link>

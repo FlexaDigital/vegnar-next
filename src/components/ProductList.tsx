@@ -84,7 +84,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, allCategories, subC
                                 <div key={cat.id}>
                                     <Link 
                                         href={`/products/${cat.slug}`}
-                                        className="text-gray-700 hover:text-green-600 hover:underline block"
+                                        className="text-gray-700 hover:text-green-600 block"
                                     >
                                         {cat.name}
                                     </Link>

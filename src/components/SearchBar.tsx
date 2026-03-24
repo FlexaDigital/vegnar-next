@@ -242,7 +242,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className = "", onItemClick }) =>
               <p>No products found for "{query}"</p>
               <button
                 onClick={handleSearch}
-                className="mt-2 text-[#0D7B52] hover:underline text-sm"
+                className="mt-2 text-[#0D7B52] text-sm"
               >
                 Search all products
               </button>

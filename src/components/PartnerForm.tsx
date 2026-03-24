@@ -278,7 +278,7 @@ export default function PartnerForm() {
             </ul>
           </div>
           <div className="mt-6 max-w-md space-y-2">
-            <p className="font-bold">Have questions? <Link href="/contact" className="text-green-300 hover:underline decoration-2 underline-offset-2 transition-all">
+            <p className="font-bold">Have questions? <Link href="/contact" className="text-green-300 transition-all">
               Reach us via our contact page
             </Link></p>
             <p className="flex items-center space-x-2">

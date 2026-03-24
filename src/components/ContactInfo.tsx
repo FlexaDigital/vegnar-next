@@ -37,14 +37,14 @@ const ContactInfo: React.FC = () => {
           <p className="text-sm text-[#4a4a4a] mb-1">General Inquiries:</p>
           <a
             href="mailto:connect@vegnar.com"
-            className="text-[#0f4d3a] text-sm block mb-2 hover:underline"
+            className="text-[#0f4d3a] text-sm block mb-2 "
           >
             connect@vegnar.com
           </a>
           <p className="text-sm text-[#4a4a4a] mb-1">Become a Partner:</p>
           <a
             href="mailto:partner@vegnar.com"
-            className="text-[#0f4d3a] text-sm hover:underline"
+            className="text-[#0f4d3a] text-sm "
           >
             partner@vegnar.com
           </a>
@@ -61,7 +61,7 @@ const ContactInfo: React.FC = () => {
           <p className="text-sm text-[#4a4a4a] mb-1">Main Office:</p>
           <a
             href="tel:+919998040373"
-            className="text-[#0f4d3a] text-sm block mb-2 hover:underline"
+            className="text-[#0f4d3a] text-sm block mb-2 "
           >
             +91 9998040373
           </a>
@@ -98,7 +98,7 @@ const ContactInfo: React.FC = () => {
           </address>
           <a
             href="mailto:usa@vegnar.com"
-            className="text-[#0f4d3a] text-sm hover:underline"
+            className="text-[#0f4d3a] text-sm "
           >
             usa@vegnar.com
           </a>

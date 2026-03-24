@@ -66,12 +66,12 @@ const GreenPromiseCard = ({
   title: string;
   description: string;
 }) => (
-  <Link href="/sustainability/eco-initiatives">
-    <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center text-center shadow-lg border border-green-100 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white hover:border-green-200 cursor-pointer">
-      <div className="bg-[#D4F5E1] text-[#007A3E] rounded-full p-4 mb-4 flex items-center justify-center text-2xl shadow-md">
+  <Link href="/sustainability/eco-initiatives" className="block h-full">
+    <div className="h-full bg-white/90 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center text-center shadow-lg border border-green-100 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white hover:border-green-200 cursor-pointer">
+      <div className="bg-[#D4F5E1] text-[#007A3E] rounded-full p-4 mb-4 flex items-center justify-center text-2xl shadow-md shrink-0">
         <Icon className="w-6 h-6" />
       </div>
-      <h3 className="font-extrabold text-lg mb-3 whitespace-pre-line text-gray-800">
+      <h3 className="font-extrabold text-lg mb-3 whitespace-pre-line text-gray-800 min-h-[56px] flex items-center justify-center">
         {title}
       </h3>
       <p className="text-sm leading-relaxed max-w-[280px] text-gray-600">
@@ -136,95 +136,71 @@ export default function Home() {
     <>
       <HeroSection />
       
-      <section className="py-20 px-4 sm:px-6 lg:px-20 bg-gradient-to-br from-green-50 via-white to-emerald-50 relative overflow-hidden">
-        {/* Background Pattern */}
+     <section className="py-16 px-4 sm:px-6 lg:px-20 relative">
         <div
-          className="absolute inset-0 opacity-5 pointer-events-none"
+          className="absolute inset-0 opacity-10 pointer-events-none"
           style={{
             backgroundImage: "url(/assets/bg-green.png)",
             backgroundRepeat: "repeat",
-            backgroundSize: "200px auto",
+            backgroundSize: "300px auto",
+            backgroundAttachment: "fixed",
           }}
         ></div>
-        
-        <div className="max-w-6xl mx-auto text-center relative z-10">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#007A3E] to-[#00A651] text-white text-sm font-bold rounded-full px-6 py-2 mb-8 shadow-lg">
-            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-            MANUFACTURER & EXPORTER
-          </div>
-          
-          {/* Main Heading */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#004D40] via-[#007A3E] to-[#00A651] mb-8 leading-tight">
-            Bagasse Tableware Manufacturer
-            <span className="block text-3xl sm:text-4xl lg:text-5xl mt-2">
-              &amp; Exporter from India
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-12 relative z-10">
+          <Image
+            src="/assets/img/waste-to-worth.webp"
+            alt="About us | Vagnar Green"
+            width={500}
+            height={300}
+          />
+          <div className="flex-1">
+            <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
+              MANUFACTURER & EXPORTER
             </span>
-          </h1>
-          
-          {/* Description with enhanced styling */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 sm:p-10 shadow-xl border border-green-100 max-w-5xl mx-auto">
-            <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6">
-              <span className="font-bold text-[#007A3E]">Vegnar Green</span> is India's leading{" "}
-              <Link href="/products/bagasse-products" className="text-[#007A3E] font-bold hover:underline decoration-2 underline-offset-2 transition-all">
+            <h1 className="text-xl sm:text-2xl font-extrabold mb-4">
+              Bagasse Tableware Manufacturer <br className="hidden sm:block" />
+              & Exporter from India
+            </h1>
+            <p className="text-base text-[#004D40] leading-relaxed mb-6 max-w-2xl">
+              <span className="font-bold">Vegnar Green</span> is India's leading{" "}
+              <Link href="/products/bagasse-products" className="text-[#007A3E] font-semibold transition-all">
                 bagasse tableware
               </Link>{" "}
-              manufacturer and{" "}
-              <Link href="/export" className="text-[#007A3E] font-bold hover:underline decoration-2 underline-offset-2 transition-all">
-                exporter
-              </Link>
-              , specializing in premium{" "}
-              <Link href="/products/round-plates" className="text-[#007A3E] font-bold hover:underline decoration-2 underline-offset-2 transition-all">
+              manufacturer and exporter, specializing in premium{" "}
+              <Link href="/products/round-plates" className="text-[#007A3E] font-semibold transition-all">
                 biodegradable plates
               </Link>,{" "}
-              <Link href="/products/bowls" className="text-[#007A3E] font-bold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/products/bowls" className="text-[#007A3E] font-semibold transition-all">
                 sugarcane bagasse bowls
               </Link>, meal trays, and{" "}
-              <strong className="text-[#004D40]">eco-friendly packaging</strong> solutions.
+              eco-friendly packaging solutions.
             </p>
-            
-            <p className="text-base sm:text-lg text-gray-600 leading-relaxed mb-8">
+            <p className="text-base text-[#004D40] leading-relaxed mb-8 max-w-2xl">
               As a trusted <strong>wholesale manufacturer in India</strong>, we transform agricultural waste into certified compostable products that meet international quality standards. Our{" "}
-              <Link href="/manufacturing" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/manufacturing" className="text-[#007A3E] font-semibold transition-all">
                 FDA-approved manufacturing facility
               </Link>{" "}
               produces SGS-certified range that serves restaurants, caterers, hotels, and distributors across <strong>7+ countries</strong>. Whether you need bulk orders or custom branding, we deliver sustainable alternatives that don't compromise on durability or performance.
             </p>
-            
-            {/* CTA Button */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <Link 
                 href="/quote" 
-                className="group bg-gradient-to-r from-[#007A3E] to-[#00A651] text-white font-bold px-8 py-4 rounded-full hover:from-[#006332] hover:to-[#008A47] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-2"
+                className="group inline-flex items-center gap-2 bg-[#007A3E] text-white font-bold px-8 py-3 rounded-full hover:bg-[#006332] transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 <span>Get a Free Quote Today</span>
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Link>
-              
-              <p className="text-sm text-gray-500 font-medium">
-                Join the <span className="text-[#007A3E] font-bold">plastic-free revolution</span>
+              <p className="text-sm font-medium text-[#004D40]">
+                Join the <span className="font-bold text-[#007A3E]">plastic-free revolution</span>
               </p>
             </div>
           </div>
-          
-          {/* Stats Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
-            <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-green-200 hover:bg-white/80 transition-all">
-              <div className="text-3xl font-black text-[#007A3E] mb-2">FDA</div>
-              <div className="text-sm font-semibold text-gray-600">Approved Products</div>
-            </div>
-            <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-green-200 hover:bg-white/80 transition-all">
-              <div className="text-3xl font-black text-[#007A3E] mb-2">SGS</div>
-              <div className="text-sm font-semibold text-gray-600">Certified Quality</div>
-            </div>
-            <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-green-200 hover:bg-white/80 transition-all">
-              <div className="text-3xl font-black text-[#007A3E] mb-2">7+</div>
-              <div className="text-sm font-semibold text-gray-600">Countries Served</div>
-            </div>
-          </div>
         </div>
+      </section>
+      <section id="ProductCatagories">
+        <ProductCategories />
       </section>
       <section
         id="green-promises" // Added an ID for the anchor link
@@ -264,69 +240,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-16 px-4 sm:px-6 lg:px-20 relative">
-        <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
-          style={{
-            backgroundImage: "url(/assets/bg-green.png)",
-            backgroundRepeat: "repeat",
-            backgroundSize: "300px auto",
-            backgroundAttachment: "fixed",
-          }}
-        ></div>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-12 relative z-10">
-          <Image
-            src="/assets/img/waste-to-worth.webp"
-            alt="About us | Vagnar Green"
-            width={500}
-            height={300}
-          />
-          <div className="flex-1">
-            <span className="inline-block bg-[#D4F5E1] text-[#007A3E] text-sm font-semibold rounded-full px-4 py-1 mb-3">
-              OUR STORY
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold mb-4">
-              The Leading Sugarcane Bagasse Tableware Manufacturer
-            </h3>
-            <p className="text-base text-[#004D40] leading-relaxed mb-6 max-w-2xl">
-              We bridge the gap between industrial scale and environmental
-              ethics. As a premier{" "}
-              <Link href="/products/bagasse-products" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
-                manufacturer of bagasse products
-              </Link>, we
-              specialize in transforming agricultural by-products, specifically
-              sugarcane bagasse, into high-performance compostable solutions.
-            </p>
-            <p className="text-base text-[#004D40] leading-relaxed mb-8 max-w-2xl">
-              We provide
-              {" "}
-              <Link href="/export" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
-               exporting to 7+ countries
-              </Link>{" "}
-               with a reliable alternative to
-              single-use plastics by offering{" "}
-              <Link href="/products/round-plates" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
-                wholesale bagasse plates 
-              </Link>{" "}
-              that meet rigorous global durability standards. Our {" "}
-              <Link href="/manufacturing" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
-our manufacturing process
-              </Link>{" "}
-              process ensures every product returns to
-              the earth without leaving a trace.
-            </p>
-            <Link 
-              href="/about-us" 
-              className="inline-flex items-center gap-2 text-[#007A3E] font-semibold hover:text-[#006332] transition-colors group"
-            >
-              Learn more about our story
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </section>
+      
       <section id="ProductCatagories">
         <ProductCategories />
       </section>
@@ -374,7 +288,7 @@ our manufacturing process
               From Our Blog
             </h2>
             <p className="text-base sm:text-lg text-gray-700 max-w-2xl mx-auto mb-6">
-              <Link href="/blog" className="text-[#007A3E] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/blog" className="text-[#007A3E] font-semibold transition-all">
                 Read our eco-packaging guides
               </Link>
             </p>
