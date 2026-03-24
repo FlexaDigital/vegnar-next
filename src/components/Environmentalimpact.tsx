@@ -56,7 +56,7 @@ const EnvironmentalImpact = () => {
             <h3 className="text-3xl font-bold mb-2 text-green-800">{impact.value}</h3>
             <p className="text-slate-600 text-base mb-2">{impact.description}</p>
             {impact.hasLink && (
-              <Link href={impact.linkUrl!} className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all text-sm">
+              <Link href={impact.linkUrl!} className="text-green-700 font-semibold transition-all text-sm">
                 {impact.linkText}
               </Link>
             )}

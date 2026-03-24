@@ -73,7 +73,7 @@ const SustainableProductRange = () => {
               </p>
               <span
                 aria-label={`Explore ${product.title} products`}
-                className="text-[#009B77] text-xs font-semibold hover:underline self-start"
+                className="text-[#009B77] text-xs font-semibold self-start"
               >
                 Explore Products →
               </span>

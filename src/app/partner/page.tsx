@@ -169,7 +169,7 @@ export default function PartnerPage() {
           </h2>
           <p className="text-gray-600 max-w-xl mx-auto mb-12">
             Join our global network of distributors and retailers committed to
-            offering <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+            offering <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
               sustainable alternatives to single-use plastic
             </Link> products.
           </p>
@@ -189,7 +189,7 @@ export default function PartnerPage() {
                   {benefit.description}
                 </p>
                 {benefit.link && benefit.linkText && (
-                  <Link href={benefit.link} className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all text-sm">
+                  <Link href={benefit.link} className="text-green-700 font-semibold transition-all text-sm">
                     {benefit.linkText}
                   </Link>
                 )}
@@ -221,7 +221,7 @@ export default function PartnerPage() {
               </h3>
               <p className="text-sm leading-relaxed mb-3">{step.description}</p>
               {step.link && step.linkText && (
-                <Link href={step.link} className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all text-sm">
+                <Link href={step.link} className="text-green-700 font-semibold transition-all text-sm">
                   {step.linkText}
                 </Link>
               )}
@@ -254,7 +254,7 @@ export default function PartnerPage() {
               <p className="text-gray-600 mb-4">
                 Discover our state-of-the-art production facilities and quality control processes.
               </p>
-              <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/manufacturing" className="text-green-700 font-semibold transition-all">
                 Our manufacturing process
               </Link>
             </div>
@@ -266,7 +266,7 @@ export default function PartnerPage() {
               <p className="text-gray-600 mb-4">
                 Browse our complete catalog of eco-friendly bagasse products available for distribution.
               </p>
-              <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
                 Explore our complete product range
               </Link>
             </div>

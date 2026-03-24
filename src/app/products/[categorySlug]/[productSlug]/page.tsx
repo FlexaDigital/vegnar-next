@@ -160,7 +160,7 @@ const SingleProductPage = async ({ params }: PageProps) => {
             <nav className="text-sm text-gray-500 mb-4 select-none">
               <ol className="list-reset flex flex-wrap gap-1">
                 <li>
-                  <Link className="hover:underline" href="/">
+                  <Link className=" " href="/">
                     Home
                   </Link>
                 </li>
@@ -168,7 +168,7 @@ const SingleProductPage = async ({ params }: PageProps) => {
                   <>
                     <li>&gt;</li>
                     <li>
-                      <Link className="hover:underline" href={`/products/${parentCategory.slug}`}>
+                      <Link className=" " href={`/products/${parentCategory.slug}`}>
                         {parentCategory.name}
                       </Link>
                     </li>
@@ -184,7 +184,7 @@ const SingleProductPage = async ({ params }: PageProps) => {
                         If no parent (subcategory is top-level), use /products/sub-slug
                       */}
                       <Link
-                        className="hover:underline"
+                        className=" "
                         href={parentCategory
                           ? `/products/${parentCategory.slug}/${subCategory.slug}`
                           : `/products/${subCategory.slug}`
@@ -237,10 +237,10 @@ const SingleProductPage = async ({ params }: PageProps) => {
                 </div>
                 <p className="text-lg text-gray-700 mb-6">
                   Premium eco-friendly {acf.product_size} made from sustainable{" "}
-                  <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
                     sugarcane bagasse
                   </Link>. Perfect for restaurants, catering, and eco-conscious consumers. Available for{" "}
-                  <Link href="/quote" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  <Link href="/quote" className="text-green-700 font-semibold transition-all">
                     bulk wholesale orders
                   </Link>{" "}
                   with competitive pricing.
@@ -348,11 +348,11 @@ const SingleProductPage = async ({ params }: PageProps) => {
                 <div className="text-center mt-6">
                   <p className="text-xs text-gray-400 mb-4 max-w-xl mx-auto">
                     Bulk orders available with customization options. Visit our{" "}
-                    <Link href="/manufacturing" className="text-green-600 hover:underline">
+                    <Link href="/manufacturing" className="text-green-600 ">
                       manufacturing facility
                     </Link>{" "}
                     page to learn about our quality processes, or explore our{" "}
-                    <Link href="/export" className="text-green-600 hover:underline">
+                    <Link href="/export" className="text-green-600 ">
                       international shipping options
                     </Link>.
                   </p>
@@ -408,7 +408,7 @@ const SingleProductPage = async ({ params }: PageProps) => {
                   <div>
                     <h3 className="font-semibold text-gray-900">100% Natural & Safe</h3>
                     <p className="text-gray-600 text-sm">Made from{" "}
-                      <Link href="/products/bagasse-products" className="text-green-700 hover:underline">
+                      <Link href="/products/bagasse-products" className="text-green-700 ">
                         sugarcane bagasse
                       </Link>{" "}
                       with no harmful chemicals or plastic coatings.
@@ -495,7 +495,7 @@ const SingleProductPage = async ({ params }: PageProps) => {
               </summary>
               <div className="px-6 pb-6 text-gray-600">
                 <p>We hold multiple certifications including FDA approval for food contact, SGS testing for safety, OKComposite certification for compostability, and ISO 14001 for environmental management. Learn more about our{" "}
-                  <Link href="/manufacturing" className="text-green-700 hover:underline">
+                  <Link href="/manufacturing" className="text-green-700 ">
                     quality certifications and manufacturing standards
                   </Link>.
                 </p>
@@ -509,7 +509,7 @@ const SingleProductPage = async ({ params }: PageProps) => {
               </summary>
               <div className="px-6 pb-6 text-gray-600">
                 <p>Yes! We offer custom printing and branding options for bulk orders.{" "}
-                  <Link href="/contact" className="text-green-700 hover:underline">
+                  <Link href="/contact" className="text-green-700 ">
                     Contact our team
                   </Link>{" "}
                   to discuss your customization requirements and minimum order quantities.
@@ -534,11 +534,11 @@ const SingleProductPage = async ({ params }: PageProps) => {
               </summary>
               <div className="px-6 pb-6 text-gray-600">
                 <p>Yes, we export to over 15 countries worldwide. We handle all export documentation and can arrange shipping via sea or air freight. Visit our{" "}
-                  <Link href="/export" className="text-green-700 hover:underline">
+                  <Link href="/export" className="text-green-700 ">
                     export page
                   </Link>{" "}
                   for more details or{" "}
-                  <Link href="/contact" className="text-green-700 hover:underline">
+                  <Link href="/contact" className="text-green-700 ">
                     contact us
                   </Link>{" "}
                   for international shipping quotes and lead times.

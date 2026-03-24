@@ -42,7 +42,7 @@ export default function EcoActivitiesPage() {
             Our Eco-Activities
           </h1>
           <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-10">
-            When you choose Vegnar, you're not just using <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+            When you choose Vegnar, you're not just using <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
               bagasse products
             </Link> over plastic – you're directly supporting our environmental initiatives that help protect and restore our planet.
           </p>
@@ -122,7 +122,7 @@ export default function EcoActivitiesPage() {
               <div>
                 <h3 className="text-xl font-bold text-[#0b3d13] mb-4">First Impact: Choosing Bagasse</h3>
                 <p className="mb-4 text-[#0b3d13]/80">
-                  By selecting bagasse products over plastic alternatives, you're already making a significant environmental difference. Explore <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  By selecting bagasse products over plastic alternatives, you're already making a significant environmental difference. Explore <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
                     our full range of bagasse products
                   </Link> to see all available options:
                 </p>
@@ -137,7 +137,7 @@ export default function EcoActivitiesPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <FontAwesomeIcon icon={faLeaf} className="text-green-600 mt-1" />
-                    <span>Supporting <Link href="/sustainability/eco-initiatives" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    <span>Supporting <Link href="/sustainability/eco-initiatives" className="text-green-700 font-semibold transition-all">
                       fully compostable products that break down in 90 days
                     </Link></span>
                   </li>
@@ -146,7 +146,7 @@ export default function EcoActivitiesPage() {
               <div>
                 <h3 className="text-xl font-bold text-[#0b3d13] mb-4">Second Impact: Vegnar's Eco Activities</h3>
                 <p className="mb-4 text-[#0b3d13]/80">
-                  When you choose Vegnar specifically, a portion of our profits directly funds environmental programs. <Link href="/about-us" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  When you choose Vegnar specifically, a portion of our profits directly funds environmental programs. <Link href="/about-us" className="text-green-700 font-semibold transition-all">
                     Learn more about Vegnar's mission
                   </Link> and our commitment to sustainability:
                 </p>
@@ -181,7 +181,7 @@ export default function EcoActivitiesPage() {
               <div className="bg-white rounded-xl p-6 shadow-md">
                 <h3 className="font-bold text-[#0b3d13] mb-3 text-xl">The Problem We're Addressing</h3>
                 <p className="text-[#0b3d13]/70 mb-4">
-                  Every year, over 300 million tons of plastic are produced worldwide, with nearly 50% being single-use items. Much of this ends up in our oceans and forests, taking hundreds of years to decompose while releasing harmful chemicals. Learn about <Link href="/sustainability/eco-initiatives" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  Every year, over 300 million tons of plastic are produced worldwide, with nearly 50% being single-use items. Much of this ends up in our oceans and forests, taking hundreds of years to decompose while releasing harmful chemicals. Learn about <Link href="/sustainability/eco-initiatives" className="text-green-700 font-semibold transition-all">
                     our commitment to plastic reduction
                   </Link>.
                 </p>
@@ -193,7 +193,7 @@ export default function EcoActivitiesPage() {
               <div className="bg-white rounded-xl p-6 shadow-md">
                 <h3 className="font-bold text-[#0b3d13] mb-3 text-xl">Our Solution: A Dual Approach</h3>
                 <p className="text-[#0b3d13]/70 mb-4">
-                  First, we transform agricultural waste into <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  First, we transform agricultural waste into <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
                     high-quality bagasse tableware
                   </Link>, preventing both the burning of bagasse and the production of plastic alternatives.
                 </p>
@@ -242,7 +242,7 @@ export default function EcoActivitiesPage() {
                 </div>
                 <h3 className="font-bold text-[#0b3d13] mb-3">Tree Plantation</h3>
                 <p className="text-[#0b3d13]/70 mb-3">
-                  We regularly organize tree planting events in areas affected by deforestation. Each purchase contributes to our goal of planting 10,000 trees annually. <Link href="/contact" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  We regularly organize tree planting events in areas affected by deforestation. Each purchase contributes to our goal of planting 10,000 trees annually. <Link href="/contact" className="text-green-700 font-semibold transition-all">
                     Contact us to get involved
                   </Link> in our next planting event.
                 </p>

@@ -173,11 +173,11 @@ const EcoInitiativesPage = () => {
           <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-10">
             At Vegnar Greens, sustainability isn't just a buzzword—it's our core mission. 
             We're committed to creating a positive environmental impact through innovative, 
-            <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+            <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
               eco-conscious tableware solutions
             </Link>{" "}
             that protect our planet for future generations. Our{" "}
-            <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+            <Link href="/manufacturing" className="text-green-700 font-semibold transition-all">
               sustainable manufacturing processes
             </Link>{" "}
             ensure every product meets the highest environmental standards.
@@ -205,10 +205,10 @@ const EcoInitiativesPage = () => {
             <p className="text-gray-700 text-lg mb-12 leading-relaxed">
               Our approach to sustainability spans sourcing, manufacturing, packaging, and logistics. 
               We continually refine processes to minimize impact while delivering{" "}
-              <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
                 planet-friendly bagasse solutions
               </Link>. Get instant{" "}
-              <Link href="/quote" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/quote" className="text-green-700 font-semibold transition-all">
                 pricing for bulk orders
               </Link>{" "}
               and join the sustainable packaging revolution.
@@ -266,7 +266,7 @@ const EcoInitiativesPage = () => {
                   </p>
                   <a
                     href={initiative.linkUrl || '#'}
-                    className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold text-lg hover:underline transition-colors"
+                    className="inline-flex items-center text-green-600 hover:text-green-700 font-semibold text-lg transition-colors"
                   >
                     {initiative.linkText}
                   </a>

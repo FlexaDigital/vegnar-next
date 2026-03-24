@@ -98,11 +98,11 @@ export default function ExportPage() {
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Premium{" "}
-            <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+            <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
               biodegradable tableware products
             </Link>{" "}
             from India to USA, UK, Germany & Europe with international quality standards. Our{" "}
-            <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+            <Link href="/manufacturing" className="text-green-700 font-semibold transition-all">
               ISO-certified manufacturing facility
             </Link>{" "}
             ensures consistent quality for global markets.
@@ -117,11 +117,11 @@ export default function ExportPage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Global Presence</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Trusted{" "}
-              <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
                 sugarcane bagasse tableware supplier
               </Link>{" "}
               serving premium markets worldwide with consistent quality and reliable delivery. Get instant{" "}
-              <Link href="/quote" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/quote" className="text-green-700 font-semibold transition-all">
                 export pricing and specifications
               </Link>{" "}
               for bulk orders.
@@ -147,7 +147,7 @@ export default function ExportPage() {
               <h2 className="text-3xl font-bold text-gray-900 mb-6">International Quality Standards</h2>
               <p className="text-lg text-gray-600 mb-8">
                 As a leading sugarcane bagasse exporter from India, we maintain the highest international quality standards to serve global markets including USA, UK, Germany, and across Europe. Our{" "}
-                <Link href="/products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                <Link href="/products" className="text-green-700 font-semibold transition-all">
                   comprehensive product range
                 </Link>{" "}
                 includes plates, bowls, containers, and custom packaging solutions.
@@ -207,9 +207,9 @@ export default function ExportPage() {
               <Shield className="h-12 w-12 text-green-600 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-3">Quality Assurance</h3>
               <p className="text-gray-600">
-                Rigorous quality control with international testing standards. Every shipment meets FDA, CE, and local regulatory requirements. Learn more about <Link href="/about-us" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                Rigorous quality control with international testing standards. Every shipment meets FDA, CE, and local regulatory requirements. Learn more about <Link href="/about-us" className="text-green-700 font-semibold transition-all">
                   our quality standards and certifications
-                </Link> and visit <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                </Link> and visit <Link href="/manufacturing" className="text-green-700 font-semibold transition-all">
                   our ISO certified manufacturing facility
                 </Link> to understand our quality processes.
               </p>
@@ -226,10 +226,10 @@ export default function ExportPage() {
               <h3 className="text-xl font-semibold mb-3">Dedicated Support</h3>
               <p className="text-gray-600">
                 Experienced export team providing end-to-end support from order to delivery. Multi-language customer service and{" "}
-                <Link href="/contact" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                <Link href="/contact" className="text-green-700 font-semibold transition-all">
                   dedicated account management
                 </Link>{" "}
-                for international clients. Our <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                for international clients. Our <Link href="/manufacturing" className="text-green-700 font-semibold transition-all">
                   our 50,000 sq.ft. production facility
                 </Link> ensures reliable supply.
               </p>
@@ -249,7 +249,7 @@ export default function ExportPage() {
                   Vegnar Green stands as India's premier <strong>sugarcane bagasse exporter</strong>, specializing in biodegradable tableware supply to international markets. Our export-oriented manufacturing facility produces premium quality bagasse plates, bowls, containers, and meal trays that meet stringent international standards.
                 </p>
                 <p className="mb-4">
-                  As a trusted <strong>sugarcane bagasse tableware supplier in USA</strong>, we serve major distributors and retailers across North America with consistent quality and reliable delivery schedules. Our <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  As a trusted <strong>sugarcane bagasse tableware supplier in USA</strong>, we serve major distributors and retailers across North America with consistent quality and reliable delivery schedules. Our <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
                     FDA-approved bagasse products
                   </Link> comply with all US food safety regulations.
                 </p>
@@ -262,7 +262,7 @@ export default function ExportPage() {
               <h3 className="text-2xl font-bold text-gray-900 mb-6">European Market Leadership</h3>
               <div className="prose prose-lg text-gray-600">
                 <p className="mb-4">
-                  As a leading <strong>biodegradable tableware exporter Germany</strong>, we supply to major German distributors who value our commitment to environmental sustainability and product quality. Our <Link href="/products/clamshells" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                  As a leading <strong>biodegradable tableware exporter Germany</strong>, we supply to major German distributors who value our commitment to environmental sustainability and product quality. Our <Link href="/products/clamshells" className="text-green-700 font-semibold transition-all">
                     CE-marked clamshell containers
                   </Link> meet all European Union standards.
                 </p>
@@ -285,25 +285,25 @@ export default function ExportPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <h3 className="text-xl font-semibold mb-3">Bagasse Plates</h3>
-              <p className="text-gray-600">Round plates 6" to 12", compartment plates, microwave-safe, FDA approved for international export. <Link href="/products/round-plates" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <p className="text-gray-600">Round plates 6" to 12", compartment plates, microwave-safe, FDA approved for international export. <Link href="/products/round-plates" className="text-green-700 font-semibold transition-all">
                 View our bagasse plates range
               </Link>.</p>
             </div>
             <div className="text-center">
               <h3 className="text-xl font-semibold mb-3">Bagasse Bowls</h3>
-              <p className="text-gray-600">Various sizes from 6oz to 32oz, perfect for soups, salads, and hot foods. Export quality with international certifications. <Link href="/products/bowls" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <p className="text-gray-600">Various sizes from 6oz to 32oz, perfect for soups, salads, and hot foods. Export quality with international certifications. <Link href="/products/bowls" className="text-green-700 font-semibold transition-all">
                 Explore bagasse bowls
               </Link>.</p>
             </div>
             <div className="text-center">
               <h3 className="text-xl font-semibold mb-3">Takeaway Containers</h3>
-              <p className="text-gray-600">Clamshells, rectangular containers with lids, ideal for food delivery services across global markets. <Link href="/products/takeaway-container" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <p className="text-gray-600">Clamshells, rectangular containers with lids, ideal for food delivery services across global markets. <Link href="/products/takeaway-container" className="text-green-700 font-semibold transition-all">
                 See takeaway container options
               </Link>.</p>
             </div>
             <div className="text-center">
               <h3 className="text-xl font-semibold mb-3">Custom Solutions</h3>
-              <p className="text-gray-600">Private labeling, custom packaging, and branding solutions for international distributors and retailers. <Link href="/partner" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <p className="text-gray-600">Private labeling, custom packaging, and branding solutions for international distributors and retailers. <Link href="/partner" className="text-green-700 font-semibold transition-all">
                 Become an OEM partner
               </Link>.</p>
             </div>
@@ -322,7 +322,7 @@ export default function ExportPage() {
                 answer: (
                   <span>
                     As a leading bagasse manufacturer worldwide, we operate ISO 9001:2015 certified facilities with 50M+ annual production capacity. Our global bagasse products manufacturer status is backed by FDA approval, CE marking, and consistent quality delivery to 25+ countries with 99.8% quality consistency rate. View{" "}
-                    <Link href="/products/bagasse-products" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    <Link href="/products/bagasse-products" className="text-green-700 font-semibold transition-all">
                       our full product catalog
                     </Link>{" "}
                     for detailed specifications.
@@ -350,7 +350,7 @@ export default function ExportPage() {
                 answer: (
                   <span>
                     Our wholesale bagasse manufacturer worldwide capacity includes 50M+ pieces annually, 15+ containers monthly export volume, and flexible production scheduling. As a bulk bagasse exporter global partner, we handle large volume orders with consistent quality and timely delivery. Get{" "}
-                    <Link href="/manufacturing" className="text-green-700 font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                    <Link href="/manufacturing" className="text-green-700 font-semibold transition-all">
                       manufacturing capacity details
                     </Link>{" "}
                     from our facility page.

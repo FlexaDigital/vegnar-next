@@ -105,10 +105,10 @@ export default function ProductsPage() {
             </h2>
             <p className="text-[#0b3d13]/80 text-base sm:text-lg">
               From plates to containers - discover our complete range of{" "}
-              <Link href="/manufacturing" className="text-[#1a7a2b] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/manufacturing" className="text-[#1a7a2b] font-semibold transition-all">
                 bagasse tableware made from renewable sugarcane fiber
               </Link>. All products are{" "}
-              <Link href="/quote" className="text-[#1a7a2b] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+              <Link href="/quote" className="text-[#1a7a2b] font-semibold transition-all">
                 available for bulk orders
               </Link>{" "}
               with competitive wholesale pricing.
@@ -163,11 +163,11 @@ export default function ProductsPage() {
               <h2 className="text-2xl font-bold text-[#0b3d13] mb-4">Need Detailed Product Specifications?</h2>
               <p className="text-[#0b3d13]/70 mb-6 max-w-2xl mx-auto">
                 Access our comprehensive packing list with detailed specifications, pricing, and technical data for all products. Our{" "}
-                <Link href="/export" className="text-[#1a7a2b] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                <Link href="/export" className="text-[#1a7a2b] font-semibold transition-all">
                   export-quality products
                 </Link>{" "}
                 meet international standards and are available for{" "}
-                <Link href="/contact" className="text-[#1a7a2b] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                <Link href="/contact" className="text-[#1a7a2b] font-semibold transition-all">
                   global shipping
                 </Link>.
               </p>
@@ -186,7 +186,7 @@ export default function ProductsPage() {
               <h2 className="text-2xl font-bold text-[#0b3d13] mb-4">Why Choose Sugarcane Bagasse?</h2>
               <p className="text-[#0b3d13]/70 max-w-3xl mx-auto">
                 Bagasse is the fibrous residue left after extracting juice from sugarcane. Instead of burning this waste, our{" "}
-                <Link href="/manufacturing" className="text-[#1a7a2b] font-semibold hover:underline decoration-2 underline-offset-2 transition-all">
+                <Link href="/manufacturing" className="text-[#1a7a2b] font-semibold transition-all">
                   advanced manufacturing facility
                 </Link>{" "}
                 transforms it into premium tableware that's stronger than paper and safer than plastic.

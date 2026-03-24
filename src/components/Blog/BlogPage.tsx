@@ -261,7 +261,7 @@ const BlogPage: React.FC = () => {
                   <h3 className="text-base font-semibold mb-1">{article.title}</h3>
                   <p className="text-sm text-gray-600 flex-grow">{article.summary}</p>
                   <div className="mt-3 flex justify-between items-center text-sm text-green-700 font-semibold">
-                    <span className="hover:underline">
+                    <span className=" ">
                       Read More →
                     </span>
                     <span>{article.readTime}</span>
