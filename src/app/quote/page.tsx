@@ -166,6 +166,21 @@ export default function PackingListPage() {
         }
       );
 
+      // Save lead to Inventory Management system
+      fetch("https://inventory.eximexperts.in/api/v1/public/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: payload['Company Name'],
+          email: payload['Email'],
+          phone: payload['Mobile Number'],
+          company: payload['Company Name'],
+          country: payload['Country'],
+          message: `Quote Request | Products: ${payload['Products Count']} | Delivery: ${payload['Delivery Terms']} | Address: ${payload['Address']}`,
+          formType: 'QuoteCartForm',
+        }),
+      }).catch(() => {}); // Silent fail
+
       // Assume success with no-cors
       alert('Quote request submitted successfully!');
       form.reset();
