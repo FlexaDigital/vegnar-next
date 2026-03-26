@@ -116,6 +116,21 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         }
       );
 
+      // Save lead to Inventory Management system
+      fetch("https://inventory.eximexperts.in/api/v1/public/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formValues.fullname,
+          email: formValues.email,
+          phone: `${selectedDialCode} ${formValues.phone}`,
+          company: formValues.company,
+          country: formValues.country,
+          message: formValues.message,
+          formType: 'ContactForm',
+        }),
+      }).catch(() => {}); // Silent fail - don't block form submission
+
       // With no-cors, assume success
       setFormSubmitted(true);
       setFormValues({

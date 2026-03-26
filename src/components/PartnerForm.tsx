@@ -239,6 +239,21 @@ export default function PartnerForm() {
       );
 
       // With no-cors, we can't read the response, so assume success
+      // Save lead to Inventory Management system
+      fetch("https://inventory.eximexperts.in/api/v1/public/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: payload['Full Name'],
+          email: payload['Email Address'],
+          phone: payload['Mobile Number'],
+          company: payload['Company Name'],
+          country: payload['Country'],
+          message: `Business Type: ${payload['Business Type']} | ${payload['Message'] || ''}`,
+          formType: 'PartnerForm',
+        }),
+      }).catch(() => {}); // Silent fail
+
       setSubmitStatus('success');
       form.reset();
     } catch (error) {

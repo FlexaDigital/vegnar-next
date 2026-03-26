@@ -35,49 +35,49 @@
   <!-- Product Categories -->
   <url>
     <loc>https://www.vegnar.com/products/bagasse-products</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/bowls</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/clamshells</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/meal-trays</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/round-plates</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/sipper-lid</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/takeaway-container</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/tray</loc>
-    <lastmod>2026-03-12</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -394,8 +394,20 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.vegnar.com/blog/where-to-buy-bagasse-plates-in-bulk</loc>
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.vegnar.com/blog/best-bagasse-bowls-for-soup-n-salad</loc>
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.vegnar.com/blog/bagasse-vs-plastic</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

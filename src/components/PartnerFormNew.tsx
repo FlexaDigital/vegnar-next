@@ -39,6 +39,21 @@ export default function PartnerFormNew() {
       const result = await response.json();
 
       if (result.success) {
+        // Save lead to Inventory Management system
+        fetch("http://localhost:8000/api/v1/public/lead", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.fullname,
+            email: formData.email,
+            phone: formData.mobile,
+            company: formData.company,
+            country: formData.country,
+            message: `Business Type: ${formData.businessType} | ${formData.message}`,
+            formType: 'PartnerFormNew',
+          }),
+        }).catch(() => {}); // Silent fail
+
         setStatus('success');
         setFormData({
           fullname: '',
