@@ -167,7 +167,7 @@ export default function PackingListPage() {
       );
 
       // Save lead to Inventory Management system
-      fetch("https://inventory.eximexperts.in/api/v1/public/lead", {
+      fetch(process.env.NEXT_PUBLIC_LEAD_API_URL!, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
