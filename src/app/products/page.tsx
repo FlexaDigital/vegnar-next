@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Script from 'next/script';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faUtensils, faBowlFood, faBowlRice, faBox, faBurger, faPlateWheat, faMugHot, faLeaf, faDumbbell, faRecycle } from '@fortawesome/free-solid-svg-icons';
 import CustomizationSection from '@/components/CustomizationSection';
@@ -69,6 +70,89 @@ export const metadata: Metadata = {
 
 export default function ProductsPage() {
   return (
+    <>
+      <Script
+        id="products-json-ld-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "CollectionPage",
+                "url": "https://www.vegnar.com/products/bagasse-products",
+                "name": "Sugarcane Bagasse Tableware Products — Vegnar Green Wholesale Manufacturer",
+                "description": "Complete range of biodegradable bagasse tableware: plates, bowls, clamshells, meal trays, takeaway containers and sipper lids. FDA-approved, SGS-tested. Export worldwide.",
+                "breadcrumb": {
+                  "@type": "BreadcrumbList",
+                  "itemListElement": [
+                    {
+                      "@type": "ListItem",
+                      "position": 1,
+                      "name": "Home",
+                      "item": "https://www.vegnar.com/"
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 2,
+                      "name": "All Products",
+                      "item": "https://www.vegnar.com/products/bagasse-products"
+                    }
+                  ]
+                }
+              },
+              {
+                "@type": "ItemList",
+                "name": "Bagasse Tableware Product Categories",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Biodegradable Round Plates",
+                    "url": "https://www.vegnar.com/products/round-plates"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Compostable Bagasse Bowls",
+                    "url": "https://www.vegnar.com/products/bowls"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Eco-Friendly Clamshell Containers",
+                    "url": "https://www.vegnar.com/products/clamshells"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 4,
+                    "name": "Sugarcane Bagasse Meal Trays",
+                    "url": "https://www.vegnar.com/products/meal-trays"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 5,
+                    "name": "Biodegradable Takeaway Containers",
+                    "url": "https://www.vegnar.com/products/takeaway-container"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 6,
+                    "name": "Bagasse Sipper Lids",
+                    "url": "https://www.vegnar.com/products/sipper-lid"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 7,
+                    "name": "Bagasse Trays",
+                    "url": "https://www.vegnar.com/products/tray"
+                  }
+                ]
+              }
+            ]
+          })
+        }}
+      />
     <div className="min-h-screen bg-[#f3faf5] text-[#0b3d13]">
       <div className="relative w-full h-[60vh] md:h-[50vh] lg:h-[45vh] overflow-hidden">
         <div className="absolute inset-0">
@@ -222,5 +306,6 @@ export default function ProductsPage() {
       </div>
       <BecomePartnerSection />
     </div>
+    </>
   );
 }

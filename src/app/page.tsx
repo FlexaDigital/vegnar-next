@@ -3,6 +3,7 @@ import HeroSection from "@/components/Home/hero-screen";
 import { Metadata, Viewport } from "next"; // Import Metadata and Viewport types
 import Image from "next/image"; // Import Image component for optimized images
 import Link from "next/link";
+import Script from "next/script";
 import CertificationsSection from "@/components/CertificationsSection";
 
 import CustomizationSection from "@/components/CustomizationSection";
@@ -134,6 +135,107 @@ export default function Home() {
 
   return (
     <>
+      <Script
+        id="json-ld-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.vegnar.com/#organization",
+                "name": "Vegnar Green",
+                "url": "https://www.vegnar.com",
+                "logo": "https://www.vegnar.com/_next/static/media/vegnar-green.b7f80c51.png",
+                "description": "India's leading sugarcane bagasse tableware manufacturer and exporter of biodegradable plates, bowls, meal trays and eco-friendly packaging.",
+                "foundingDate": "2019",
+                "founder": [
+                  { "@type": "Person", "name": "Tushar Hirani" },
+                  { "@type": "Person", "name": "Ashish Chauhan" }
+                ],
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "B623, RK Iconic, Sheetal Park, 150 Feet Ring Rd",
+                  "addressLocality": "Rajkot",
+                  "addressRegion": "Gujarat",
+                  "postalCode": "360007",
+                  "addressCountry": "IN"
+                },
+                "contactPoint": {
+                  "@type": "ContactPoint",
+                  "telephone": "+91-9998040373",
+                  "contactType": "customer service",
+                  "email": "connect@vegnar.com"
+                },
+                "sameAs": ["https://www.linkedin.com/company/vegnargreens/"],
+                "areaServed": "Worldwide",
+                "hasOfferCatalog": {
+                  "@type": "OfferCatalog",
+                  "name": "Bagasse Tableware Products"
+                }
+              },
+              {
+                "@type": "WebSite",
+                "@id": "https://www.vegnar.com/#website",
+                "url": "https://www.vegnar.com",
+                "name": "Vegnar Green",
+                "publisher": { "@id": "https://www.vegnar.com/#organization" },
+                "potentialAction": {
+                  "@type": "SearchAction",
+                  "target": "https://www.vegnar.com/products/bagasse-products?q={search_term_string}",
+                  "query-input": "required name=search_term_string"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What is bagasse tableware and how is it made?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Bagasse tableware is made from sugarcane fibrous residue left after juice extraction. The bagasse is processed into pulp, molded under heat and pressure into plates, bowls, and containers — creating fully compostable, plastic-free tableware."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Is bagasse tableware safe for hot and cold foods?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. Vegnar bagasse products are microwave safe up to 220 degrees Fahrenheit, oil and water resistant, and freezer safe — suitable for both hot and cold food."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How long does bagasse tableware take to decompose?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Vegnar bagasse products fully decompose within 60-90 days in industrial composting conditions — compared to 500+ years for plastic."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "What is the minimum order quantity for wholesale?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Vegnar Green offers competitive MOQ for wholesale bulk orders. Contact us at connect@vegnar.com or request a quote on our website for specific MOQ details per product category."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Do you export bagasse products internationally?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. Vegnar Green exports to 15+ countries. We serve wholesale buyers, distributors, hotels, restaurants and catering companies worldwide."
+                    }
+                  }
+                ]
+              }
+            ]
+          })
+        }}
+      />
       <HeroSection />
       
      <section className="py-16 px-4 sm:px-6 lg:px-20 relative">

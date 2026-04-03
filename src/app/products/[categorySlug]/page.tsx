@@ -143,32 +143,118 @@ function generateSeoDescription(
 }
 
 function generateSchemaOrgData(category: Category, products: Product[]) {
+  // Special schema for "round-plates" category
+  if (category.slug === 'round-plates') {
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'CollectionPage',
+          url: 'https://www.vegnar.com/products/round-plates',
+          name: 'Biodegradable Bagasse Round Plates — Vegnar Green Wholesale',
+          description: 'Wholesale sugarcane bagasse round plates. Microwave safe, oil resistant, compostable in 90 days. FDA approved, SGS tested. Export to 15+ countries from India.',
+          breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://www.vegnar.com/',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Products',
+                item: 'https://www.vegnar.com/products/bagasse-products',
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: 'Round Plates',
+                item: 'https://www.vegnar.com/products/round-plates',
+              },
+            ],
+          },
+        },
+        {
+          '@type': 'Product',
+          name: 'Biodegradable Sugarcane Bagasse Round Plates',
+          description: 'Premium sugarcane bagasse round plates. Microwave safe up to 220F, oil and water resistant, fully compostable within 90 days. Ideal for restaurants, catering and food service. Available in wholesale bulk quantities.',
+          brand: {
+            '@type': 'Brand',
+            name: 'Vegnar Green',
+          },
+          manufacturer: {
+            '@type': 'Organization',
+            name: 'Vegnar Green',
+            url: 'https://www.vegnar.com',
+          },
+          material: 'Sugarcane bagasse',
+          additionalProperty: [
+            {
+              '@type': 'PropertyValue',
+              name: 'Compostable',
+              value: 'Within 90 days',
+            },
+            {
+              '@type': 'PropertyValue',
+              name: 'Microwave Safe',
+              value: 'Up to 220 degrees Fahrenheit',
+            },
+            {
+              '@type': 'PropertyValue',
+              name: 'Certification',
+              value: 'FDA, SGS, OK Compost, ISO 9001',
+            },
+            {
+              '@type': 'PropertyValue',
+              name: 'Material',
+              value: '100% Sugarcane Bagasse',
+            },
+          ],
+          offers: {
+            '@type': 'Offer',
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+            seller: {
+              '@type': 'Organization',
+              name: 'Vegnar Green',
+            },
+            url: 'https://www.vegnar.com/quote',
+          },
+        },
+      ],
+    };
+  }
+
+  // Default schema for other categories
   return {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
     name: category.name,
     description: category.description,
     url: `https://www.vegnar.com/products/${category.slug}`,
     publisher: {
-      "@type": "Organization",
-      name: "Vegnar Green",
+      '@type': 'Organization',
+      name: 'Vegnar Green',
       logo: {
-        "@type": "ImageObject",
-        url: "https://www.vegnar.com/logo.png",
+        '@type': 'ImageObject',
+        url: 'https://www.vegnar.com/logo.png',
       },
     },
     mainEntity: {
-      "@type": "ItemList",
+      '@type': 'ItemList',
       itemListElement: products.map((product, index) => ({
-        "@type": "ListItem",
+        '@type': 'ListItem',
         position: index + 1,
         item: {
-          "@type": "Product",
+          '@type': 'Product',
           name: product.title.rendered,
           description: product.content.rendered
-            .replace(/(<([^>]+)>)/gi, "")
+            .replace(/(<([^>]+)>)/gi, '')
             .slice(0, 160),
-          image: product._embedded?.["wp:featuredmedia"]?.[0]?.source_url,
+          image: product._embedded?.['wp:featuredmedia']?.[0]?.source_url,
           url: `https://www.vegnar.com/products/${category.slug}/${product.slug}`,
         },
       })),
