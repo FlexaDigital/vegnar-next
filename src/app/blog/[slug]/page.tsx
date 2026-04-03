@@ -120,6 +120,64 @@ function generateSchemaOrgData(post: Post) {
   const image =
     rm.opengraph_image || post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '';
 
+  // Special schema for "what-is-bagasse" article
+  if (slug === 'what-is-bagasse') {
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Article',
+          headline: 'What is Bagasse? The Sustainable Sugarcane Fiber Revolution',
+          url: `${PUBLIC_SITE_URL}/blog/what-is-bagasse`,
+          datePublished: '2025-07-16',
+          dateModified: '2025-07-16',
+          author: {
+            '@type': 'Organization',
+            name: 'Vegnar Green',
+            url: PUBLIC_SITE_URL,
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'Vegnar Green',
+            logo: {
+              '@type': 'ImageObject',
+              url: 'https://www.vegnar.com/_next/static/media/vegnar-green.b7f80c51.png',
+            },
+          },
+          image: 'https://cms.vegnar.com/wp-content/uploads/2025/07/Blog-Thumbnail-1.png',
+          description: 'Discover what bagasse is, how it is made from sugarcane waste, and why it is a superior sustainable alternative to plastic tableware.',
+          mainEntityOfPage: `${PUBLIC_SITE_URL}/blog/what-is-bagasse`,
+          articleSection: 'Biodegradable Living',
+          keywords: ['bagasse', 'sugarcane tableware', 'biodegradable plates', 'eco-friendly packaging'],
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: 'Home',
+              item: `${PUBLIC_SITE_URL}/`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: 'Blog',
+              item: `${PUBLIC_SITE_URL}/blog`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: 'What is Bagasse?',
+              item: `${PUBLIC_SITE_URL}/blog/what-is-bagasse`,
+            },
+          ],
+        },
+      ],
+    };
+  }
+
+  // Default schema for other blog posts
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',

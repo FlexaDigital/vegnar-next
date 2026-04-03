@@ -1,6 +1,7 @@
 import React from 'react';
 import { Metadata } from "next";
 import Image from 'next/image';
+import Script from 'next/script';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLeaf,
@@ -236,6 +237,78 @@ const factoryStats = [
 
 export default function OurStory() {
   return (
+    <>
+      <Script
+        id="about-us-json-ld-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "AboutPage",
+                "@id": "https://www.vegnar.com/about-us#webpage",
+                "url": "https://www.vegnar.com/about-us",
+                "name": "About Vegnar Green — India's Top Bagasse Products Manufacturer",
+                "description": "Learn about Vegnar Green's founding story, Gujarat manufacturing facility, certifications and mission to replace plastic with biodegradable bagasse tableware.",
+                "isPartOf": { "@id": "https://www.vegnar.com/#website" },
+                "about": { "@id": "https://www.vegnar.com/#organization" }
+              },
+              {
+                "@type": "Corporation",
+                "@id": "https://www.vegnar.com/#organization",
+                "name": "Vegnar Green",
+                "url": "https://www.vegnar.com",
+                "foundingDate": "2019",
+                "foundingLocation": "Rajkot, Gujarat, India",
+                "founder": [
+                  {
+                    "@type": "Person",
+                    "name": "Tushar Hirani",
+                    "jobTitle": "Co-Founder & Sales Director",
+                    "sameAs": "https://www.linkedin.com/in/hiranitushar/"
+                  },
+                  {
+                    "@type": "Person",
+                    "name": "Ashish Chauhan",
+                    "jobTitle": "Co-Founder & COO",
+                    "sameAs": "https://www.linkedin.com/in/ashiishchauhan/"
+                  }
+                ],
+                "award": [
+                  "OK Compost Certified by TUV Austria",
+                  "SGS Tested",
+                  "FDA Approved for food contact",
+                  "ISO 9001:2015 Certified",
+                  "ISO 14001:2015 Certified"
+                ],
+                "numberOfEmployees": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 50
+                },
+                "areaServed": "Worldwide"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.vegnar.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "About Us",
+                    "item": "https://www.vegnar.com/about-us"
+                  }
+                ]
+              }
+            ]
+          })
+        }}
+      />
     <main className="w-full bg-gray-50 text-gray-900 font-sans text-base leading-relaxed">
 
       {/* ═══════════ HERO SECTION ═══════════ */}
@@ -530,5 +603,6 @@ export default function OurStory() {
         </p>
       </section>
     </main>
+    </>
   );
 }
