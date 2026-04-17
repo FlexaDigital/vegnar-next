@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { Search, Filter, Download, ShoppingCart, Plus, Check } from 'lucide-react';
+import { generateInvoice } from '@/lib/invoice';
 import productsData from '@/data/products.json';
 import countryList from '@/data/country-list.json';
 import Head from 'next/head';
@@ -35,6 +36,26 @@ export default function PackingListPage() {
   const [cart, setCart] = useState<{product: Product, quantity: number, unit: 'pieces' | 'cartons'}[]>([]);
   const [showQuoteForm, setShowQuoteForm] = useState(false);
   const [showSampleForm, setShowSampleForm] = useState(false);
+  const [sampleFormData, setSampleFormData] = useState({ 
+    userType: 'company' as 'company' | 'customer',
+    companyName: '', 
+    email: '', 
+    mobile: '', 
+    country: '', 
+    address: '', 
+    products: '',
+    gstNumber: '',
+    panNumber: ''
+  });
+  const [isPayingForSample, setIsPayingForSample] = useState(false);
+  const [lastInvoiceData, setLastInvoiceData] = useState<Parameters<typeof generateInvoice>[0] | null>(null);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('vegnar_last_invoice');
+      if (saved) setLastInvoiceData(JSON.parse(saved));
+    } catch {}
+  }, []);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -844,17 +865,25 @@ Generated on: ${new Date().toLocaleString()}
           <div className="text-center">
             <h2 className="text-3xl font-bold mb-4">Need to Test Quality First?</h2>
             <p className="text-xl mb-6 text-green-100">
-              Request free samples of our premium sugarcane bagasse products before placing bulk orders
+              Request samples of our premium sugarcane bagasse products before placing bulk orders
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => setShowSampleForm(true)}
                 className="bg-white text-green-700 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors"
               >
-                Request Free Samples
+                Request Samples
               </button>
+              {lastInvoiceData && (
+                <button
+                  onClick={() => generateInvoice(lastInvoiceData)}
+                  className="bg-green-800 border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-900 transition-colors flex items-center gap-2"
+                >
+                  🧾 View Invoice
+                </button>
+              )}
               <span className="text-green-200 text-sm">
-                ✓ Free shipping worldwide • ✓ 3-5 business days delivery
+                ✓ Free shipping worldwide • ✓ 3-5 business days delivery • ✓ ₹3000 + GST per sample kit
               </span>
             </div>
           </div>
@@ -867,7 +896,7 @@ Generated on: ${new Date().toLocaleString()}
           <div className="bg-white rounded-lg max-w-md w-full">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Request Free Samples</h2>
+                <h2 className="text-2xl font-bold text-gray-900">Request Samples</h2>
                 <button
                   onClick={() => setShowSampleForm(false)}
                   className="text-gray-400 hover:text-gray-600"
@@ -877,58 +906,236 @@ Generated on: ${new Date().toLocaleString()}
               </div>
               <form className="space-y-4" onSubmit={async (e) => {
                 e.preventDefault();
-                const form = e.target as HTMLFormElement;
-                const formData = new FormData(form);
+                if (isPayingForSample) return;
                 
+                // Validation
+                if (sampleFormData.userType === 'company' && !sampleFormData.gstNumber.trim()) {
+                  alert('GST Number is required for companies');
+                  return;
+                }
+
+                setIsPayingForSample(true);
+
                 try {
-                  await fetch(
-                    "https://script.google.com/macros/s/AKfycbys6WK8uBmZQM2vP5KMOu16UWd1qwsUbBmdvp9qxeioPb3B6F2mSpyai2pT1PJYQsZQJQ/exec",
-                    {
-                      method: "POST",
-                      mode: "no-cors",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        formType: 'SampleRequest',
-                        'Timestamp': new Date().toISOString(),
-                        'Company Name': formData.get('companyName'),
-                        'Email': formData.get('email'),
-                        'Mobile Number': formData.get('mobile'),
-                        'Country': formData.get('country'),
-                        'Address': formData.get('address')
-                      })
-                    }
-                  );
-                  alert('Sample request submitted successfully!');
-                  setShowSampleForm(false);
-                  form.reset();
-                } catch (error) {
-                  alert('Please email us at connect@vegnar.com for sample requests.');
+                  // 1. Create Razorpay order (₹3150 = ₹3000 + 5% GST sample fee)
+                  const orderRes = await fetch('/api/razorpay/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      amount: 3150,
+                      currency: 'INR',
+                      receipt: `sample_${Date.now()}`,
+                      notes: { name: sampleFormData.companyName, email: sampleFormData.email }
+                    })
+                  });
+                  const { order } = await orderRes.json();
+
+                  // 2. Load Razorpay script dynamically
+                  await new Promise<void>((resolve) => {
+                    if ((window as any).Razorpay) { resolve(); return; }
+                    const s = document.createElement('script');
+                    s.src = 'https://checkout.razorpay.com/v1/checkout.js';
+                    s.onload = () => resolve();
+                    document.body.appendChild(s);
+                  });
+
+                  // 3. Open Razorpay checkout
+                  const rzp = new (window as any).Razorpay({
+                    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+                    amount: order.amount,
+                    currency: order.currency,
+                    name: 'Vegnar Green',
+                    description: 'Sample Request Fee',
+                    image: '/assets/img/vegnar-green.png',
+                    order_id: order.id,
+                    prefill: { name: sampleFormData.companyName, email: sampleFormData.email, contact: sampleFormData.mobile },
+                    theme: { color: '#166534' },
+                    handler: async (response: any) => {
+                      // 4. Verify payment
+                      const verifyRes = await fetch('/api/razorpay/verify-payment', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(response)
+                      });
+                      const verify = await verifyRes.json();
+
+                      if (verify.success) {
+                        // 5. Submit to Google Sheets
+                        fetch('https://script.google.com/macros/s/AKfycbys6WK8uBmZQM2vP5KMOu16UWd1qwsUbBmdvp9qxeioPb3B6F2mSpyai2pT1PJYQsZQJQ/exec', {
+                          method: 'POST', mode: 'no-cors',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            formType: 'SampleRequest',
+                            'Timestamp': new Date().toISOString(),
+                            'User Type': sampleFormData.userType === 'company' ? 'Company' : 'Customer',
+                            'Company/Name': sampleFormData.companyName,
+                            'Email': sampleFormData.email,
+                            'Mobile Number': sampleFormData.mobile,
+                            ...(sampleFormData.userType === 'company' ? { 'GST Number': sampleFormData.gstNumber } : {}),
+                            ...(sampleFormData.userType === 'customer' ? { 'PAN Number': sampleFormData.panNumber || 'N/A' } : {}),
+                            'Country': sampleFormData.country,
+                            'Address': sampleFormData.address,
+                            'Products': sampleFormData.products,
+                            'Payment ID': response.razorpay_payment_id,
+                          })
+                        }).catch(() => {});
+
+                        // 6. Generate invoice
+                        const invoiceNum = `VG-${Date.now().toString().slice(-8)}`;
+                        const invoiceData: Parameters<typeof generateInvoice>[0] = {
+                          invoiceNumber: invoiceNum,
+                          paymentId: response.razorpay_payment_id,
+                          orderId: response.razorpay_order_id,
+                          date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }),
+                          customerName: sampleFormData.companyName,
+                          customerEmail: sampleFormData.email,
+                          customerPhone: sampleFormData.mobile,
+                          customerAddress: sampleFormData.address,
+                          userType: sampleFormData.userType,
+                          gstNumber: sampleFormData.gstNumber || undefined,
+                          panNumber: sampleFormData.panNumber || undefined,
+                          items: [{ description: 'Sample Request — Vegnar Green Eco Products (Sugarcane Bagasse Tableware)', quantity: 1, unitPrice: 3150 }],
+                          subtotal: 3000,
+                          tax: 150,
+                          total: 3150,
+                          currency: 'INR',
+                        };
+                        generateInvoice(invoiceData);
+                        setLastInvoiceData(invoiceData);
+                        localStorage.setItem('vegnar_last_invoice', JSON.stringify(invoiceData));
+
+                        setShowSampleForm(false);
+                        setSampleFormData({ userType: 'company', companyName: '', email: '', mobile: '', country: '', address: '', products: '', gstNumber: '', panNumber: '' });
+                      } else {
+                        alert('Payment verification failed. Please contact connect@vegnar.com');
+                      }
+                    },
+                    modal: { ondismiss: () => setIsPayingForSample(false) }
+                  });
+                  rzp.open();
+                } catch (err) {
+                  alert('Payment initiation failed. Please try again.');
+                } finally {
+                  setIsPayingForSample(false);
                 }
               }}>
-                <input name="companyName" type="text" placeholder="Company Name" className="border rounded px-3 py-2 w-full" required />
-                <input name="email" type="email" placeholder="Email" className="border rounded px-3 py-2 w-full" required />
-                <input name="mobile" type="text" placeholder="Mobile Number" className="border rounded px-3 py-2 w-full" required />
-                <select name="country" className="border rounded px-3 py-2 w-full" required>
-                  <option value="">Select Country</option>
+                {/* User Type Selection */}
+                <div className="flex gap-4 mb-4 p-3 bg-gray-50 rounded-lg">
+                  <label className="flex items-center cursor-pointer">
+                    <input 
+                      type="radio" 
+                      name="userType" 
+                      value="company" 
+                      checked={sampleFormData.userType === 'company'}
+                      onChange={() => setSampleFormData(p => ({...p, userType: 'company'}))}
+                      className="mr-2"
+                    />
+                    <span className="font-medium text-gray-700">🏢 Company</span>
+                  </label>
+                  <label className="flex items-center cursor-pointer">
+                    <input 
+                      type="radio" 
+                      name="userType" 
+                      value="customer" 
+                      checked={sampleFormData.userType === 'customer'}
+                      onChange={() => setSampleFormData(p => ({...p, userType: 'customer'}))}
+                      className="mr-2"
+                    />
+                    <span className="font-medium text-gray-700">👤 Customer</span>
+                  </label>
+                </div>
+
+                <input 
+                  value={sampleFormData.companyName} 
+                  onChange={e => setSampleFormData(p => ({...p, companyName: e.target.value}))} 
+                  type="text" 
+                  placeholder={sampleFormData.userType === 'company' ? 'Company Name *' : 'Your Name *'} 
+                  className="border rounded px-3 py-2 w-full" 
+                  required 
+                />
+                <input 
+                  value={sampleFormData.email} 
+                  onChange={e => setSampleFormData(p => ({...p, email: e.target.value}))} 
+                  type="email" 
+                  placeholder="Email *" 
+                  className="border rounded px-3 py-2 w-full" 
+                  required 
+                />
+                <input 
+                  value={sampleFormData.mobile} 
+                  onChange={e => setSampleFormData(p => ({...p, mobile: e.target.value}))} 
+                  type="text" 
+                  placeholder="Mobile Number *" 
+                  className="border rounded px-3 py-2 w-full" 
+                  required 
+                />
+                
+                {/* GST Number - Only for Company */}
+                {sampleFormData.userType === 'company' && (
+                  <input 
+                    value={sampleFormData.gstNumber} 
+                    onChange={e => setSampleFormData(p => ({...p, gstNumber: e.target.value}))} 
+                    type="text" 
+                    placeholder="GST Number (e.g., 07AAHCV8504R1Z0) *" 
+                    className="border rounded px-3 py-2 w-full border-red-300 bg-red-50" 
+                    required 
+                  />
+                )}
+
+                {/* PAN Number - Only for Customer (Optional) */}
+                {sampleFormData.userType === 'customer' && (
+                  <input 
+                    value={sampleFormData.panNumber} 
+                    onChange={e => setSampleFormData(p => ({...p, panNumber: e.target.value}))} 
+                    type="text" 
+                    placeholder="PAN Number (Optional, e.g., AAAPA1234A)" 
+                    className="border rounded px-3 py-2 w-full border-gray-200" 
+                  />
+                )}
+
+                <select 
+                  value={sampleFormData.country} 
+                  onChange={e => setSampleFormData(p => ({...p, country: e.target.value}))} 
+                  className="border rounded px-3 py-2 w-full" 
+                  required
+                >
+                  <option value="">Select Country *</option>
                   {countryList.map(country => (
                     <option key={country.code} value={country.code}>{country.name}</option>
                   ))}
                 </select>
-                <textarea name="address" placeholder="Shipping Address" className="border rounded px-3 py-2 w-full" rows={3} required></textarea>
-                <textarea name="products" placeholder="Which products are you interested in?" className="border rounded px-3 py-2 w-full" rows={2}></textarea>
+                <textarea 
+                  value={sampleFormData.address} 
+                  onChange={e => setSampleFormData(p => ({...p, address: e.target.value}))} 
+                  placeholder="Shipping Address *" 
+                  className="border rounded px-3 py-2 w-full" 
+                  rows={3} 
+                  required
+                ></textarea>
+                <textarea 
+                  value={sampleFormData.products} 
+                  onChange={e => setSampleFormData(p => ({...p, products: e.target.value}))} 
+                  placeholder="Which products are you interested in?" 
+                  className="border rounded px-3 py-2 w-full" 
+                  rows={2}
+                ></textarea>
                 <div className="flex justify-end space-x-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowSampleForm(false)}
+                  <button 
+                    type="button" 
+                    onClick={() => {
+                      setShowSampleForm(false);
+                      setSampleFormData({ userType: 'company', companyName: '', email: '', mobile: '', country: '', address: '', products: '', gstNumber: '', panNumber: '' });
+                    }} 
                     className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
                   >
                     Cancel
                   </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors font-medium"
+                  <button 
+                    type="submit" 
+                    disabled={isPayingForSample} 
+                    className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors font-medium disabled:opacity-50"
                   >
-                    Request Samples
+                    {isPayingForSample ? 'Processing...' : '💳 Pay & Request Samples'}
                   </button>
                 </div>
               </form>
