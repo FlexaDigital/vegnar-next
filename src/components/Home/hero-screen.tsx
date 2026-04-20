@@ -114,9 +114,9 @@ const HeroSection = () => {
                   </svg>
                 </button>
               </a>
-              <Link href="/contact">
+              <Link href="/request-samples">
                 <button className="border border-white/60 hover:border-white transition text-white font-semibold rounded-full px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base min-h-[44px] min-w-[44px]">
-               Get a free sample
+               Get a sample
                 </button>
               </Link>
             </div>
