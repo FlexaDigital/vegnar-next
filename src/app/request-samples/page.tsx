@@ -47,7 +47,7 @@ export default function RequestSamplesPage() {
               <div className="flex items-center justify-center space-x-6 text-sm text-green-700">
                 <span className="flex items-center">
                   <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                  ₹1 + GST per sample kit
+                  ₹3000 + GST per sample kit
                 </span>
                 <span className="flex items-center">
                   <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
@@ -76,12 +76,12 @@ export default function RequestSamplesPage() {
               setIsPayingForSample(true);
 
               try {
-                // 1. Create Razorpay order (₹2 = ₹1 + 5% GST sample fee)
+                // 1. Create Razorpay order (₹3150 = ₹3000 + 5% GST sample fee)
                 const orderRes = await fetch('/api/razorpay/create-order', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
-                    amount: 2,
+                    amount: 3150,
                     currency: 'INR',
                     receipt: `sample_${Date.now()}`,
                     notes: { name: sampleFormData.companyName, email: sampleFormData.email }
@@ -151,7 +151,7 @@ export default function RequestSamplesPage() {
                           state: sampleFormData.state,
                           products: sampleFormData.products,
                           paymentId: response.razorpay_payment_id,
-                          kitPrice: 2,
+                          kitPrice: 3150,
                           userType: sampleFormData.userType,
                           gstNumber: sampleFormData.gstNumber,
                           panNumber: sampleFormData.panNumber,
@@ -172,10 +172,10 @@ export default function RequestSamplesPage() {
                         userType: sampleFormData.userType,
                         gstNumber: sampleFormData.gstNumber || undefined,
                         panNumber: sampleFormData.panNumber || undefined,
-                        items: [{ description: 'Sample Request — Vegnar Green Eco Products (Sugarcane Bagasse Tableware)', quantity: 1, unitPrice: 1 }],
-                        subtotal: 1,
-                        tax: 1,
-                        total: 2,
+                        items: [{ description: 'Sample Request — Vegnar Green Eco Products (Sugarcane Bagasse Tableware)', quantity: 1, unitPrice: 3000 }],
+                        subtotal: 3000,
+                        tax: 150,
+                        total: 3150,
                         currency: 'INR',
                       };
                       generateInvoice(invoiceData);
@@ -340,7 +340,7 @@ export default function RequestSamplesPage() {
                     </>
                   ) : (
                     <>
-                      💳 Pay ₹2 & Request Samples
+                      💳 Pay ₹3,150 & Request Samples
                     </>
                   )}
                 </button>
