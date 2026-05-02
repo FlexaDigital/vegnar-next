@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { sendToZohoCRM } from '@/utils/zoho-webhook';
 
 interface FormData {
   fullname: string;
@@ -53,6 +54,18 @@ export default function PartnerFormNew() {
             formType: 'PartnerFormNew',
           }),
         }).catch(() => {}); // Silent fail
+
+        // Send to Zoho CRM
+        sendToZohoCRM({
+          formType: 'PartnerFormNew',
+          fullName: formData.fullname,
+          email: formData.email,
+          phone: formData.mobile,
+          company: formData.company,
+          country: formData.country,
+          businessType: formData.businessType,
+          message: formData.message,
+        });
 
         setStatus('success');
         setFormData({
