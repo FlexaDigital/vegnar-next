@@ -3,6 +3,7 @@
 import { FaCheck, FaEnvelope, FaPhone } from 'react-icons/fa';
 import { useState } from 'react';
 import Link from 'next/link';
+import { sendToZohoCRM } from '@/utils/zoho-webhook';
 
 // Add countries array at the top of the file
 const countries = [
@@ -253,6 +254,18 @@ export default function PartnerForm() {
           formType: 'PartnerForm',
         }),
       }).catch(() => {}); // Silent fail
+
+      // Send to Zoho CRM
+      sendToZohoCRM({
+        formType: 'PartnerForm',
+        fullName: payload['Full Name'],
+        email: payload['Email Address'],
+        phone: payload['Mobile Number'],
+        company: payload['Company Name'],
+        country: payload['Country'],
+        businessType: payload['Business Type'],
+        message: payload['Message'],
+      });
 
       setSubmitStatus('success');
       form.reset();

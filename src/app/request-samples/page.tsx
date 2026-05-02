@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { generateInvoice } from '@/lib/invoice';
+import { sendToZohoCRM } from '@/utils/zoho-webhook';
 const indiaStates = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry'];
 import Head from 'next/head';
 
@@ -157,6 +158,22 @@ export default function RequestSamplesPage() {
                           panNumber: sampleFormData.panNumber,
                         })
                       }).catch(() => {});
+
+                      // 5c. Send to Zoho CRM
+                      sendToZohoCRM({
+                        formType: 'SampleRequest',
+                        fullName: sampleFormData.companyName,
+                        email: sampleFormData.email,
+                        phone: sampleFormData.mobile,
+                        userType: sampleFormData.userType,
+                        state: sampleFormData.state,
+                        address: sampleFormData.address,
+                        products: sampleFormData.products,
+                        gstNumber: sampleFormData.gstNumber,
+                        panNumber: sampleFormData.panNumber,
+                        paymentId: response.razorpay_payment_id,
+                        amount: 3150,
+                      });
 
                       // 6. Generate invoice
                       const invoiceNum = `VG-${Date.now().toString().slice(-8)}`;

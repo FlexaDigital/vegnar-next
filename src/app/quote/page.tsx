@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Search, Filter, Download, ShoppingCart, Plus, Check } from 'lucide-react';
 import { generateInvoice } from '@/lib/invoice';
+import { sendToZohoCRM } from '@/utils/zoho-webhook';
 import productsData from '@/data/products.json';
 import countryList from '@/data/country-list.json';
 import Head from 'next/head';
@@ -189,6 +190,23 @@ export default function PackingListPage() {
           formType: 'QuoteCartForm',
         }),
       }).catch(() => {}); // Silent fail
+
+      // Send to Zoho CRM
+      sendToZohoCRM({
+        formType: 'QuoteCartForm',
+        fullName: payload['Company Name'] as string,
+        email: payload['Email'] as string,
+        phone: payload['Mobile Number'] as string,
+        company: payload['Company Name'] as string,
+        country: payload['Country'] as string,
+        address: payload['Address'] as string,
+        deliveryTerms: payload['Delivery Terms'] as string,
+        productsCount: payload['Products Count'] as number,
+        totalPieces: payload['Total Pieces'] as number,
+        totalWeight: payload['Total Weight'] as string,
+        totalCBM: payload['Total CBM'] as string,
+        additionalRequirements: payload['Additional Requirements'] as string,
+      });
 
       // Assume success with no-cors
       alert('Quote request submitted successfully!');
