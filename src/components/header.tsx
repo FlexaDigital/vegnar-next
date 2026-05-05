@@ -229,6 +229,12 @@ const Header = ({ categories }: HeaderProps) => {
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             <Link
+              href="/schedule-meeting"
+              className="px-4 py-2 border border-[#0f4d3a] rounded-full text-[#0f4d3a] text-sm font-medium hover:bg-[#0f4d3a]/10 flex items-center gap-1.5"
+            >
+               Schedule Meeting
+            </Link>
+            <Link
               href="/partner"
               className="px-4 py-2 border border-vegnar-green rounded-full text-vegnar-green text-sm font-medium hover:bg-vegnar-light"
             >
@@ -361,6 +367,15 @@ const Header = ({ categories }: HeaderProps) => {
             )}
 
             {/* Buttons */}
+            <li>
+              <Link
+                href="/schedule-meeting"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block mt-2 px-4 py-2 border border-[#0f4d3a] rounded-full text-center text-[#0f4d3a] font-medium hover:bg-[#0f4d3a]/10"
+              >
+                 Schedule Meeting
+              </Link>
+            </li>
             <li>
               <Link
                 href="/partner"
