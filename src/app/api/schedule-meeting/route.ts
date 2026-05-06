@@ -139,6 +139,53 @@ export async function GET(request: NextRequest) {
 
     const data = JSON.parse(Buffer.from(token, 'base64url').toString('utf-8'));
 
+    // --- Build datetime strings for ICS and Google Calendar ---
+    // preferredDate = "YYYY-MM-DD", preferredTime = "HH:MM"
+    const [year, month, day] = data.preferredDate.split('-');
+    const [hour, minute] = data.preferredTime.split(':');
+
+    // ICS format: YYYYMMDDTHHMMSS (1 hour duration)
+    const dtStart = `${year}${month}${day}T${hour}${minute}00`;
+    const endHour = String(Number(hour) + 1).padStart(2, '0');
+    const dtEnd = `${year}${month}${day}T${endHour}${minute}00`;
+
+    // Google Calendar URL format
+    const gcStart = dtStart;
+    const gcEnd = dtEnd;
+    const gcTitle = encodeURIComponent(`Meeting with Vegnar Greens — ${data.meetingPurpose}`);
+    const gcDetails = encodeURIComponent(`Company: ${data.company}\nMeeting Type: ${data.meetingType}\nPurpose: ${data.meetingPurpose}`);
+    const gcLocation = encodeURIComponent(data.meetingType);
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${gcTitle}&dates=${gcStart}/${gcEnd}&details=${gcDetails}&location=${gcLocation}`;
+
+    // .ics file content
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Vegnar Greens//Meeting//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:REQUEST',
+      'BEGIN:VEVENT',
+      `DTSTART:${dtStart}`,
+      `DTEND:${dtEnd}`,
+      `SUMMARY:Meeting with Vegnar Greens — ${data.meetingPurpose}`,
+      `DESCRIPTION:Company: ${data.company}\nMeeting Type: ${data.meetingType}\nPurpose: ${data.meetingPurpose}`,
+      `LOCATION:${data.meetingType}`,
+      `ORGANIZER;CN=Vegnar Greens:mailto:${process.env.SMTP_FROM}`,
+      `ATTENDEE;CN=${data.fullName}:mailto:${data.email}`,
+      'BEGIN:VALARM',
+      'TRIGGER:-PT30M',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:Meeting with Vegnar Greens in 30 minutes',
+      'END:VALARM',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT1H',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:Meeting with Vegnar Greens in 1 hour',
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ].join('\r\n');
+
     await transporter.sendMail({
       from: process.env.SMTP_FROM,
       to: data.email,
@@ -163,6 +210,20 @@ export async function GET(request: NextRequest) {
                 <tr><td style="padding:10px 5px;color:#555;font-size:13px;">🎯 Purpose</td><td style="padding:10px 5px;font-weight:700;color:#0f4d3a;font-size:13px;">${data.meetingPurpose}</td></tr>
               </table>
             </div>
+
+            <!-- Calendar Buttons -->
+            <div style="background:#f8f9fa;border:1px solid #e9ecef;border-radius:8px;padding:20px;margin:20px 0;text-align:center;">
+              <p style="margin:0 0 14px;color:#333;font-weight:600;font-size:14px;">📆 Add to Your Calendar</p>
+              <div style="display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+                <a href="${googleCalendarUrl}" target="_blank"
+                  style="display:inline-flex;align-items:center;gap:8px;background:#4285F4;color:white;text-decoration:none;font-weight:600;font-size:13px;padding:11px 22px;border-radius:7px;">
+                  <img src="https://www.gstatic.com/images/branding/product/1x/calendar_48dp.png" width="18" height="18" style="vertical-align:middle;" />
+                  Add to Google Calendar
+                </a>
+              </div>
+              <p style="margin:12px 0 0;color:#888;font-size:12px;">Or open the attached <strong>meeting.ics</strong> file to add to any calendar (Outlook, Apple Calendar, etc.)</p>
+            </div>
+
             <p style="color:#555;line-height:1.8;font-size:14px;">Our team will reach out to you shortly with the meeting link or further instructions.</p>
             <p style="color:#333;font-weight:600;font-size:14px;margin-bottom:0;">Best Regards,<br/>Team Vegnar Greens</p>
           </div>
@@ -171,22 +232,38 @@ export async function GET(request: NextRequest) {
           </div>
         </div>
       `,
+      attachments: [
+        {
+          filename: 'meeting.ics',
+          content: icsContent,
+          contentType: 'text/calendar; method=REQUEST',
+        },
+      ],
     });
 
-    return new Response(successPage(data.fullName, data.email), { headers: { 'Content-Type': 'text/html' } });
+    return new Response(successPage(data.fullName, data.email, googleCalendarUrl, icsContent), { headers: { 'Content-Type': 'text/html' } });
   } catch (error) {
     console.error('Confirm meeting error:', error);
     return new Response(errorPage('Error', 'Something went wrong. Please try again.'), { headers: { 'Content-Type': 'text/html' } });
   }
 }
 
-function successPage(name: string, email: string) {
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Meeting Confirmed</title></head><body style="font-family:Arial,sans-serif;background:#f0faf5;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;">
-    <div style="background:white;border-radius:12px;padding:50px 40px;text-align:center;max-width:480px;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
-      <div style="font-size:60px;margin-bottom:16px;">✅</div>
-      <h1 style="color:#0f4d3a;margin:0 0 12px;">Meeting Confirmed!</h1>
-      <p style="color:#555;line-height:1.7;">A confirmation email has been sent to <strong>${email}</strong>.</p>
-      <a href="https://vegnar.com" style="display:inline-block;margin-top:24px;background:#0f4d3a;color:white;text-decoration:none;padding:12px 30px;border-radius:8px;font-weight:bold;">Go to Website</a>
+function successPage(name: string, email: string, googleCalendarUrl: string, icsContent: string) {
+  const icsBase64 = Buffer.from(icsContent).toString('base64');
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Meeting Confirmed</title></head><body style="font-family:Arial,sans-serif;background:#f0faf5;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px;box-sizing:border-box;">
+    <div style="background:white;border-radius:12px;padding:40px;text-align:center;max-width:500px;width:100%;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+      <div style="font-size:60px;margin-bottom:12px;">✅</div>
+      <h1 style="color:#0f4d3a;margin:0 0 8px;font-size:24px;">Meeting Confirmed!</h1>
+      <p style="color:#555;line-height:1.7;margin:0 0 24px;font-size:14px;">Confirmation email sent to <strong>${email}</strong>.<br/>Add this meeting to your own calendar:</p>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+        <a href="${googleCalendarUrl}" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#4285F4;color:white;text-decoration:none;font-weight:600;font-size:14px;padding:13px 20px;border-radius:8px;">
+          <img src="https://www.gstatic.com/images/branding/product/1x/calendar_48dp.png" width="20" height="20" />Add to Google Calendar
+        </a>
+        <a href="data:text/calendar;base64,${icsBase64}" download="meeting.ics" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#f0faf5;color:#0f4d3a;text-decoration:none;font-weight:600;font-size:14px;padding:13px 20px;border-radius:8px;border:2px solid #0f4d3a;">
+          📎 Download .ics (Outlook / Apple Calendar)
+        </a>
+      </div>
+      <a href="https://vegnar.com" style="display:inline-block;background:#0f4d3a;color:white;text-decoration:none;padding:11px 28px;border-radius:8px;font-weight:bold;font-size:13px;">Go to Website</a>
     </div>
   </body></html>`;
 }
