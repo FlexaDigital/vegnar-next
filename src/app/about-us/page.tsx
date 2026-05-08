@@ -367,9 +367,6 @@ export default function OurStory() {
       <section className="bg-white py-24 px-4 relative z-10">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
-            <span className="inline-block bg-green-100 text-green-800 text-sm font-semibold rounded-full px-6 py-2 mb-6">
-              🏭 OUR MANUFACTURING EXCELLENCE
-            </span>
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
               World-Class Facility,
               <span className="block text-green-600">Made in Gujarat, India</span>
