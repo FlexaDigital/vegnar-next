@@ -52,7 +52,7 @@ export default function RequestSamplesPage() {
                 </span>
                 <span className="flex items-center">
                   <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                  Free worldwide shipping
+                  Free India shipping
                 </span>
                 <span className="flex items-center">
                   <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
@@ -224,7 +224,7 @@ export default function RequestSamplesPage() {
                       onChange={() => setSampleFormData(p => ({...p, userType: 'company'}))}
                       className="mr-3 w-4 h-4 text-green-600"
                     />
-                    <span className="font-medium text-gray-700">🏢 Company/Business</span>
+                    <span className="font-medium text-gray-700">Company/Business</span>
                   </label>
                   <label className="flex items-center cursor-pointer">
                     <input 
@@ -235,7 +235,7 @@ export default function RequestSamplesPage() {
                       onChange={() => setSampleFormData(p => ({...p, userType: 'customer'}))}
                       className="mr-3 w-4 h-4 text-green-600"
                     />
-                    <span className="font-medium text-gray-700">👤 Individual Customer</span>
+                    <span className="font-medium text-gray-700">Individual Customer</span>
                   </label>
                 </div>
               </div>
@@ -357,7 +357,7 @@ export default function RequestSamplesPage() {
                     </>
                   ) : (
                     <>
-                      💳 Pay ₹3,150 & Request Samples
+                      Pay ₹3,150 & Request Samples
                     </>
                   )}
                 </button>

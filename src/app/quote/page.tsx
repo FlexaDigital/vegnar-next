@@ -889,7 +889,7 @@ Generated on: ${new Date().toLocaleString()}
                 </button>
               )}
               <span className="text-green-200 text-sm">
-                ✓ Free shipping worldwide • ✓ 3-5 business days delivery • ✓ ₹3000 + GST per sample kit
+                ✓ Free shipping India • ✓ 3-5 business days delivery • ✓ ₹3000 + GST per sample kit
               </span>
             </div>
           </div>
