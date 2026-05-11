@@ -1,3 +1,18 @@
+/* ─── Product Image Gallery Animations ─── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Hide scrollbars but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Product Slider Styles */
 .product-slider {
   position: relative;

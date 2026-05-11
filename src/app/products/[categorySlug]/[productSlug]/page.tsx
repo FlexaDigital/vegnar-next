@@ -13,8 +13,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from '@/components/ProductCard';
 import { decodeAndStripHtml, decodeHtmlEntities } from './utils';
+import ProductImageGallery from '@/components/Product/ProductImageGallery';
 
 // --- TypeScript Interfaces ---
+interface WpAttachment {
+  id: number;
+  source_url: string;
+  media_details?: {
+    sizes?: {
+      full?: { source_url: string };
+      large?: { source_url: string };
+      medium_large?: { source_url: string };
+    };
+  };
+}
+
 interface Product {
   id: number;
   slug: string;
@@ -28,9 +41,13 @@ interface Product {
     item_code?: string;
     product_weight?: string;
     color?: string;
+    // product_images returns array of image IDs or objects from ACF gallery field
+    product_images?: number[] | Array<{ id: number; url?: string; sizes?: Record<string, string> }>;
   };
   _embedded?: {
-    "wp:featuredmedia"?: Array<{ source_url: string }>;
+    "wp:featuredmedia"?: Array<WpAttachment>;
+    // ACF gallery images are embedded here as attachments
+    "acf:attachment"?: Array<WpAttachment>;
   };
   featured_media?: number;
   product_category?: number[]; // Array of category IDs
@@ -128,6 +145,28 @@ const SingleProductPage = async ({ params }: PageProps) => {
     product._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
     "https://placehold.co/500x500/e0e0e0/ffffff?text=No+Image"; // Fallback placeholder
 
+  // Build gallery images array: featured image + ACF gallery images (deduplicated)
+  const acfGalleryImages: string[] = [];
+  if (product._embedded?.["acf:attachment"]) {
+    for (const attachment of product._embedded["acf:attachment"]) {
+      const url =
+        attachment.media_details?.sizes?.large?.source_url ||
+        attachment.media_details?.sizes?.medium_large?.source_url ||
+        attachment.source_url;
+      if (url && !acfGalleryImages.includes(url)) {
+        acfGalleryImages.push(url);
+      }
+    }
+  }
+
+  // Combine: start with featured image, add gallery images that aren't duplicates
+  const allProductImages: string[] = [featuredImageUrl];
+  for (const url of acfGalleryImages) {
+    if (!allProductImages.includes(url)) {
+      allProductImages.push(url);
+    }
+  }
+
   // --- Breadcrumb Logic ---
   let subCategory: Category | undefined;
   let parentCategory: Category | undefined;
@@ -207,17 +246,13 @@ const SingleProductPage = async ({ params }: PageProps) => {
               </ol>
             </nav>
 
-            {/* Main Product Details Section - Added mt-8 for top margin */}
-            <div className="flex flex-col md:flex-row md:space-x-12">
-              <div className="md:flex-shrink-0 md:w-[400px]">
-                <img
-                  alt={`${decodeHtmlEntities(decodeAndStripHtml(product.title.rendered))} - Premium Biodegradable Tableware by Vegnar Green`}
-                  className="rounded-lg w-full object-cover"
-                  height={500}
-                  src={featuredImageUrl}
-                  width={500}
-                />
-              </div>
+            {/* Main Product Details Section */}
+            <div className="flex flex-col md:flex-row md:space-x-12 overflow-visible">
+              {/* Image Gallery - Amazon/Flipkart style */}
+              <ProductImageGallery
+                images={allProductImages}
+                productName={decodeHtmlEntities(decodeAndStripHtml(product.title.rendered))}
+              />
               <div className="flex-1 md:mt-0">
                 <h1 className="text-3xl font-extrabold text-gray-900 mb-2">
                   {decodeHtmlEntities(
