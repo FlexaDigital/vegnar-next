@@ -64,6 +64,7 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Redirect non-www to www
       {
         source: '/:path*',
         has: [
@@ -73,6 +74,42 @@ const nextConfig = {
           },
         ],
         destination: 'https://www.vegnar.com/:path*',
+        permanent: true,
+      },
+      // Redirect HTTP CMS to HTTPS
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'cms.vegnar.com',
+          },
+          {
+            type: 'header',
+            key: 'x-forwarded-proto',
+            value: 'http',
+          },
+        ],
+        destination: 'https://cms.vegnar.com/:path*',
+        permanent: true,
+      },
+      // Fix duplicate product URLs - redirect old format to new
+      {
+        source: '/products/bagasse-products/:slug*',
+        destination: '/products/bowls/:slug*',
+        permanent: true,
+      },
+      // Fix ?p=1 parameter redirect
+      {
+        source: '/',
+        has: [
+          {
+            type: 'query',
+            key: 'p',
+            value: '1',
+          },
+        ],
+        destination: 'https://www.vegnar.com/',
         permanent: true,
       },
     ]

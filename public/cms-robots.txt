@@ -1,0 +1,21 @@
+# robots.txt for cms.vegnar.com - Block all crawlers
+# This file should be uploaded to cms.vegnar.com/robots.txt
+
+User-agent: Googlebot
+Disallow: /
+
+User-agent: *
+Disallow: /
+Disallow: /wp-json/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+Disallow: /?s=
+Disallow: /search/
+Disallow: /author/
+Disallow: /users/
+Disallow: /feed/
+Disallow: /comments/feed/
+
+# No sitemap for CMS - we don't want it indexed
