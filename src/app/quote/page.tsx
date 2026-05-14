@@ -157,6 +157,23 @@ function PackingListPageInner() {
         }),
       }).catch(() => {}); // Silent fail
 
+      // Send to Zoho CRM
+      sendToZohoCRM({
+        formType: 'QuoteCartForm',
+        fullName: payload['Company Name'] as string,
+        email: payload['Email'] as string,
+        phone: payload['Mobile Number'] as string,
+        company: payload['Company Name'] as string,
+        country: payload['Country'] as string,
+        address: payload['Address'] as string,
+        deliveryTerms: payload['Delivery Terms'] as string,
+        productsCount: payload['Products Count'] as number,
+        totalPieces: payload['Total Pieces'] as number,
+        totalWeight: payload['Total Weight'] as string,
+        totalCBM: payload['Total CBM'] as string,
+        additionalRequirements: payload['Additional Requirements'] as string,
+      });
+
       // Assume success with no-cors
       alert('Quote request submitted successfully! Your PDF is being generated...');
       
@@ -1188,7 +1205,7 @@ function PackingListPageInner() {
                 Request Samples
               </a>
               <span className="text-green-200 text-sm">
-                ✓ Free shipping worldwide • ✓ 3-5 business days delivery • ✓ ₹3000 + GST per sample kit
+                ✓ Free shipping India • ✓ 3-5 business days delivery • ✓ ₹3000 + GST per sample kit
               </span>
             </div>
           </div>

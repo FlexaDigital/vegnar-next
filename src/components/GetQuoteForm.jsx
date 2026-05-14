@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
+import { sendToZohoCRM } from "@/utils/zoho-webhook";
 
 // Replace with your actual EmailJS credentials
 const YOUR_SERVICE_ID = "service_tkls90l";
@@ -63,6 +64,19 @@ const GetQuoteFormPopup = ({ productTitle }) => {
         UagVn - lyzNZrSPlUN
       );
       console.log("SUCCESS!", response.status, response.text);
+      
+      // Send to Zoho CRM
+      sendToZohoCRM({
+        formType: 'GetQuote',
+        fullName: formData.name,
+        email: formData.email,
+        phone: formData.number,
+        company: formData.company,
+        country: formData.country,
+        quantity: formData.quantity,
+        productTitle: productTitle,
+      });
+      
       setSubmissionStatus("success");
     } catch (error) {
       console.error("FAILED...", error);

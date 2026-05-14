@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
 import ContactInfo from '@/components/ContactInfo';
 import BecomePartnerSection from '@/components/BecomePartnerSection';
+import { sendToZohoCRM } from '@/utils/zoho-webhook';
 
 const ContactPage: React.FC = () => {
   const handleFormSubmit = async (formValues: any, selectedDialCode: string) => {
@@ -12,7 +13,9 @@ const ContactPage: React.FC = () => {
       formPayload.append(key, formValues[key]);
     }
     formPayload.append("dial_code", selectedDialCode);
+    
     try {
+      // Send to FormSubmit
       const response = await fetch("https://formsubmit.co/export.anantainc@gmail.com", {
         method: "POST",
         body: formPayload,
@@ -20,6 +23,18 @@ const ContactPage: React.FC = () => {
       if (!response.ok) {
         throw new Error("Failed to send message. Please try again.");
       }
+      
+      // Send to Zoho CRM
+      sendToZohoCRM({
+        formType: 'ContactPageForm',
+        fullName: formValues.fullname,
+        email: formValues.email,
+        phone: `${selectedDialCode} ${formValues.phone}`,
+        company: formValues.company,
+        country: formValues.country,
+        message: formValues.message,
+      });
+      
     } catch (error) {
       console.error(error);
     }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { generateInvoice } from '@/lib/invoice';
+import { sendToZohoCRM } from '@/utils/zoho-webhook';
 const indiaStates = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry'];
 import Head from 'next/head';
 
@@ -51,7 +52,7 @@ export default function RequestSamplesPage() {
                 </span>
                 <span className="flex items-center">
                   <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                  Free worldwide shipping
+                  Free India shipping
                 </span>
                 <span className="flex items-center">
                   <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
@@ -158,6 +159,22 @@ export default function RequestSamplesPage() {
                         })
                       }).catch(() => {});
 
+                      // 5c. Send to Zoho CRM
+                      sendToZohoCRM({
+                        formType: 'SampleRequest',
+                        fullName: sampleFormData.companyName,
+                        email: sampleFormData.email,
+                        phone: sampleFormData.mobile,
+                        userType: sampleFormData.userType,
+                        state: sampleFormData.state,
+                        address: sampleFormData.address,
+                        products: sampleFormData.products,
+                        gstNumber: sampleFormData.gstNumber,
+                        panNumber: sampleFormData.panNumber,
+                        paymentId: response.razorpay_payment_id,
+                        amount: 3150,
+                      });
+
                       // 6. Generate invoice
                       const invoiceNum = `VG-${Date.now().toString().slice(-8)}`;
                       const invoiceData: Parameters<typeof generateInvoice>[0] = {
@@ -207,7 +224,7 @@ export default function RequestSamplesPage() {
                       onChange={() => setSampleFormData(p => ({...p, userType: 'company'}))}
                       className="mr-3 w-4 h-4 text-green-600"
                     />
-                    <span className="font-medium text-gray-700">🏢 Company/Business</span>
+                    <span className="font-medium text-gray-700">Company/Business</span>
                   </label>
                   <label className="flex items-center cursor-pointer">
                     <input 
@@ -218,7 +235,7 @@ export default function RequestSamplesPage() {
                       onChange={() => setSampleFormData(p => ({...p, userType: 'customer'}))}
                       className="mr-3 w-4 h-4 text-green-600"
                     />
-                    <span className="font-medium text-gray-700">👤 Individual Customer</span>
+                    <span className="font-medium text-gray-700">Individual Customer</span>
                   </label>
                 </div>
               </div>
@@ -340,7 +357,7 @@ export default function RequestSamplesPage() {
                     </>
                   ) : (
                     <>
-                      💳 Pay ₹3,150 & Request Samples
+                      Pay ₹3,150 & Request Samples
                     </>
                   )}
                 </button>

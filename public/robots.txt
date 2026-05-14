@@ -1,6 +1,6 @@
 # robots.txt for https://www.vegnar.com
 
-# Allow all web crawlers
+# Allow all web crawlers for main site
 User-agent: *
 Allow: /
 
@@ -8,14 +8,24 @@ Allow: /
 Disallow: /admin/
 Disallow: /_next/
 Disallow: /api/
+Disallow: /quote/
+Disallow: /request-samples/
+Disallow: /schedule-meeting/
 
 # Allow important pages
 Allow: /products/
 Allow: /blog/
 Allow: /about-us
 Allow: /contact
+Allow: /sustainability
+Allow: /manufacturing
 
-# Crawl delay (optional)
+# Block CMS subdomain (this should also be on cms.vegnar.com/robots.txt)
+User-agent: Googlebot
+Disallow: http://cms.vegnar.com/
+Disallow: https://cms.vegnar.com/
+
+# Crawl delay
 Crawl-delay: 1
 
 # Sitemap location

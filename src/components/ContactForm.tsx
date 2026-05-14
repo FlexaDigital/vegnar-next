@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import countries from "@/data/country-list.json";
 import { FaSearch, FaChevronDown } from "react-icons/fa";
+import { sendToZohoCRM } from "@/utils/zoho-webhook";
 
 interface ContactFormProps {
   onSubmit?: (formValues: any, selectedDialCode: string) => Promise<void>;
@@ -130,6 +131,17 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
           formType: 'ContactForm',
         }),
       }).catch(() => {}); // Silent fail - don't block form submission
+
+      // Send to Zoho CRM
+      sendToZohoCRM({
+        formType: 'ContactForm',
+        fullName: formValues.fullname,
+        email: formValues.email,
+        phone: `${selectedDialCode} ${formValues.phone}`,
+        company: formValues.company,
+        country: formValues.country,
+        message: formValues.message,
+      });
 
       // With no-cors, assume success
       setFormSubmitted(true);
