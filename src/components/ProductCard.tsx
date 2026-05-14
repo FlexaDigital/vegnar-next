@@ -6,30 +6,14 @@ import { faRulerCombined } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import he from 'he';
 import PlaceholderImage from './PlaceholderImage';
-
-interface Category {
-  id: number;
-  name: string;
-  slug: string;
-  parent: number;
-}
-
-interface Product {
-  id: number;
-  slug: string;
-  title: { rendered: string };
-  content: { rendered: string };
-  product_category: number[];
-  acf?: { product_size?: string };
-  _embedded?: {
-    'wp:featuredmedia'?: Array<{ source_url?: string }>;
-  };
-}
+import productsData from '@/data/products.json';
+import { DomesticProduct, WpProduct as Product, Category } from '@/types/product';
+import AddToCartButton from './Product/AddToCartButton';
 
 interface ProductCardProps {
   product: Product;
   allCategories: Category[];
-  disableViewProduct: boolean;
+  disableViewProduct?: boolean;
 }
 
 const decodeAndStripHtml = (html: string) => {
@@ -64,6 +48,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
       parentCat?.slug === 'bio-bags'
     );
   });
+
+  // Find matching domestic product for quote functionality
+  const domesticProduct = (productsData as DomesticProduct[]).find(
+    p => p.item_code === product.acf?.item_code
+  );
 
   const generateProductUrl = (product: Product): string => {
     if (!product.product_category || !allCategories || allCategories.length === 0) {
@@ -154,12 +143,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
           )}
           <p className="text-sm mb-4 line-clamp-3">{shortDescription}</p>
           {!isRestrictedCategory && !disableViewProduct && (
-            <Link
-              href={generateProductUrl(product)}
-              className="inline-block w-full bg-green-600 text-white text-center px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition-colors duration-200"
-            >
-              View Product
-            </Link>
+            <div className="flex flex-col gap-2 w-full">
+              <Link
+                href={generateProductUrl(product)}
+                className="inline-block w-full bg-white text-green-700 text-center px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100 transition-colors duration-200"
+              >
+                View Product
+              </Link>
+              {domesticProduct && (
+                <AddToCartButton 
+                  product={domesticProduct} 
+                  className="inline-flex items-center justify-center w-full bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition-colors duration-200" 
+                />
+              )}
+            </div>
           )}
         </div>
       </div>
