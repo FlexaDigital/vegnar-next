@@ -6,28 +6,10 @@ import ProductList from "@/components/ProductList";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
 
-type Category = {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  parent: number;
-};
-
-type Product = {
-  id: number;
-  slug: string;
-  title: { rendered: string };
-  content: { rendered: string };
-  product_category: number[];
-  acf?: { product_size?: string };
-  _embedded?: {
-    "wp:featuredmedia"?: Array<{ source_url?: string }>;
-  };
-};
+import { WpProduct as Product, Category } from "@/types/product";
 
 type Props = {
-  params: { categorySlug: string };
+  params: Promise<{ categorySlug: string }>;
 };
 
 // Generic fetch helper with error handling and timeout
@@ -262,7 +244,7 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
   };
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { categorySlug } = params;
+  const { categorySlug } = await params;
 
   if (categorySlug === "bagasse-products") {
     return {
@@ -463,7 +445,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductCategoryPage({ params }: Props) {
   try {
-    const category = await fetchCategoryBySlug(params.categorySlug);
+    const { categorySlug } = await params;
+    const category = await fetchCategoryBySlug(categorySlug);
 
     if (!category) {
       notFound();

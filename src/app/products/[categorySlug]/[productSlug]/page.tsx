@@ -14,57 +14,15 @@ import {
 import ProductCard from '@/components/ProductCard';
 import { decodeAndStripHtml, decodeHtmlEntities } from './utils';
 import ProductImageGallery from '@/components/Product/ProductImageGallery';
-
-// --- TypeScript Interfaces ---
-interface WpAttachment {
-  id: number;
-  source_url: string;
-  media_details?: {
-    sizes?: {
-      full?: { source_url: string };
-      large?: { source_url: string };
-      medium_large?: { source_url: string };
-    };
-  };
-}
-
-interface Product {
-  id: number;
-  slug: string;
-  title: { rendered: string };
-  content: { rendered: string };
-  acf?: {
-    product_size?: string;
-    pscPerPack?: string;
-    packPerBox?: string;
-    box_dimension?: string;
-    item_code?: string;
-    product_weight?: string;
-    color?: string;
-    // product_images returns array of image IDs or objects from ACF gallery field
-    product_images?: number[] | Array<{ id: number; url?: string; sizes?: Record<string, string> }>;
-  };
-  _embedded?: {
-    "wp:featuredmedia"?: Array<WpAttachment>;
-    // ACF gallery images are embedded here as attachments
-    "acf:attachment"?: Array<WpAttachment>;
-  };
-  featured_media?: number;
-  product_category?: number[]; // Array of category IDs
-}
-
-interface Category {
-  id: number;
-  name: string;
-  slug: string;
-  parent: number; // 0 if it's a top-level category
-}
+import productsData from '@/data/products.json';
+import { DomesticProduct, WpProduct as Product, Category } from '@/types/product';
+import AddToCartButton from '@/components/Product/AddToCartButton';
 
 interface PageProps {
-  params: {
-    categorySlug: string; // This is the slug from the URL, which could be parent or sub
+  params: Promise<{
+    categorySlug: string; 
     productSlug: string;
-  };
+  }>;
 }
 
 // --- Server-Side Data Fetching Functions ---
@@ -125,7 +83,7 @@ async function getRelatedProducts(
 
 // --- Main Server Component ---
 const SingleProductPage = async ({ params }: PageProps) => {
-  const { productSlug } = params;
+  const { productSlug, categorySlug } = await params;
 
   // Fetch all data concurrently on the server
   const productPromise = getProduct(productSlug);
@@ -188,6 +146,11 @@ const SingleProductPage = async ({ params }: PageProps) => {
   }
 
   const acf = product.acf || {};
+
+  // Find matching domestic product for quote functionality
+  const domesticProduct = (productsData as DomesticProduct[]).find(
+    p => p.item_code === acf.item_code
+  );
 
   return (
     <div>
@@ -391,9 +354,13 @@ const SingleProductPage = async ({ params }: PageProps) => {
                       international shipping options
                     </Link>.
                   </p>
-                  <Link href="/quote" className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors">
-                    Get Quote
-                  </Link>
+                  {domesticProduct ? (
+                    <AddToCartButton product={domesticProduct} />
+                  ) : (
+                    <Link href="/quote" className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors">
+                      Get Quote
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -406,7 +373,7 @@ const SingleProductPage = async ({ params }: PageProps) => {
                 </h2>
                 <div className="flex overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
                   {relatedProducts.map((relatedProduct) => {
-                    const shouldDisableViewProduct = params.categorySlug === 'paper-cups' || params.categorySlug === 'bio-bags';
+                    const shouldDisableViewProduct = categorySlug === 'paper-cups' || categorySlug === 'bio-bags';
 
                     return (
                       <div key={relatedProduct.id} className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 snap-start">
@@ -589,8 +556,9 @@ const SingleProductPage = async ({ params }: PageProps) => {
 
 export default SingleProductPage;
 
-export async function generateMetadata({ params }: { params: { categorySlug: string; productSlug: string } }): Promise<Metadata> {
-  const product = await getProduct(params.productSlug);
+export async function generateMetadata({ params }: { params: Promise<{ categorySlug: string; productSlug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const product = await getProduct(resolvedParams.productSlug);
   if (!product) {
     return {
       title: 'Product Not Found | Vegnar Green',
@@ -642,12 +610,12 @@ export async function generateMetadata({ params }: { params: { categorySlug: str
     description,
     keywords: keywords.join(', '),
     alternates: {
-      canonical: seoData?.link || `https://www.vegnar.com/products/${params.categorySlug}/${params.productSlug}`,
+      canonical: seoData?.link || `https://www.vegnar.com/products/${resolvedParams.categorySlug}/${resolvedParams.productSlug}`,
     },
     openGraph: {
       title,
       description,
-      url: seoData?.link || `https://www.vegnar.com/products/${params.categorySlug}/${params.productSlug}`,
+      url: seoData?.link || `https://www.vegnar.com/products/${resolvedParams.categorySlug}/${resolvedParams.productSlug}`,
       type: 'article',
       siteName: 'Vegnar Green',
       images: [
