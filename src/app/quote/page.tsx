@@ -130,17 +130,16 @@ function PackingListPageInner() {
     };
 
     try {
-      const response = await fetch(
+      // Google Sheets (silent fail - no-cors)
+      fetch(
         "https://script.google.com/macros/s/AKfycbys6WK8uBmZQM2vP5KMOu16UWd1qwsUbBmdvp9qxeioPb3B6F2mSpyai2pT1PJYQsZQJQ/exec",
         {
           method: "POST",
           mode: "no-cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         }
-      );
+      ).catch(() => {});
 
       // Save lead to Inventory Management system
       fetch(process.env.NEXT_PUBLIC_LEAD_API_URL!, {
@@ -157,32 +156,38 @@ function PackingListPageInner() {
         }),
       }).catch(() => {}); // Silent fail
 
-      // Send to Zoho CRM
-      sendToZohoCRM({
-        formType: 'QuoteCartForm',
-        fullName: payload['Company Name'] as string,
-        email: payload['Email'] as string,
-        phone: payload['Mobile Number'] as string,
-        company: payload['Company Name'] as string,
-        country: payload['Country'] as string,
-        address: payload['Address'] as string,
-        deliveryTerms: payload['Delivery Terms'] as string,
-        productsCount: payload['Products Count'] as number,
-        totalPieces: payload['Total Pieces'] as number,
-        totalWeight: payload['Total Weight'] as string,
-        totalCBM: payload['Total CBM'] as string,
-        additionalRequirements: payload['Additional Requirements'] as string,
-      });
+      // Send to Zoho CRM (silent fail)
+      try {
+        sendToZohoCRM({
+          formType: 'QuoteCartForm',
+          fullName: payload['Company Name'] as string,
+          email: payload['Email'] as string,
+          phone: payload['Mobile Number'] as string,
+          company: payload['Company Name'] as string,
+          country: payload['Country'] as string,
+          address: payload['Address'] as string,
+          deliveryTerms: payload['Delivery Terms'] as string,
+          productsCount: payload['Products Count'] as number,
+          totalPieces: payload['Total Pieces'] as number,
+          totalWeight: payload['Total Weight'] as string,
+          totalCBM: payload['Total CBM'] as string,
+          additionalRequirements: payload['Additional Requirements'] as string,
+        });
+      } catch {}
 
-      // Assume success with no-cors
-      alert('Quote request submitted successfully! Your PDF is being generated...');
-      
-      // Generate PDF after successful submission
-      downloadPDF();
-      
+      // Capture form data before reset
+      const capturedFormData = new FormData(form);
+      const quoteNo = `QT-${Math.floor(Math.random() * 90000) + 10000}`;
+
+      // Save to inventory (silent fail)
+      await saveQuoteToInventory(capturedFormData, quoteNo);
+
+      // Generate PDF
+      downloadPDF(capturedFormData, quoteNo);
+
       form.reset();
       setShowQuoteForm(false);
-      clearCart(); // Clear cart after successful submission
+      clearCart();
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitError(true);
@@ -205,11 +210,72 @@ function PackingListPageInner() {
     return parseFloat(priceStr.replace(/[^\d.]/g, '')) || 0;
   };
 
-  const downloadPDF = () => {
+  const saveQuoteToInventory = async (formData: FormData, quoteNo: string) => {
+    try {
+      const products = cart.map((item) => ({
+        itemCode: item.product.item_code,
+        productName: item.product.product,
+        category: item.product.category,
+        quantity: item.quantity,
+        unit: item.unit,
+        pcsPerCarton: item.product.pcs_per_carton,
+        totalPieces: item.unit === 'cartons' ? item.quantity * item.product.pcs_per_carton : item.quantity,
+        hsnCode: item.product.hsn_code,
+      }));
+
+      const totalPieces = cart.reduce((total, item) => {
+        return total + (item.unit === 'cartons' ? item.quantity * item.product.pcs_per_carton : item.quantity);
+      }, 0);
+
+      const totalWeight = cart.reduce((total, item) => {
+        const cartons = item.unit === 'cartons' ? item.quantity : Math.ceil(item.quantity / item.product.pcs_per_carton);
+        return total + (cartons * (item.product.net_weight_kg || 0));
+      }, 0).toFixed(1) + ' kg';
+
+      const totalCBM = cart.reduce((total, item) => {
+        const cartons = item.unit === 'cartons' ? item.quantity : Math.ceil(item.quantity / item.product.pcs_per_carton);
+        const cbm = item.product.length_m && item.product.width_m && item.product.height_m
+          ? item.product.length_m * item.product.width_m * item.product.height_m : 0;
+        return total + (cartons * cbm);
+      }, 0).toFixed(3) + ' m³';
+
+      await fetch(`${process.env.NEXT_PUBLIC_LEAD_API_URL!.replace('/lead', '')}/website-quote`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quoteNo,
+          quoteDate: new Date().toISOString(),
+          companyName: formData.get('companyName'),
+          contactPerson: formData.get('contactPerson'),
+          email: formData.get('email'),
+          mobile: formData.get('mobile'),
+          orderType,
+          gstin: formData.get('gstin'),
+          city: formData.get('city'),
+          state: formData.get('state'),
+          pincode: formData.get('pincode'),
+          billingAddress: formData.get('billingAddress'),
+          country: formData.get('country'),
+          deliveryTerms: formData.get('deliveryTerms'),
+          portOfDischarge: formData.get('portOfDischarge'),
+          address: formData.get('address'),
+          additionalRequirements: formData.get('additionalRequirements'),
+          products,
+          totalPieces,
+          totalWeight,
+          totalCBM,
+        }),
+      });
+    } catch {
+      // Silent fail - PDF generation should not be blocked
+    }
+  };
+
+  const downloadPDF = (savedFormData?: FormData, savedQuoteNo?: string) => {
     const doc = new jsPDF();
     const form = document.querySelector('form') as HTMLFormElement;
-    const formData = new FormData(form);
-    const quoteNo = `QT-${Math.floor(Math.random() * 90000) + 10000}`;
+    const formData = savedFormData || new FormData(form);
+    const quoteNo = savedQuoteNo || `QT-${Math.floor(Math.random() * 90000) + 10000}`;
     const date = new Date().toLocaleDateString('en-GB');
     const expiry = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB');
     const isDomestic = orderType === 'domestic';
