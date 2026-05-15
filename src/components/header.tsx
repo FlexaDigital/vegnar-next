@@ -142,8 +142,8 @@ const Header = ({ categories }: HeaderProps) => {
               onMouseEnter={() => handleMouseEnter(0)}
               onMouseLeave={handleMouseLeave}
             >
-              <button
-                onClick={() => toggleDropdown(0)}
+              <Link
+                href="/products"
                 className="cursor-pointer flex items-center space-x-1 text-sm font-medium text-gray-700 hover:text-vegnar-green px-3 py-2 rounded-md"
               >
                 <span>Products</span>
@@ -152,7 +152,7 @@ const Header = ({ categories }: HeaderProps) => {
                     activeDropdown === 0 ? "rotate-180" : ""
                   }`}
                 />
-              </button>
+              </Link>
 
               <div
                 className={`absolute left-0 top-full mt-0 w-64 bg-white rounded-md shadow-lg py-1 z-10 transition-all duration-200 ${
@@ -294,11 +294,18 @@ const Header = ({ categories }: HeaderProps) => {
           <ul className="flex flex-col px-4 py-4 space-y-1">
             {/* Dynamic Products */}
             <li>
+              <Link
+                href="/products"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block px-3 py-2 text-gray-700 hover:text-vegnar-green hover:bg-vegnar-light rounded-md font-medium"
+              >
+                Products
+              </Link>
               <button
                 onClick={() => toggleDropdown(0)}
-                className="w-full flex justify-between items-center px-3 py-2 text-gray-700 hover:text-vegnar-green hover:bg-vegnar-light rounded-md font-medium"
+                className="w-full flex justify-between items-center px-3 py-2 text-gray-700 hover:text-vegnar-green hover:bg-vegnar-light rounded-md font-medium mt-1"
               >
-                <span>Products</span>
+                <span>Categories</span>
                 <FaChevronDown
                   className={`text-xs transition-transform ${
                     activeDropdown === 0 ? "rotate-180" : ""
