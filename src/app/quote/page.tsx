@@ -242,7 +242,9 @@ function PackingListPageInner() {
         return total + (cartons * cbm);
       }, 0).toFixed(3) + ' m³';
 
-      await fetch(`${process.env.NEXT_PUBLIC_LEAD_API_URL!.replace('/lead', '')}/website-quote`, {
+      const leadApiBase = process.env.NEXT_PUBLIC_LEAD_API_URL?.replace('/lead', '');
+      if (!leadApiBase) return;
+      await fetch(`${leadApiBase}/website-quote`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
