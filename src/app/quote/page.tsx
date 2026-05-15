@@ -673,7 +673,7 @@ function PackingListPageInner() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 relative">
+    <div className="min-h-screen bg-gray-50 py-8 relative overflow-x-hidden">
         <div className="absolute inset-0 bg-[url('/assets/bg-green.png')] bg-repeat opacity-15 pointer-events-none" style={{backgroundSize: '200px'}}></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="bg-white rounded-lg shadow-sm">
@@ -684,7 +684,7 @@ function PackingListPageInner() {
                 <h1 className="text-2xl font-bold text-gray-900">Get Quote - Biodegradable Tableware</h1>
                 <p className="mt-1 text-sm text-gray-500">Premium sugarcane bagasse products with instant pricing and specifications</p>
               </div>
-              <div className="mt-4 sm:mt-0 flex space-x-3">
+              <div className="mt-4 sm:mt-0 flex flex-wrap gap-2">
                 <button
                   onClick={() => setShowFilters(!showFilters)}
                   className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
@@ -937,58 +937,56 @@ function PackingListPageInner() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="px-6 py-4 border-t border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Previous
-                  </button>
-                  
-                  <div className="flex space-x-1">
-                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                      let pageNum;
-                      if (totalPages <= 5) {
-                        pageNum = i + 1;
-                      } else if (currentPage <= 3) {
-                        pageNum = i + 1;
-                      } else if (currentPage >= totalPages - 2) {
-                        pageNum = totalPages - 4 + i;
-                      } else {
-                        pageNum = currentPage - 2 + i;
-                      }
-                      
-                      return (
-                        <button
-                          key={pageNum}
-                          onClick={() => handlePageChange(pageNum)}
-                          className={`px-3 py-2 text-sm font-medium rounded-md ${
-                            currentPage === pageNum
-                              ? 'bg-green-600 text-white'
-                              : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
-                          }`}
-                        >
-                          {pageNum}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  
-                  <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Next
-                  </button>
+            <div className="px-4 py-4 border-t border-gray-200">
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+                
+                <div className="flex flex-wrap gap-1">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    let pageNum;
+                    if (totalPages <= 5) {
+                      pageNum = i + 1;
+                    } else if (currentPage <= 3) {
+                      pageNum = i + 1;
+                    } else if (currentPage >= totalPages - 2) {
+                      pageNum = totalPages - 4 + i;
+                    } else {
+                      pageNum = currentPage - 2 + i;
+                    }
+                    
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => handlePageChange(pageNum)}
+                        className={`px-3 py-2 text-sm font-medium rounded-md ${
+                          currentPage === pageNum
+                            ? 'bg-green-600 text-white'
+                            : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
                 </div>
                 
-                <div className="text-sm text-gray-700">
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+
+                <span className="text-sm text-gray-700 w-full text-center sm:w-auto">
                   Page {currentPage} of {totalPages}
-                </div>
+                </span>
               </div>
             </div>
           )}
@@ -1035,7 +1033,7 @@ function PackingListPageInner() {
                   <>
                     <div className="space-y-4 mb-6">
                       {cart.map((item) => (
-                        <div key={item.product.item_code} className="flex items-center justify-between p-4 border rounded-lg">
+                        <div key={item.product.item_code} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 border rounded-lg gap-3">
                           <div className="flex-1">
                             <h4 className="font-medium">{item.product.product}</h4>
                             <p className="text-sm text-gray-500">{item.product.item_code}</p>
@@ -1046,11 +1044,11 @@ function PackingListPageInner() {
                               }
                             </p>
                           </div>
-                          <div className="flex items-center space-x-4">
+                          <div className="flex flex-wrap items-center gap-2">
                             <select
                               value={item.unit}
                               onChange={(e) => updateCartUnit(item.product.item_code, e.target.value as 'pieces' | 'cartons')}
-                              className="border rounded px-2 py-1"
+                              className="border rounded px-2 py-1 text-sm"
                             >
                               <option value="pieces">Pieces</option>
                               <option value="cartons">Cartons</option>
@@ -1060,11 +1058,11 @@ function PackingListPageInner() {
                               min="1"
                               value={item.quantity}
                               onChange={(e) => updateCartQuantity(item.product.item_code, parseInt(e.target.value) || 1)}
-                              className="w-20 text-center border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+                              className="w-20 text-center border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                             />
                             <button
                               onClick={() => removeFromCart(item.product.item_code)}
-                              className="text-red-600 hover:text-red-800"
+                              className="text-red-600 hover:text-red-800 text-sm"
                             >
                               Remove
                             </button>
@@ -1122,7 +1120,7 @@ function PackingListPageInner() {
 
               {/* Quote Form */}
               <form className="space-y-4" onSubmit={handleQuoteSubmit}>
-                <div className="flex space-x-6 mb-6 p-4 bg-gray-50 rounded-lg">
+                <div className="flex flex-wrap gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
                   <label className="flex items-center space-x-2 cursor-pointer">
                     <input 
                       type="radio" 
@@ -1148,17 +1146,17 @@ function PackingListPageInner() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input name="companyName" type="text" placeholder="Company Name" className="border rounded px-3 py-2" required />
-                  <input name="contactPerson" type="text" placeholder="Contact Person" className="border rounded px-3 py-2" required />
-                  <input name="email" type="email" placeholder="Email" className="border rounded px-3 py-2" required />
-                  <input name="mobile" type="tel" placeholder="Mobile Number" className="border rounded px-3 py-2" required />
+                  <input name="companyName" type="text" placeholder="Company Name" className="w-full border rounded px-3 py-2" required />
+                  <input name="contactPerson" type="text" placeholder="Contact Person" className="w-full border rounded px-3 py-2" required />
+                  <input name="email" type="email" placeholder="Email" className="w-full border rounded px-3 py-2" required />
+                  <input name="mobile" type="tel" placeholder="Mobile Number" className="w-full border rounded px-3 py-2" required />
                   
                   {orderType === 'domestic' ? (
                     <>
-                      <input name="gstin" type="text" placeholder="GSTIN (Optional)" className="border rounded px-3 py-2" />
-                      <input name="city" type="text" placeholder="City" className="border rounded px-3 py-2" required />
-                      <input name="state" type="text" placeholder="State" className="border rounded px-3 py-2" required />
-                      <input name="pincode" type="text" placeholder="Pincode" className="border rounded px-3 py-2" required />
+                      <input name="gstin" type="text" placeholder="GSTIN (Optional)" className="w-full border rounded px-3 py-2" />
+                      <input name="city" type="text" placeholder="City" className="w-full border rounded px-3 py-2" required />
+                      <input name="state" type="text" placeholder="State" className="w-full border rounded px-3 py-2" required />
+                      <input name="pincode" type="text" placeholder="Pincode" className="w-full border rounded px-3 py-2" required />
                       <textarea name="billingAddress" placeholder="Billing Address" className="border rounded px-3 py-2 md:col-span-2" rows={3} required></textarea>
                     </>
                   ) : (
@@ -1232,18 +1230,18 @@ function PackingListPageInner() {
                   </div>
                 )}
                 
-                <div className="flex justify-end space-x-4">
+                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
                   <button
                     type="button"
                     onClick={() => setShowQuoteForm(false)}
-                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                    className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors font-medium disabled:opacity-50"
+                    className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors font-medium disabled:opacity-50"
                   >
                     {isSubmitting ? 'Submitting...' : 'Download PDF'}
                   </button>
