@@ -3,54 +3,114 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaLeaf, FaCheckCircle } from "react-icons/fa";
-import HeroImage1 from "../../../public/assets/img/Newbanner3.webp";
-import HeroImage2 from "../../../public/assets/img/Newbanner1.webp";
-import HeroImage3 from "../../../public/assets/img/Newbanner2.webp";
+
+// Desktop images
+import HeroImage1 from "../../../public/assets/img/Bowl bannar image.png";
+import HeroImage2 from "../../../public/assets/img/Round plate banner image.png";
+import HeroImage3 from "../../../public/assets/img/clamshell banner image.png";
+import HeroImage4 from "../../../public/assets/img/cup banner image.png";
+import HeroImage5 from "../../../public/assets/img/meal try banner image.png";
+import HeroImage6 from "../../../public/assets/img/takeaway banner image.png";
+
+// Mobile images
+import HeroMobile1 from "../../../public/assets/img/Bowl bannar image mobile.png";
+import HeroMobile2 from "../../../public/assets/img/Round plate banner image mobile.png";
+import HeroMobile3 from "../../../public/assets/img/clamshell banner image mobile.png";
+import HeroMobile4 from "../../../public/assets/img/cup banner image mobile.png";
+import HeroMobile5 from "../../../public/assets/img/meal try banner image mobile.png";
+import HeroMobile6 from "../../../public/assets/img/takeaway banner image mobile.png";
 
 const slides = [
   {
     id: 1,
-    image: HeroImage2,
-    alt: "Sugarcane bagasse plates and bowls eco-friendly tableware",
-    title: (
-      <>
-        Biodegradable <br />
-        <span className="font-bold">Sugarcane Bagasse</span> Tableware
-      </>
-    ),
+    desktopImage: HeroImage5,
+    mobileImage: HeroMobile5,
+    alt: "Sugarcane bagasse meal trays for food service and catering",
+    productRoute: "/products/meal-trays",
+    buttonLabel: "Explore Meal Trays",
+    title: "Versatile Meal Trays",
+    highlight: "Compartment Ready",
     description:
-      "Premium bagasse plates, bowls & compartment trays. Plastic-free, compostable & planet-friendly.",
+      "Multi-compartment bagasse meal trays for canteens, airlines & food courts. Oil & water resistant.",
+    showBadges: true,
   },
   {
     id: 2,
-    image: HeroImage1,
-    alt: "Eco-friendly compostable packaging bags and containers",
-    title: (
-      <>
-        Compostable <br />
-        <span className="font-bold">Eco-Friendly</span> Packaging Solutions
-      </>
-    ),
+    desktopImage: HeroImage2,
+    mobileImage: HeroMobile2,
+    alt: "Eco-friendly round plates made from sugarcane bagasse",
+    productRoute: "/products/round-plates",
+    buttonLabel: "Explore Round Plates",
+    title: "Sustainable Round Plates",
+    highlight: "100% Compostable",
     description:
-      "Bio bags, carry bags, courier & garbage bags. Sustainable packaging made for a greener future.",
+      "Natural sugarcane bagasse round plates. Plastic-free, microwave-safe & ideal for events and catering.",
+    showBadges: false,
   },
   {
     id: 3,
-    image: HeroImage3,
-    alt: "Areca palm leaf plates and sustainable disposable tableware",
-    title: (
-      <>
-        Sustainable <br />
-        <span className="font-bold">Disposable</span> Tableware
-      </>
-    ),
+    desktopImage: HeroImage3,
+    mobileImage: HeroMobile3,
+    alt: "Bagasse clamshell food containers - eco packaging",
+    productRoute: "/products/clamshells",
+    buttonLabel: "Explore Clamshell Boxes",
+    title: "Compostable Clamshell",
+    highlight: "Containers for Takeaway",
     description:
-      "Eco-friendly disposable plates, bowls & food containers made from natural plant fibers.",
+      "Sturdy bagasse clamshell boxes for meals, burgers & snacks. Leak-resistant & fully biodegradable.",
+    showBadges: false,
+  },
+  {
+    id: 4,
+    desktopImage: HeroImage4,
+    mobileImage: HeroMobile4,
+    alt: "Eco-friendly disposable cups made from sugarcane bagasse",
+    productRoute: "/products/sipper-lid",
+    buttonLabel: "Explore Eco Cups",
+    title: "Green Eco Cups",
+    highlight: "Plastic-Free Sipping",
+    description:
+      "Compostable bagasse cups for hot & cold beverages. Durable, safe & sustainably sourced.",
+    showBadges: false,
+  },
+  {
+    id: 5,
+    desktopImage: HeroImage1,
+    mobileImage: HeroMobile1,
+    alt: "Eco-friendly sugarcane bagasse bowls - biodegradable tableware",
+    productRoute: "/products/bowls",
+    buttonLabel: "Explore Bagasse Bowls",
+    title: "Biodegradable Bagasse Bowls",
+    highlight: "For Every Occasion",
+    description:
+      "Premium sugarcane bagasse bowls — compostable, sturdy & planet-friendly. Perfect for soups, salads & more.",
+    showBadges: false,
+  },
+  {
+    id: 6,
+    desktopImage: HeroImage6,
+    mobileImage: HeroMobile6,
+    alt: "Eco-friendly takeaway packaging solutions from Vegnar Greens",
+    productRoute: "/products/takeaway-container",
+    buttonLabel: "Explore Takeaway Packaging",
+    title: "Complete Takeaway Packaging",
+    highlight: "Solutions",
+    description:
+      "End-to-end sustainable takeaway packaging — bowls, boxes, trays & bags. All compostable, all green.",
+    showBadges: false,
   },
 ];
 
 const HeroSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(
@@ -61,19 +121,21 @@ const HeroSection = () => {
   }, []);
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "ArrowLeft") {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft")
         setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
-      } else if (e.key === "ArrowRight") {
+      else if (e.key === "ArrowRight")
         setCurrentIndex((prev) => (prev + 1) % slides.length);
-      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
-    <div className="relative h-screen sm:h-screen pt-16 sm:pt-20 overflow-hidden">
+    <div
+      className="relative w-full overflow-hidden"
+      style={{ height: "100svh", paddingTop: "64px" }}
+    >
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -81,99 +143,149 @@ const HeroSection = () => {
             index === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/30 z-10" />
+          {/* Background image — mobile: mobile image, desktop: desktop image */}
           <Image
-            src={slide.image}
+            src={isMobile ? slide.mobileImage : slide.desktopImage}
             alt={slide.alt}
             fill
             priority={index === 0}
-            className="object-cover object-center sm:object-center object-top w-full h-full"
+            sizes="(max-width: 640px) 100vw, 100vw"
+            className="object-cover object-center w-full h-full"
           />
-          <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 h-full flex flex-col justify-center sm:justify-center justify-end pb-20 sm:pb-0 text-white">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight max-w-3xl">
-              {slide.title}
-            </h1>
-            <p className="mt-3 sm:mt-4 max-w-2xl text-base sm:text-lg md:text-xl font-medium">
-              {slide.description}
-            </p>
-            <div className="mt-4 sm:mt-6 flex flex-wrap gap-3 sm:gap-4">
-              <a href="/products/bagasse-products">
-                <button className="bg-vegnar-green hover:bg-green-800 transition text-white font-semibold rounded-full px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base flex items-center min-h-[44px] min-w-[44px]">
-                  Explore our bagasse products 
-                  <svg
-                    className="ml-2 w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M5 12h14M13 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </a>
-              <Link href="/request-samples">
-                <button className="border border-white/60 hover:border-white transition text-white font-semibold rounded-full px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base min-h-[44px] min-w-[44px]">
-               Get a sample
-                </button>
-              </Link>
-            </div>
 
-            {index === 0 && (
-              <>
-                <div className="mt-4 sm:mt-6 flex flex-wrap items-center gap-3 sm:gap-6 max-w-4xl">
-                  <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 sm:px-5 py-2 sm:py-3 max-w-xs">
-                    <FaLeaf className="text-green-400 text-lg mr-3" />
-                    <div>
-                      <p className="font-bold text-white text-base sm:text-lg">
-                        630+ tons
-                      </p>
-                      <p className="text-white text-xs font-semibold -mt-1">
-                        of plastic replaced
-                      </p>
+          {/* Gradient overlay — left-to-right on both mobile & desktop
+              so text on left is readable and image shows through on right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/10" />
+
+          {/* ── Text content — same layout for mobile & desktop, left-aligned ── */}
+          <div className="absolute inset-0 z-10 flex flex-col justify-center px-5 sm:px-10 lg:px-20">
+            <div className="max-w-[90%] sm:max-w-md md:max-w-lg">
+
+              {/* Title */}
+              <h1
+                className="text-[1.6rem] sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight text-white"
+                style={{ textShadow: "1px 2px 10px rgba(0,0,0,0.7)" }}
+              >
+                {slide.title}
+                <br />
+                <span className="text-white">{slide.highlight}</span>
+              </h1>
+
+              {/* Description */}
+              <p
+                className="mt-2 sm:mt-3 text-sm sm:text-base md:text-lg font-medium text-white leading-relaxed"
+                style={{ textShadow: "1px 1px 8px rgba(0,0,0,0.7)" }}
+              >
+                {slide.description}
+              </p>
+
+              {/* Buttons — stacked on mobile like screenshot, side-by-side on desktop */}
+              <div className="mt-4 sm:mt-5 flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <Link href={slide.productRoute}>
+                  <button className="w-full sm:w-auto bg-vegnar-green hover:bg-green-800 transition-all duration-300 text-white font-semibold rounded-full px-6 py-3 text-sm sm:text-base flex items-center justify-center shadow-lg">
+                    {slide.buttonLabel}
+                    <svg
+                      className="ml-2 w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M5 12h14M13 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </Link>
+
+                <Link href="/request-samples">
+                  <button className="w-full sm:w-auto border border-white/70 hover:border-white hover:bg-white/10 transition-all duration-300 text-white font-semibold rounded-full px-6 py-3 text-sm sm:text-base text-center">
+                    Get a sample
+                  </button>
+                </Link>
+              </div>
+
+              {/* Badges — visible on both mobile & desktop (first slide only) */}
+              {slide.showBadges && (
+                <>
+                  <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-3 sm:gap-4">
+                    {/* 630+ tons badge */}
+                    <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-lg px-3 sm:px-4 py-2">
+                      <FaLeaf className="text-green-400 text-base mr-2" />
+                      <div>
+                        <p className="font-bold text-white text-sm sm:text-base leading-none">
+                          630+ tons
+                        </p>
+                        <p className="text-white text-xs font-semibold mt-0.5">
+                          of plastic replaced
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2 sm:gap-3 text-white text-xs sm:text-sm font-medium flex-wrap">
-                    <span>Certified by:</span>
-                    {["OKComposite", "US FDA", "SGS Tested", "CE"].map(
-                      (cert) => (
+
+                    {/* Certifications */}
+                    <div className="flex flex-wrap items-center gap-2 text-white text-xs font-medium">
+                      <span className="text-white text-xs sm:text-sm">Certified by:</span>
+                      {["OKComposite", "US FDA", "SGS Tested", "CE"].map((cert) => (
                         <span
                           key={cert}
-                          className="bg-white text-gray-900 font-semibold text-xs rounded-md px-2 sm:px-3 py-1"
+                          className="bg-white text-gray-900 font-semibold text-xs rounded-md px-2 py-0.5"
                         >
                           {cert}
                         </span>
-                      ),
-                    )}
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="mt-3 sm:mt-4 inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-3 sm:px-5 py-2 max-w-max text-white text-xs sm:text-sm font-semibold">
-                  <FaCheckCircle className="text-green-400 mr-2" />
-                  Trusted by eco-conscious businesses worldwide
-                </div>
-              </>
-            )}
+
+                  {/* Trust badge */}
+                  <div className="mt-2 sm:mt-3 inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-3 sm:px-4 py-1.5 max-w-max text-white text-xs sm:text-sm font-semibold">
+                    <FaCheckCircle className="text-green-400 mr-1.5" />
+                    Trusted by eco-conscious businesses worldwide
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       ))}
 
-      {/* Slide Dots */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-30">
+      {/* ── Slide Dots ── */}
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-30">
         {slides.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors p-2 ${
+            className={`rounded-full transition-all duration-300 ${
               currentIndex === idx
-                ? "bg-vegnar-green"
-                : "bg-white bg-opacity-50"
+                ? "bg-vegnar-green w-5 h-2.5 sm:w-6 sm:h-3"
+                : "bg-white/60 hover:bg-white/90 w-2.5 h-2.5 sm:w-3 sm:h-3"
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           />
         ))}
       </div>
+
+      {/* ── Arrow Navigation ── */}
+      <button
+        onClick={() =>
+          setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length)
+        }
+        className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded-full p-2.5 sm:p-3 transition-all duration-300 items-center justify-center"
+        aria-label="Previous slide"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <button
+        onClick={() => setCurrentIndex((prev) => (prev + 1) % slides.length)}
+        className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded-full p-2.5 sm:p-3 transition-all duration-300 items-center justify-center"
+        aria-label="Next slide"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
     </div>
   );
 };
