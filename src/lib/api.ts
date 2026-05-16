@@ -12,7 +12,7 @@ export interface ProductCategory {
 export async function fetchAllProductCategories(): Promise<ProductCategory[]> {
   try {
     const res = await fetch('https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100', {
-      next: { revalidate: 60 },
+      next: { revalidate: 3600 },
       signal: AbortSignal.timeout(5000) // 5 second timeout
     });
 

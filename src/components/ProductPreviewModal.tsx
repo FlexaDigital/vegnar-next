@@ -77,12 +77,15 @@ export default function ProductPreviewModal({ product, onClose }: Props) {
                   />
                 </div>
                 {images.length > 1 && (
-                  <div className="flex gap-2 flex-wrap">
+                  <div
+                    className="grid gap-2"
+                    style={{ gridTemplateColumns: `repeat(${images.length}, 1fr)` }}
+                  >
                     {images.map((img, i) => (
                       <button
                         key={i}
                         onClick={() => setActiveImg(i)}
-                        className={`w-12 h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                        className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
                           i === activeImg ? 'border-green-600' : 'border-gray-200 opacity-60 hover:opacity-100'
                         }`}
                       >

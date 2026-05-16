@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
   };
 
   const quickLinks = [
-    { to: "/products", label: "Products" },
+    { to: "/products/bagasse-products", label: "Products" },
     { to: "/about-us", label: "About Us" },
     { to: "/manufacturing", label: "Manufacturing" },
     // { to: "/career", label: "Career" },

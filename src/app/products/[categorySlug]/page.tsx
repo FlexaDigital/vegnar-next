@@ -54,7 +54,7 @@ async function fetchCategoryBySlug(slug: string): Promise<Category | null> {
     const data = await fetchWithTimeout<Category[]>(
       `https://cms.vegnar.com/wp-json/wp/v2/product_category?slug=${slug}`,
       {
-        next: { revalidate: 60 }, // Cache for 1 minute
+        next: { revalidate: 3600 }, // Cache for 1 hour
       },
     );
     return data[0] || null;
@@ -71,7 +71,7 @@ async function fetchProductsByCategoryId(
     return await fetchWithTimeout<Product[]>(
       `https://cms.vegnar.com/wp-json/wp/v2/products?product_category=${categoryId}&per_page=100&_embed`,
       {
-        next: { revalidate: 60 }, // Cache for 1 minute
+        next: { revalidate: 3600 }, // Cache for 1 hour
       },
     );
   } catch (error) {
@@ -85,7 +85,7 @@ async function fetchAllCategories(): Promise<Category[]> {
     return await fetchWithTimeout<Category[]>(
       `https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100`,
       {
-        next: { revalidate: 60 }, // Cache for 1 minute
+        next: { revalidate: 3600 }, // Cache for 1 hour
       },
     );
   } catch (error) {
@@ -99,7 +99,7 @@ async function fetchSubCategories(parentId: number): Promise<Category[]> {
     return await fetchWithTimeout<Category[]>(
       `https://cms.vegnar.com/wp-json/wp/v2/product_category?parent=${parentId}&per_page=100`,
       {
-        next: { revalidate: 60 }, // Cache for 1 minute
+        next: { revalidate: 3600 }, // Cache for 1 hour
       },
     );
   } catch (error) {
@@ -243,6 +243,15 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
     },
   };
 }
+export async function generateStaticParams() {
+  try {
+    const categories = await fetchAllCategories();
+    return categories.map((cat) => ({ categorySlug: cat.slug }));
+  } catch {
+    return [];
+  }
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { categorySlug } = await params;
 
@@ -446,18 +455,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductCategoryPage({ params }: Props) {
   try {
     const { categorySlug } = await params;
-    const category = await fetchCategoryBySlug(categorySlug);
+
+    // Single call for all categories, then derive current + subcategories from it
+    const allCategories = await fetchAllCategories();
+    const category = allCategories.find((c) => c.slug === categorySlug) || null;
 
     if (!category) {
       notFound();
       return null;
     }
 
-    const [products, allCategories, subCategories] = await Promise.all([
-      fetchProductsByCategoryId(category.id),
-      fetchAllCategories(),
-      fetchSubCategories(category.id),
-    ]);
+    const subCategories = allCategories.filter((c) => c.parent === category.id);
+    const products = await fetchProductsByCategoryId(category.id);
 
     return (
       <>
