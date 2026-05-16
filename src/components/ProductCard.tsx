@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRulerCombined } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
@@ -26,7 +26,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   allCategories,
   disableViewProduct = false,
 }) => {
-  const [categoryName, setCategoryName] = useState<string>('Loading...');
   const [imageLoading, setImageLoading] = useState(true);
 
   const decodedTitle = decodeAndStripHtml(product.title.rendered);
@@ -36,6 +35,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
     : decodedDescription;
   const size = product.acf?.product_size || 'Size not specified';
   const image = product._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/images/placeholder-product.jpg';
+
+  // Resolve category name from allCategories prop (no extra API call needed)
+  const categoryName = (() => {
+    if (!product.product_category?.length) return 'No Category';
+    const cat = allCategories.find((c) => c.id === product.product_category[0]);
+    return cat?.name || 'Category Unavailable';
+  })();
 
   // Check if product belongs to paper-cups or bio-bags category
   const isRestrictedCategory = product.product_category.some((catId) => {
@@ -72,31 +78,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
       return `/products/${subCategory.slug}/${product.slug}`;
     }
   };
-
-  useEffect(() => {
-    const fetchCategoryName = async () => {
-      if (product.product_category && product.product_category.length > 0) {
-        try {
-          const categoryId = product.product_category[0];
-          const response = await fetch(
-            `https://cms.vegnar.com/wp-json/wp/v2/product_category/${categoryId}`
-          );
-          if (response.ok) {
-            const categoryData = await response.json();
-            setCategoryName(categoryData.name);
-          } else {
-            setCategoryName('Category Unavailable');
-          }
-        } catch (error) {
-          setCategoryName('Category Unavailable');
-        }
-      } else {
-        setCategoryName('No Category');
-      }
-    };
-
-    fetchCategoryName();
-  }, [product.product_category]);
 
   return (
     <div className="relative aspect-square rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-shadow duration-300">
