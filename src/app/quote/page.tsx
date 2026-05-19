@@ -224,6 +224,8 @@ function PackingListPageInner() {
         pcsPerCarton: item.product.pcs_per_carton,
         totalPieces: item.unit === 'cartons' ? item.quantity * item.product.pcs_per_carton : item.quantity,
         hsnCode: item.product.hsn_code,
+        rate: getPricePerPiece(item.product, item.quantity, item.unit),
+        taxRate: parseFloat((item.product as any).gst) || 0,
       }));
 
       const totalPieces = cart.reduce((total, item) => {
