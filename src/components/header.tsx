@@ -143,7 +143,7 @@ const Header = ({ categories }: HeaderProps) => {
               onMouseLeave={handleMouseLeave}
             >
               <Link
-                href="/products"
+                href="/products/bagasse-products"
                 className="cursor-pointer flex items-center space-x-1 text-sm font-medium text-gray-700 hover:text-vegnar-green px-3 py-2 rounded-md"
               >
                 <span>Products</span>
@@ -295,7 +295,7 @@ const Header = ({ categories }: HeaderProps) => {
             {/* Dynamic Products */}
             <li>
               <Link
-                href="/products"
+                href="/products/bagasse-products"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block px-3 py-2 text-gray-700 hover:text-vegnar-green hover:bg-vegnar-light rounded-md font-medium"
               >
