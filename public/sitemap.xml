@@ -22,7 +22,7 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.vegnar.com/products/bagasse-products</loc>
+    <loc>https://www.vegnar.com/products</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
@@ -35,55 +35,55 @@
   <!-- Product Categories -->
   <url>
     <loc>https://www.vegnar.com/products/bagasse-products</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/bowls</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/clamshells</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/cups</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/meal-trays</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/round-plates</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/sipper-lid</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/takeaway-container</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/tray</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -191,13 +191,13 @@
   </url>
   <url>
     <loc>https://www.vegnar.com/products/bagasse-products/clam-shell-8-x-8-inch-3-cp</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/bagasse-products/clam-shell-8-x-8-inch</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -365,25 +365,25 @@
   </url>
   <url>
     <loc>https://www.vegnar.com/products/bagasse-products/clam-shell-6-x-6-inch</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/bagasse-products/clam-shell-9-x-9-inch</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/bagasse-products/clam-shell-9-x-9-inch-3-cp</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.vegnar.com/products/bagasse-products/clam-shell-9-x-6-inch</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

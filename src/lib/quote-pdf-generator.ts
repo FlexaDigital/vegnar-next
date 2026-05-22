@@ -11,11 +11,19 @@ Handlebars.registerHelper('formatNumber', (num: number) => {
   return num.toLocaleString('en-IN');
 });
 Handlebars.registerHelper('formatCurrency', (num: number) => {
-  if (!num || isNaN(num)) return '0.00';
+  if (num === null || num === undefined || isNaN(num)) return '0.00';
   return parseFloat(num.toString()).toLocaleString('en-IN', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
+});
+Handlebars.registerHelper('formatNumberWeight', (num: number) => {
+  if (num === null || num === undefined || isNaN(num)) return '0.0';
+  return parseFloat(num.toString()).toFixed(1);
+});
+Handlebars.registerHelper('formatNumberVolume', (num: number) => {
+  if (num === null || num === undefined || isNaN(num)) return '0.000';
+  return parseFloat(num.toString()).toFixed(3);
 });
 
 interface QuoteItem {
@@ -71,6 +79,27 @@ interface QuoteData {
   termsAndConditions?: string;
 }
 
+// Function to convert numbers to USD words
+function numberToWordsUSD(num: number): string {
+  const ones = ['', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN', 'ELEVEN', 'TWELVE', 'THIRTEEN', 'FOURTEEN', 'FIFTEEN', 'SIXTEEN', 'SEVENTEEN', 'EIGHTEEN', 'NINETEEN'];
+  const tens = ['', '', 'TWENTY', 'THIRTY', 'FORTY', 'FIFTY', 'SIXTY', 'SEVENTY', 'EIGHTY', 'NINETY'];
+  
+  const helper = (n: number): string => {
+    if (n === 0) return '';
+    if (n < 20) return ones[n];
+    if (n < 100) return tens[Math.floor(n / 10)] + (n % 10 ? ' ' + ones[n % 10] : '');
+    if (n < 1000) return ones[Math.floor(n / 100)] + ' HUNDRED' + (n % 100 ? ' ' + helper(n % 100) : '');
+    if (n < 1000000) return helper(Math.floor(n / 1000)) + ' THOUSAND' + (n % 1000 ? ' ' + helper(n % 1000) : '');
+    return helper(Math.floor(n / 1000000)) + ' MILLION' + (n % 1000000 ? ' ' + helper(n % 1000000) : '');
+  };
+
+  const whole = Math.floor(num);
+  if (whole === 0) return 'ZERO DOLLARS ONLY';
+  
+  const words = helper(whole).trim();
+  return `${words} DOLLARS ONLY`;
+}
+
 async function launchBrowser() {
   const isLinux = process.platform === 'linux';
 
@@ -96,20 +125,37 @@ async function launchBrowser() {
 
 export class QuotePDFGenerator {
   private templatePath: string;
-  private template: HandlebarsTemplateDelegate;
+  private template?: HandlebarsTemplateDelegate;
+  private proformaTemplatePath: string;
+  private proformaTemplate?: HandlebarsTemplateDelegate;
 
   constructor() {
     this.templatePath = path.join(process.cwd(), 'src', 'templates', 'quote-template.html');
-    this.loadTemplate();
+    this.proformaTemplatePath = path.join(process.cwd(), 'src', 'templates', 'proforma-invoice-template.html');
   }
 
-  private loadTemplate() {
+  private async ensureTemplatesLoaded() {
+    if (this.template && this.proformaTemplate) return;
+
     try {
-      const templateContent = fs.readFileSync(this.templatePath, 'utf-8');
-      this.template = Handlebars.compile(templateContent);
+      if (!this.template) {
+        const templateContent = await fs.promises.readFile(this.templatePath, 'utf-8');
+        this.template = Handlebars.compile(templateContent);
+      }
+
+      if (!this.proformaTemplate) {
+        try {
+          const proformaContent = await fs.promises.readFile(this.proformaTemplatePath, 'utf-8');
+          this.proformaTemplate = Handlebars.compile(proformaContent);
+        } catch (e: any) {
+          if (e.code !== 'ENOENT') {
+            console.error('Error loading proforma template:', e);
+          }
+        }
+      }
     } catch (error) {
-      console.error('Error loading template:', error);
-      throw new Error('Failed to load quote template');
+      console.error('Error loading templates:', error);
+      throw new Error('Failed to load templates');
     }
   }
 
@@ -117,7 +163,7 @@ export class QuotePDFGenerator {
     const d = typeof date === 'string' ? new Date(date) : date;
     return d.toLocaleDateString('en-GB', {
       day: '2-digit',
-      month: '2-digit',
+      month: 'long',
       year: 'numeric'
     });
   }
@@ -126,6 +172,7 @@ export class QuotePDFGenerator {
     const rawAddress = (formData.get('billingAddress') as string || formData.get('address') as string || 'N/A').toUpperCase();
     const city = (formData.get('city') as string || '').toUpperCase();
     const state = (formData.get('state') as string || '').toUpperCase();
+    const pincode = (formData.get('pincode') as string || '').toUpperCase();
 
     let country = '';
     if (isDomestic) {
@@ -141,10 +188,18 @@ export class QuotePDFGenerator {
         'LT': 'LITHUANIA', 'LV': 'LATVIA', 'EE': 'ESTONIA', 'IE': 'IRELAND', 'PT': 'PORTUGAL',
         'GR': 'GREECE', 'CY': 'CYPRUS', 'MT': 'MALTA', 'LU': 'LUXEMBOURG'
       };
-      country = countryMap[countryCode] || countryCode.toUpperCase();
+      country = countryMap[countryCode] || countryCode?.toUpperCase() || '';
     }
 
-    return `${rawAddress}\n${city} ${state} ${country}`.trim();
+    let result = rawAddress;
+    if (city || state || pincode) {
+      const cityStateZip = [city, state, pincode].filter(Boolean).join(' ');
+      result += `\n${cityStateZip}`.trim();
+    }
+    if (country) {
+      result += `\n${country}`.trim();
+    }
+    return result;
   }
 
   private calculateTotals(items: any[], isDomestic: boolean) {
@@ -161,9 +216,9 @@ export class QuotePDFGenerator {
         quantity = item.unit === 'cartons' ? item.quantity * item.product.pcs_per_carton : item.quantity;
         rate = pricePerPiece;
       } else {
-        const fobPrice = item.product.fob_price_per_carton_usd || 0;
-        quantity = item.unit === 'cartons' ? item.quantity : Math.ceil(item.quantity / item.product.pcs_per_carton);
-        rate = fobPrice;
+        const fobPricePerPiece = item.product.fob_price_usd || 0;
+        quantity = item.unit === 'cartons' ? item.quantity * item.product.pcs_per_carton : item.quantity;
+        rate = fobPricePerPiece;
       }
 
       const lineTotal = quantity * rate;
@@ -187,8 +242,8 @@ export class QuotePDFGenerator {
 
       return {
         ...item,
-        rate: rate.toFixed(2),
-        quantity: isDomestic ? quantity : (item.unit === 'cartons' ? item.quantity : Math.ceil(item.quantity / item.product.pcs_per_carton)),
+        rate: rate.toFixed(4),
+        quantity: quantity,
         lineTotal,
         cgstRate,
         cgstAmount,
@@ -199,8 +254,10 @@ export class QuotePDFGenerator {
           name: item.product.product.toUpperCase(),
           hsnCode: item.product.hsn_code || '48237010'
         },
-        unit: isDomestic ? 'Pcs' : 'Carton',
-        description: `Set of ${item.product.pcs_per_pack} | ${item.product.color} | ${item.product.pcs_per_carton} Pack`
+        unit: isDomestic ? 'Pcs' : 'PCS',
+        description: isDomestic 
+          ? `Set of ${item.product.pcs_per_pack} | ${item.product.color} | ${item.product.pcs_per_carton} Pack`
+          : item.product.detailed_description || `Set of ${item.product.pcs_per_pack} | ${item.product.color}`
       };
     });
 
@@ -273,7 +330,7 @@ export class QuotePDFGenerator {
   private async getLogoBase64(): Promise<string> {
     try {
       const logoPath = path.join(process.cwd(), 'public', 'assets', 'img', 'vegnar-green.png');
-      const logoBuffer = fs.readFileSync(logoPath);
+      const logoBuffer = await fs.promises.readFile(logoPath);
       return logoBuffer.toString('base64');
     } catch (error) {
       console.warn('Logo not found, continuing without logo');
@@ -281,7 +338,19 @@ export class QuotePDFGenerator {
     }
   }
 
+  private async getSignatureBase64(): Promise<string> {
+    try {
+      const sigPath = path.join(process.cwd(), 'public', 'assets', 'img', 'signature.png');
+      const sigBuffer = await fs.promises.readFile(sigPath);
+      return sigBuffer.toString('base64');
+    } catch (error) {
+      console.warn('Signature not found, continuing without signature');
+      return '';
+    }
+  }
+
   public async generateQuotePDF(formData: FormData, cart: any[], orderType: 'domestic' | 'international', quoteNo: string): Promise<Buffer> {
+    await this.ensureTemplatesLoaded();
     const isDomestic = orderType === 'domestic';
     const date = new Date();
     const expiryDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
@@ -291,37 +360,154 @@ export class QuotePDFGenerator {
     const company = (formData.get('companyName') as string || 'Valued Customer').toUpperCase();
     const fullAddress = this.formatAddress(formData, isDomestic);
 
-    const quoteData: QuoteData = {
-      quoteNo,
-      quoteDate: this.formatDate(date),
-      expiryDate: this.formatDate(expiryDate),
-      reference: 'Online Inquiry',
-      termsOfDelivery: formData.get('deliveryTerms') as string || (isDomestic ? 'Ex-works' : 'FOB'),
-      paymentTerms: '100% advance',
-      customer: {
-        name: company,
-        address: fullAddress,
-        phone: formData.get('mobile') as string || undefined,
-        email: formData.get('email') as string || undefined,
-        gstNumber: formData.get('gstin') as string || undefined
-      },
-      items: processedItems,
-      isDomestic,
-      subTotal,
-      taxBreakdown,
-      grandTotal,
-      totalInWords: isDomestic ? numberToWords(Math.round(grandTotal)) : `USD ${grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })} Only`,
-      currencySymbol: isDomestic ? 'Rs. ' : 'USD ',
-      logoBase64: await this.getLogoBase64()
+    const countryCode = formData.get('country') as string || '';
+    const countryMap: Record<string, string> = {
+      'US': 'UNITED STATES', 'GB': 'UNITED KINGDOM', 'CA': 'CANADA', 'AU': 'AUSTRALIA',
+      'DE': 'GERMANY', 'FR': 'FRANCE', 'IT': 'ITALY', 'ES': 'SPAIN', 'NL': 'NETHERLANDS',
+      'BE': 'BELGIUM', 'CH': 'SWITZERLAND', 'AT': 'AUSTRIA', 'SE': 'SWEDEN', 'NO': 'NORWAY',
+      'DK': 'DENMARK', 'FI': 'FINLAND', 'PL': 'POLAND', 'CZ': 'CZECH REPUBLIC', 'HU': 'HUNGARY',
+      'RO': 'ROMANIA', 'BG': 'BULGARIA', 'HR': 'CROATIA', 'SI': 'SLOVENIA', 'SK': 'SLOVAKIA',
+      'LT': 'LITHUANIA', 'LV': 'LATVIA', 'EE': 'ESTONIA', 'IE': 'IRELAND', 'PT': 'PORTUGAL',
+      'GR': 'GREECE', 'CY': 'CYPRUS', 'MT': 'MALTA', 'LU': 'LUXEMBOURG'
     };
+    const countryName = isDomestic ? 'INDIA' : (countryMap[countryCode] || countryCode.toUpperCase());
 
-    const html = this.template(quoteData);
+    const logoBase64Data = await this.getLogoBase64();
+    const signatureBase64Data = await this.getSignatureBase64();
+
+    let html = '';
+
+    if (isDomestic) {
+      const quoteData: QuoteData = {
+        quoteNo,
+        quoteDate: this.formatDate(date),
+        expiryDate: this.formatDate(expiryDate),
+        reference: 'Online Inquiry',
+        termsOfDelivery: formData.get('deliveryTerms') as string || 'Ex-works',
+        paymentTerms: '100% advance',
+        customer: {
+          name: company,
+          address: fullAddress,
+          phone: formData.get('mobile') as string || undefined,
+          email: formData.get('email') as string || undefined,
+          gstNumber: formData.get('gstin') as string || undefined
+        },
+        items: processedItems,
+        isDomestic,
+        subTotal,
+        taxBreakdown,
+        grandTotal,
+        totalInWords: numberToWords(Math.round(grandTotal)),
+        currencySymbol: 'Rs. ',
+        logoBase64: logoBase64Data
+      };
+      if (!this.template) throw new Error('Standard HTML template is not loaded');
+      html = this.template(quoteData);
+    } else {
+      // Calculate weights and packing specs for Proforma Invoice
+      let totalNetWeight = 0;
+      let totalGrossWeight = 0;
+      let totalCBM = 0;
+
+      const piProducts = processedItems.map(item => {
+        const totalPieces = item.unit === 'CARTON' 
+          ? item.quantity * item.product.pcs_per_carton
+          : item.quantity;
+        
+        const cartonsCount = Math.ceil(totalPieces / item.product.pcs_per_carton);
+        const netW = (totalPieces / item.product.pcs_per_carton) * (item.product.net_weight_kg || 0);
+        const grossW = netW + (cartonsCount * 0.7);
+
+        const cbmPerCarton = (item.product.length_m || 0) * (item.product.width_m || 0) * (item.product.height_m || 0);
+        const itemCBM = cartonsCount * cbmPerCarton;
+
+        totalNetWeight += netW;
+        totalGrossWeight += grossW;
+        totalCBM += itemCBM;
+
+        return {
+          productName: item.product.name,
+          productDescription: item.description || '',
+          containerCount: 1,
+          hsCode: item.product.hsnCode || '48237010',
+          quantity: item.quantity,
+          unit: item.unit,
+          rate: parseFloat(item.rate),
+          totalWeight: grossW, // Gross Weight of this item in kg
+          netWeight: netW,     // Net Weight of this item in kg
+          cbm: itemCBM,
+          total: item.lineTotal
+        };
+      });
+
+      const deliveryTerm = (formData.get('deliveryTerms') as string || 'FOB').toUpperCase();
+      const portOfDischarge = (formData.get('portOfDischarge') as string || '-').toUpperCase();
+      const finalDestination = (formData.get('finalDeliveryAddress') as string || formData.get('address') as string || '-').toUpperCase();
+
+      const piInvoice = {
+        isSampleKit: formData.get('isSampleKit') === 'true',
+        company: {
+          name: 'VEGNAR GLOBAL LLP',
+          address: 'B-623, RK Iconic, 150 Feet Ring Road, Ayodhya Chowk',
+          city: 'Rajkot',
+          state: 'Gujarat',
+          pincode: '360007',
+          phoneNo: '+91 9998040373',
+          email: 'connect@vegnar.com'
+        },
+        piNumber: quoteNo,
+        invoiceDate: this.formatDate(date),
+        deliveryTerm: deliveryTerm,
+        paymentTerm: '100% ADVANCE PAYMENT',
+        showToTheOrder: false,
+        partyName: company,
+        address: fullAddress,
+        country: countryName,
+        phone: formData.get('mobile') as string || '',
+        email: formData.get('email') as string || '',
+        preCarriageBy: 'BY ROAD',
+        placeOfReceipt: 'RAJKOT',
+        countryOfOrigin: 'INDIA',
+        countryOfDestination: countryName,
+        vesselFlightNo: '-',
+        portOfLoading: 'MUNDRA PORT',
+        portOfDischarge: portOfDischarge,
+        finalDestination: finalDestination,
+        buyerRef: '-',
+        products: piProducts,
+        currency: 'USD',
+        subtotal: subTotal,
+        freightCharges: 0,
+        totalAmount: subTotal,
+        totalWeight: totalNetWeight,
+        totalGrossWeight: totalGrossWeight,
+        totalCBM: totalCBM,
+        selectedBank: {
+          bankName: 'Axis Bank Limited',
+          bankAddress: 'Ground floor Shop no 09-10 & First Floor, Shop no 109-110, The One World, R. S. No: - 516/2, Plot no 1, Nr Ayodhya Chowk, 150 Ft Ring road, Synergy Circle, Rajkot, Gujarat - 360007.',
+          accountNumber: '925020013383048',
+          ifscCode: 'UTIB0005420',
+          swiftCode: 'AXISINBB087'
+        },
+        notes: formData.get('additionalRequirements') as string || ''
+      };
+
+      const quoteData = {
+        piInvoice,
+        amountInWords: numberToWordsUSD(subTotal),
+        logoBase64: logoBase64Data,
+        signatureBase64: signatureBase64Data
+      };
+
+      if (!this.proformaTemplate) throw new Error('Proforma HTML template is not loaded');
+      html = this.proformaTemplate(quoteData);
+    }
 
     const browser = await launchBrowser();
 
     try {
       const page = await browser.newPage();
-      await page.setContent(html, { waitUntil: 'networkidle0' });
+      await page.setContent(html, { waitUntil: 'networkidle0' as any });
 
       const quotePdfBuffer = await page.pdf({
         format: 'A4',
@@ -330,29 +516,33 @@ export class QuotePDFGenerator {
         displayHeaderFooter: false
       });
 
-      const termsHtml = this.generateTermsPage();
-      const termsPage = await browser.newPage();
-      await termsPage.setContent(termsHtml, { waitUntil: 'networkidle0' });
+      if (isDomestic) {
+        const termsHtml = this.generateTermsPage();
+        const termsPage = await browser.newPage();
+        await termsPage.setContent(termsHtml, { waitUntil: 'networkidle0' as any });
 
-      const termsPdfBuffer = await termsPage.pdf({
-        format: 'A4',
-        printBackground: true,
-        margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
-        displayHeaderFooter: false
-      });
+        const termsPdfBuffer = await termsPage.pdf({
+          format: 'A4',
+          printBackground: true,
+          margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
+          displayHeaderFooter: false
+        });
 
-      const mergedPdf = await PDFDocument.create();
+        const mergedPdf = await PDFDocument.create();
 
-      const quotePdf = await PDFDocument.load(quotePdfBuffer);
-      const quotePages = await mergedPdf.copyPages(quotePdf, quotePdf.getPageIndices());
-      quotePages.forEach((p) => mergedPdf.addPage(p));
+        const quotePdf = await PDFDocument.load(quotePdfBuffer);
+        const quotePages = await mergedPdf.copyPages(quotePdf, quotePdf.getPageIndices());
+        quotePages.forEach((p) => mergedPdf.addPage(p));
 
-      const termsPdf = await PDFDocument.load(termsPdfBuffer);
-      const termsPages = await mergedPdf.copyPages(termsPdf, termsPdf.getPageIndices());
-      termsPages.forEach((p) => mergedPdf.addPage(p));
+        const termsPdf = await PDFDocument.load(termsPdfBuffer);
+        const termsPages = await mergedPdf.copyPages(termsPdf, termsPdf.getPageIndices());
+        termsPages.forEach((p) => mergedPdf.addPage(p));
 
-      const mergedPdfBuffer = await mergedPdf.save();
-      return Buffer.from(mergedPdfBuffer);
+        const mergedPdfBuffer = await mergedPdf.save();
+        return Buffer.from(mergedPdfBuffer);
+      } else {
+        return Buffer.from(quotePdfBuffer);
+      }
     } finally {
       await browser.close();
     }
@@ -377,3 +567,4 @@ export class QuotePDFGenerator {
     }
   }
 }
+
