@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { DomesticProduct as Product } from '@/types/product';
 
+import { intToDomImageMap } from '@/utils/product-mapping';
+
 export interface CartItem {
   product: Product;
   quantity: number;
@@ -80,6 +82,14 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         }
       }
     });
+
+    // Map international product codes to domestic counterparts to retrieve their images
+    Object.entries(intToDomImageMap).forEach(([intCode, domCode]) => {
+      if (map[domCode]) {
+        map[intCode] = map[domCode];
+      }
+    });
+
     return map;
   }, [wpProducts]);
 
