@@ -20,6 +20,7 @@ function PackingListPageInner() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [showFilters, setShowFilters] = useState(false);
+  const [orderType, setOrderType] = useState<'domestic' | 'international'>('domestic');
   const { 
     wpImageMap, 
     cart, 
@@ -44,11 +45,19 @@ function PackingListPageInner() {
     } catch {}
   }, []);
 
-  const categories = [...new Set(products.map(p => p.category))];
+  const filteredProductsByType = useMemo(() => {
+    return products.filter(p => {
+      const type = (p as any).type || 'domestic';
+      return type === orderType;
+    });
+  }, [orderType]);
 
+  const categories = useMemo(() => {
+    return Array.from(new Set(filteredProductsByType.map(p => p.category)));
+  }, [filteredProductsByType]);
 
   const filteredProducts = useMemo(() => {
-    const filtered = products.filter(product => {
+    const filtered = filteredProductsByType.filter(product => {
       const matchesSearch = product.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            product.item_code.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = !selectedCategory || product.category === selectedCategory;
@@ -56,7 +65,13 @@ function PackingListPageInner() {
     });
     setCurrentPage(1); // Reset to first page when filters change
     return filtered;
-  }, [searchTerm, selectedCategory]);
+  }, [filteredProductsByType, searchTerm, selectedCategory]);
+
+  useEffect(() => {
+    if (selectedCategory && !categories.includes(selectedCategory)) {
+      setSelectedCategory('');
+    }
+  }, [orderType, categories, selectedCategory]);
 
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
   const startIndex = (currentPage - 1) * productsPerPage;
@@ -71,11 +86,10 @@ function PackingListPageInner() {
   const [showQuoteForm, setShowQuoteForm] = useState(false);
 
   useEffect(() => {
-    if (searchParams.get('checkout') === '1') {
+    if (searchParams && searchParams.get('checkout') === '1') {
       setShowQuoteForm(true);
     }
   }, [searchParams]);
-  const [orderType, setOrderType] = useState<'domestic' | 'international'>('domestic');
 
 
   const handleQuoteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -93,8 +107,16 @@ function PackingListPageInner() {
       'Mobile Number': formData.get('mobile'),
       'Country': formData.get('country'),
       'Address': formData.get('address'),
+      'City': formData.get('city'),
+      'State': formData.get('state'),
+      'Zip Code': formData.get('pincode'),
       'Delivery Terms': formData.get('deliveryTerms'),
       'Port of Discharge': formData.get('portOfDischarge'),
+      'Port of Loading': formData.get('portOfLoading') || (orderType === 'domestic' ? null : 'MUNDRA PORT'),
+      'Buyer Ref': formData.get('buyerRef') || (orderType === 'domestic' ? null : '-'),
+      'Pre Carriage By': formData.get('preCarriageBy') || (orderType === 'domestic' ? null : 'BY ROAD'),
+      'Place of Receipt': formData.get('placeOfReceipt') || (orderType === 'domestic' ? null : 'RAJKOT'),
+      'Vessel/Flight No': formData.get('vesselFlightNo') || (orderType === 'domestic' ? null : '-'),
       'Final Delivery Address': formData.get('finalDeliveryAddress'),
       'Additional Requirements': formData.get('additionalRequirements'),
       'Products Count': cart.length,
@@ -179,7 +201,21 @@ function PackingListPageInner() {
 
       // Capture form data before reset
       const capturedFormData = new FormData(form);
-      const quoteNo = `QT-${Math.floor(Math.random() * 90000) + 10000}`;
+      let quoteNo = `QT-${Math.floor(Math.random() * 90000) + 10000}`;
+
+      if (orderType === 'international') {
+        try {
+          const res = await fetch('/api/next-invoice-number', { method: 'POST' });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.invoiceNo) {
+              quoteNo = data.invoiceNo;
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching sequential invoice number:', error);
+        }
+      }
 
       // Save to inventory (silent fail)
       await saveQuoteToInventory(capturedFormData, quoteNo);
@@ -200,6 +236,9 @@ function PackingListPageInner() {
   };
 
   const getPricePerPiece = (product: Product, quantity: number, unit: 'pieces' | 'cartons') => {
+    if ((product as any).type === 'international') {
+      return (product as any).fob_price_usd || 0;
+    }
     const cartons = unit === 'cartons' ? quantity : Math.ceil(quantity / product.pcs_per_carton);
     
     let priceStr = product.price_1_to_10_box;
@@ -211,6 +250,14 @@ function PackingListPageInner() {
     
     if (!priceStr) return 0;
     return parseFloat(priceStr.replace(/[^\d.]/g, '')) || 0;
+  };
+
+  const getCartTotalAmount = () => {
+    return cart.reduce((total, item) => {
+      const pricePerPc = getPricePerPiece(item.product, item.quantity, item.unit);
+      const totalPieces = item.unit === 'cartons' ? item.quantity * item.product.pcs_per_carton : item.quantity;
+      return total + (totalPieces * pricePerPc);
+    }, 0);
   };
 
   const saveQuoteToInventory = async (formData: FormData, quoteNo: string) => {
@@ -267,6 +314,12 @@ function PackingListPageInner() {
           portOfDischarge: formData.get('portOfDischarge'),
           address: formData.get('address'),
           additionalRequirements: formData.get('additionalRequirements'),
+          buyerRef: formData.get('buyerRef') || (orderType === 'domestic' ? undefined : '-'),
+          preCarriageBy: formData.get('preCarriageBy') || (orderType === 'domestic' ? undefined : 'BY ROAD'),
+          placeOfReceipt: formData.get('placeOfReceipt') || (orderType === 'domestic' ? undefined : 'RAJKOT'),
+          vesselFlightNo: formData.get('vesselFlightNo') || (orderType === 'domestic' ? undefined : '-'),
+          portOfLoading: formData.get('portOfLoading') || (orderType === 'domestic' ? undefined : 'MUNDRA PORT'),
+          finalDeliveryAddress: formData.get('finalDeliveryAddress'),
           products,
           totalPieces,
           totalWeight,
@@ -283,7 +336,26 @@ function PackingListPageInner() {
     try {
       const form = document.querySelector('form') as HTMLFormElement;
       const formData = savedFormData || new FormData(form);
-      const quoteNo = savedQuoteNo || `QT-${Math.floor(Math.random() * 90000) + 10000}`;
+      
+      let quoteNo = savedQuoteNo;
+      if (!quoteNo) {
+        if (orderType === 'international') {
+          try {
+            const res = await fetch('/api/next-invoice-number', { method: 'POST' });
+            if (res.ok) {
+              const data = await res.json();
+              if (data.invoiceNo) {
+                quoteNo = data.invoiceNo;
+              }
+            }
+          } catch (error) {
+            console.error('Error fetching sequential invoice number:', error);
+          }
+        }
+        if (!quoteNo) {
+          quoteNo = `QT-${Math.floor(Math.random() * 90000) + 10000}`;
+        }
+      }
       
       // Convert FormData to plain object for JSON serialization
       const formDataObj: Record<string, string> = {};
@@ -325,37 +397,6 @@ function PackingListPageInner() {
     }
   };
 
-  const exportToCSV = () => {
-    const headers = [
-      'Item Code', 'Category', 'Sub Category', 'Product', 'Color', 'Vendor',
-      'Weight', 'Pcs/Pack', 'Packs/Carton', 'Pcs/Carton', 'Price/Carton'
-    ];
-    
-    const csvContent = [
-      headers.join(','),
-      ...filteredProducts.map(product => [
-        product.item_code,
-        product.category,
-        product.sub_category,
-        `"${product.product}"`,
-        product.color,
-        product.preferred_vendor || '',
-        product.product_weight_g || 0,
-        product.pcs_per_pack,
-        product.packs_per_carton,
-        product.pcs_per_carton,
-        product.price_per_carton_inr || 0
-      ].join(','))
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'vegnar-packing-list.csv';
-    a.click();
-    window.URL.revokeObjectURL(url);
-  };
 
   useEffect(() => {
     document.title = "Get Quote - Sugarcane Bagasse Products | Biodegradable Tableware Pricing - Vegnar Green";
@@ -381,11 +422,12 @@ function PackingListPageInner() {
               <div className="mt-4 sm:mt-0 flex flex-wrap gap-2">
                 <button
                   onClick={() => setShowFilters(!showFilters)}
-                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
                 >
                   <Filter className="h-4 w-4 mr-2" />
                   Filters
                 </button>
+
                 <button
                   onClick={() => setShowQuoteForm(true)}
                   className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#1a7a2b] hover:bg-[#0f5a1f] relative transition-colors"
@@ -402,6 +444,40 @@ function PackingListPageInner() {
 
               </div>
             </div>
+          </div>
+
+          {/* Inquiry Type Tabs */}
+          <div className="flex border-b border-gray-200 overflow-hidden rounded-t-lg">
+            <button 
+              onClick={() => { 
+                if (orderType !== 'domestic') { 
+                  setOrderType('domestic'); 
+                  clearCart(); 
+                } 
+              }} 
+              className={`flex-1 py-4 text-center font-bold text-base md:text-lg border-b-2 transition-all duration-300 flex items-center justify-center gap-2 ${
+                orderType === 'domestic' 
+                  ? 'border-[#1a7a2b] text-[#1a7a2b] bg-green-50/20' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50/50'
+              }`}
+            >
+              <span className="text-xl">🇮🇳</span> Domestic Inquiry (INR)
+            </button>
+            <button 
+              onClick={() => { 
+                if (orderType !== 'international') { 
+                  setOrderType('international'); 
+                  clearCart(); 
+                } 
+              }} 
+              className={`flex-1 py-4 text-center font-bold text-base md:text-lg border-b-2 transition-all duration-300 flex items-center justify-center gap-2 ${
+                orderType === 'international' 
+                  ? 'border-[#1a7a2b] text-[#1a7a2b] bg-green-50/20' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50/50'
+              }`}
+            >
+              <span className="text-xl">🌐</span> International Inquiry (USD)
+            </button>
           </div>
 
           {/* Search and Filters */}
@@ -768,7 +844,7 @@ function PackingListPageInner() {
                     {/* Totals */}
                     <div className="bg-green-50 p-4 rounded-lg border border-green-200">
                       <h4 className="font-semibold text-green-800 mb-3">Quote Summary</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                         <div className="bg-white p-3 rounded border">
                           <span className="text-gray-600">Total Pieces:</span>
                           <div className="font-bold text-lg text-green-700">
@@ -784,10 +860,11 @@ function PackingListPageInner() {
                           <span className="text-gray-600">Total Weight:</span>
                           <div className="font-bold text-lg text-green-700">
                             {cart.reduce((total, item) => {
-                              const cartons = item.unit === 'cartons' 
-                                ? item.quantity 
-                                : Math.ceil(item.quantity / item.product.pcs_per_carton);
-                              return total + (cartons * (item.product.net_weight_kg || 0));
+                              const totalPieces = item.unit === 'cartons' 
+                                ? item.quantity * item.product.pcs_per_carton
+                                : item.quantity;
+                              const cartonsFraction = totalPieces / item.product.pcs_per_carton;
+                              return total + (cartonsFraction * (item.product.net_weight_kg || 0));
                             }, 0).toFixed(1)} kg
                           </div>
                         </div>
@@ -814,29 +891,24 @@ function PackingListPageInner() {
 
               {/* Quote Form */}
               <form className="space-y-4" onSubmit={handleQuoteSubmit}>
-                <div className="flex flex-wrap gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="orderType" 
-                      value="domestic" 
-                      checked={orderType === 'domestic'} 
-                      onChange={() => setOrderType('domestic')}
-                      className="w-4 h-4 text-green-600 focus:ring-green-500"
-                    />
-                    <span className="text-sm font-medium text-gray-700">Domestic Inquiry</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="orderType" 
-                      value="international" 
-                      checked={orderType === 'international'} 
-                      onChange={() => setOrderType('international')}
-                      className="w-4 h-4 text-green-600 focus:ring-green-500"
-                    />
-                    <span className="text-sm font-medium text-gray-700">International Inquiry</span>
-                  </label>
+                {/* Hidden Order Type input for API compatibility */}
+                <input type="hidden" name="orderType" value={orderType} />
+                
+                {/* Read-only Inquiry Type Badge */}
+                <div className="mb-6 p-4 bg-green-50/50 border border-green-100 rounded-lg flex items-center justify-between">
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">Inquiry Mode</span>
+                    <h4 className="text-sm font-bold text-gray-800">
+                      {orderType === 'domestic' ? '🇮🇳 Domestic Inquiry (INR)' : '🌐 International Inquiry (USD)'}
+                    </h4>
+                  </div>
+                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    orderType === 'domestic' 
+                      ? 'bg-blue-100 text-blue-800' 
+                      : 'bg-indigo-100 text-indigo-800'
+                  }`}>
+                    {orderType === 'domestic' ? 'Domestic Quote (₹)' : 'Proforma Invoice ($)'}
+                  </span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -867,6 +939,43 @@ function PackingListPageInner() {
                           ))}
                         </select>
                       </div>
+
+                      <div className="md:col-span-2">
+                        <textarea 
+                          name="address" 
+                          placeholder="Company Address" 
+                          className="border rounded px-3 py-2 w-full" 
+                          rows={2} 
+                          required
+                        ></textarea>
+                      </div>
+
+                      <input 
+                        name="city" 
+                        type="text" 
+                        placeholder="City" 
+                        className="w-full border rounded px-3 py-2" 
+                        required 
+                      />
+                      <input 
+                        name="state" 
+                        type="text" 
+                        placeholder="State / Province / Region" 
+                        className="w-full border rounded px-3 py-2" 
+                        required 
+                      />
+                      <input 
+                        name="pincode" 
+                        type="text" 
+                        placeholder="Zip / Postal Code" 
+                        className="w-full border rounded px-3 py-2" 
+                        required 
+                      />
+                      
+                      <div className="md:col-span-2 border-t pt-4 mt-2">
+                        <h4 className="text-sm font-semibold text-gray-800">Shipment & Logistics Details</h4>
+                      </div>
+
                       <select 
                         name="deliveryTerms"
                         className="border rounded px-3 py-2 w-full" 
@@ -886,21 +995,22 @@ function PackingListPageInner() {
                         <option value="CFR">CFR (Cost & Freight)</option>
                         <option value="DDP">DDP (Delivered Duty Paid)</option>
                       </select>
+
                       <input 
                         id="cifPort"
                         name="portOfDischarge"
                         type="text" 
-                        placeholder="Port of Loading/Discharge" 
+                        placeholder="Port of Discharge" 
                         className="border rounded px-3 py-2 w-full" 
                         style={{display: 'none'}}
                       />
-                      <textarea name="address" placeholder="Company Address" className="border rounded px-3 py-2 md:col-span-2" rows={3} required></textarea>
+
                       <textarea 
                         id="ddpAddress"
                         name="finalDeliveryAddress"
-                        placeholder="Final Delivery Address" 
+                        placeholder="Final Delivery Address / Destination" 
                         className="border rounded px-3 py-2 md:col-span-2" 
-                        rows={3}
+                        rows={2}
                         style={{display: 'none'}}
                       ></textarea>
                     </>

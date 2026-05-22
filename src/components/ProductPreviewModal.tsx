@@ -6,6 +6,7 @@ import { DomesticProduct } from '@/types/product';
 import AddToCartButton from './Product/AddToCartButton';
 import Link from 'next/link';
 import { useProducts } from '@/lib/products-context';
+import { getImageItemCode } from '@/utils/product-mapping';
 
 interface Props {
   product: DomesticProduct;
@@ -21,8 +22,9 @@ export default function ProductPreviewModal({ product, onClose }: Props) {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  // Match wp product by item_code (ACF field), fallback to name search
-  const wpProduct = wpProducts.find(p => p.acf?.item_code === product.item_code)
+  // Match wp product by item_code (ACF field), with fallback to domestic mapping or name search
+  const targetItemCode = getImageItemCode(product.item_code);
+  const wpProduct = wpProducts.find(p => p.acf?.item_code === targetItemCode)
     ?? wpProducts.find(p =>
         (p.title?.rendered ?? '').toLowerCase().includes(
           product.product.split(',')[0].trim().toLowerCase()
