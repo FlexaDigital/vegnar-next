@@ -2,6 +2,7 @@ import { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import BlogArticle from '@/components/Blog/BlogArticle';
 import { Post } from '@/types/blog';
+import { SITE_CONFIG } from '@/lib/constants';
 
 interface PageProps {
   params: {
@@ -18,7 +19,7 @@ export const viewport: Viewport = {
   themeColor: '#ffffff',
 };
 
-const PUBLIC_SITE_URL = 'https://www.vegnar.com';
+const PUBLIC_SITE_URL = SITE_CONFIG.BASE_URL;
 
 async function fetchPost(slug: string): Promise<Post | null> {
   try {
@@ -81,12 +82,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description,
     keywords,
     alternates: {
-      canonical: seoData?.link || `${PUBLIC_SITE_URL}/blog/${params.slug}`,
+      canonical: `${PUBLIC_SITE_URL}/blog/${params.slug}`,
     },
     openGraph: {
       title,
       description,
-      url: seoData?.link || `${PUBLIC_SITE_URL}/blog/${params.slug}`,
+      url: `${PUBLIC_SITE_URL}/blog/${params.slug}`,
       type: 'article',
       siteName: 'Vegnar Green',
       images: [

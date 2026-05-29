@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { Globe, Award, Shield, Truck, CheckCircle, Users } from 'lucide-react';
 import BecomePartnerSection from '@/components/BecomePartnerSection';
+import { SITE_CONFIG } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: "Global Sugarcane Bagasse Exporter | Premium Biodegradable Tableware Supplier - Vegnar Green",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Global Sugarcane Bagasse Exporter | International Quality Standards",
     description: "Premium biodegradable tableware exporter from India. Serving USA, UK, Germany & Europe with ISO certified, FDA approved bagasse products.",
-    url: "https://www.vegnar.com/export",
+    url: `${SITE_CONFIG.BASE_URL}/export`,
     type: "website",
     siteName: "Vegnar Green",
     images: [
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
     images: ["https://www.vegnar.com/images/export-banner.jpg"],
   },
   alternates: {
-    canonical: "https://www.vegnar.com/export",
+    canonical: `${SITE_CONFIG.BASE_URL}/export`,
   },
   robots: {
     index: true,

@@ -12,6 +12,7 @@ import {
   faLocationDot
 } from '@fortawesome/free-solid-svg-icons';
 import BecomePartnerSection from '@/components/BecomePartnerSection';
+import { SITE_CONFIG } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: "Careers at Vegnar Green | Join Our Sustainable Mission",
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
     "sustainability careers"
   ],
   alternates: {
-    canonical: "https://www.vegnar.com/career",
+    canonical: `${SITE_CONFIG.BASE_URL}/career`,
   },
   robots: "index, follow",
   authors: [{ name: "Vegnar Greens" }],

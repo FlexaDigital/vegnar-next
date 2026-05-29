@@ -1,6 +1,7 @@
 import { metadata } from './metadata';
 import Script from 'next/script';
 import BlogPage from '@/components/Blog/BlogPage';
+import { SITE_CONFIG } from '@/lib/constants';
 
 export { metadata };
 
@@ -16,13 +17,13 @@ export default function Page() {
             "@graph": [
               {
                 "@type": "Blog",
-                "url": "https://www.vegnar.com/blog",
+                "url": `${SITE_CONFIG.BASE_URL}/blog`,
                 "name": "Green Insights — Biodegradable Living Blog by Vegnar Green",
                 "description": "Tips, trends and guides on biodegradable products, bagasse tableware and eco-conscious business decisions.",
                 "publisher": {
                   "@type": "Organization",
                   "name": "Vegnar Green",
-                  "url": "https://www.vegnar.com",
+                  "url": SITE_CONFIG.BASE_URL,
                   "logo": "https://www.vegnar.com/_next/static/media/vegnar-green.b7f80c51.png"
                 },
                 "breadcrumb": {
@@ -32,13 +33,13 @@ export default function Page() {
                       "@type": "ListItem",
                       "position": 1,
                       "name": "Home",
-                      "item": "https://www.vegnar.com/"
+                      "item": `${SITE_CONFIG.BASE_URL}/`
                     },
                     {
                       "@type": "ListItem",
                       "position": 2,
                       "name": "Blog",
-                      "item": "https://www.vegnar.com/blog"
+                      "item": `${SITE_CONFIG.BASE_URL}/blog`
                     }
                   ]
                 }

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { SITE_CONFIG } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: "Contact Vegnar Green - Get in Touch for Sustainable Solutions",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact Vegnar Green | Sustainable Packaging Solutions",
     description: "Get in touch with Vegnar Green for innovative eco-friendly packaging solutions and sustainable business opportunities. Let's create a greener future together.",
-    url: "https://www.vegnar.com/contact",
+    url: `${SITE_CONFIG.BASE_URL}/contact`,
     type: "website",
     siteName: "Vegnar Green",
     images: [
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
     images: ["https://www.vegnar.com/images/contact-banner.jpg"],
   },
   alternates: {
-    canonical: "https://www.vegnar.com/contact",
+    canonical: `${SITE_CONFIG.BASE_URL}/contact`,
   },
   robots: {
     index: true,
