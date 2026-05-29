@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { SITE_CONFIG } from '@/lib/constants';
 
 interface Product {
   id: number;
@@ -68,7 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     fetchBlogPosts(),
   ]);
 
-  const baseUrl = 'https://www.vegnar.com';
+  const baseUrl = SITE_CONFIG.BASE_URL;
 
   // 🔒 Static pages should NOT use current date
   const STATIC_LAST_MODIFIED = new Date('2025-01-01');

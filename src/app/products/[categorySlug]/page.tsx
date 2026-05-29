@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import ProductList from "@/components/ProductList";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
+import { SITE_CONFIG } from "@/lib/constants";
 
 import { WpProduct as Product, Category } from "@/types/product";
 
@@ -132,7 +133,7 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
       '@graph': [
         {
           '@type': 'CollectionPage',
-          url: 'https://www.vegnar.com/products/round-plates',
+          url: `${SITE_CONFIG.BASE_URL}/products/round-plates`,
           name: 'Biodegradable Bagasse Round Plates — Vegnar Green Wholesale',
           description: 'Wholesale sugarcane bagasse round plates. Microwave safe, oil resistant, compostable in 90 days. FDA approved, SGS tested. Export to 15+ countries from India.',
           breadcrumb: {
@@ -142,19 +143,19 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: 'https://www.vegnar.com/',
+                item: `${SITE_CONFIG.BASE_URL}/`,
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Products',
-                item: 'https://www.vegnar.com/products/bagasse-products',
+                item: `${SITE_CONFIG.BASE_URL}/products/bagasse-products`,
               },
               {
                 '@type': 'ListItem',
                 position: 3,
                 name: 'Round Plates',
-                item: 'https://www.vegnar.com/products/round-plates',
+                item: `${SITE_CONFIG.BASE_URL}/products/round-plates`,
               },
             ],
           },
@@ -170,7 +171,7 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
           manufacturer: {
             '@type': 'Organization',
             name: 'Vegnar Green',
-            url: 'https://www.vegnar.com',
+            url: SITE_CONFIG.BASE_URL,
           },
           material: 'Sugarcane bagasse',
           additionalProperty: [
@@ -203,7 +204,7 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
               '@type': 'Organization',
               name: 'Vegnar Green',
             },
-            url: 'https://www.vegnar.com/quote',
+            url: `${SITE_CONFIG.BASE_URL}/quote`,
           },
         },
       ],
@@ -216,13 +217,13 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
     '@type': 'CollectionPage',
     name: category.name,
     description: category.description,
-    url: `https://www.vegnar.com/products/${category.slug}`,
+    url: `${SITE_CONFIG.BASE_URL}/products/${category.slug}`,
     publisher: {
       '@type': 'Organization',
       name: 'Vegnar Green',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.vegnar.com/logo.png',
+        url: `${SITE_CONFIG.BASE_URL}/logo.png`,
       },
     },
     mainEntity: {
@@ -237,7 +238,7 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
             .replace(/(<([^>]+)>)/gi, '')
             .slice(0, 160),
           image: product._embedded?.['wp:featuredmedia']?.[0]?.source_url,
-          url: `https://www.vegnar.com/products/${category.slug}/${product.slug}`,
+          url: `${SITE_CONFIG.BASE_URL}/products/${category.slug}/${product.slug}`,
         },
       })),
     },
@@ -263,7 +264,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       keywords:
         "sugarcane bagasse products, bagasse tableware manufacturer, biodegradable tableware, compostable tableware, eco-friendly food packaging, Vegnar Greens",
       alternates: {
-        canonical: "https://vegnar.com/products/bagasse-products",
+        canonical: `${SITE_CONFIG.BASE_URL}/products/bagasse-products`,
       },
       robots: "index, follow",
     };
@@ -276,7 +277,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Buy premium sugarcane bagasse plates including round and compartment plates. Biodegradable, microwave-safe and ideal for food service.",
       keywords:
         "sugarcane bagasse plates, biodegradable plates, compostable plates, bagasse plates manufacturer, bulk bagasse plates, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/plates" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/plates` },
       robots: "index, follow",
     };
   }
@@ -288,7 +289,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Eco-friendly sugarcane bagasse cups for hot and cold beverages. Compostable, microwave-safe and ideal for cafes and food service.",
       keywords:
         "sugarcane bagasse cups, biodegradable cups, compostable cups, eco-friendly cups, bagasse cup manufacturer, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/cups" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/cups` },
       robots: "index, follow",
     };
   }
@@ -301,7 +302,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Premium biodegradable wooden cutlery including spoons, forks and knives. Sustainable alternative to plastic cutlery.",
       keywords:
         "wooden cutlery manufacturer, biodegradable cutlery, eco-friendly cutlery, wooden spoons forks knives, bulk wooden cutlery, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/wooden-cutlery" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/wooden-cutlery` },
       robots: "index, follow",
     };
   }
@@ -313,7 +314,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Biodegradable sugarcane bagasse trays including compartment and meal trays. Ideal for catering and food service.",
       keywords:
         "sugarcane bagasse trays, biodegradable trays, compostable trays, bagasse tray manufacturer, bulk food trays, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/trays" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/trays` },
       robots: "index, follow",
     };
   }
@@ -325,7 +326,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Eco-friendly sugarcane bagasse food containers for takeaway and delivery. Compostable, leak-proof and microwave-safe.",
       keywords:
         "bagasse food containers, biodegradable containers, compostable containers, takeaway containers manufacturer, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/containers" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/containers` },
       robots: "index, follow",
     };
   }
@@ -338,7 +339,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Premium compartment meal trays made from sugarcane bagasse. Perfect for catering, restaurants and food service.",
       keywords:
         "bagasse meal trays, compartment meal trays, biodegradable meal trays, bulk meal trays, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/meal-trays" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/meal-trays` },
       robots: "index, follow",
     };
   }
@@ -350,7 +351,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "High-quality sugarcane bagasse round plates available in multiple sizes. Biodegradable and ideal for events and restaurants.",
       keywords:
         "bagasse round plates, biodegradable round plates, compostable plates, bulk round plates, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/round-plates" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/round-plates` },
       robots: "index, follow",
     };
   }
@@ -362,7 +363,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Eco-friendly biodegradable sipper lids made from sugarcane bagasse. Suitable for hot and cold beverages.",
       keywords:
         "biodegradable sipper lids, bagasse cup lids, compostable lids, eco-friendly lids, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/sipper-lid" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/sipper-lid` },
       robots: "index, follow",
     };
   }
@@ -375,7 +376,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       keywords:
         "bagasse takeaway containers, biodegradable food containers, compostable takeaway boxes, Vegnar Greens",
       alternates: {
-        canonical: "https://vegnar.com/products/takeaway-container",
+        canonical: `${SITE_CONFIG.BASE_URL}/products/takeaway-container`,
       },
       robots: "index, follow",
     };
@@ -388,7 +389,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Durable and compostable sugarcane bagasse trays for food service and catering use.",
       keywords:
         "sugarcane bagasse trays, biodegradable trays, compostable trays, food service trays, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/bagasse-tray" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/bagasse-tray` },
       robots: "index, follow",
     };
   }
@@ -400,7 +401,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Plant-based biodegradable and compostable bags for shopping, packaging and carry use. Plastic-free solutions.",
       keywords:
         "biodegradable bags, compostable bags, eco-friendly bags, plastic-free bags, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/bio-bags" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/bio-bags` },
       robots: "index, follow",
     };
   }
@@ -413,7 +414,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Buy premium sugarcane bagasse bowls for restaurants and food service. 100% biodegradable, microwave-safe and export quality.",
       keywords:
         "sugarcane bagasse bowls, biodegradable bowls, compostable bowls, eco-friendly bowls, bagasse bowls manufacturer, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/bowls" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/bowls` },
       robots: "index, follow",
     };
   }
@@ -425,7 +426,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Eco-friendly sugarcane bagasse clamshell containers for takeaway and food delivery. Compostable and leak-resistant.",
       keywords:
         "bagasse clamshell containers, biodegradable clamshells, compostable food containers, takeaway packaging, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/clamshells" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/clamshells` },
       robots: "index, follow",
     };
   }
@@ -438,7 +439,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       keywords:
         "areca palm leaf plates, palm leaf tableware, biodegradable palm plates, eco-friendly dinnerware, Vegnar Greens",
       alternates: {
-        canonical: "https://vegnar.com/products/areca-palm-tableware",
+        canonical: `${SITE_CONFIG.BASE_URL}/products/areca-palm-tableware`,
       },
       robots: "index, follow",
     };
