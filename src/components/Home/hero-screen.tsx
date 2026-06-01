@@ -11,6 +11,7 @@ import HeroImage3 from "../../../public/assets/img/clamshell banner image.png";
 import HeroImage4 from "../../../public/assets/img/cup banner image.png";
 import HeroImage5 from "../../../public/assets/img/meal try banner image.png";
 import HeroImage6 from "../../../public/assets/img/takeaway banner image.png";
+import HeroImage7 from "../../../public/assets/img/industries banner image.png";
 
 // Mobile images
 import HeroMobile1 from "../../../public/assets/img/Bowl bannar image mobile.png";
@@ -19,8 +20,22 @@ import HeroMobile3 from "../../../public/assets/img/clamshell banner image mobil
 import HeroMobile4 from "../../../public/assets/img/cup banner image mobile.png";
 import HeroMobile5 from "../../../public/assets/img/meal try banner image mobile.png";
 import HeroMobile6 from "../../../public/assets/img/takeaway banner image mobile.png";
+import HeroMobile7 from "../../../public/assets/img/industries banner image mobile.png";
 
 const slides = [
+  {
+    id: 7,
+    desktopImage: HeroImage7,
+    mobileImage: HeroMobile7,
+    alt: "Sugarcane bagasse sustainable tableware products serving global industries",
+    productRoute: "/industries",
+    buttonLabel: "Explore Industries",
+    title: "Industries We Serve",
+    highlight: "Sustainable Packaging",
+    description:
+      "Vegnar Green provides compostable sugarcane bagasse tableware and packaging solutions tailored for restaurants, hotels, QSRs, aviation, corporate canteens, and global industries.",
+    showBadges: true,
+  },
   {
     id: 1,
     desktopImage: HeroImage5,
@@ -32,7 +47,7 @@ const slides = [
     highlight: "Compartment Ready",
     description:
       "Multi-compartment bagasse meal trays for canteens, airlines & food courts. Oil & water resistant.",
-    showBadges: true,
+    showBadges: false,
   },
   {
     id: 2,
