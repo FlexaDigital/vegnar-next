@@ -69,12 +69,15 @@ async function fetchProductsByCategoryId(
   categoryId: number,
 ): Promise<Product[]> {
   try {
-    return await fetchWithTimeout<Product[]>(
+    console.log(`Fetching products for category ID: ${categoryId}`);
+    const products = await fetchWithTimeout<Product[]>(
       `https://cms.vegnar.com/wp-json/wp/v2/products?product_category=${categoryId}&per_page=100&_embed`,
       {
         next: { revalidate: 3600 }, // Cache for 1 hour
       },
     );
+    console.log(`Found ${products.length} products for category ${categoryId}`);
+    return products;
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];
@@ -538,6 +541,7 @@ export default async function ProductCategoryPage({ params }: Props) {
             allCategories={allCategories}
             subCategories={subCategories}
             ProductCard={ProductCard}
+            categorySlug={categorySlug}
           />
         </main>
       </>

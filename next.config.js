@@ -94,11 +94,11 @@ const nextConfig = {
         permanent: true,
       },
       // Fix duplicate product URLs - redirect old format to new
-      {
-        source: '/products/bagasse-products/:slug',
-        destination: '/products/bowls/:slug',
-        permanent: true,
-      },
+      // {
+      //   source: '/products/bagasse-products/:slug',
+      //   destination: '/products/bowls/:slug',
+      //   permanent: true,
+      // },
       // Fix ?p=1 parameter redirect
       {
         source: '/',
