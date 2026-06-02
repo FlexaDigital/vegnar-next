@@ -12,6 +12,7 @@ import styles from './SingleBlog.module.css';
 import '@/app/blog/blog-global.css';
 import { Post } from '@/types/blog';
 import CompanyProfileCard from '@/components/CompanyProfileCard';
+import { decodeAndStripHtml } from '@/utils/wordpress';
 
 interface Heading {
   level: number;
@@ -231,10 +232,9 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
               BIODEGRADABLE LIVING
             </span>
 
-            <h1
-              className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
-              dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-            />
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              {decodeAndStripHtml(post.title.rendered)}
+            </h1>
 
             <div className="flex flex-wrap gap-4 text-sm text-gray-600">
               <div className="flex items-center">
@@ -267,14 +267,14 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
                 <button
                   className="text-gray-600 hover:text-green-600 transition-colors"
                   aria-label="Share on Twitter"
-                  onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title.rendered)}`, '_blank')}
+                  onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(decodeAndStripHtml(post.title.rendered))}`, '_blank')}
                 >
                   <FaTwitter />
                 </button>
                 <button
                   className="text-gray-600 hover:text-green-600 transition-colors"
                   aria-label="Share on LinkedIn"
-                  onClick={() => window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(post.title.rendered)}`, '_blank')}
+                  onClick={() => window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(decodeAndStripHtml(post.title.rendered))}`, '_blank')}
                 >
                   <FaLinkedinIn />
                 </button>
@@ -361,10 +361,9 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
                       />
                     </div>
                     <div className="p-4">
-                      <h3
-                        className="font-semibold text-gray-900 group-hover:text-green-600 transition-colors line-clamp-2 mb-3"
-                        dangerouslySetInnerHTML={{ __html: relatedPost.title.rendered }}
-                      />
+                      <h3 className="font-semibold text-gray-900 group-hover:text-green-600 transition-colors line-clamp-2 mb-3">
+                        {decodeAndStripHtml(relatedPost.title.rendered)}
+                      </h3>
                       <button
                         onClick={() => {
                           setIsLoading(true);
