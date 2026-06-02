@@ -7,6 +7,7 @@ import AddToCartButton from './Product/AddToCartButton';
 import Link from 'next/link';
 import { useProducts } from '@/lib/products-context';
 import { getImageItemCode } from '@/utils/product-mapping';
+import { decodeAndStripHtml } from '@/utils/wordpress';
 
 interface Props {
   product: DomesticProduct;
@@ -42,8 +43,6 @@ export default function ProductPreviewModal({ product, onClose }: Props) {
     });
   }
   if (images.length === 0) images.push('https://placehold.co/400x400/e0e0e0/ffffff?text=No+Image');
-
-  const stripHtml = (html: string) => html.replace(/<[^>]+>/g, '');
 
   return (
     <div
@@ -110,7 +109,7 @@ export default function ProductPreviewModal({ product, onClose }: Props) {
                 {/* Description */}
                 {wpProduct?.content?.rendered && (
                   <p className="text-sm text-gray-600 mb-4 line-clamp-4">
-                    {stripHtml(wpProduct.content.rendered)}
+                    {decodeAndStripHtml(wpProduct.content.rendered)}
                   </p>
                 )}
 

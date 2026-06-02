@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { FiFilter, FiX } from 'react-icons/fi';
 import Link from 'next/link';
 import SearchBar from './SearchBar';
+import { decodeAndStripHtml } from '@/utils/wordpress';
 
 type Category = {
     id: number;
@@ -86,7 +87,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, allCategories, subC
                                         href={`/products/${cat.slug}`}
                                         className="text-gray-700 hover:text-green-600 block"
                                     >
-                                        {cat.name}
+                                        {decodeAndStripHtml(cat.name)}
                                     </Link>
                                 </div>
                             ))}

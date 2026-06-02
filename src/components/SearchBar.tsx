@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDebounce } from "@/hooks/useDebounce";
+import { decodeAndStripHtml } from "@/utils/wordpress";
 
 interface Product {
   id: number;
@@ -131,7 +132,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className = "", onItemClick }) =>
     } else {
       // Fallback to search results if no category
       router.push(
-        `/search?q=${encodeURIComponent(product.title?.rendered || "")}`
+        `/search?q=${encodeURIComponent(decodeAndStripHtml(product.title?.rendered) || "")}`
       );
     }
   };
@@ -153,14 +154,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className = "", onItemClick }) =>
   };
 
   const stripHtml = (html: string): string => {
-    if (!html) return "";
-    const decoded = html
-      .replace(/&#8211;/g, "–")
-      .replace(/&#8212;/g, "—")
-      .replace(/&amp;/g, "&")
-      .replace(/&lt;/g, "<")
-      .replace(/&gt;/g, ">");
-    return decoded.replace(/<[^>]*>/g, "").substring(0, 100);
+    return decodeAndStripHtml(html).substring(0, 100);
   };
 
   return (
@@ -224,10 +218,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className = "", onItemClick }) =>
                 >
                   <div className="flex flex-col">
                     <span className="font-medium text-gray-900 text-sm">
-                      {product.title?.rendered
-                        ?.replace(/&#8211;/g, "–")
-                        .replace(/&#8212;/g, "—")
-                        .replace(/&amp;/g, "&") || "Untitled Product"}
+                      {decodeAndStripHtml(product.title?.rendered) || "Untitled Product"}
                     </span>
 
                     <span className="text-xs text-gray-500 mt-1 line-clamp-2">
