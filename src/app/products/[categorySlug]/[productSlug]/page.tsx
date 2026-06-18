@@ -17,6 +17,7 @@ import ProductImageGallery from '@/components/Product/ProductImageGallery';
 import productsData from '@/data/products.json';
 import { DomesticProduct, WpProduct as Product, Category } from '@/types/product';
 import AddToCartButton from '@/components/Product/AddToCartButton';
+import { SITE_CONFIG } from '@/lib/constants';
 
 interface PageProps {
   params: Promise<{
@@ -610,12 +611,12 @@ export async function generateMetadata({ params }: { params: Promise<{ categoryS
     description,
     keywords: keywords.join(', '),
     alternates: {
-      canonical: seoData?.link || `https://www.vegnar.com/products/${resolvedParams.categorySlug}/${resolvedParams.productSlug}`,
+      canonical: `${SITE_CONFIG.BASE_URL}/products/${resolvedParams.categorySlug}/${resolvedParams.productSlug}`,
     },
     openGraph: {
       title,
       description,
-      url: seoData?.link || `https://www.vegnar.com/products/${resolvedParams.categorySlug}/${resolvedParams.productSlug}`,
+      url: `${SITE_CONFIG.BASE_URL}/products/${resolvedParams.categorySlug}/${resolvedParams.productSlug}`,
       type: 'article',
       siteName: 'Vegnar Green',
       images: [
