@@ -196,6 +196,7 @@ function PackingListPageInner() {
           totalWeight: payload['Total Weight'] as string,
           totalCBM: payload['Total CBM'] as string,
           additionalRequirements: payload['Additional Requirements'] as string,
+          buyerRef: payload['Buyer Ref'] as string,
         });
       } catch {}
 
@@ -918,6 +919,7 @@ function PackingListPageInner() {
                   {orderType === 'domestic' ? (
                     <>
                       <input name="gstin" type="text" placeholder="GSTIN (Optional)" className="w-full border rounded px-3 py-2" />
+                      <input name="buyerRef" type="text" placeholder="Reference (Optional)" className="w-full border rounded px-3 py-2" />
                       <input name="city" type="text" placeholder="City" className="w-full border rounded px-3 py-2" required />
                       <input name="state" type="text" placeholder="State" className="w-full border rounded px-3 py-2" required />
                       <input name="pincode" type="text" placeholder="Pincode" className="w-full border rounded px-3 py-2" required />
@@ -968,6 +970,12 @@ function PackingListPageInner() {
                         placeholder="Zip / Postal Code" 
                         className="w-full border rounded px-3 py-2" 
                         required 
+                      />
+                      <input 
+                        name="buyerRef" 
+                        type="text" 
+                        placeholder="Reference / Buyer's Ref No. (Optional)" 
+                        className="w-full border rounded px-3 py-2" 
                       />
                       
                       <div className="md:col-span-2 border-t pt-4 mt-2">
