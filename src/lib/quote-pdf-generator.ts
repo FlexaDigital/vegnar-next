@@ -382,7 +382,7 @@ export class QuotePDFGenerator {
         quoteNo,
         quoteDate: this.formatDate(date),
         expiryDate: this.formatDate(expiryDate),
-        reference: 'Online Inquiry',
+        reference: (formData.get('buyerRef') as string) || 'Online Inquiry',
         termsOfDelivery: formData.get('deliveryTerms') as string || 'Ex-works',
         paymentTerms: '100% advance',
         customer: {
@@ -473,7 +473,7 @@ export class QuotePDFGenerator {
         portOfLoading: 'MUNDRA PORT',
         portOfDischarge: portOfDischarge,
         finalDestination: finalDestination,
-        buyerRef: '-',
+        buyerRef: (formData.get('buyerRef') as string) || '-',
         products: piProducts,
         currency: 'USD',
         subtotal: subTotal,
