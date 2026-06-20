@@ -251,6 +251,7 @@ const BlogPage: React.FC = () => {
                     width="400"
                     loading="lazy"
                     onError={(e) => {
+                      e.currentTarget.onerror = null;
                       e.currentTarget.src = "https://placehold.co/400x240/cccccc/333333?text=Image+Not+Found";
                       e.currentTarget.alt = "Placeholder image";
                     }}
@@ -321,9 +322,10 @@ const BlogPage: React.FC = () => {
                 <img 
                   alt="Tushar Hirani professional headshot" 
                   className="w-20 h-20 rounded-full object-cover mb-4 bg-gray-200" 
-                  src="https://media.licdn.com/dms/image/v2/D4D03AQHEGLx61pmo6w/profile-displayphoto-shrink_800_800/B4DZZNMw.yHAAc-/0/1745051915695?e=1756944000&v=beta&t=4yFYIeAHdH4eeyGl2to5O7jpGJqzMT0VbBVfICbQYxY" 
+                  src="/assets/1745051915695.jfif" 
                   onError={(e) => {
-                    e.currentTarget.src = "https://media.licdn.com/dms/image/v2/D4D03AQHEGLx61pmo6w/profile-displayphoto-shrink_800_800/B4DZZNMw.yHAAc-/0/1745051915695?e=1756944000&v=beta&t=4yFYIeAHdH4eeyGl2to5O7jpGJqzMT0VbBVfICbQYxY";
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "https://placehold.co/80x80/0f4d3f/ffffff?text=TH";
                   }}
                 />
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -351,9 +353,10 @@ const BlogPage: React.FC = () => {
                 <img 
                   alt="Ashiish Chauhan professional headshot" 
                   className="w-20 h-20 rounded-full object-cover mb-4 bg-gray-200" 
-                  src="https://media.licdn.com/dms/image/v2/D4D03AQEOnUNfZ-T83Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1720693421303?e=1756944000&v=beta&t=pxc0HAv33IyX7TfDMUpCv2Pa9BohEe5OtL46yzeczZE" 
+                  src="/assets/1720693421250.jfif" 
                   onError={(e) => {
-                    e.currentTarget.src = "https://media.licdn.com/dms/image/v2/D4D03AQEOnUNfZ-T83Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1720693421303?e=1756944000&v=beta&t=pxc0HAv33IyX7TfDMUpCv2Pa9BohEe5OtL46yzeczZE";
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "https://placehold.co/80x80/0f4d3f/ffffff?text=AC";
                   }}
                 />
                 <h3 className="text-lg font-semibold text-gray-900">
