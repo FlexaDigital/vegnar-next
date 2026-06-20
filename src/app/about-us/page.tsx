@@ -20,6 +20,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import BecomePartnerSection from '@/components/BecomePartnerSection';
+import { SITE_CONFIG } from '@/lib/constants';
 
 // Add the icons to the library
 library.add(
@@ -81,12 +82,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Vegnar Greens | Sugarcane Bagasse Product Manufacturer in India',
     description: 'Explore Vegnar Greens — India\'s trusted brand for eco-conscious bagasse and biodegradable packaging products. From design to export, we deliver sustainable innovation.',
-    url: 'https://www.vegnar.com/about-us',
+    url: `${SITE_CONFIG.BASE_URL}/about-us`,
     siteName: 'Vegnar Greens',
     type: 'website',
   },
   alternates: {
-    canonical: 'https://www.vegnar.com/about-us',
+    canonical: `${SITE_CONFIG.BASE_URL}/about-us`,
   },
   robots: 'index, follow',
   authors: [{ name: 'Vegnar Greens' }],

@@ -10,6 +10,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import TawkTo from "@/components/Talkto";
 import { Viewport } from "next";
 import Script from "next/script";
+import { SITE_CONFIG } from "@/lib/constants";
 
 interface ProductCategory {
   id: number;
@@ -56,7 +57,7 @@ export const metadata = {
     yandex: "c904a809eacce6d1",
   },
   alternates: {
-    canonical: "https://www.vegnar.com",
+    canonical: SITE_CONFIG.BASE_URL,
   },
   authors: [{ name: "Vegnar Greens" }],
   publisher: "Vegnar Greens",

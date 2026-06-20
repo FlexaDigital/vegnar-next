@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useMemo, useEffect, Suspense } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Search, Filter, Download, ShoppingCart, Plus, Check } from 'lucide-react';
+import { Search, Filter, Download, ShoppingCart, Plus, Check, Play, X, Volume2, VolumeX } from 'lucide-react';
 import Image from 'next/image';
 import { numberToWords } from '@/lib/pdf-utils';
 import productsData from '@/data/products.json';
@@ -84,6 +84,105 @@ function PackingListPageInner() {
 
   const [previewProduct, setPreviewProduct] = useState<Product | null>(null);
   const [showQuoteForm, setShowQuoteForm] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
+  const [narrationLang, setNarrationLang] = useState<'en' | 'hi' | 'gu'>('en');
+  const narrationTimersRef = useRef<NodeJS.Timeout[]>([]);
+
+  // Time-synced narration scripts for each language
+  // Each entry: { delayMs, text } — timed to match the 78s WebP animation
+  const narrationScripts: Record<'en' | 'hi' | 'gu', { delayMs: number; text: string; langCode: string }[]> = useMemo(() => ({
+    en: [
+      { delayMs: 0, text: "Welcome to Vegnar Green's quote builder! Let me show you how easy it is to create and download a custom quote.", langCode: 'en-US' },
+      { delayMs: 10000, text: "Step one. Browse the product catalog. Find the sugarcane bagasse products you need, and click the Add button to add them to your Quote Cart.", langCode: 'en-US' },
+      { delayMs: 28000, text: "Step two. Now click on the Quote Cart button at the top right. Here you can switch between pieces and cartons, and adjust the quantities for each product.", langCode: 'en-US' },
+      { delayMs: 48000, text: "Step three. Fill in your company name, contact person, email, mobile number, and delivery address in the form below.", langCode: 'en-US' },
+      { delayMs: 65000, text: "Finally, click Download PDF to instantly get your customized quotation. It's that simple! Thank you for using Vegnar Green.", langCode: 'en-US' },
+    ],
+    hi: [
+      { delayMs: 0, text: "वेगनार ग्रीन के कोट बिल्डर में आपका स्वागत है! आइए देखें कि कस्टम कोट बनाना और डाउनलोड करना कितना आसान है।", langCode: 'hi-IN' },
+      { delayMs: 10000, text: "पहला कदम। प्रोडक्ट कैटलॉग ब्राउज़ करें। जो गन्ना बगास प्रोडक्ट आपको चाहिए, उसे ढूंढें और ऐड बटन पर क्लिक करके उसे अपने कोट कार्ट में जोड़ें।", langCode: 'hi-IN' },
+      { delayMs: 28000, text: "दूसरा कदम। अब ऊपर दाईं ओर कोट कार्ट बटन पर क्लिक करें। यहां आप पीस और कार्टन के बीच स्विच कर सकते हैं, और हर प्रोडक्ट की मात्रा बदल सकते हैं।", langCode: 'hi-IN' },
+      { delayMs: 48000, text: "तीसरा कदम। नीचे दिए गए फॉर्म में अपनी कंपनी का नाम, संपर्क व्यक्ति, ईमेल, मोबाइल नंबर और डिलीवरी एड्रेस भरें।", langCode: 'hi-IN' },
+      { delayMs: 65000, text: "अंत में, डाउनलोड पीडीएफ पर क्लिक करें और तुरंत अपना कस्टम कोटेशन प्राप्त करें। बस इतना ही! वेगनार ग्रीन का उपयोग करने के लिए धन्यवाद।", langCode: 'hi-IN' },
+    ],
+    gu: [
+      { delayMs: 0, text: "વેગનાર ગ્રીનના ક્વોટ બિલ્ડરમાં આપનું સ્વાગત છે! ચાલો જોઈએ કે કસ્ટમ ક્વોટ બનાવવો અને ડાઉનલોડ કરવો કેટલું સહેલું છે.", langCode: 'gu-IN' },
+      { delayMs: 10000, text: "પહેલું પગલું. પ્રોડક્ટ કેટલોગ બ્રાઉઝ કરો. તમને જરૂરી શેરડીના બગાસ પ્રોડક્ટ શોધો અને એડ બટન પર ક્લિક કરીને તેને તમારા ક્વોટ કાર્ટમાં ઉમેરો.", langCode: 'gu-IN' },
+      { delayMs: 28000, text: "બીજું પગલું. હવે ઉપર જમણી બાજુએ ક્વોટ કાર્ટ બટન પર ક્લિક કરો. અહીં તમે પીસ અને કાર્ટન વચ્ચે બદલી શકો છો, અને દરેક પ્રોડક્ટની સંખ્યા બદલી શકો છો.", langCode: 'gu-IN' },
+      { delayMs: 48000, text: "ત્રીજું પગલું. નીચેના ફોર્મમાં તમારી કંપનીનું નામ, સંપર્ક વ્યક્તિ, ઈમેલ, મોબાઈલ નંબર અને ડિલિવરી સરનામું ભરો.", langCode: 'gu-IN' },
+      { delayMs: 65000, text: "છેલ્લે, ડાઉનલોડ પીડીએફ પર ક્લિક કરો અને તરત જ તમારું કસ્ટમ ક્વોટેશન મેળવો. બસ આટલું જ! વેગનાર ગ્રીનનો ઉપયોગ કરવા બદલ આભાર.", langCode: 'gu-IN' },
+    ],
+  }), []);
+
+  const stopNarration = useCallback(() => {
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    narrationTimersRef.current.forEach(t => clearTimeout(t));
+    narrationTimersRef.current = [];
+  }, []);
+
+  const speakText = useCallback((text: string, langCode: string) => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return;
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.92;
+    utterance.pitch = 1.1;
+    utterance.volume = 1;
+    utterance.lang = langCode;
+
+    // Try to find a matching voice for the language
+    const voices = window.speechSynthesis.getVoices();
+    const langPrefix = langCode.split('-')[0];
+    const preferredVoice = voices.find(v =>
+      v.lang.startsWith(langPrefix) && (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('victoria') || v.name.toLowerCase().includes('karen') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('google'))
+    ) || voices.find(v => v.lang.startsWith(langPrefix));
+
+    if (preferredVoice) utterance.voice = preferredVoice;
+
+    window.speechSynthesis.speak(utterance);
+  }, []);
+
+  // Time-synced narration: schedule each narration segment with setTimeout
+  useEffect(() => {
+    if (!showTutorial || isMuted) {
+      stopNarration();
+      return;
+    }
+
+    const startTimedNarration = () => {
+      stopNarration();
+      const steps = narrationScripts[narrationLang];
+      steps.forEach(step => {
+        const timer = setTimeout(() => {
+          speakText(step.text, step.langCode);
+        }, step.delayMs);
+        narrationTimersRef.current.push(timer);
+      });
+    };
+
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        startTimedNarration();
+      } else {
+        window.speechSynthesis.onvoiceschanged = () => {
+          startTimedNarration();
+        };
+      }
+    }
+
+    return () => {
+      stopNarration();
+    };
+  }, [showTutorial, isMuted, narrationLang, narrationScripts, speakText, stopNarration]);
+
+  // Close tutorial helper that also stops narration
+  const closeTutorial = useCallback(() => {
+    stopNarration();
+    setShowTutorial(false);
+  }, [stopNarration]);
 
   useEffect(() => {
     if (searchParams && searchParams.get('checkout') === '1') {
@@ -272,6 +371,8 @@ function PackingListPageInner() {
         pcsPerCarton: item.product.pcs_per_carton,
         totalPieces: item.unit === 'cartons' ? item.quantity * item.product.pcs_per_carton : item.quantity,
         hsnCode: item.product.hsn_code,
+        rate: getPricePerPiece(item.product, item.quantity, item.unit),
+        taxRate: parseFloat((item.product as any).gst) || 0,
       }));
 
       const totalPieces = cart.reduce((total, item) => {
@@ -419,6 +520,14 @@ function PackingListPageInner() {
                 <p className="mt-1 text-sm text-gray-500">Premium sugarcane bagasse products with instant pricing and specifications</p>
               </div>
               <div className="mt-4 sm:mt-0 flex flex-wrap gap-2">
+                <button
+                  onClick={() => setShowTutorial(true)}
+                  className="inline-flex items-center px-4 py-2 border border-green-200 rounded-md shadow-sm text-sm font-medium text-green-700 bg-green-50 hover:bg-green-100 transition-colors"
+                >
+                  <Play className="h-4 w-4 mr-2 text-green-600 animate-pulse animate-duration-1000" />
+                  How it Works (Video)
+                </button>
+
                 <button
                   onClick={() => setShowFilters(!showFilters)}
                   className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
@@ -1071,6 +1180,94 @@ function PackingListPageInner() {
                 </div>
               </form>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tutorial Video Modal */}
+      {showTutorial && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-3 z-50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-5xl overflow-hidden shadow-2xl border border-gray-100 flex flex-col" style={{maxHeight: '95vh'}}>
+
+            {/* Modal Header */}
+            <div className="px-5 py-3 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-green-50 to-white flex-shrink-0">
+              <div className="flex items-center space-x-2">
+                <div className="bg-green-100 p-1.5 rounded-lg">
+                  <Play className="h-4 w-4 text-[#1a7a2b]" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-gray-900">How to Create & Download a Quote</h3>
+                  <p className="text-[11px] text-gray-500">Watch this quick guide — it only takes a minute!</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-1">
+                <button
+                  onClick={() => setIsMuted(!isMuted)}
+                  className={`p-2 rounded-full transition-colors ${isMuted ? 'text-red-400 hover:text-red-600 hover:bg-red-50' : 'text-green-600 hover:text-green-700 hover:bg-green-50'}`}
+                  title={isMuted ? 'Unmute narration' : 'Mute narration'}
+                >
+                  {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+                </button>
+                <button
+                  onClick={closeTutorial}
+                  className="text-gray-400 hover:text-gray-700 hover:bg-gray-100 p-2 rounded-full transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Full-Width Video */}
+            <div className="bg-gray-950 w-full flex-shrink-0" style={{maxHeight: '60vh'}}>
+              <img
+                src="/assets/img/create_quote_tutorial.webp"
+                alt="Create Quote Video Guide"
+                className="w-full h-full object-contain"
+                style={{maxHeight: '60vh', display: 'block'}}
+              />
+            </div>
+
+            {/* Steps Row */}
+            <div className="bg-gray-50 border-t border-gray-100 px-5 py-4 flex-shrink-0">
+              <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-3">3 Simple Steps</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {/* Step 1 */}
+                <div className="flex items-start space-x-3 bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#1a7a2b] text-white flex items-center justify-center text-xs font-bold">1</div>
+                  <div>
+                    <h5 className="text-sm font-semibold text-gray-900 mb-0.5">Add to Cart</h5>
+                    <p className="text-[11px] text-gray-500 leading-snug">Browse products and click "Add" to add them to your Quote Cart.</p>
+                  </div>
+                </div>
+                {/* Step 2 */}
+                <div className="flex items-start space-x-3 bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#1a7a2b] text-white flex items-center justify-center text-xs font-bold">2</div>
+                  <div>
+                    <h5 className="text-sm font-semibold text-gray-900 mb-0.5">Set Qty & Units</h5>
+                    <p className="text-[11px] text-gray-500 leading-snug">Open Quote Cart, choose pieces or cartons, and update quantities.</p>
+                  </div>
+                </div>
+                {/* Step 3 */}
+                <div className="flex items-start space-x-3 bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#1a7a2b] text-white flex items-center justify-center text-xs font-bold">3</div>
+                  <div>
+                    <h5 className="text-sm font-semibold text-gray-900 mb-0.5">Fill & Download PDF</h5>
+                    <p className="text-[11px] text-gray-500 leading-snug">Enter your company details and download your custom quote PDF instantly.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="mt-4">
+                <button
+                  onClick={closeTutorial}
+                  className="w-full bg-[#1a7a2b] hover:bg-[#0f5a1f] text-white py-2.5 px-4 rounded-xl text-sm font-semibold transition-colors shadow hover:shadow-md"
+                >
+                  ✓ Got it — Let's Create My Quote!
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       )}

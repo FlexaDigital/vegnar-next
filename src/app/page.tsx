@@ -5,6 +5,7 @@ import Image from "next/image"; // Import Image component for optimized images
 import Link from "next/link";
 import Script from "next/script";
 import CertificationsSection from "@/components/CertificationsSection";
+import { SITE_CONFIG } from "@/lib/constants";
 
 import CustomizationSection from "@/components/CustomizationSection";
 import { FaCheckCircle } from "react-icons/fa";
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     images: ["https://www.vegnar.com/images/twitter-banner.jpg"],
   },
   alternates: {
-    canonical: "https://www.vegnar.com",
+    canonical: SITE_CONFIG.BASE_URL,
   },
   robots: "index, follow",
   authors: [{ name: "Vegnar Greens" }],

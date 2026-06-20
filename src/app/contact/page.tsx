@@ -1,6 +1,7 @@
 import { metadata } from './metadata';
 import Script from 'next/script';
 import ContactPage from '@/components/Contact/ContactPage';
+import { SITE_CONFIG } from '@/lib/constants';
 
 export { metadata };
 
@@ -16,7 +17,7 @@ export default function Page() {
             "@graph": [
               {
                 "@type": "ContactPage",
-                "url": "https://www.vegnar.com/contact",
+                "url": `${SITE_CONFIG.BASE_URL}/contact`,
                 "name": "Contact Vegnar Green — Sustainable Packaging Enquiries",
                 "description": "Contact Vegnar Green for wholesale bagasse tableware inquiries, export quotes, and partnership opportunities.",
                 "breadcrumb": {
@@ -26,13 +27,13 @@ export default function Page() {
                       "@type": "ListItem",
                       "position": 1,
                       "name": "Home",
-                      "item": "https://www.vegnar.com/"
+                      "item": `${SITE_CONFIG.BASE_URL}/`
                     },
                     {
                       "@type": "ListItem",
                       "position": 2,
                       "name": "Contact",
-                      "item": "https://www.vegnar.com/contact"
+                      "item": `${SITE_CONFIG.BASE_URL}/contact`
                     }
                   ]
                 }
@@ -40,7 +41,7 @@ export default function Page() {
               {
                 "@type": "LocalBusiness",
                 "name": "Vegnar Green",
-                "url": "https://www.vegnar.com",
+                "url": SITE_CONFIG.BASE_URL,
                 "telephone": "+91-9998040373",
                 "email": "connect@vegnar.com",
                 "address": {

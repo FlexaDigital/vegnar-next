@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { decodeAndStripHtml } from "@/utils/wordpress";
 
 interface Product {
   id: number;
@@ -76,14 +77,7 @@ const SearchResults: React.FC = () => {
   };
 
   const stripHtml = (html: string): string => {
-    if (!html) return "";
-    const decoded = html
-      .replace(/&#8211;/g, "–")
-      .replace(/&#8212;/g, "—")
-      .replace(/&amp;/g, "&")
-      .replace(/&lt;/g, "<")
-      .replace(/&gt;/g, ">");
-    return decoded.replace(/<[^>]*>/g, "").substring(0, 150);
+    return decodeAndStripHtml(html).substring(0, 150);
   };
 
   const handlePageChange = (page: number) => {
@@ -125,7 +119,7 @@ const SearchResults: React.FC = () => {
                 <div className="aspect-square relative overflow-hidden">
                   <Image
                     src={getProductImage(product)}
-                    alt={product.title.rendered}
+                    alt={decodeAndStripHtml(product.title.rendered)}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
@@ -134,10 +128,7 @@ const SearchResults: React.FC = () => {
 
                 <div className="p-4">
                   <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
-                    {product.title?.rendered
-                      ?.replace(/&#8211;/g, "–")
-                      .replace(/&#8212;/g, "—")
-                      .replace(/&amp;/g, "&") || "Untitled Product"}
+                    {decodeAndStripHtml(product.title?.rendered) || "Untitled Product"}
                   </h3>
 
                   {getCategoryName(product) && (

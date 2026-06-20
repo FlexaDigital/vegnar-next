@@ -5,6 +5,8 @@ import { Metadata } from "next";
 import ProductList from "@/components/ProductList";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
+import { SITE_CONFIG } from "@/lib/constants";
+import { decodeAndStripHtml } from "@/utils/wordpress";
 
 import { WpProduct as Product, Category } from "@/types/product";
 
@@ -17,81 +19,178 @@ async function fetchWithTimeout<T>(
   url: string,
   options: RequestInit = {},
 ): Promise<T> {
-  const timeout = 10000; // 10 seconds timeout
+  const timeout = 20000; // Increase to 20 seconds timeout
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
 
   try {
+    console.log(`Fetching: ${url}`);
     const response = await fetch(url, {
       ...options,
       signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
         ...options.headers,
       },
     });
 
     clearTimeout(id);
 
+    console.log(`Response status for ${url}: ${response.status}`);
+    
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      const errorText = await response.text();
+      console.error(`HTTP error for ${url}:`, response.status, errorText);
+      throw new Error(`HTTP error! Status: ${response.status} - ${errorText}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    console.log(`Successfully fetched from ${url}:`, Array.isArray(data) ? `${data.length} items` : 'single item');
+    return data;
   } catch (error: unknown) {
+    clearTimeout(id);
     if (error instanceof Error) {
       if (error.name === "AbortError") {
-        throw new Error("Request timed out");
+        console.error(`Request timeout for ${url}`);
+        throw new Error(`Request timed out for ${url}`);
       }
+      console.error(`Fetch error for ${url}:`, error.message);
       throw error;
     }
-    throw new Error("An unknown error occurred");
+    throw new Error(`An unknown error occurred while fetching ${url}`);
   }
 }
 
 async function fetchCategoryBySlug(slug: string): Promise<Category | null> {
-  try {
-    const data = await fetchWithTimeout<Category[]>(
-      `https://cms.vegnar.com/wp-json/wp/v2/product_category?slug=${slug}`,
-      {
-        next: { revalidate: 3600 }, // Cache for 1 hour
-      },
-    );
-    return data[0] || null;
-  } catch (error) {
-    console.error("Error fetching category:", error);
-    return null;
+  const maxRetries = 3;
+  let lastError;
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const data = await fetchWithTimeout<Category[]>(
+        `https://cms.vegnar.com/wp-json/wp/v2/product_category?slug=${slug}`,
+        {
+          next: { revalidate: 3600 },
+          headers: {
+            'User-Agent': 'Vegnar-Next-App/1.0',
+          },
+        },
+      );
+      return data[0] || null;
+    } catch (error) {
+      console.error(`Error fetching category (attempt ${attempt}):`, error);
+      lastError = error;
+      if (attempt < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+      }
+    }
   }
+  
+  // Fallback data for known categories
+  const fallbackCategories: Record<string, Category> = {
+    'bagasse-products': {
+      id: 15,
+      name: 'Bagasse Products',
+      slug: 'bagasse-products',
+      description: 'Eco-friendly sugarcane bagasse tableware products including plates, bowls, trays and containers.',
+      parent: 0
+    }
+  };
+  
+  if (fallbackCategories[slug]) {
+    console.warn(`Using fallback data for category: ${slug}`);
+    return fallbackCategories[slug];
+  }
+  
+  return null;
 }
 
 async function fetchProductsByCategoryId(
   categoryId: number,
 ): Promise<Product[]> {
-  try {
-    return await fetchWithTimeout<Product[]>(
-      `https://cms.vegnar.com/wp-json/wp/v2/products?product_category=${categoryId}&per_page=100&_embed`,
-      {
-        next: { revalidate: 3600 }, // Cache for 1 hour
-      },
-    );
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
+  const maxRetries = 3;
+  let lastError;
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(`Fetching products for category ID: ${categoryId} (attempt ${attempt})`);
+      const products = await fetchWithTimeout<Product[]>(
+        `https://cms.vegnar.com/wp-json/wp/v2/products?product_category=${categoryId}&per_page=100&_embed`,
+        {
+          next: { revalidate: 3600 },
+          headers: {
+            'User-Agent': 'Vegnar-Next-App/1.0',
+          },
+        },
+      );
+      console.log(`Found ${products.length} products for category ${categoryId}`);
+      return products;
+    } catch (error) {
+      console.error(`Error fetching products (attempt ${attempt}):`, error);
+      lastError = error;
+      if (attempt < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+      }
+    }
   }
+  
+  console.error(`Failed to fetch products after ${maxRetries} attempts:`, lastError);
+  return [];
 }
 
 async function fetchAllCategories(): Promise<Category[]> {
-  try {
-    return await fetchWithTimeout<Category[]>(
-      `https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100`,
-      {
-        next: { revalidate: 3600 }, // Cache for 1 hour
-      },
-    );
-  } catch (error) {
-    console.error("Error fetching all categories:", error);
-    return [];
+  const maxRetries = 3;
+  let lastError;
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const categories = await fetchWithTimeout<Category[]>(
+        `https://cms.vegnar.com/wp-json/wp/v2/product_category?per_page=100`,
+        {
+          next: { revalidate: 3600 },
+          headers: {
+            'User-Agent': 'Vegnar-Next-App/1.0',
+          },
+        },
+      );
+      return categories;
+    } catch (error) {
+      console.error(`Error fetching all categories (attempt ${attempt}):`, error);
+      lastError = error;
+      if (attempt < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+      }
+    }
   }
+  
+  // Return minimal fallback categories
+  const fallbackCategories: Category[] = [
+    {
+      id: 15,
+      name: 'Bagasse Products',
+      slug: 'bagasse-products',
+      description: 'Eco-friendly sugarcane bagasse tableware products',
+      parent: 0
+    },
+    {
+      id: 16,
+      name: 'Bowls',
+      slug: 'bowls',
+      description: 'Biodegradable bowls',
+      parent: 15
+    },
+    {
+      id: 17,
+      name: 'Plates',
+      slug: 'plates',
+      description: 'Biodegradable plates',
+      parent: 15
+    }
+  ];
+  
+  console.warn('Using fallback categories data');
+  return fallbackCategories;
 }
 
 async function fetchSubCategories(parentId: number): Promise<Category[]> {
@@ -118,7 +217,7 @@ function generateSeoDescription(
   }
   return `Discover premium ${categoryName} products including ${products
     .slice(0, 5)
-    .map((p) => p.title.rendered)
+    .map((p) => decodeAndStripHtml(p.title.rendered))
     .join(
       ", ",
     )} and more at Vegnar Greens. Sustainable and eco-friendly solutions for your business.`;
@@ -132,7 +231,7 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
       '@graph': [
         {
           '@type': 'CollectionPage',
-          url: 'https://www.vegnar.com/products/round-plates',
+          url: `${SITE_CONFIG.BASE_URL}/products/round-plates`,
           name: 'Biodegradable Bagasse Round Plates — Vegnar Green Wholesale',
           description: 'Wholesale sugarcane bagasse round plates. Microwave safe, oil resistant, compostable in 90 days. FDA approved, SGS tested. Export to 15+ countries from India.',
           breadcrumb: {
@@ -142,19 +241,19 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: 'https://www.vegnar.com/',
+                item: `${SITE_CONFIG.BASE_URL}/`,
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Products',
-                item: 'https://www.vegnar.com/products/bagasse-products',
+                item: `${SITE_CONFIG.BASE_URL}/products/bagasse-products`,
               },
               {
                 '@type': 'ListItem',
                 position: 3,
                 name: 'Round Plates',
-                item: 'https://www.vegnar.com/products/round-plates',
+                item: `${SITE_CONFIG.BASE_URL}/products/round-plates`,
               },
             ],
           },
@@ -170,7 +269,7 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
           manufacturer: {
             '@type': 'Organization',
             name: 'Vegnar Green',
-            url: 'https://www.vegnar.com',
+            url: SITE_CONFIG.BASE_URL,
           },
           material: 'Sugarcane bagasse',
           additionalProperty: [
@@ -203,7 +302,7 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
               '@type': 'Organization',
               name: 'Vegnar Green',
             },
-            url: 'https://www.vegnar.com/quote',
+            url: `${SITE_CONFIG.BASE_URL}/quote`,
           },
         },
       ],
@@ -214,15 +313,15 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: category.name,
-    description: category.description,
-    url: `https://www.vegnar.com/products/${category.slug}`,
+    name: decodeAndStripHtml(category.name),
+    description: decodeAndStripHtml(category.description),
+    url: `${SITE_CONFIG.BASE_URL}/products/${category.slug}`,
     publisher: {
       '@type': 'Organization',
       name: 'Vegnar Green',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.vegnar.com/logo.png',
+        url: `${SITE_CONFIG.BASE_URL}/logo.png`,
       },
     },
     mainEntity: {
@@ -232,12 +331,10 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
         position: index + 1,
         item: {
           '@type': 'Product',
-          name: product.title.rendered,
-          description: product.content.rendered
-            .replace(/(<([^>]+)>)/gi, '')
-            .slice(0, 160),
+          name: decodeAndStripHtml(product.title.rendered),
+          description: decodeAndStripHtml(product.content.rendered).slice(0, 160),
           image: product._embedded?.['wp:featuredmedia']?.[0]?.source_url,
-          url: `https://www.vegnar.com/products/${category.slug}/${product.slug}`,
+          url: `${SITE_CONFIG.BASE_URL}/products/${category.slug}/${product.slug}`,
         },
       })),
     },
@@ -263,7 +360,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       keywords:
         "sugarcane bagasse products, bagasse tableware manufacturer, biodegradable tableware, compostable tableware, eco-friendly food packaging, Vegnar Greens",
       alternates: {
-        canonical: "https://vegnar.com/products/bagasse-products",
+        canonical: `${SITE_CONFIG.BASE_URL}/products/bagasse-products`,
       },
       robots: "index, follow",
     };
@@ -276,7 +373,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Buy premium sugarcane bagasse plates including round and compartment plates. Biodegradable, microwave-safe and ideal for food service.",
       keywords:
         "sugarcane bagasse plates, biodegradable plates, compostable plates, bagasse plates manufacturer, bulk bagasse plates, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/plates" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/plates` },
       robots: "index, follow",
     };
   }
@@ -288,7 +385,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Eco-friendly sugarcane bagasse cups for hot and cold beverages. Compostable, microwave-safe and ideal for cafes and food service.",
       keywords:
         "sugarcane bagasse cups, biodegradable cups, compostable cups, eco-friendly cups, bagasse cup manufacturer, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/cups" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/cups` },
       robots: "index, follow",
     };
   }
@@ -301,7 +398,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Premium biodegradable wooden cutlery including spoons, forks and knives. Sustainable alternative to plastic cutlery.",
       keywords:
         "wooden cutlery manufacturer, biodegradable cutlery, eco-friendly cutlery, wooden spoons forks knives, bulk wooden cutlery, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/wooden-cutlery" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/wooden-cutlery` },
       robots: "index, follow",
     };
   }
@@ -313,7 +410,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Biodegradable sugarcane bagasse trays including compartment and meal trays. Ideal for catering and food service.",
       keywords:
         "sugarcane bagasse trays, biodegradable trays, compostable trays, bagasse tray manufacturer, bulk food trays, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/trays" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/trays` },
       robots: "index, follow",
     };
   }
@@ -325,7 +422,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Eco-friendly sugarcane bagasse food containers for takeaway and delivery. Compostable, leak-proof and microwave-safe.",
       keywords:
         "bagasse food containers, biodegradable containers, compostable containers, takeaway containers manufacturer, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/containers" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/containers` },
       robots: "index, follow",
     };
   }
@@ -338,7 +435,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Premium compartment meal trays made from sugarcane bagasse. Perfect for catering, restaurants and food service.",
       keywords:
         "bagasse meal trays, compartment meal trays, biodegradable meal trays, bulk meal trays, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/meal-trays" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/meal-trays` },
       robots: "index, follow",
     };
   }
@@ -350,7 +447,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "High-quality sugarcane bagasse round plates available in multiple sizes. Biodegradable and ideal for events and restaurants.",
       keywords:
         "bagasse round plates, biodegradable round plates, compostable plates, bulk round plates, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/round-plates" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/round-plates` },
       robots: "index, follow",
     };
   }
@@ -362,7 +459,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Eco-friendly biodegradable sipper lids made from sugarcane bagasse. Suitable for hot and cold beverages.",
       keywords:
         "biodegradable sipper lids, bagasse cup lids, compostable lids, eco-friendly lids, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/sipper-lid" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/sipper-lid` },
       robots: "index, follow",
     };
   }
@@ -375,7 +472,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       keywords:
         "bagasse takeaway containers, biodegradable food containers, compostable takeaway boxes, Vegnar Greens",
       alternates: {
-        canonical: "https://vegnar.com/products/takeaway-container",
+        canonical: `${SITE_CONFIG.BASE_URL}/products/takeaway-container`,
       },
       robots: "index, follow",
     };
@@ -388,7 +485,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Durable and compostable sugarcane bagasse trays for food service and catering use.",
       keywords:
         "sugarcane bagasse trays, biodegradable trays, compostable trays, food service trays, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/bagasse-tray" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/bagasse-tray` },
       robots: "index, follow",
     };
   }
@@ -400,7 +497,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Plant-based biodegradable and compostable bags for shopping, packaging and carry use. Plastic-free solutions.",
       keywords:
         "biodegradable bags, compostable bags, eco-friendly bags, plastic-free bags, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/bio-bags" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/bio-bags` },
       robots: "index, follow",
     };
   }
@@ -413,7 +510,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Buy premium sugarcane bagasse bowls for restaurants and food service. 100% biodegradable, microwave-safe and export quality.",
       keywords:
         "sugarcane bagasse bowls, biodegradable bowls, compostable bowls, eco-friendly bowls, bagasse bowls manufacturer, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/bowls" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/bowls` },
       robots: "index, follow",
     };
   }
@@ -425,7 +522,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "Eco-friendly sugarcane bagasse clamshell containers for takeaway and food delivery. Compostable and leak-resistant.",
       keywords:
         "bagasse clamshell containers, biodegradable clamshells, compostable food containers, takeaway packaging, Vegnar Greens",
-      alternates: { canonical: "https://vegnar.com/products/clamshells" },
+      alternates: { canonical: `${SITE_CONFIG.BASE_URL}/products/clamshells` },
       robots: "index, follow",
     };
   }
@@ -438,7 +535,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       keywords:
         "areca palm leaf plates, palm leaf tableware, biodegradable palm plates, eco-friendly dinnerware, Vegnar Greens",
       alternates: {
-        canonical: "https://vegnar.com/products/areca-palm-tableware",
+        canonical: `${SITE_CONFIG.BASE_URL}/products/areca-palm-tableware`,
       },
       robots: "index, follow",
     };
@@ -456,9 +553,21 @@ export default async function ProductCategoryPage({ params }: Props) {
   try {
     const { categorySlug } = await params;
 
-    // Single call for all categories, then derive current + subcategories from it
-    const allCategories = await fetchAllCategories();
-    const category = allCategories.find((c) => c.slug === categorySlug) || null;
+    // Try to get category data with fallback
+    let category: Category | null = null;
+    let allCategories: Category[] = [];
+    
+    try {
+      allCategories = await fetchAllCategories();
+      category = allCategories.find((c) => c.slug === categorySlug) || null;
+    } catch (error) {
+      console.error('Failed to fetch categories, trying individual category:', error);
+    }
+    
+    // If category not found in all categories, try fetching individually
+    if (!category) {
+      category = await fetchCategoryBySlug(categorySlug);
+    }
 
     if (!category) {
       notFound();
@@ -466,7 +575,32 @@ export default async function ProductCategoryPage({ params }: Props) {
     }
 
     const subCategories = allCategories.filter((c) => c.parent === category.id);
-    const products = await fetchProductsByCategoryId(category.id);
+    let products = await fetchProductsByCategoryId(category.id);
+    
+    // Special handling for bagasse-products if no products found
+    if (products.length === 0 && categorySlug === 'bagasse-products') {
+      console.warn('No products found for bagasse-products, trying alternative approach');
+      // Try to fetch all products and filter by category name or other methods
+      try {
+        const allProducts = await fetchWithTimeout<Product[]>(
+          `https://cms.vegnar.com/wp-json/wp/v2/products?per_page=100&_embed`,
+          {
+            next: { revalidate: 3600 },
+            headers: {
+              'User-Agent': 'Vegnar-Next-App/1.0',
+            },
+          },
+        );
+        // Filter products that might belong to bagasse category
+        products = allProducts.filter(product => 
+          product.title.rendered.toLowerCase().includes('bagasse') ||
+          product.content.rendered.toLowerCase().includes('bagasse')
+        );
+        console.log(`Found ${products.length} bagasse products through alternative method`);
+      } catch (error) {
+        console.error('Alternative product fetch also failed:', error);
+      }
+    }
 
     return (
       <>
@@ -484,10 +618,10 @@ export default async function ProductCategoryPage({ params }: Props) {
           <section className="relative min-h-[250px] sm:min-h-[300px] md:h-[400px] bg-green-100 flex flex-col justify-center items-start px-4 sm:px-8 md:px-16 mb-6 sm:mb-8 md:mb-10 rounded-xl sm:rounded-2xl shadow-md overflow-hidden z-10">
             <div className="z-10 w-full md:max-w-3xl">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-green-900 mb-2 sm:mb-3">
-                {category.name}
+                {decodeAndStripHtml(category.name)}
               </h1>
               <p className="text-gray-700 mt-2 sm:mt-3 md:mt-4 max-w-2xl text-sm sm:text-base md:text-lg">
-                {category.description || "No description available."} Browse our{" "}
+                {decodeAndStripHtml(category.description) || "No description available."} Browse our{" "}
                 <Link href="/products" className="text-green-700 font-semibold transition-all">
                   complete product range
                 </Link>{" "}
@@ -526,7 +660,7 @@ export default async function ProductCategoryPage({ params }: Props) {
                   href={`/products/${category.slug}`}
                   className=" text-green-800 font-medium"
                 >
-                  {category.name}
+                  {decodeAndStripHtml(category.name)}
                 </Link>
               </li>
             </ol>
@@ -537,6 +671,7 @@ export default async function ProductCategoryPage({ params }: Props) {
             allCategories={allCategories}
             subCategories={subCategories}
             ProductCard={ProductCard}
+            categorySlug={categorySlug}
           />
         </main>
       </>
