@@ -141,6 +141,7 @@ export default function RequestSamplesPage() {
                       }).catch(() => {});
 
                       // 5b. Save to Inventory Sample module
+                      const invoiceNum = `VG-${Date.now().toString().slice(-8)}`;
                       fetch(process.env.NEXT_PUBLIC_SAMPLE_API_URL!, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -152,12 +153,16 @@ export default function RequestSamplesPage() {
                           state: sampleFormData.state,
                           products: sampleFormData.products,
                           paymentId: response.razorpay_payment_id,
+                          orderId: response.razorpay_order_id,
+                          invoiceNumber: invoiceNum,
                           kitPrice: 3150,
+                          subtotal: 3000,
+                          tax: 150,
                           userType: sampleFormData.userType,
                           gstNumber: sampleFormData.gstNumber,
                           panNumber: sampleFormData.panNumber,
                         })
-                      }).catch(() => {});
+                      }).then(r => r.json()).then(d => console.log('Inventory sample saved:', d)).catch(err => console.error('Inventory sample save failed:', err));
 
                       // 5c. Send to Zoho CRM
                       sendToZohoCRM({
@@ -176,7 +181,6 @@ export default function RequestSamplesPage() {
                       });
 
                       // 6. Generate invoice
-                      const invoiceNum = `VG-${Date.now().toString().slice(-8)}`;
                       const invoiceData: Parameters<typeof generateInvoice>[0] = {
                         invoiceNumber: invoiceNum,
                         paymentId: response.razorpay_payment_id,
