@@ -85,7 +85,7 @@ export default function IndustriesPage() {
             "name": "Are bagasse products suitable for exports?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, we are a leading exporter of bagasse tableware from India, holding certifications like OK Compost (TÜV Austria), FDA compliance, and SGS testing, regularly supplying global markets."
+              "text": "Yes, we are a leading exporter of bagasse tableware from India, holding certifications like FDA compliance and SGS testing, regularly supplying global markets."
             }
           },
           {

@@ -159,12 +159,6 @@ const goals = [
 
 const certifications = [
   {
-    id: 'okcompost',
-    title: 'OK Compost',
-    image: '/assets/img/certifications/okcompost.png',
-    description: 'Certified compostable by TÜV Austria — products break down fully in industrial composting.',
-  },
-  {
     id: 'sgs',
     title: 'SGS Tested',
     image: '/assets/img/certifications/sgs.png',
@@ -277,7 +271,6 @@ export default function OurStory() {
                   }
                 ],
                 "award": [
-                  "OK Compost Certified by TUV Austria",
                   "SGS Tested",
                   "FDA Approved for food contact",
                   "ISO 9001:2015 Certified",
