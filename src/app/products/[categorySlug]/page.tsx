@@ -286,7 +286,7 @@ function generateSchemaOrgData(category: Category, products: Product[]) {
             {
               '@type': 'PropertyValue',
               name: 'Certification',
-              value: 'FDA, SGS, OK Compost, ISO 9001',
+              value: 'FDA, SGS, ISO 9001',
             },
             {
               '@type': 'PropertyValue',

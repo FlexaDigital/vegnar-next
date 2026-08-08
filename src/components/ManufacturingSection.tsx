@@ -529,7 +529,7 @@ const ManufacturingSection = () => {
                 What certifications do you have?
               </h3>
               <p className="text-gray-600">
-                Our facility is ISO 9001:2015 and ISO 14001:2015 certified. All products are FDA approved, SGS tested, and OK Compost certified. Learn more about <Link href="/about-us" className="text-green-700 font-semibold transition-all">
+                Our facility is ISO 9001:2015 and ISO 14001:2015 certified. All products are FDA approved and SGS tested. Learn more about <Link href="/about-us" className="text-green-700 font-semibold transition-all">
                   our certifications and quality standards
                 </Link>.
               </p>

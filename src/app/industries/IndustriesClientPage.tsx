@@ -259,7 +259,7 @@ export default function IndustriesClientPage() {
     },
     {
       question: "Are your sustainable packaging solutions suitable for international exports?",
-      answer: "Yes. As a leading exporter from India, Vegnar Green manufactures products that meet international standards. We hold global certifications including OK Compost (TÜV Austria) for commercial and home composting, FDA compliance, and SGS test reports. We regularly ship full container loads to North America, Europe, the Middle East, and Australia."
+      answer: "Yes. As a leading exporter from India, Vegnar Green manufactures products that meet international standards. We hold global certifications including FDA compliance and SGS test reports. We regularly ship full container loads to North America, Europe, the Middle East, and Australia."
     },
     {
       question: "Can Vegnar Green provide private labeling and custom designs (OEM) for our brand?",
