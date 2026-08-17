@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Head from 'next/head';
 import { generateInvoice } from '@/lib/invoice';
 import { sendToZohoCRM } from '@/utils/zoho-webhook';
+
 const indiaStates = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry'];
-import Head from 'next/head';
 
 export default function RequestSamplesPage() {
   const [sampleFormData, setSampleFormData] = useState({ 
@@ -88,7 +89,12 @@ export default function RequestSamplesPage() {
                     notes: { name: sampleFormData.companyName, email: sampleFormData.email }
                   })
                 });
-                const { order } = await orderRes.json();
+                const orderData = await orderRes.json();
+                if (!orderRes.ok || !orderData.success || !orderData.order) {
+                  alert(`Payment initiation failed: ${orderData.message || 'Razorpay order error'}`);
+                  return;
+                }
+                const order = orderData.order;
 
                 // 2. Load Razorpay script dynamically
                 await new Promise<void>((resolve) => {
@@ -200,8 +206,16 @@ export default function RequestSamplesPage() {
                         currency: 'INR',
                       };
                       generateInvoice(invoiceData);
+
+                      // 6b. Send invoice copy to Customer and Admin via email
+                      fetch('/api/send-invoice-email', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(invoiceData)
+                      }).catch((err) => console.error('Failed to send invoice email:', err));
+
                       setSampleFormData({ userType: 'company', companyName: '', email: '', mobile: '', state: '', address: '', products: '', gstNumber: '', panNumber: '' });
-                      alert('Sample request submitted successfully! Your invoice has been generated.');
+                      alert('Sample request submitted successfully! Your invoice has been sent to your email.');
                     } else {
                       alert('Payment verification failed. Please contact connect@vegnar.com');
                     }
