@@ -106,6 +106,23 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
         stack.push(newHeading);
       });
 
+      // Convert plain text URLs to clickable anchor tags
+      const urlRegex = /(^|[\s>])(https?:\/\/[^\s<"']+)/g;
+      tempDiv.querySelectorAll('p, li, td').forEach((el) => {
+        el.childNodes.forEach((node) => {
+          if (node.nodeType === Node.TEXT_NODE && node.textContent) {
+            const text = node.textContent;
+            if (urlRegex.test(text)) {
+              const span = document.createElement('span');
+              span.innerHTML = text.replace(/(^|[\s])(https?:\/\/[^\s<"']+)/g, (_, pre, url) => {
+                return `${pre}<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+              });
+              node.parentNode?.replaceChild(span, node);
+            }
+          }
+        });
+      });
+
       // Update the content with IDs and processed images
       contentRef.current.innerHTML = tempDiv.innerHTML;
       setTableOfContents(toc);
