@@ -2,17 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useLoading } from "@/lib/context/LoadingContext";
 
-interface Category {
+import he from "he";
+
+export interface Category {
   id: number;
   name: string;
   slug: string;
   count: number;
 }
 
-interface Article {
+export interface Article {
   id: number;
   title: string;
   summary: string;
@@ -24,99 +26,204 @@ interface Article {
   slug: string;
 }
 
+export interface BlogPageProps {
+  initialCategories?: Category[];
+  initialArticles?: Article[];
+  initialPage?: number;
+  initialTag?: string;
+  initialSearch?: string;
+}
+
 const decodeHtmlEntities = (text: string): string => {
-  const textarea = document.createElement('textarea');
-  textarea.innerHTML = text;
-  return textarea.value;
+  if (!text) return "";
+  return he.decode(text);
 };
 
-const BlogPage: React.FC = () => {
+const BlogPage: React.FC<BlogPageProps> = ({
+  initialCategories = [],
+  initialArticles = [],
+  initialPage = 1,
+  initialTag = "",
+  initialSearch = "",
+}) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { setLoading } = useLoading();
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isInitialLoading, setIsInitialLoading] = useState(initialArticles.length === 0);
   const [error, setError] = useState<string | null>(null);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
 
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedTag, setSelectedTag] = useState<string>("");
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchTerm, setSearchTerm] = useState<string>(initialSearch);
+  const [selectedTag, setSelectedTag] = useState<string>(initialTag);
+  const [articles, setArticles] = useState<Article[]>(initialArticles);
+  const [currentPage, setCurrentPage] = useState<number>(initialPage);
   const postsPerPage = 6;
 
+  const updateUrlAndStorage = (page: number, tag: string, search: string) => {
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams();
+    if (page > 1) {
+      params.set("page", page.toString());
+    }
+    if (tag) {
+      params.set("category", tag);
+    }
+    if (search.trim()) {
+      params.set("q", search.trim());
+    }
+
+    const qs = params.toString();
+    const newUrl = qs ? `/blog?${qs}` : "/blog";
+
+    window.history.pushState(null, "", newUrl);
+
+    sessionStorage.setItem("blog_current_page", page.toString());
+    if (tag) {
+      sessionStorage.setItem("blog_selected_tag", tag);
+    } else {
+      sessionStorage.removeItem("blog_selected_tag");
+    }
+    if (search.trim()) {
+      sessionStorage.setItem("blog_search", search.trim());
+    } else {
+      sessionStorage.removeItem("blog_search");
+    }
+  };
+
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(
-          "https://cms.vegnar.com/wp-json/wp/v2/categories?per_page=100",
-          {
-            next: { revalidate: 60 } // Cache for 1 minute
-          }
-        );
+    const pageParam = searchParams?.get("page");
+    const tagParam = searchParams?.get("category");
+    const qParam = searchParams?.get("q");
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+    if (pageParam) {
+      const p = parseInt(pageParam, 10);
+      if (!isNaN(p) && p > 0) {
+        setCurrentPage(p);
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("blog_current_page", p.toString());
         }
-
-        const data = await response.json();
-        // Filter out categories with no posts
-        const activeCategories = data.filter((cat: Category) => cat.count > 0);
-        setCategories(activeCategories);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
       }
-    };
-
-    const fetchArticles = async () => {
-      setIsInitialLoading(true);
-      setError(null);
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-        const response = await fetch(
-          "https://cms.vegnar.com/wp-json/wp/v2/posts?_embed&per_page=100",
-          {
-            signal: controller.signal,
-            next: { revalidate: 60 }
-          }
-        );
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+    } else if (typeof window !== "undefined") {
+      const savedPage = sessionStorage.getItem("blog_current_page");
+      const fromArticle = sessionStorage.getItem("blog_navigated_from_article");
+      if (fromArticle === "true" && savedPage) {
+        const p = parseInt(savedPage, 10);
+        if (!isNaN(p) && p > 1) {
+          setCurrentPage(p);
+          const params = new URLSearchParams(window.location.search);
+          params.set("page", p.toString());
+          window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
         }
-
-        const data = await response.json();
-
-        const formatted: Article[] = data.map((post: any) => ({
-          id: post.id,
-          title: decodeHtmlEntities(post.title.rendered),
-          summary: decodeHtmlEntities(post.excerpt.rendered.replace(/<[^>]+>/g, "")).slice(0, 120) + "...",
-          url: `/blog/${post.slug}`,
-          image: post._embedded["wp:featuredmedia"]?.[0]?.source_url || "https://via.placeholder.com/400x240",
-          alt: post.title.rendered,
-          tag: post._embedded["wp:term"]?.[0]?.[0]?.name || "Blog",
-          readTime: `${Math.ceil(post.content.rendered.split(" ").length / 200)} min read`,
-          slug: post.slug,
-        }));
-
-        setArticles(formatted);
-      } catch (error: any) {
-        console.error("Error fetching blog data:", error);
-        setError(
-          error.name === "AbortError"
-            ? "Request timed out. Please try again."
-            : "Failed to load blog posts. Please try again later."
-        );
-      } finally {
-        setIsInitialLoading(false);
       }
-    };
+      sessionStorage.removeItem("blog_navigated_from_article");
+    }
 
-    fetchCategories();
-    fetchArticles();
-  }, []);
+    if (tagParam !== null && tagParam !== undefined) {
+      setSelectedTag(tagParam);
+      if (typeof window !== "undefined") {
+        if (tagParam) {
+          sessionStorage.setItem("blog_selected_tag", tagParam);
+        } else {
+          sessionStorage.removeItem("blog_selected_tag");
+        }
+      }
+    } else if (typeof window !== "undefined") {
+      const savedTag = sessionStorage.getItem("blog_selected_tag");
+      if (savedTag) {
+        setSelectedTag(savedTag);
+      }
+    }
+
+    if (qParam !== null && qParam !== undefined) {
+      setSearchTerm(qParam);
+    }
+  }, [searchParams]);
+
+  const fetchCategories = async () => {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 20000);
+
+      const response = await fetch(
+        "https://cms.vegnar.com/wp-json/wp/v2/categories?per_page=100",
+        {
+          signal: controller.signal,
+        }
+      );
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const activeCategories = data.filter((cat: Category) => cat.count > 0);
+      setCategories(activeCategories);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  const fetchArticles = async () => {
+    setIsInitialLoading(true);
+    setError(null);
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+      const response = await fetch(
+        "https://cms.vegnar.com/wp-json/wp/v2/posts?_embed=wp:featuredmedia,wp:term&_fields=id,slug,title,excerpt,date,_links,_embedded&per_page=100",
+        {
+          signal: controller.signal,
+        }
+      );
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      const formatted: Article[] = data.map((post: any) => ({
+        id: post.id,
+        title: decodeHtmlEntities(post.title?.rendered || ""),
+        summary: decodeHtmlEntities((post.excerpt?.rendered || "").replace(/<[^>]+>/g, "")).slice(0, 120) + "...",
+        url: `/blog/${post.slug}`,
+        image: post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "https://placehold.co/400x240/cccccc/333333?text=Vegnar+Blog",
+        alt: post.title?.rendered || "Blog article",
+        tag: post._embedded?.["wp:term"]?.[0]?.[0]?.name || "Blog",
+        readTime: "3 min read",
+        slug: post.slug,
+      }));
+
+      setArticles(formatted);
+    } catch (error: any) {
+      console.error("Error fetching blog data:", error);
+      setError(
+        error.name === "AbortError"
+          ? "Request timed out. Please try again."
+          : "Failed to load blog posts. Please try again later."
+      );
+    } finally {
+      setIsInitialLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (initialArticles.length > 0 && initialCategories.length > 0) {
+      return;
+    }
+
+    if (categories.length === 0) {
+      fetchCategories();
+    }
+    if (articles.length === 0) {
+      fetchArticles();
+    }
+  }, [initialArticles, initialCategories]);
 
   const filteredArticles = articles.filter((article) => {
     const matchesSearchTerm =
@@ -126,26 +233,43 @@ const BlogPage: React.FC = () => {
     return matchesSearchTerm && matchesTag;
   });
 
-  const indexOfLastPost = currentPage * postsPerPage;
+  const totalPages = Math.ceil(filteredArticles.length / postsPerPage) || 1;
+  const safeCurrentPage = Math.min(Math.max(1, currentPage), totalPages);
+
+  const indexOfLastPost = safeCurrentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = filteredArticles.slice(indexOfFirstPost, indexOfLastPost);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+    const val = e.target.value;
+    setSearchTerm(val);
     setCurrentPage(1);
+    updateUrlAndStorage(1, selectedTag, val);
   };
 
   const handleTagClick = (tag: string) => {
-    setSelectedTag(tag);
+    const nextTag = selectedTag === tag ? "" : tag;
+    setSelectedTag(nextTag);
     setCurrentPage(1);
+    updateUrlAndStorage(1, nextTag, searchTerm);
   };
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+    updateUrlAndStorage(pageNumber, selectedTag, searchTerm);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleLinkClick = async (href: string) => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("blog_current_page", safeCurrentPage.toString());
+      if (selectedTag) {
+        sessionStorage.setItem("blog_selected_tag", selectedTag);
+      } else {
+        sessionStorage.removeItem("blog_selected_tag");
+      }
+      sessionStorage.setItem("blog_navigated_from_article", "true");
+    }
     setLoading(true);
     try {
       await router.push(href);
@@ -229,7 +353,10 @@ const BlogPage: React.FC = () => {
             <div className="text-center py-12">
               <p className="text-red-600 mb-4">{error}</p>
               <button
-                onClick={() => window.location.reload()}
+                onClick={() => {
+                  fetchCategories();
+                  fetchArticles();
+                }}
                 className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
               >
                 Try Again
@@ -282,20 +409,20 @@ const BlogPage: React.FC = () => {
               className="mt-6 flex justify-center items-center space-x-2 text-xs font-semibold text-[#0f4d3f]"
             >
               <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
+                onClick={() => handlePageChange(safeCurrentPage - 1)}
+                disabled={safeCurrentPage === 1}
                 className="border border-[#0f4d3f] rounded px-2 py-1 hover:bg-[#0f4d3f] hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <i className="fas fa-chevron-left"></i>
               </button>
-              {Array(Math.ceil(filteredArticles.length / postsPerPage))
+              {Array(totalPages)
                 .fill(null)
                 .map((_, i) => (
                   <button
                     key={i + 1}
                     onClick={() => handlePageChange(i + 1)}
                     className={`rounded px-3 py-1 transition ${
-                      currentPage === i + 1
+                      safeCurrentPage === i + 1
                         ? "bg-[#0f4d3f] text-white"
                         : "border border-[#0f4d3f] hover:bg-[#0f4d3f] hover:text-white"
                     }`}
@@ -304,8 +431,8 @@ const BlogPage: React.FC = () => {
                   </button>
                 ))}
               <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === Math.ceil(filteredArticles.length / postsPerPage)}
+                onClick={() => handlePageChange(safeCurrentPage + 1)}
+                disabled={safeCurrentPage === totalPages}
                 className="border border-[#0f4d3f] rounded px-2 py-1 hover:bg-[#0f4d3f] hover:text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <i className="fas fa-chevron-right"></i>

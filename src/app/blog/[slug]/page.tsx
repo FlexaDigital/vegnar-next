@@ -5,10 +5,10 @@ import { Post } from '@/types/blog';
 import { SITE_CONFIG } from '@/lib/constants';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
+  }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export const viewport: Viewport = {
@@ -48,7 +48,8 @@ async function fetchRelatedPosts(categoryId: number, excludeId: number): Promise
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const post = await fetchPost(params.slug);
+  const { slug } = await params;
+  const post = await fetchPost(slug);
   if (!post) {
     return {
       title: 'Article Not Found | Vegnar Green',
@@ -57,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // Fetch SEO data from custom endpoint
-  let seoData = null;
+  let seoData: any = null;
   try {
     const seoRes = await fetch(`https://cms.vegnar.com/wp-json/custom/v1/seo/${post.id}`, {
       next: { revalidate: 60 }
@@ -82,12 +83,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description,
     keywords,
     alternates: {
-      canonical: `${PUBLIC_SITE_URL}/blog/${params.slug}`,
+      canonical: `${PUBLIC_SITE_URL}/blog/${slug}`,
     },
     openGraph: {
       title,
       description,
-      url: `${PUBLIC_SITE_URL}/blog/${params.slug}`,
+      url: `${PUBLIC_SITE_URL}/blog/${slug}`,
       type: 'article',
       siteName: 'Vegnar Green',
       images: [
@@ -208,7 +209,8 @@ function generateSchemaOrgData(post: Post) {
 }
 
 export default async function BlogArticlePage({ params }: PageProps) {
-  const post = await fetchPost(params.slug);
+  const { slug } = await params;
+  const post = await fetchPost(slug);
   if (!post) notFound();
 
   const relatedPosts =

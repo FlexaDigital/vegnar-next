@@ -228,6 +228,21 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
     day: 'numeric',
   });
 
+  const handleBackToBlog = () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('blog_navigated_from_article', 'true');
+      const savedPage = sessionStorage.getItem('blog_current_page');
+      const savedTag = sessionStorage.getItem('blog_selected_tag');
+      const params = new URLSearchParams();
+      if (savedPage && savedPage !== '1') params.set('page', savedPage);
+      if (savedTag) params.set('category', savedTag);
+      const qs = params.toString();
+      router.push(qs ? `/blog?${qs}` : '/blog');
+    } else {
+      router.push('/blog');
+    }
+  };
+
   return (
     <div className="bg-white text-gray-900 relative min-h-screen font-sans">
       {/* Hero Section */}
@@ -245,9 +260,17 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
 
         <div className="relative max-w-4xl mx-auto px-6 py-20">
           <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
-            <span className="inline-block px-4 py-1 bg-green-50 text-green-600 rounded-full text-sm font-medium mb-4">
-              BIODEGRADABLE LIVING
-            </span>
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <span className="inline-block px-4 py-1 bg-green-50 text-green-600 rounded-full text-sm font-medium">
+                BIODEGRADABLE LIVING
+              </span>
+              <button
+                onClick={handleBackToBlog}
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#0f4d3f] hover:text-[#0b3a2c] bg-[#d9f1e3] hover:bg-[#c0e8d0] px-3.5 py-1.5 rounded-full transition-all shadow-sm hover:shadow cursor-pointer"
+              >
+                ← Back to Articles
+              </button>
+            </div>
 
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               {decodeAndStripHtml(post.title.rendered)}
@@ -353,8 +376,18 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
             className={`prose max-w-none prose-green prose-headings:scroll-mt-20 ${styles.article}`}
           />
 
+          {/* Back to Blog Button */}
+          <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
+            <button
+              onClick={handleBackToBlog}
+              className="inline-flex items-center gap-2 bg-[#0f4d3f] hover:bg-[#0b3a2c] text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow hover:shadow-md cursor-pointer"
+            >
+              ← Back to All Articles
+            </button>
+          </div>
+
           {/* Company Profile Card */}
-          <div className="mt-12 mb-8">
+          <div className="mt-8 mb-8">
             <CompanyProfileCard />
           </div>
 
