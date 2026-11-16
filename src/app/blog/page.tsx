@@ -4,6 +4,7 @@ import Script from 'next/script';
 import BlogPage, { Article, Category } from '@/components/Blog/BlogPage';
 import { SITE_CONFIG } from '@/lib/constants';
 import { decodeAndStripHtml } from '@/utils/wordpress';
+import { getAuthorFromPost } from '@/lib/authors';
 
 export { metadata };
 
@@ -25,7 +26,7 @@ async function getInitialBlogData(): Promise<{ categories: Category[]; articles:
         signal: controller.signal,
         next: { revalidate: 300 }, // Cache on server for 5 minutes
       }),
-      fetch('https://cms.vegnar.com/wp-json/wp/v2/posts?_embed=wp:featuredmedia,wp:term&_fields=id,slug,title,excerpt,date,_links,_embedded&per_page=100', {
+      fetch('https://cms.vegnar.com/wp-json/wp/v2/posts?_embed=wp:featuredmedia,wp:term,author&_fields=id,slug,title,excerpt,date,author,_links,_embedded&per_page=100', {
         signal: controller.signal,
         next: { revalidate: 300 }, // Cache on server for 5 minutes
       }),
@@ -40,17 +41,23 @@ async function getInitialBlogData(): Promise<{ categories: Category[]; articles:
 
     if (postRes.status === 'fulfilled' && postRes.value.ok) {
       const data = await postRes.value.json();
-      articles = data.map((post: any) => ({
-        id: post.id,
-        title: decodeAndStripHtml(post.title?.rendered || ''),
-        summary: decodeAndStripHtml(post.excerpt?.rendered || '').slice(0, 120) + '...',
-        url: `/blog/${post.slug}`,
-        image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 'https://placehold.co/400x240/cccccc/333333?text=Vegnar+Blog',
-        alt: decodeAndStripHtml(post.title?.rendered || 'Blog article'),
-        tag: post._embedded?.['wp:term']?.[0]?.[0]?.name || 'Blog',
-        readTime: '3 min read',
-        slug: post.slug,
-      }));
+      articles = data.map((post: any) => {
+        const author = getAuthorFromPost(post);
+        return {
+          id: post.id,
+          title: decodeAndStripHtml(post.title?.rendered || ''),
+          summary: decodeAndStripHtml(post.excerpt?.rendered || '').slice(0, 120) + '...',
+          url: `/blog/${post.slug}`,
+          image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 'https://placehold.co/400x240/cccccc/333333?text=Vegnar+Blog',
+          alt: decodeAndStripHtml(post.title?.rendered || 'Blog article'),
+          tag: post._embedded?.['wp:term']?.[0]?.[0]?.name || 'Blog',
+          readTime: '3 min read',
+          slug: post.slug,
+          authorName: author.name,
+          authorSlug: author.slug,
+          authorAvatar: author.avatar,
+        };
+      });
     }
   } catch (err) {
     console.error('Error prefetching blog data on server:', err);

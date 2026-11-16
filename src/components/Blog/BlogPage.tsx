@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useLoading } from "@/lib/context/LoadingContext";
 
 import he from "he";
+import { getAuthorFromPost } from "@/lib/authors";
 
 export interface Category {
   id: number;
@@ -24,6 +25,9 @@ export interface Article {
   tag: string;
   readTime: string;
   slug: string;
+  authorName?: string;
+  authorSlug?: string;
+  authorAvatar?: string;
 }
 
 export interface BlogPageProps {
@@ -173,7 +177,7 @@ const BlogPage: React.FC<BlogPageProps> = ({
       const timeoutId = setTimeout(() => controller.abort(), 30000);
 
       const response = await fetch(
-        "https://cms.vegnar.com/wp-json/wp/v2/posts?_embed=wp:featuredmedia,wp:term&_fields=id,slug,title,excerpt,date,_links,_embedded&per_page=100",
+        "https://cms.vegnar.com/wp-json/wp/v2/posts?_embed=wp:featuredmedia,wp:term,author&_fields=id,slug,title,excerpt,date,author,_links,_embedded&per_page=100",
         {
           signal: controller.signal,
         }
@@ -187,17 +191,23 @@ const BlogPage: React.FC<BlogPageProps> = ({
 
       const data = await response.json();
 
-      const formatted: Article[] = data.map((post: any) => ({
-        id: post.id,
-        title: decodeHtmlEntities(post.title?.rendered || ""),
-        summary: decodeHtmlEntities((post.excerpt?.rendered || "").replace(/<[^>]+>/g, "")).slice(0, 120) + "...",
-        url: `/blog/${post.slug}`,
-        image: post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "https://placehold.co/400x240/cccccc/333333?text=Vegnar+Blog",
-        alt: post.title?.rendered || "Blog article",
-        tag: post._embedded?.["wp:term"]?.[0]?.[0]?.name || "Blog",
-        readTime: "3 min read",
-        slug: post.slug,
-      }));
+      const formatted: Article[] = data.map((post: any) => {
+        const author = getAuthorFromPost(post);
+        return {
+          id: post.id,
+          title: decodeHtmlEntities(post.title?.rendered || ""),
+          summary: decodeHtmlEntities((post.excerpt?.rendered || "").replace(/<[^>]+>/g, "")).slice(0, 120) + "...",
+          url: `/blog/${post.slug}`,
+          image: post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "https://placehold.co/400x240/cccccc/333333?text=Vegnar+Blog",
+          alt: post.title?.rendered || "Blog article",
+          tag: post._embedded?.["wp:term"]?.[0]?.[0]?.name || "Blog",
+          readTime: "3 min read",
+          slug: post.slug,
+          authorName: author.name,
+          authorSlug: author.slug,
+          authorAvatar: author.avatar,
+        };
+      });
 
       setArticles(formatted);
     } catch (error: any) {
@@ -386,13 +396,32 @@ const BlogPage: React.FC<BlogPageProps> = ({
                   <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded mb-2 w-max">
                     {article.tag.replace(/&amp;/g, '&')}
                   </span>
-                  <h3 className="text-base font-semibold mb-1">{article.title}</h3>
-                  <p className="text-sm text-gray-600 flex-grow">{article.summary}</p>
-                  <div className="mt-3 flex justify-between items-center text-sm text-green-700 font-semibold">
-                    <span className=" ">
+                  <h3 className="text-base font-semibold mb-1 line-clamp-2">{article.title}</h3>
+                  <p className="text-sm text-gray-600 flex-grow line-clamp-3">{article.summary}</p>
+
+                  {/* Author Link & Read More */}
+                  <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center text-xs">
+                    <Link
+                      href={`/blog/author/${article.authorSlug || 'vegnar-greens'}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-1.5 text-gray-700 hover:text-green-800 font-medium group transition-colors"
+                      title={`View all articles by ${article.authorName || 'Vegnar Greens'}`}
+                    >
+                      {article.authorAvatar && (
+                        <img
+                          src={article.authorAvatar}
+                          alt={article.authorName || 'Author'}
+                          className="w-5 h-5 rounded-full object-cover border border-gray-200"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      )}
+                      <span className="group-hover:underline">By {article.authorName || 'Vegnar Greens'}</span>
+                    </Link>
+                    <span className="text-green-700 font-semibold">
                       Read More →
                     </span>
-                    <span>{article.readTime}</span>
                   </div>
                 </article>
               ))}
@@ -495,15 +524,24 @@ const BlogPage: React.FC<BlogPageProps> = ({
                 <p className="mt-2 text-gray-700 text-xs leading-relaxed">
                   As Co-Founder & COO of Vegnar, I lead operations and global strategy for our biodegradable product exports, driving B2B growth and contributing to India's international trade ecosystem.
                 </p>
-                <a 
-                  className="inline-flex items-center mt-3 text-blue-700 hover:text-blue-900 font-semibold text-sm" 
-                  href="https://www.linkedin.com/in/ashiishchauhan/" 
-                  rel="noopener noreferrer" 
-                  target="_blank"
-                >
-                  <i className="fab fa-linkedin mr-2"></i>
-                  View Profile
-                </a>
+                <div className="mt-3 flex items-center justify-center gap-3">
+                  <a 
+                    className="inline-flex items-center text-blue-700 hover:text-blue-900 font-semibold text-xs" 
+                    href="https://www.linkedin.com/in/ashiishchauhan/" 
+                    rel="noopener noreferrer" 
+                    target="_blank"
+                  >
+                    <i className="fab fa-linkedin mr-1.5"></i>
+                    LinkedIn
+                  </a>
+                  <span className="text-gray-300">•</span>
+                  <Link
+                    href="/blog/author/ashish-chauhan"
+                    className="inline-flex items-center text-green-700 hover:text-green-900 font-semibold text-xs"
+                  >
+                    View Articles →
+                  </Link>
+                </div>
               </div>
             </div>
             

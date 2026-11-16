@@ -8,11 +8,13 @@ import {
 } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './SingleBlog.module.css';
 import '@/app/blog/blog-global.css';
 import { Post } from '@/types/blog';
 import CompanyProfileCard from '@/components/CompanyProfileCard';
 import { decodeAndStripHtml } from '@/utils/wordpress';
+import { getAuthorFromPost } from '@/lib/authors';
 
 interface Heading {
   level: number;
@@ -220,8 +222,10 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
   };
 
   const image = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/img/default-blog.jpg';
-  const authorName = 'Vegnar Green';
-  const authorImage = post._embedded?.author?.[0]?.avatar_urls?.['96'] || '/img/author-icon.png';
+  const authorProfile = getAuthorFromPost(post);
+  const authorName = authorProfile.name;
+  const authorImage = authorProfile.avatar || post._embedded?.author?.[0]?.avatar_urls?.['96'] || '/img/author-icon.png';
+  const authorLink = `/blog/author/${authorProfile.slug}`;
   const postDate = new Date(post.date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -278,14 +282,30 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
 
             <div className="flex flex-wrap gap-4 text-sm text-gray-600">
               <div className="flex items-center">
-                <Image
-                  src={authorImage}
-                  alt="Author"
-                  width={32}
-                  height={32}
-                  className="rounded-full mr-2"
-                />
-                <span className="font-medium">Author: {authorName}</span>
+                <Link
+                  href={authorLink}
+                  className="flex items-center group cursor-pointer hover:opacity-90 transition-opacity"
+                  title={`View all articles by ${authorName}`}
+                >
+                  <img
+                    src={authorImage}
+                    alt={authorName}
+                    width={32}
+                    height={32}
+                    className="rounded-full mr-2 object-cover border border-gray-200"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src =
+                        'https://placehold.co/32x32/0f4d3f/ffffff?text=' + authorName.charAt(0);
+                    }}
+                  />
+                  <span className="font-medium text-gray-700 group-hover:text-green-700 transition-colors">
+                    Author:{' '}
+                    <span className="text-green-700 font-semibold underline decoration-transparent group-hover:decoration-green-700">
+                      {authorName}
+                    </span>
+                  </span>
+                </Link>
               </div>
 
               <div className="flex items-center">
@@ -375,6 +395,54 @@ export default function BlogArticle({ post, relatedPosts = [] }: BlogArticleProp
             ref={contentRef}
             className={`prose max-w-none prose-green prose-headings:scroll-mt-20 ${styles.article}`}
           />
+
+          {/* Author Box */}
+          <div className="mt-12 p-6 sm:p-7 bg-gradient-to-br from-[#f2f9f5] via-white to-[#eaf5ee] border border-[#cbe8d5] rounded-2xl flex flex-col sm:flex-row items-center sm:items-start gap-5 shadow-sm">
+            <Link href={authorLink} className="flex-shrink-0 group">
+              <img
+                src={authorImage}
+                alt={authorName}
+                className="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md group-hover:scale-105 transition-transform"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src =
+                    'https://placehold.co/80x80/0f4d3f/ffffff?text=' + authorName.charAt(0);
+                }}
+              />
+            </Link>
+            <div className="flex-1 text-center sm:text-left">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
+                <div>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-green-700 bg-green-100 px-2.5 py-0.5 rounded-full">
+                    About the Author
+                  </span>
+                  <h3 className="text-xl font-bold text-gray-900 mt-1">
+                    <Link href={authorLink} className="hover:text-green-700 transition-colors">
+                      {authorName}
+                    </Link>
+                  </h3>
+                </div>
+                {authorProfile.linkedin && (
+                  <a
+                    href={authorProfile.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-xs font-semibold text-blue-700 hover:text-blue-900"
+                  >
+                    <FaLinkedinIn className="mr-1" /> LinkedIn
+                  </a>
+                )}
+              </div>
+              <p className="text-xs font-semibold text-[#0f4d3f] mb-2">{authorProfile.role}</p>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">{authorProfile.bio}</p>
+              <Link
+                href={authorLink}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-green-800 hover:text-white bg-white hover:bg-green-700 border border-green-300 hover:border-green-700 px-4 py-2 rounded-full transition-all shadow-sm hover:shadow"
+              >
+                View all articles by {authorName} →
+              </Link>
+            </div>
+          </div>
 
           {/* Back to Blog Button */}
           <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
