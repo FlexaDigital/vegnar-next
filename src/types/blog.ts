@@ -8,6 +8,7 @@ export interface Post {
   modified: string;
   categories: number[];
   tags?: Array<{ name: string }>;
+  author?: number;
   rank_math_seo?: {
     title?: string;
     description?: string;
@@ -20,7 +21,11 @@ export interface Post {
     }>;
     'wp:term'?: Array<Array<{ name: string; slug: string }>>;
     author?: Array<{
+      id?: number;
       name: string;
+      slug?: string;
+      url?: string;
+      description?: string;
       avatar_urls?: {
         [key: string]: string;
       };
